@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class CDA_Deactivator {
+class JIMCA_Deactivator {
 
 	public static function deactivate() {
 		flush_rewrite_rules();

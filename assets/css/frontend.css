@@ -1,66 +1,132 @@
 /*
- * Estilos do visualizador de documento acessível.
- * Segue diretrizes WCAG 2.1 AA: contraste mínimo 4.5:1, foco sempre visível,
- * medida de linha legível, respeito a prefers-reduced-motion/prefers-contrast.
+ * Visualizador de documento acessível.
+ *
+ * Segue WCAG 2.1 AA (contraste mínimo 4.5:1 em texto, foco sempre visível,
+ * medida de linha legível, respeito a prefers-reduced-motion) e, no player,
+ * os tokens do Material Design 3: alvo de toque de 48dp, ícone de 24dp,
+ * grade de 8dp, escala tipográfica (label-large 14/20/500/0.1px), formas
+ * (extra-large 28dp na barra) e elevação (nível 3 na barra, nível 2 nos
+ * menus).
  */
 
-.cda-viewer {
-	--cda-fg: #1b1b1b;
-	--cda-bg: #ffffff;
-	--cda-border: #6b6b6b;
-	--cda-accent: #0b4a8f;
-	--cda-accent-fg: #ffffff;
-	--cda-highlight-bg: #fff3b0;
-	--cda-highlight-border: #8a6d00;
+.jimca-viewer {
+	--jimca-fg: #1b1b1b;
+	--jimca-bg: #ffffff;
+	--jimca-border: #6b6b6b;
+	--jimca-accent: #0b4a8f;
+	--jimca-accent-fg: #ffffff;
+	--jimca-highlight-bg: #fff3b0;
+	--jimca-highlight-border: #8a6d00;
 
-	color: var(--cda-fg);
-	background: var(--cda-bg);
+	/*
+	 * Player: superfície própria, que não acompanha o fundo do texto.
+	 * A barra flutua sobre o conteúdo e precisa se destacar dele.
+	 * `--jimca-player-fg` é o cinza neutro dos ícones em repouso e
+	 * `--jimca-player-fg-strong` o tom mais escuro usado quando a leitura
+	 * está em andamento.
+	 */
+	--jimca-player-surface: #ffffff;
+	--jimca-player-fg: #44474a;
+	--jimca-player-fg-strong: #1a1c1e;
+	--jimca-player-outline: #c4c7c9;
+	--jimca-player-selected: rgba(11, 74, 143, 0.12);
+	--jimca-player-state: rgba(0, 0, 0, 0.08);
+
+	/* Espaçamento interno do documento, em token para o conteúdo poder
+	   reservar espaço para a barra flutuante. */
+	--jimca-pad: 1.25rem;
+
+	/* Elevação Material 3. */
+	--jimca-elev-2: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+	--jimca-elev-3: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+	/* Motion Material 3. */
+	--jimca-ease-in: cubic-bezier(0.3, 0, 0.8, 0.15);
+	--jimca-ease-out: cubic-bezier(0.05, 0.7, 0.1, 1);
+
+	color: var(--jimca-fg);
+	background: var(--jimca-bg);
 	max-width: 100%;
 	box-sizing: border-box;
-	padding: 1.25rem;
-	border: 1px solid var(--cda-border);
+	padding: var(--jimca-pad);
+	border: 1px solid var(--jimca-border);
 	border-radius: 8px;
 	font-size: 1rem;
 	line-height: 1.6;
 }
 
-@media (prefers-color-scheme: dark) {
-	.cda-viewer {
-		--cda-fg: #f2f2f2;
-		--cda-bg: #1b1b1b;
-		--cda-border: #9a9a9a;
-		--cda-accent: #6fb3ff;
-		--cda-accent-fg: #0b1a2b;
-		--cda-highlight-bg: #4a3d00;
-		--cda-highlight-border: #ffd84a;
-	}
+/*
+ * Temas: "Claro" é o padrão acima. "Sépia" e "Escuro" usam uma classe
+ * extra (`.jimca-viewer.jimca-theme-*`), com mais especificidade que a
+ * regra base, então sempre vencem quando aplicadas — seja o padrão
+ * definido pelo admin em Configurações, seja a escolha do leitor no menu
+ * do player. `.jimca-high-contrast` vem depois (mesma especificidade,
+ * ordem posterior) e tem prioridade sobre qualquer tema.
+ * Os temas são explícitos e não seguem prefers-color-scheme: quem decide
+ * é o admin (padrão do site) ou o leitor (na hora).
+ */
+.jimca-viewer.jimca-theme-sepia {
+	--jimca-fg: #3a2f1e;
+	--jimca-bg: #f6ecd9;
+	--jimca-border: #8a7457;
+	--jimca-accent: #7a4a12;
+	--jimca-accent-fg: #ffffff;
+	--jimca-highlight-bg: #ffe08a;
+	--jimca-highlight-border: #6b4c00;
+
+	--jimca-player-surface: #fffaf2;
+	--jimca-player-fg: #5a4a33;
+	--jimca-player-fg-strong: #2e2413;
+	--jimca-player-outline: #c7b79f;
+	--jimca-player-selected: rgba(122, 74, 18, 0.14);
+	--jimca-player-state: rgba(58, 47, 30, 0.08);
 }
 
-.cda-viewer.cda-high-contrast {
-	--cda-fg: #000000;
-	--cda-bg: #ffffff;
-	--cda-border: #000000;
-	--cda-accent: #0000ee;
-	--cda-accent-fg: #ffffff;
-	--cda-highlight-bg: #ffff00;
-	--cda-highlight-border: #000000;
+.jimca-viewer.jimca-theme-dark {
+	--jimca-fg: #f2f2f2;
+	--jimca-bg: #1b1b1b;
+	--jimca-border: #9a9a9a;
+	--jimca-accent: #6fb3ff;
+	--jimca-accent-fg: #0b1a2b;
+	--jimca-highlight-bg: #4a3d00;
+	--jimca-highlight-border: #ffd84a;
+
+	--jimca-player-surface: #2b2b2b;
+	--jimca-player-fg: #c8cacc;
+	--jimca-player-fg-strong: #ffffff;
+	--jimca-player-outline: #5a5d60;
+	--jimca-player-selected: rgba(111, 179, 255, 0.22);
+	--jimca-player-state: rgba(255, 255, 255, 0.10);
 }
 
-@media (prefers-color-scheme: dark) {
-	.cda-viewer.cda-high-contrast {
-		--cda-fg: #ffffff;
-		--cda-bg: #000000;
-		--cda-border: #ffffff;
-		--cda-accent: #ffff00;
-		--cda-accent-fg: #000000;
-	}
+.jimca-viewer.jimca-high-contrast {
+	--jimca-fg: #000000;
+	--jimca-bg: #ffffff;
+	--jimca-border: #000000;
+	--jimca-accent: #0000ee;
+	--jimca-accent-fg: #ffffff;
+	--jimca-highlight-bg: #ffff00;
+	--jimca-highlight-border: #000000;
+
+	--jimca-player-surface: #ffffff;
+	--jimca-player-fg: #000000;
+	--jimca-player-fg-strong: #000000;
+	--jimca-player-outline: #000000;
+	--jimca-player-selected: #ffff00;
+	--jimca-player-state: rgba(0, 0, 0, 0.14);
 }
 
-.cda-viewer * {
+.jimca-viewer * {
 	box-sizing: inherit;
 }
 
-.cda-visually-hidden {
+/* Reserva espaço para a barra flutuante não cobrir as últimas linhas.
+   Só quando o player está ativo (classe posta pelo JS). */
+.jimca-viewer.jimca-player-active {
+	padding-bottom: calc(var(--jimca-pad) + 96px);
+}
+
+.jimca-visually-hidden {
 	position: absolute !important;
 	width: 1px;
 	height: 1px;
@@ -72,7 +138,7 @@
 	border: 0;
 }
 
-.cda-skip-link:focus {
+.jimca-skip-link:focus {
 	position: static !important;
 	width: auto;
 	height: auto;
@@ -80,142 +146,332 @@
 	padding: 0.5rem 0.75rem;
 	clip: auto;
 	display: inline-block;
-	background: var(--cda-accent);
-	color: var(--cda-accent-fg);
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
 	border-radius: 4px;
 	text-decoration: none;
 }
 
-.cda-viewer :focus-visible {
-	outline: 3px solid var(--cda-accent);
+.jimca-viewer :focus-visible {
+	outline: 3px solid var(--jimca-accent);
 	outline-offset: 2px;
 }
 
-.cda-title {
+.jimca-title {
 	margin-top: 0;
 	font-size: 1.5rem;
 }
 
-.cda-meta {
-	color: var(--cda-fg);
+.jimca-meta {
+	color: var(--jimca-fg);
 	opacity: 0.8;
 	font-size: 0.9rem;
 }
 
-.cda-toolbar,
-.cda-audio-controls {
+/* ------------------------------------------------------------------
+ * Player de leitura
+ * ------------------------------------------------------------------ */
+
+/*
+ * A barra flutua fixa no rodapé da janela enquanto o documento está à
+ * vista. O JS acrescenta `is-visible` (via IntersectionObserver) para que
+ * ela não fique sobrando por cima do resto da página quando o leitor já
+ * passou do documento.
+ */
+.jimca-player {
+	position: fixed;
+	z-index: 40;
+	left: 50%;
+	bottom: 16px;
+	transform: translateX(-50%);
+	width: min(600px, calc(100% - 16px));
 	display: flex;
-	flex-wrap: wrap;
+	justify-content: center;
+
+	/* Os vãos ao redor da barra não devem bloquear cliques no texto. */
+	pointer-events: none;
+
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 200ms var(--jimca-ease-in), visibility 0s linear 200ms;
+}
+
+.jimca-player[hidden] {
+	display: none;
+}
+
+.jimca-player.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 400ms var(--jimca-ease-out), visibility 0s;
+}
+
+.jimca-player > * {
+	pointer-events: auto;
+}
+
+.jimca-player__bar {
+	display: flex;
 	align-items: center;
-	gap: 0.75rem 1.25rem;
-	padding: 0.75rem;
-	margin-bottom: 1rem;
-	border: 1px solid var(--cda-border);
-	border-radius: 6px;
+	justify-content: space-between;
+	gap: 4px;
+	width: 100%;
+	padding: 8px;
+
+	/* Material 3: forma extra-large (28dp) e elevação nível 3. */
+	border-radius: 28px;
+	background: var(--jimca-player-surface);
+	box-shadow: var(--jimca-elev-3);
+}
+
+.jimca-player__bar[hidden] {
+	display: none;
+}
+
+.jimca-player__slot {
+	position: relative;
+	display: flex;
+	flex: 0 1 auto;
+	min-width: 0;
+}
+
+.jimca-player__slot[hidden],
+.jimca-player__icon-slot[hidden] {
+	display: none;
+}
+
+/*
+ * Botão de ícone. 48dp é o alvo de toque mínimo do Material 3; a largura
+ * pode encolher até 40px em telas muito estreitas (sete botões a 48dp não
+ * cabem num celular de 320px), o que continua bem acima do mínimo de
+ * 24x24 CSS px exigido pelo WCAG 2.2 (2.5.8).
+ */
+.jimca-player__btn {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 1 48px;
+	min-width: 40px;
+	height: 48px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
 	background: transparent;
+	color: var(--jimca-player-fg);
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
-.cda-toolbar-group {
+/* Camada de estado do Material 3: 8% no hover, 12% ao pressionar. */
+.jimca-player__btn::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: currentColor;
+	opacity: 0;
+	transition: opacity 150ms var(--jimca-ease-out);
+	pointer-events: none;
+}
+
+.jimca-player__btn:hover::before {
+	opacity: 0.08;
+}
+
+.jimca-player__btn:active::before {
+	opacity: 0.12;
+}
+
+.jimca-player__btn[disabled] {
+	cursor: default;
+	opacity: 0.38; /* Material 3: conteúdo desabilitado a 38%. */
+}
+
+.jimca-player__btn[disabled]::before {
+	display: none;
+}
+
+.jimca-player__icon {
+	display: block;
+	width: 24px;
+	height: 24px;
+	flex: 0 0 auto;
+}
+
+.jimca-player__icon-slot {
+	display: inline-flex;
+}
+
+/*
+ * Estado "tocando": o ícone vira pausa (trocado pelo JS) e o tom escurece,
+ * como especificado no design.
+ */
+.jimca-player__btn--play[aria-pressed="true"],
+.jimca-player__btn[aria-expanded="true"] {
+	color: var(--jimca-player-fg-strong);
+}
+
+.jimca-player__btn[aria-expanded="true"]::before {
+	opacity: 0.12;
+}
+
+/* Botão que traz a barra de volta depois de oculta. */
+.jimca-player__restore {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	margin-left: auto;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg);
+	box-shadow: var(--jimca-elev-3);
+	cursor: pointer;
+}
+
+.jimca-player__restore[hidden] {
+	display: none;
+}
+
+.jimca-player__restore:hover {
+	color: var(--jimca-player-fg-strong);
+}
+
+/* ------------------------------------------------------------------
+ * Menus do player (padrão FAB menu / menu do Material 3)
+ * ------------------------------------------------------------------ */
+
+.jimca-player__menu {
+	position: absolute;
+	bottom: calc(100% + 8px);
+	left: 50%;
+	min-width: 112px; /* Material 3: largura mínima de menu. */
+	max-width: min(280px, calc(100vw - 32px));
+	max-height: 50vh;
+	overflow-y: auto;
+	padding: 8px 0;
+	margin: 0;
+
+	/* Raio de 10px e sombra leve, conforme o design enviado. */
+	border-radius: 10px;
+	background: var(--jimca-player-surface);
+	box-shadow: var(--jimca-elev-2);
+
+	/* `--jimca-menu-shift` é ajustado pelo JS para o menu não vazar da
+	   tela quando o botão está perto da borda. */
+	transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px)));
+	transform-origin: bottom center;
+	animation: jimca-menu-in 200ms var(--jimca-ease-out);
+}
+
+.jimca-player__menu[hidden] {
+	display: none;
+}
+
+@keyframes jimca-menu-in {
+	from {
+		opacity: 0;
+		transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px))) translateY(6px) scale(0.96);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px))) translateY(0) scale(1);
+	}
+}
+
+/*
+ * Item de menu: altura mínima de 48dp e tipografia label-large do
+ * Material 3 (14px / 20px / peso 500 / 0.1px de espaçamento).
+ */
+.jimca-player__menuitem {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
-	flex-wrap: wrap;
-}
-
-.cda-toolbar-label {
-	font-size: 0.85rem;
-	font-weight: 600;
-}
-
-.cda-btn {
-	font: inherit;
-	font-size: 0.95rem;
-	color: var(--cda-fg);
-	background: var(--cda-bg);
-	border: 2px solid var(--cda-border);
-	border-radius: 4px;
-	padding: 0.4rem 0.75rem;
+	gap: 12px;
+	width: 100%;
+	min-height: 48px;
+	padding: 8px 16px;
+	border: 0;
+	background: transparent;
+	color: var(--jimca-player-fg-strong);
+	font-family: inherit;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	letter-spacing: 0.1px;
+	text-align: left;
 	cursor: pointer;
-	min-height: 44px;
-	min-width: 44px;
 }
 
-.cda-btn:hover {
-	background: var(--cda-accent);
-	color: var(--cda-accent-fg);
-	border-color: var(--cda-accent);
+.jimca-player__menuitem:hover {
+	background: var(--jimca-player-state);
 }
 
-.cda-btn[aria-pressed="true"] {
-	background: var(--cda-accent);
-	color: var(--cda-accent-fg);
-	border-color: var(--cda-accent);
+.jimca-player__menuitem[aria-checked="true"] {
+	background: var(--jimca-player-selected);
 }
 
-.cda-btn:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
+/* Marca de seleção nos menus de escolha única (tema, voz, velocidade). */
+.jimca-player__menuitem[aria-checked="true"]::after {
+	content: "";
+	width: 16px;
+	height: 16px;
+	margin-left: auto;
+	flex: 0 0 auto;
+	background: currentColor;
+	clip-path: polygon(41% 76%, 12% 48%, 20% 40%, 41% 60%, 80% 22%, 88% 30%);
 }
 
-.cda-btn-primary {
-	font-weight: 700;
+.jimca-player__divider {
+	height: 1px;
+	margin: 8px 0;
+	border: 0;
+	background: var(--jimca-player-outline);
 }
 
-.cda-field {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
-	font-size: 0.85rem;
-	font-weight: 600;
-}
+/* ------------------------------------------------------------------
+ * Conteúdo
+ * ------------------------------------------------------------------ */
 
-.cda-field select,
-.cda-field input[type="range"] {
-	font: inherit;
-	min-height: 44px;
-}
-
-.cda-status {
-	margin: 0;
-	font-size: 0.9rem;
-	font-style: italic;
-	flex-basis: 100%;
-}
-
-.cda-content {
+.jimca-content {
 	max-width: 70ch;
 	font-size: 1em;
+	scroll-margin-top: 2rem;
 }
 
-.cda-content :is(h1, h2, h3, h4, h5, h6) {
+.jimca-content :is(h1, h2, h3, h4, h5, h6) {
 	line-height: 1.3;
 }
 
-.cda-content h2.cda-page-title {
+.jimca-content h2.jimca-page-title {
 	font-size: 0.9em;
 	font-style: italic;
 	opacity: 0.8;
 	padding: 8px 0;
 }
 
-.cda-content p,
-.cda-content li {
+.jimca-content p,
+.jimca-content li {
 	margin-bottom: 1em;
 }
 
-.cda-content .cda-reading {
-	background: var(--cda-highlight-bg);
-	border-left: 4px solid var(--cda-highlight-border);
+.jimca-content .jimca-reading {
+	background: var(--jimca-highlight-bg);
+	border-left: 4px solid var(--jimca-highlight-border);
 	padding-left: 0.5em;
 	margin-left: -0.5em;
 }
 
-.cda-content img {
+.jimca-content img {
 	max-width: 100%;
 	height: auto;
 }
 
-.cda-content table {
+.jimca-content table {
 	width: 100%;
 	max-width: 100%;
 	overflow-x: auto;
@@ -223,22 +479,44 @@
 	border-collapse: collapse;
 }
 
+/* ------------------------------------------------------------------
+ * Preferências do sistema e telas pequenas
+ * ------------------------------------------------------------------ */
+
 @media (prefers-reduced-motion: reduce) {
-	.cda-viewer * {
+	.jimca-viewer * {
 		scroll-behavior: auto !important;
 		transition: none !important;
 		animation: none !important;
 	}
 }
 
-@media (max-width: 480px) {
-	.cda-viewer {
-		padding: 1rem;
+/* A barra do WordPress é fixa no topo e não interfere no rodapé, mas em
+   telas pequenas ela vira uma barra inferior em alguns temas de admin. */
+@media (max-width: 600px) {
+	.jimca-viewer {
+		--jimca-pad: 1rem;
 	}
 
-	.cda-toolbar,
-	.cda-audio-controls {
-		flex-direction: column;
-		align-items: stretch;
+	.jimca-player {
+		bottom: 8px;
+		width: calc(100% - 16px);
+	}
+
+	.jimca-player__bar {
+		gap: 2px;
+		padding: 6px;
+		border-radius: 26px;
+	}
+
+	.jimca-viewer.jimca-player-active {
+		padding-bottom: calc(var(--jimca-pad) + 80px);
+	}
+}
+
+@media (max-width: 380px) {
+	.jimca-player__bar {
+		gap: 0;
+		padding: 4px;
 	}
 }

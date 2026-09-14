@@ -5,12 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Smalot\PdfParser\Parser as PdfParser;
 
-class CDA_Pdf_Converter implements CDA_Converter_Interface {
+class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 
 	public function convert( $file_path ) {
 		if ( ! class_exists( PdfParser::class ) ) {
-			throw new CDA_Converter_Exception(
-				__( 'Biblioteca smalot/pdfparser não encontrada. Rode "composer install" na pasta do plugin.', 'conversor-acessivel' )
+			throw new JIMCA_Converter_Exception(
+				esc_html__( 'Biblioteca smalot/pdfparser não encontrada. Rode "composer install" na pasta do plugin.', 'jim-conversor-acessivel' )
 			);
 		}
 
@@ -19,17 +19,17 @@ class CDA_Pdf_Converter implements CDA_Converter_Interface {
 			$pdf     = $parser->parseFile( $file_path );
 			$pages   = $pdf->getPages();
 		} catch ( \Exception $e ) {
-			throw new CDA_Converter_Exception(
+			throw new JIMCA_Converter_Exception(
 				sprintf(
 					/* translators: %s: mensagem de erro original */
-					__( 'Não foi possível ler o PDF: %s', 'conversor-acessivel' ),
-					$e->getMessage()
+					esc_html__( 'Não foi possível ler o PDF: %s', 'jim-conversor-acessivel' ),
+					esc_html( $e->getMessage() )
 				)
 			);
 		}
 
 		if ( empty( $pages ) ) {
-			throw new CDA_Converter_Exception( __( 'O PDF não contém texto extraível (pode ser um PDF escaneado/apenas imagem).', 'conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'O PDF não contém texto extraível (pode ser um PDF escaneado/apenas imagem).', 'jim-conversor-acessivel' ) );
 		}
 
 		$html = '';
@@ -38,9 +38,9 @@ class CDA_Pdf_Converter implements CDA_Converter_Interface {
 			$paragraphs = $this->reconstruct_paragraphs( $page->getText() );
 
 			if ( count( $pages ) > 1 ) {
-				$html .= '<h2 class="cda-page-title">' . sprintf(
+				$html .= '<h2 class="jimca-page-title">' . sprintf(
 					/* translators: %d: número da página */
-					esc_html__( 'Página %d', 'conversor-acessivel' ),
+					esc_html__( 'Página %d', 'jim-conversor-acessivel' ),
 					$index + 1
 				) . '</h2>' . "\n";
 			}

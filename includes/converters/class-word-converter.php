@@ -5,12 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use PhpOffice\PhpWord\IOFactory;
 
-class CDA_Word_Converter implements CDA_Converter_Interface {
+class JIMCA_Word_Converter implements JIMCA_Converter_Interface {
 
 	public function convert( $file_path ) {
 		if ( ! class_exists( IOFactory::class ) ) {
-			throw new CDA_Converter_Exception(
-				__( 'Biblioteca phpoffice/phpword não encontrada. Rode "composer install" na pasta do plugin.', 'conversor-acessivel' )
+			throw new JIMCA_Converter_Exception(
+				esc_html__( 'Biblioteca phpoffice/phpword não encontrada. Rode "composer install" na pasta do plugin.', 'jim-conversor-acessivel' )
 			);
 		}
 
@@ -18,28 +18,28 @@ class CDA_Word_Converter implements CDA_Converter_Interface {
 			$phpWord = IOFactory::load( $file_path, 'Word2007' );
 			$writer  = IOFactory::createWriter( $phpWord, 'HTML' );
 		} catch ( \Exception $e ) {
-			throw new CDA_Converter_Exception(
+			throw new JIMCA_Converter_Exception(
 				sprintf(
 					/* translators: %s: mensagem de erro original */
-					__( 'Não foi possível ler o documento Word: %s', 'conversor-acessivel' ),
-					$e->getMessage()
+					esc_html__( 'Não foi possível ler o documento Word: %s', 'jim-conversor-acessivel' ),
+					esc_html( $e->getMessage() )
 				)
 			);
 		}
 
-		$tmp_html = wp_tempnam( 'cda-word-' );
+		$tmp_html = wp_tempnam( 'jimca-word-' );
 
 		try {
 			$writer->save( $tmp_html );
 			$full_html = file_get_contents( $tmp_html );
 		} finally {
 			if ( file_exists( $tmp_html ) ) {
-				unlink( $tmp_html );
+				wp_delete_file( $tmp_html );
 			}
 		}
 
 		if ( false === $full_html || '' === trim( (string) $full_html ) ) {
-			throw new CDA_Converter_Exception( __( 'O documento Word parece estar vazio.', 'conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'O documento Word parece estar vazio.', 'jim-conversor-acessivel' ) );
 		}
 
 		return $this->extract_body( $full_html );

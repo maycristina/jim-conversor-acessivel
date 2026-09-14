@@ -1,6 +1,6 @@
 {
-    "name": "mayaracristina/conversor-acessivel",
-    "description": "Dependencias PHP do plugin Conversor de Documentos Acessivel para WordPress.",
+    "name": "mayaracristina/jim-conversor-acessivel",
+    "description": "PHP dependencies for the Jim - Conversor Acessivel WordPress plugin.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {

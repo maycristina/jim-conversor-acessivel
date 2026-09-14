@@ -8,33 +8,36 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$post_type = 'cda_documento';
+$jimca_post_type = 'jimca_documento';
 
-$post_ids = get_posts(
+$jimca_post_ids = get_posts(
 	array(
-		'post_type'      => $post_type,
+		'post_type'      => $jimca_post_type,
 		'post_status'    => 'any',
 		'numberposts'    => -1,
 		'fields'         => 'ids',
 	)
 );
 
-foreach ( $post_ids as $post_id ) {
-	wp_delete_post( $post_id, true );
+foreach ( $jimca_post_ids as $jimca_post_id ) {
+	wp_delete_post( $jimca_post_id, true );
 }
 
-delete_option( 'cda_settings' );
+delete_option( 'jimca_settings' );
 
 global $wpdb;
+
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- limpeza única na desinstalação; não há API dedicada para apagar transients por prefixo, e cache de objeto não se aplica aqui (o plugin está sendo removido).
 $wpdb->query(
 	$wpdb->prepare(
 		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-		$wpdb->esc_like( '_transient_cda_active_installs_' ) . '%'
+		$wpdb->esc_like( '_transient_jimca_active_installs_' ) . '%'
 	)
 );
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- limpeza única na desinstalação; não há API dedicada para apagar transients por prefixo, e cache de objeto não se aplica aqui (o plugin está sendo removido).
 $wpdb->query(
 	$wpdb->prepare(
 		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-		$wpdb->esc_like( '_transient_timeout_cda_active_installs_' ) . '%'
+		$wpdb->esc_like( '_transient_timeout_jimca_active_installs_' ) . '%'
 	)
 );

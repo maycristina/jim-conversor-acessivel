@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Classe principal: orquestra o carregamento dos demais componentes.
  */
-class CDA_Plugin {
+class JIMCA_Plugin {
 
 	private static $instance = null;
 
@@ -20,14 +20,14 @@ class CDA_Plugin {
 	private function __construct() {}
 
 	public function init() {
-		load_plugin_textdomain( 'conversor-acessivel', false, dirname( plugin_basename( CDA_PLUGIN_FILE ) ) . '/languages' );
-
-		CDA_Post_Type::get_instance()->init();
-		CDA_Shortcode::get_instance()->init();
-		CDA_Install_Badge::get_instance()->init();
+		// Since WordPress 4.6, translations for plugins hosted on WordPress.org
+		// are loaded automatically; load_plugin_textdomain() is not needed here.
+		JIMCA_Post_Type::get_instance()->init();
+		JIMCA_Shortcode::get_instance()->init();
+		JIMCA_Install_Badge::get_instance()->init();
 
 		if ( is_admin() ) {
-			CDA_Admin::get_instance()->init();
+			JIMCA_Admin::get_instance()->init();
 		}
 	}
 }

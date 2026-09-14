@@ -3,13 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class CDA_Txt_Converter implements CDA_Converter_Interface {
+class JIMCA_Txt_Converter implements JIMCA_Converter_Interface {
 
 	public function convert( $file_path ) {
 		$contents = file_get_contents( $file_path );
 
 		if ( false === $contents ) {
-			throw new CDA_Converter_Exception( __( 'Não foi possível ler o arquivo TXT.', 'conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'Não foi possível ler o arquivo TXT.', 'jim-conversor-acessivel' ) );
 		}
 
 		// Garante UTF-8 (arquivos .txt são comuns em Latin-1/Windows-1252).
@@ -30,7 +30,7 @@ class CDA_Txt_Converter implements CDA_Converter_Interface {
 		}
 
 		if ( '' === $html ) {
-			throw new CDA_Converter_Exception( __( 'O arquivo TXT está vazio.', 'conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'O arquivo TXT está vazio.', 'jim-conversor-acessivel' ) );
 		}
 
 		return $html;

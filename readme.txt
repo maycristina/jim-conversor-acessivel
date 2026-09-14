@@ -1,6 +1,6 @@
-=== Conversor Acessível ===
+=== Jim - Conversor Acessível ===
 Contributors: maycristina
-Tags: acessibilidade, pdf, docx, shortcode, text-to-speech
+Tags: accessibility, pdf, docx, shortcode, text-to-speech
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -8,58 +8,66 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Converte arquivos PDF, Word (.docx) e TXT em páginas responsivas e acessíveis, com leitura em voz alta, publicáveis via shortcode.
+Converts PDF, Word (.docx) and TXT files into responsive, accessible pages with text-to-speech, publishable via shortcode.
 
 == Description ==
 
-O **Conversor Acessível** permite que administradores enviem arquivos PDF, DOCX ou TXT pelo painel do WordPress e transforma cada arquivo em uma página HTML responsiva e acessível (WCAG 2.1 AA), com:
+**Jim - Conversor Acessível** lets administrators upload PDF, DOCX or TXT files from the WordPress dashboard and turns each file into a responsive, accessible (WCAG 2.1 AA) HTML page, with:
 
-* Controles de tamanho de texto e alto contraste.
-* Leitura em voz alta usando a Web Speech API do navegador (sem custo de API externa).
-* Contraste, foco visível e navegação por teclado em todos os controles.
-* Armazenamento das conversões no banco de dados do WordPress (Custom Post Type), reaproveitáveis via shortcode `[documento_acessivel id="123"]`.
-* Shortcode `[cda_instalacoes]` que exibe o número de instalações ativas reportado pela API do WordPress.org (disponível depois que o plugin for publicado no diretório oficial).
+* Text size, high-contrast and reading theme controls (Light, Sepia, Dark).
+* A floating player docked to the bottom of the screen, following Material Design 3 (48dp touch targets, 24dp icons, label-large type, level 2/3 elevation): text size and theme, high contrast, voice, play/pause, speed, stop, and a button to hide the whole bar.
+* Text-to-speech using the browser's native Web Speech API (no external API cost).
+* Contrast, visible focus and keyboard navigation across all controls.
+* Conversions stored in the WordPress database (Custom Post Type), reusable via the `[documento_acessivel id="123"]` shortcode.
+* A `[jimca_instalacoes]` shortcode that displays the number of active installs reported by the WordPress.org API (available once the plugin is published in the official directory).
 
-= Requisitos =
+= Requirements =
 
 * PHP 7.4+
-* Dependências instaladas via Composer (`composer install` na pasta do plugin) antes da ativação: `smalot/pdfparser` e `phpoffice/phpword`.
+* Dependencies installed via Composer (`composer install` in the plugin folder) before activation: `smalot/pdfparser` and `phpoffice/phpword`.
 
-= Formatos suportados =
+= Supported formats =
 
-* PDF (texto extraível — PDFs somente-imagem/escaneados não são suportados)
-* Word `.docx` (o formato antigo `.doc` do Word 97-2003 não é suportado)
+* PDF (with extractable text — image-only/scanned PDFs are not supported)
+* Word `.docx` (the legacy Word 97-2003 `.doc` format is not supported)
 * TXT
 
 == Installation ==
 
-1. Envie a pasta do plugin para `wp-content/plugins/`.
-2. Rode `composer install --no-dev` dentro da pasta do plugin.
-3. Ative o plugin em **Plugins > Plugins Instalados**.
-4. Acesse **Conversor Acessível > Novo Documento** para enviar um arquivo.
-5. Copie o shortcode gerado (`[documento_acessivel id="X"]`) e cole em qualquer página ou post.
+1. Upload the plugin folder to `wp-content/plugins/`.
+2. Run `composer install --no-dev` inside the plugin folder.
+3. Activate the plugin under **Plugins > Installed Plugins**.
+4. Go to **Jim - Conversor Acessível > Novo Documento** to upload a file.
+5. Copy the generated shortcode (`[documento_acessivel id="X"]`) and paste it into any page or post.
 
 == Frequently Asked Questions ==
 
-= O contador de instalações funciona antes de eu publicar o plugin no WordPress.org? =
+= Does the install counter work before I publish the plugin on WordPress.org? =
 
-Não. O shortcode `[cda_instalacoes]` consulta a API pública do WordPress.org (`api.wordpress.org/plugins/info`), que só tem dados depois que o plugin é submetido e aprovado no diretório oficial. Até lá, o shortcode fica em branco para visitantes (e mostra um aviso para administradores logados).
+No. The `[jimca_instalacoes]` shortcode queries the public WordPress.org API (`api.wordpress.org/plugins/info`), which only has data after the plugin has been submitted to and approved in the official directory. Until then, the shortcode renders blank for visitors (and shows a notice to logged-in administrators).
 
-= Os arquivos originais enviados ficam guardados? =
+= Are the original uploaded files kept? =
 
-Por padrão, não — o plugin extrai o conteúdo e apaga o arquivo original enviado. Isso pode ser alterado em **Conversor Acessível > Configurações**.
+By default, no — the plugin extracts the content and deletes the original uploaded file. This can be changed under **Jim - Conversor Acessível > Configurações**.
 
-= O plugin envia dados para algum servidor externo? =
+= Can I choose how the converted document looks? =
 
-Só uma chamada, e só se você usar o shortcode `[cda_instalacoes]`: uma consulta à API pública do próprio WordPress.org (`api.wordpress.org/plugins/info`) para buscar o número de instalações ativas deste plugin. Nenhum dado do seu site, dos seus documentos ou dos seus visitantes é enviado a lugar nenhum.
+Yes. Under **Jim - Conversor Acessível > Configurações** you can set a default reading theme (Light, Sepia or Dark) applied to every converted document. Readers can also switch the theme themselves from the reading toolbar on each document — their choice is saved only in their own browser and doesn't change the site-wide default.
+
+= Does the plugin send data to any external server? =
+
+Only one call, and only if you use the `[jimca_instalacoes]` shortcode: a request to WordPress.org's own public API (`api.wordpress.org/plugins/info`) to fetch this plugin's active install count. No data about your site, your documents or your visitors is ever sent anywhere else.
 
 == Screenshots ==
 
-1. Painel administrativo: listagem "Todos os Documentos", com a coluna de shortcode de cada conversão.
-2. Documento convertido, com os controles de tamanho de texto, alto contraste e o botão de leitura em voz alta.
-3. Leitura em voz alta em andamento, com o parágrafo atual destacado na página.
+1. A converted document with the floating reading bar: text size and theme, high contrast, voice, play/pause, speed, stop and hide.
+2. The same document on a phone, with the bar fitting seven controls at a 48px touch target.
+3. The appearance menu open above the bar, following the Material Design 3 menu pattern.
+4. The in-plugin Tutorial screen: what the plugin is, how to use it, version and authorship.
 
 == Changelog ==
 
 = 1.0.0 =
-* Versão inicial: conversão de PDF/DOCX/TXT, shortcode do documento acessível com leitura em voz alta, e shortcode de contagem de instalações via WordPress.org.
+* Initial release: PDF/DOCX/TXT conversion, accessible document shortcode with text-to-speech, reading themes (Light/Sepia/Dark), and WordPress.org install-count shortcode.
+* Reading controls float at the bottom of the screen while the document is in view, with menus that open above each button; the reader's choices (size, theme, contrast, voice, speed, bar hidden) are remembered per document in their own browser.
+* Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.

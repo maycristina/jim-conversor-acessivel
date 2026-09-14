@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shortcode [cda_instalacoes] — mostra o número de instalações ativas
+ * Shortcode [jimca_instalacoes] — mostra o número de instalações ativas
  * reportado pela API oficial do WordPress.org para este plugin.
  *
  * Só retorna dados reais depois que o plugin for publicado no diretório
@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * não encontra o slug e o shortcode não exibe nada no site (mas mostra
  * um aviso para administradores logados).
  */
-class CDA_Install_Badge {
+class JIMCA_Install_Badge {
 
-	const TAG            = 'cda_instalacoes';
+	const TAG            = 'jimca_instalacoes';
 	const TRANSIENT_TTL  = 12 * HOUR_IN_SECONDS;
 
 	private static $instance = null;
@@ -41,7 +41,7 @@ class CDA_Install_Badge {
 			self::TAG
 		);
 
-		$slug = CDA_Admin::get_settings()['wporg_slug'];
+		$slug = JIMCA_Admin::get_settings()['wporg_slug'];
 		$data = $this->get_active_installs( $slug );
 
 		if ( 'badge' === $atts['formato'] ) {
@@ -50,7 +50,7 @@ class CDA_Install_Badge {
 
 		if ( null === $data ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				return '<p class="cda-installs-notice">' . esc_html__( 'Contador de instalações: este plugin ainda não foi publicado no WordPress.org (visível só para administradores).', 'conversor-acessivel' ) . '</p>';
+				return '<p class="jimca-installs-notice">' . esc_html__( 'Contador de instalações: este plugin ainda não foi publicado no WordPress.org (visível só para administradores).', 'jim-conversor-acessivel' ) . '</p>';
 			}
 			return '';
 		}
@@ -59,16 +59,16 @@ class CDA_Install_Badge {
 			return esc_html( number_format_i18n( $data ) );
 		}
 
-		return '<span class="cda-installs-count">' . sprintf(
+		return '<span class="jimca-installs-count">' . sprintf(
 			/* translators: %s: número de instalações ativas, formatado */
-			esc_html__( '%s instalações ativas', 'conversor-acessivel' ),
+			esc_html__( '%s instalações ativas', 'jim-conversor-acessivel' ),
 			esc_html( number_format_i18n( $data ) )
 		) . '</span>';
 	}
 
 	private function render_badge_image( $slug ) {
 		$url = 'https://img.shields.io/wordpress/plugin/installs/' . rawurlencode( $slug ) . '.svg';
-		return '<img src="' . esc_url( $url ) . '" alt="' . esc_attr__( 'Número de instalações ativas no WordPress.org', 'conversor-acessivel' ) . '" loading="lazy">';
+		return '<img src="' . esc_url( $url ) . '" alt="' . esc_attr__( 'Número de instalações ativas no WordPress.org', 'jim-conversor-acessivel' ) . '" loading="lazy">';
 	}
 
 	/**
@@ -76,7 +76,7 @@ class CDA_Install_Badge {
 	 * @return int|null Número de instalações ativas, ou null se indisponível/não publicado.
 	 */
 	public function get_active_installs( $slug ) {
-		$cache_key = 'cda_active_installs_' . $slug;
+		$cache_key = 'jimca_active_installs_' . $slug;
 		$cached    = get_transient( $cache_key );
 
 		if ( false !== $cached ) {

@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Usamos um CPT (em vez de uma tabela própria) para reaproveitar wp_posts/wp_postmeta,
  * revisões, exportação/backup nativos do WordPress e a tela de listagem do admin.
  */
-class CDA_Post_Type {
+class JIMCA_Post_Type {
 
-	const POST_TYPE = 'cda_documento';
+	const POST_TYPE = 'jimca_documento';
 
 	private static $instance = null;
 
@@ -34,13 +34,13 @@ class CDA_Post_Type {
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => __( 'Documentos Acessíveis', 'conversor-acessivel' ),
-			'singular_name'      => __( 'Documento Acessível', 'conversor-acessivel' ),
-			'add_new_item'       => __( 'Adicionar Novo Documento', 'conversor-acessivel' ),
-			'edit_item'          => __( 'Editar Documento', 'conversor-acessivel' ),
-			'all_items'          => __( 'Todos os Documentos', 'conversor-acessivel' ),
-			'search_items'       => __( 'Buscar Documentos', 'conversor-acessivel' ),
-			'not_found'          => __( 'Nenhum documento convertido ainda.', 'conversor-acessivel' ),
+			'name'               => __( 'Documentos Acessíveis', 'jim-conversor-acessivel' ),
+			'singular_name'      => __( 'Documento Acessível', 'jim-conversor-acessivel' ),
+			'add_new_item'       => __( 'Adicionar Novo Documento', 'jim-conversor-acessivel' ),
+			'edit_item'          => __( 'Editar Documento', 'jim-conversor-acessivel' ),
+			'all_items'          => __( 'Todos os Documentos', 'jim-conversor-acessivel' ),
+			'search_items'       => __( 'Buscar Documentos', 'jim-conversor-acessivel' ),
+			'not_found'          => __( 'Nenhum documento convertido ainda.', 'jim-conversor-acessivel' ),
 		);
 
 		register_post_type(
@@ -49,7 +49,7 @@ class CDA_Post_Type {
 				'labels'          => $labels,
 				'public'          => false,
 				'show_ui'         => true,
-				'show_in_menu'    => 'cda-conversor',
+				'show_in_menu'    => 'jimca-conversor',
 				'capability_type' => 'post',
 				'map_meta_cap'    => true,
 				// Bloqueia o "Adicionar Novo" nativo do WP: documentos só podem ser
@@ -69,7 +69,7 @@ class CDA_Post_Type {
 		foreach ( $columns as $key => $label ) {
 			$new_columns[ $key ] = $label;
 			if ( 'title' === $key ) {
-				$new_columns['cda_shortcode'] = __( 'Shortcode', 'conversor-acessivel' );
+				$new_columns['jimca_shortcode'] = __( 'Shortcode', 'jim-conversor-acessivel' );
 			}
 		}
 
@@ -77,17 +77,17 @@ class CDA_Post_Type {
 	}
 
 	public function render_shortcode_column( $column, $post_id ) {
-		if ( 'cda_shortcode' !== $column ) {
+		if ( 'jimca_shortcode' !== $column ) {
 			return;
 		}
 
-		echo '<input type="text" readonly onclick="this.select();" class="cda-shortcode-input" style="width:100%;max-width:220px;" value="' . esc_attr( '[documento_acessivel id="' . $post_id . '"]' ) . '">';
+		echo '<input type="text" readonly onclick="this.select();" class="jimca-shortcode-input" style="width:100%;max-width:220px;" value="' . esc_attr( '[documento_acessivel id="' . $post_id . '"]' ) . '">';
 	}
 
 	public function add_meta_boxes() {
 		add_meta_box(
-			'cda_documento_info',
-			__( 'Informações da conversão', 'conversor-acessivel' ),
+			'jimca_documento_info',
+			__( 'Informações da conversão', 'jim-conversor-acessivel' ),
 			array( $this, 'render_info_meta_box' ),
 			self::POST_TYPE,
 			'side',
@@ -96,18 +96,18 @@ class CDA_Post_Type {
 	}
 
 	public function render_info_meta_box( $post ) {
-		$original_filename = get_post_meta( $post->ID, '_cda_original_filename', true );
-		$original_type     = get_post_meta( $post->ID, '_cda_original_type', true );
-		$word_count        = get_post_meta( $post->ID, '_cda_word_count', true );
-		$converted_at      = get_post_meta( $post->ID, '_cda_converted_at', true );
+		$original_filename = get_post_meta( $post->ID, '_jimca_original_filename', true );
+		$original_type     = get_post_meta( $post->ID, '_jimca_original_type', true );
+		$word_count        = get_post_meta( $post->ID, '_jimca_word_count', true );
+		$converted_at      = get_post_meta( $post->ID, '_jimca_converted_at', true );
 
-		echo '<p><strong>' . esc_html__( 'Arquivo original:', 'conversor-acessivel' ) . '</strong><br>' . esc_html( $original_filename ) . '</p>';
-		echo '<p><strong>' . esc_html__( 'Tipo:', 'conversor-acessivel' ) . '</strong> ' . esc_html( strtoupper( $original_type ) ) . '</p>';
-		echo '<p><strong>' . esc_html__( 'Palavras:', 'conversor-acessivel' ) . '</strong> ' . esc_html( number_format_i18n( (int) $word_count ) ) . '</p>';
-		echo '<p><strong>' . esc_html__( 'Convertido em:', 'conversor-acessivel' ) . '</strong><br>' . esc_html( $converted_at ) . '</p>';
+		echo '<p><strong>' . esc_html__( 'Arquivo original:', 'jim-conversor-acessivel' ) . '</strong><br>' . esc_html( $original_filename ) . '</p>';
+		echo '<p><strong>' . esc_html__( 'Tipo:', 'jim-conversor-acessivel' ) . '</strong> ' . esc_html( strtoupper( $original_type ) ) . '</p>';
+		echo '<p><strong>' . esc_html__( 'Palavras:', 'jim-conversor-acessivel' ) . '</strong> ' . esc_html( number_format_i18n( (int) $word_count ) ) . '</p>';
+		echo '<p><strong>' . esc_html__( 'Convertido em:', 'jim-conversor-acessivel' ) . '</strong><br>' . esc_html( $converted_at ) . '</p>';
 
 		echo '<hr>';
-		echo '<p><strong>' . esc_html__( 'Shortcode:', 'conversor-acessivel' ) . '</strong></p>';
+		echo '<p><strong>' . esc_html__( 'Shortcode:', 'jim-conversor-acessivel' ) . '</strong></p>';
 		echo '<input type="text" readonly onclick="this.select();" style="width:100%" value="' . esc_attr( '[documento_acessivel id="' . $post->ID . '"]' ) . '">';
 	}
 }

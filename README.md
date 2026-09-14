@@ -1,155 +1,129 @@
-# Conversor Acessível
+# Jim — Conversor Acessível
 
-Plugin WordPress que converte arquivos PDF, Word (.docx) e TXT em páginas
-responsivas e acessíveis (WCAG 2.1 AA), com leitura em voz alta pelo
-navegador. Cada conversão fica salva no banco (Custom Post Type) e pode ser
-publicada em qualquer página via shortcode.
+Plugin WordPress que transforma arquivos **PDF**, **Word (.docx)** e **TXT** em páginas de
+leitura acessíveis (WCAG 2.1 AA), com leitura em voz alta pelo próprio navegador. Cada
+conversão fica guardada no banco do site (Custom Post Type) e pode ser publicada em
+qualquer página via shortcode.
+
+**[Site do plugin](https://maycristina.github.io/jim-conversor-acessivel/)** ·
+[Relatar um problema](https://github.com/maycristina/jim-conversor-acessivel/issues) ·
+Versão 1.0.0 · GPL v2 ou posterior
+
+---
+
+## Como fica para quem lê
+
+Uma barra flutuante acompanha o leitor enquanto ele rola o documento: tamanho do texto,
+tema de leitura (Claro, Sépia e Escuro), alto contraste, escolha da voz, ouvir/pausar,
+velocidade, parar — e um botão para ocultar a barra inteira.
+
+![Demonstração dos controles de leitura: menu de aparência, troca de tema, reprodução e ocultação da barra](docs/media/demo-leitura.gif)
+
+## Como fica no painel
+
+O envio mostra o arquivo escolhido, o estado de conversão enquanto o arquivo é processado,
+e o aviso de conclusão com o link para o documento e seu shortcode.
+
+![Demonstração do envio no painel: arquivo selecionado, conversão em andamento e documento pronto](docs/media/demo-admin.gif)
+
+---
+
+## Instalação
+
+1. Baixe ou clone este repositório para `wp-content/plugins/jim-conversor-acessivel/`:
+   ```bash
+   git clone https://github.com/maycristina/jim-conversor-acessivel.git
+   cd jim-conversor-acessivel
+   composer install --no-dev
+   ```
+2. Ative o plugin em **Plugins › Plugins instalados**.
+3. Vá em **Jim › Novo Documento** e envie um PDF, DOCX ou TXT.
+4. Copie o shortcode gerado e cole em qualquer página ou post.
+
+> As dependências de leitura de arquivos (`smalot/pdfparser` e `phpoffice/phpword`) são
+> instaladas via Composer e não são versionadas aqui. Rode `composer install` antes de ativar.
+
+## Shortcodes
+
+| Shortcode | O que faz |
+|---|---|
+| `[documento_acessivel id="123"]` | Publica o documento convertido, com a barra de controles de leitura. |
+| `[jimca_instalacoes]` | Mostra o número de instalações ativas informado pela API do WordPress.org. |
+
+## Requisitos
+
+| | |
+|---|---|
+| WordPress | 6.0 ou superior |
+| PHP | 7.4 ou superior |
+| Formatos aceitos | PDF com texto selecionável, `.docx`, `.txt` |
+| Não suportado | PDF escaneado (apenas imagem) e o formato antigo `.doc` |
 
 ## Estrutura do plugin
 
 ```
-conversor-acessivel.php        Bootstrap: headers do WP, autoload, ativação
+jim-conversor-acessivel.php    Bootstrap: headers do WP, autoload, constantes
 includes/
   class-plugin.php             Orquestra o carregamento dos componentes
-  class-activator.php          Ativação (opções padrão, flush rewrite)
+  class-activator.php          Ativação (opções padrão)
   class-deactivator.php
-  class-post-type.php          CPT "cda_documento" + meta box com o shortcode
-  class-converter.php          Dispatcher por extensão de arquivo
+  class-post-type.php          CPT "jimca_documento" + coluna com o shortcode
+  class-converter.php          Dispatcher por extensão + checagem de extensões do PHP
   class-converter-interface.php
   class-converter-exception.php
   converters/
     class-pdf-converter.php    smalot/pdfparser
     class-word-converter.php   phpoffice/phpword
     class-txt-converter.php
-  class-shortcode.php          [documento_acessivel id="123"]
-  class-install-badge.php      [cda_instalacoes] (API do WordPress.org)
+  class-shortcode.php          [documento_acessivel] + ícones SVG do player
+  class-install-badge.php      [jimca_instalacoes] (API do WordPress.org)
 admin/
-  class-admin.php              Upload + Configurações
+  class-admin.php              Upload, Configurações e Tutorial
 templates/
-  document-viewer.php          Template acessível (ARIA, controles de áudio)
+  document-viewer.php          Visualizador acessível (ARIA, player de leitura)
 assets/
-  css/frontend.css             Estilos responsivos/acessíveis
-  js/frontend.js                Web Speech API + tamanho de texto/contraste
-readme.txt                     Formato oficial WordPress.org
+  css/frontend.css             Visualizador e player (tokens do Material Design 3)
+  css/admin.css                Telas do painel
+  js/frontend.js               Player: menus, temas, Web Speech API
+  js/admin.js                  Feedback de arquivo escolhido e de conversão
+docs/                          Site do plugin (GitHub Pages)
+readme.txt                     Formato oficial do diretório WordPress.org
 uninstall.php                  Limpeza ao desinstalar
-composer.json                  Dependências PHP
 ```
 
-## Como rodar localmente
+## Decisões de arquitetura
 
-1. Clone este repositório e instale as dependências PHP:
-   ```bash
-   git clone https://github.com/maycristina/conversor-acessivel.git
-   cd conversor-acessivel
-   composer install
-   ```
-2. Copie (ou faça symlink d)o repositório clonado para
-   `wp-content/plugins/conversor-acessivel/` de uma instalação WordPress local
-   (ex.: via `wp-env`, Local, ou XAMPP/MAMP).
-3. Ative o plugin em **Plugins**.
-4. Vá em **Conversor Acessível > Novo Documento**, envie um PDF/DOCX/TXT.
-5. Copie o shortcode gerado (mostrado na tela de edição do documento) e cole
-   em qualquer página/post: `[documento_acessivel id="X"]`.
+**Custom Post Type, não tabela própria.** Reaproveita `wp_posts`/`wp_postmeta`, revisões,
+export e backup nativos do WordPress — e a tela de listagem do admin sai pronta.
 
-## Decisões de arquitetura (e por quê)
+**Conversão em PHP, não via API externa.** Evita custo recorrente e dependência de
+internet no momento da conversão. Nenhum documento do usuário sai do servidor dele.
 
-- **Armazenamento em Custom Post Type**, não em tabela própria: reaproveita
-  `wp_posts`/`wp_postmeta`, revisões, export/backup nativos do WordPress, e a
-  tela de listagem do admin sai "de graça".
-- **Conversão via bibliotecas PHP (Composer)**, não via API externa: evita
-  custo recorrente e dependência de internet no momento da conversão. Como
-  contrapartida, PDFs com layout muito complexo ou escaneados (sem texto
-  extraível) não são suportados.
-- **Leitura em voz alta via Web Speech API do navegador**, não TTS em nuvem:
-  zero custo de API, funciona no cliente. A qualidade da voz varia conforme o
-  navegador/SO do visitante — é uma limitação aceita nessa versão.
-- **Contador de instalações via API oficial do WordPress.org**
-  (`[cda_instalacoes]`): não exige infraestrutura própria, mas só retorna
-  dados reais depois que o plugin for submetido e aprovado no diretório
-  oficial (https://wordpress.org/plugins/developers/). Até lá o shortcode
-  fica em branco para visitantes.
-- **O texto convertido NÃO passa pelo filtro `the_content`** (apenas por
-  `wp_kses_post`): rodar `the_content` executaria `do_shortcode()` sobre texto
-  extraído de um arquivo enviado, permitindo que um documento contendo algo
-  como `[algum-shortcode]` disparasse shortcodes do site sem intenção.
-- **Reconstrução de parágrafos do PDF por heurística**: PDF não tem o conceito
-  de parágrafo — só texto posicionado por coordenadas. `class-pdf-converter.php`
-  junta linhas quebradas na mesma frase e só fecha um parágrafo quando a linha
-  termina em pontuação final (ou há uma linha em branco no PDF). Isso evita o
-  "bloco de texto corrido" de uma extração ingênua, mas não reconstrói a
-  paragrafação exata do documento original — na ausência de linhas em branco,
-  tende a gerar um parágrafo por frase.
-- **O "Adicionar Novo" nativo do WordPress para `cda_documento` fica
-  desabilitado de propósito** (`capabilities => ['create_posts' => 'do_not_allow']`
-  em `class-post-type.php`): documentos só podem ser criados pela tela de
-  upload/conversão, nunca em branco pelo editor padrão do WP. A listagem
-  "Todos os Documentos" continua normal, com uma coluna extra mostrando o
-  shortcode de cada um.
+**Leitura em voz alta pela Web Speech API do navegador.** Sem custo por caractere e sem
+enviar o texto para um serviço de terceiros; a voz é a que o leitor já tem instalada.
 
-## Hardening (index.php + guard ABSPATH)
+**O conteúdo convertido não passa por `the_content`.** Rodar `do_shortcode()` sobre texto
+extraído de um arquivo enviado permitiria que um documento com algo como `[shortcode]`
+executasse shortcodes do site sem intenção. O HTML já vem sanitizado com `wp_kses_post()`
+no momento da conversão.
 
-- O WordPress.org **não aceita arquivos ocultos** (dotfiles) na submissão do
-  plugin — um `.htaccess` estático na raiz do plugin é rejeitado pela
-  verificação automática ("Hidden files are not permitted"). Por isso a
-  proteção principal contra acesso direto via URL é o guard
-  `if (!defined('ABSPATH')) exit;` no topo de cada arquivo PHP, que funciona
-  em qualquer servidor (Apache, Nginx, LiteSpeed) e não depende de nenhum
-  arquivo extra.
-- Um `index.php` vazio ("silence is golden") em cada subpasta evita listagem
-  de diretório de forma universal — não é um dotfile, então não tem problema
-  incluir na submissão.
-- A pasta de upload (`wp-content/uploads/cda-documentos/`) recebe seu próprio
-  `.htaccess` + `index.php` gerados **em tempo de execução**, na primeira vez
-  que é usada (`CDA_Admin::protect_upload_dir()`), negando **execução de
-  scripts** (`.php`, `.phtml`, `.cgi`, etc.) — mas não bloqueando acesso
-  geral, já que o PDF/DOCX/TXT original precisa continuar servível quando a
-  opção "apagar original após converter" está desligada. Como esse
-  `.htaccess` é criado pelo PHP no servidor do usuário (não vai dentro do
-  zip do plugin), a regra do WordPress.org contra dotfiles não se aplica a
-  ele.
+**Temas explícitos, sem seguir `prefers-color-scheme`.** Quem decide o tema de leitura é o
+administrador (padrão do site) ou o próprio leitor — a escolha do leitor vale só para o
+navegador dele e não altera o padrão.
 
-## Publicando no WordPress.org (necessário para o badge de instalações)
+## Acessibilidade
 
-1. Revise `readme.txt` (headers, tags, `Stable tag`, `Tested up to` — precisa
-   bater com a versão atual do WordPress, senão a verificação automática
-   reprova o envio).
-2. Rode `composer install --no-dev` e gere o zip do plugin incluindo a pasta
-   `vendor/` (o WordPress.org não roda Composer), **excluindo** `.git/`,
-   `.gitignore` e `.wordpress-org/` — a verificação automática rejeita
-   qualquer arquivo/pasta oculto (começando com `.`) dentro do zip.
-3. Siga o processo de submissão em
-   https://wordpress.org/plugins/developers/add/.
-4. Depois de aprovado, defina o slug correto em
-   **Conversor Acessível > Configurações** para o shortcode `[cda_instalacoes]`
-   passar a mostrar o número real de instalações ativas.
-
-### Pasta `.wordpress-org/assets/`
-
-Não faz parte do plugin em si (não vai no zip de instalação) — são os
-materiais visuais da **página** do plugin no diretório do WordPress.org:
-
-- `icon-128x128.png` / `icon-256x256.png` — já gerados.
-- `icon-source.html` — fonte editável do ícone (SVG renderizado via Chromium
-  headless); edite e regenere se quiser mudar o design.
-- `screenshot-1.png`, `screenshot-2.png`, `screenshot-3.png` — capturas reais
-  de uma instalação WordPress rodando o plugin: listagem de documentos no
-  admin, documento convertido, e leitura em voz alta em andamento. Legendas
-  correspondentes em `== Screenshots ==` no `readme.txt`.
-
-Depois de aprovado no WordPress.org, o conteúdo desta pasta vai para a pasta
-`assets/` do repositório SVN (`https://plugins.svn.wordpress.org/conversor-acessivel/assets/`),
-que é separada da `trunk/` (código) e do `assets/` interno do plugin
-(`assets/css`, `assets/js`).
-
-## Limitações conhecidas
-
-- `.doc` (Word 97-2003) não é suportado — apenas `.docx`.
-- PDFs escaneados/somente-imagem não têm texto extraível.
-- A leitura em voz alta depende de `speechSynthesis` no navegador do
-  visitante; sem suporte, os controles de áudio ficam ocultos automaticamente
-  (o texto continua acessível normalmente).
+- Contraste conferido em todos os pares de texto e fundo dos três temas (mínimo 4,5:1).
+- Navegação completa por teclado, foco sempre visível, menus que fecham no `Esc`
+  devolvendo o foco ao botão de origem.
+- Alvos de toque de 48 px seguindo o Material Design 3, com redução controlada até 40 px
+  em telas muito estreitas (acima do mínimo de 24×24 do WCAG 2.2).
+- Estrutura semântica com `role`/`aria` e avisos anunciados por região `aria-live`.
+- `prefers-reduced-motion` respeitado.
+- Sem JavaScript, o texto continua inteiramente legível; apenas os controles não aparecem.
 
 ## Licença
 
-GPLv2 ou posterior — veja [LICENSE](LICENSE). Mesma licença do próprio
-WordPress, exigida para publicação no diretório oficial de plugins.
+GPL v2 ou posterior. Veja [LICENSE](LICENSE).
+
+Desenvolvido por [Mayara Nascimento](https://github.com/maycristina).
