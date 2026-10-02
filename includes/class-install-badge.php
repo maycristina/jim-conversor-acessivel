@@ -7,9 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Shortcode [jimca_instalacoes] — mostra o número de instalações ativas
  * reportado pela API oficial do WordPress.org para este plugin.
  *
- * Só retorna dados reais depois que o plugin for publicado no diretório
- * do WordPress.org (https://wordpress.org/plugins/). Antes disso a API
- * não encontra o slug e o shortcode não exibe nada no site (mas mostra
+ * Os dados vêm de https://wordpress.org/plugins/jim-conversor-acessivel/.
+ * Se a API não responder, o shortcode não exibe nada no site (mas mostra
  * um aviso para administradores logados).
  */
 class JIMCA_Install_Badge {
