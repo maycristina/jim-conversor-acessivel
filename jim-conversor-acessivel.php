@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Jim - Conversor Acessível
- * Plugin URI:         https://maycristina.github.io/jim-conversor-acessivel/
+ * Plugin URI:         https://jim.mabo.cc/
  * Description:       Converts PDF, Word and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
  * Version:            1.0.0
  * Requires at least:  6.0
@@ -30,7 +30,7 @@ define( 'JIMCA_PLUGIN_SLUG', 'jim-conversor-acessivel' );
  * mudar quando algum deles mudar.
  */
 define( 'JIMCA_REPO_URL', 'https://github.com/maycristina/jim-conversor-acessivel' );
-define( 'JIMCA_SITE_URL', 'https://maycristina.github.io/jim-conversor-acessivel/' );
+define( 'JIMCA_SITE_URL', 'https://jim.mabo.cc/' );
 define( 'JIMCA_AUTHOR_URL', 'https://github.com/maycristina' );
 
 /**

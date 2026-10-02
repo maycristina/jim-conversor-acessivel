@@ -42,9 +42,9 @@ Converts PDF, Word (.docx) and TXT files into responsive, accessible pages with 
 
 == Frequently Asked Questions ==
 
-= Does the install counter work before I publish the plugin on WordPress.org? =
+= Where does the install counter get its number? =
 
-No. The `[jimca_instalacoes]` shortcode queries the public WordPress.org API (`api.wordpress.org/plugins/info`), which only has data after the plugin has been submitted to and approved in the official directory. Until then, the shortcode renders blank for visitors (and shows a notice to logged-in administrators).
+The `[jimca_instalacoes]` shortcode queries the public WordPress.org API (`api.wordpress.org/plugins/info`) for this plugin's active install count. If the API can't be reached, the shortcode renders blank for visitors (and shows a notice to logged-in administrators).
 
 = Are the original uploaded files kept? =
 

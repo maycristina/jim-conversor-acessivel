@@ -5,7 +5,8 @@ leitura acessíveis (WCAG 2.1 AA), com leitura em voz alta pelo próprio navegad
 conversão fica guardada no banco do site (Custom Post Type) e pode ser publicada em
 qualquer página via shortcode.
 
-**[Site do plugin](https://maycristina.github.io/jim-conversor-acessivel/)** ·
+**[Site do plugin](https://jim.mabo.cc/)** ·
+[WordPress.org](https://wordpress.org/plugins/jim-conversor-acessivel/) ·
 [Relatar um problema](https://github.com/maycristina/jim-conversor-acessivel/issues) ·
 Versão 1.0.0 · GPL v2 ou posterior
 
@@ -30,15 +31,26 @@ e o aviso de conclusão com o link para o documento e seu shortcode.
 
 ## Instalação
 
-1. Baixe ou clone este repositório para `wp-content/plugins/jim-conversor-acessivel/`:
-   ```bash
-   git clone https://github.com/maycristina/jim-conversor-acessivel.git
-   cd jim-conversor-acessivel
-   composer install --no-dev
-   ```
-2. Ative o plugin em **Plugins › Plugins instalados**.
+O plugin está no diretório oficial do WordPress:
+**[wordpress.org/plugins/jim-conversor-acessivel](https://wordpress.org/plugins/jim-conversor-acessivel/)**
+
+1. No painel do WordPress, vá em **Plugins › Adicionar novo plugin** e busque por **Jim Conversor Acessível**.
+2. Clique em **Instalar agora** e depois em **Ativar**.
 3. Vá em **Jim › Novo Documento** e envie um PDF, DOCX ou TXT.
 4. Copie o shortcode gerado e cole em qualquer página ou post.
+
+As atualizações chegam pela tela de Plugins, como em qualquer outro plugin do diretório.
+
+### A partir do código-fonte
+
+Para desenvolver ou testar uma versão ainda não publicada, clone o repositório em
+`wp-content/plugins/jim-conversor-acessivel/` e instale as dependências:
+
+```bash
+git clone https://github.com/maycristina/jim-conversor-acessivel.git
+cd jim-conversor-acessivel
+composer install --no-dev
+```
 
 > As dependências de leitura de arquivos (`smalot/pdfparser` e `phpoffice/phpword`) são
 > instaladas via Composer e não são versionadas aqui. Rode `composer install` antes de ativar.
@@ -86,7 +98,7 @@ assets/
   css/admin.css                Telas do painel
   js/frontend.js               Player: menus, temas, Web Speech API
   js/admin.js                  Feedback de arquivo escolhido e de conversão
-docs/                          Site do plugin (GitHub Pages)
+docs/                          Site do plugin (GitHub Pages, jim.mabo.cc)
 readme.txt                     Formato oficial do diretório WordPress.org
 uninstall.php                  Limpeza ao desinstalar
 ```
