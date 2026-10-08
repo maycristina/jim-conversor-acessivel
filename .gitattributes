@@ -1,0 +1,4 @@
+# Material privado e configuração local: fora do git archive
+# (bin/build-zip.sh e _privado/exportar-publico.sh).
+/_privado export-ignore
+/.claude export-ignore

@@ -1,0 +1,1301 @@
+# Jim - Accessible Converter translation catalog.
+# License: GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Jim - Accessible Converter 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/maycristina/jim-conversor-acessivel/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "%1$d of %2$d documents converted."
+msgstr ""
+
+msgid "%1$s answered with an error (HTTP %2$d): %3$s"
+msgstr ""
+
+msgid "%1$s: %2$s"
+msgstr ""
+
+msgid "%1$s: connection working. Model that answered: %2$s."
+msgstr ""
+
+msgid "%d new entries."
+msgstr ""
+
+msgid "%s active installs"
+msgstr ""
+
+msgid "%s answered without any reply."
+msgstr ""
+
+msgid "%s converted"
+msgstr ""
+
+msgid "%s extension"
+msgstr ""
+
+msgid "%s image has no description: edit the document and describe it, so that screen reader users know what it shows."
+msgid_plural "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s image included."
+msgid_plural "%s images included."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s images so far"
+msgstr ""
+
+msgid "%s min read"
+msgstr ""
+
+msgid "%s: the key was not saved. It must be 16 to 300 characters long, with only letters, numbers and the symbols _ - . : (no spaces)."
+msgstr ""
+
+msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
+msgstr ""
+
+msgid "%s: there is no usable API key. Save the key again."
+msgstr ""
+
+msgid "(opens in a new tab)"
+msgstr ""
+
+msgid ".%s files are turned off in Jim › Settings › Allowed file types."
+msgstr ""
+
+msgid ".doc files (Word 97-2003) are not supported. Save the document as .docx and upload it again."
+msgstr ""
+
+msgid "1 new entry."
+msgstr ""
+
+msgid "A chat bubble on the document page where readers ask questions about that document. Each question is sent, with the passages of the document that best match it and the last turns of the conversation, to the provider chosen above, using your key: every answer has a cost. Readers can hide the bubble."
+msgstr ""
+
+msgid "A highlighter: select a passage and pick one of four colors. Highlights are saved only in that reader's browser."
+msgstr ""
+
+msgid "A key is saved, ending in ••••%s. Leave blank to keep it, or type another to replace it."
+msgstr ""
+
+msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
+msgstr ""
+
+msgid "A — default text size"
+msgstr ""
+
+msgid "A+ — increase text size"
+msgstr ""
+
+msgid "A- — decrease text size"
+msgstr ""
+
+msgid "AI assistant"
+msgstr ""
+
+msgid "AI assistant (API keys)"
+msgstr ""
+
+msgid "AI providers (OpenRouter, Anthropic, OpenAI, Google Gemini, DeepSeek): if an administrator presses a provider's \"Test connection\" button, the server sends it one fixed test sentence. If the AI tutor is on, each question a visitor asks, the last turns of that visitor's conversation and passages of the document are sent to the provider chosen by the site, which writes the answer. The visitor's IP address is not sent; it is kept only as a salted hash, for one hour, to limit the number of questions. The conversation stays in the visitor's browser until the tab is closed. Voice questions use the browser's speech recognition, which in some browsers sends the audio to the browser vendor."
+msgstr ""
+
+msgid "AI tutor for readers"
+msgstr ""
+
+msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
+msgstr ""
+
+msgid "API key"
+msgstr ""
+
+msgid "API key (optional)"
+msgstr ""
+
+msgid "About %s words."
+msgstr ""
+
+msgid "Accepted formats: PDF, DOCX, TXT and MD (Markdown)."
+msgstr ""
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s. Several files at once: only TXT and MD (up to 20); PDF and DOCX are sent one at a time."
+msgstr ""
+
+msgid "Accessible Document"
+msgstr ""
+
+msgid "Accessible Documents"
+msgstr ""
+
+msgid "Accessible documents, read aloud, in a few clicks."
+msgstr ""
+
+msgid "Activity log"
+msgstr ""
+
+msgid "Add New Document"
+msgstr ""
+
+msgid "Address (URL)"
+msgstr ""
+
+msgid "All Documents"
+msgstr ""
+
+msgid "All highlights were removed."
+msgstr ""
+
+msgid "Allowed file types"
+msgstr ""
+
+msgid "An unexpected error occurred while processing the file."
+msgstr ""
+
+msgid "Another SEO plugin is active on this site (Yoast, Rank Math, All in One SEO or SEOPress): Jim writes no tags, to avoid duplicating theirs, even with this option on."
+msgstr ""
+
+msgid "Any service that uses the OpenAI Chat Completions format: open-source models on your own server (Ollama, vLLM, LM Studio, LocalAI, llama.cpp, Hugging Face TGI) or an AI gateway (LiteLLM, Portkey, Cloudflare AI Gateway and others). With a model on your own server, questions and passages do not leave it."
+msgstr ""
+
+msgid "Applied to all converted documents. Each reader can still change the theme on the spot, from the reading bar; their choice only applies to their own browser and does not change this default."
+msgstr ""
+
+msgid "Ask about the document"
+msgstr ""
+
+msgid "Ask by voice"
+msgstr ""
+
+msgid "Ask the tutor (%s)"
+msgstr ""
+
+msgid "Assistant"
+msgstr ""
+
+msgid "Authorship"
+msgstr ""
+
+msgid "Automatic SEO"
+msgstr ""
+
+msgid "Available shortcodes"
+msgstr ""
+
+msgid "Blog post (converted HTML page)"
+msgstr ""
+
+msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
+msgstr ""
+
+msgid "Clear all"
+msgstr ""
+
+msgid "Clear log"
+msgstr ""
+
+msgid "Clear the whole log?"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close contents"
+msgstr ""
+
+msgid "Close menu"
+msgstr ""
+
+msgid "Contents"
+msgstr ""
+
+msgid "Conversation with the tutor"
+msgstr ""
+
+msgid "Conversion details"
+msgstr ""
+
+msgid "Conversion finished. Opening the result…"
+msgstr ""
+
+msgid "Conversion is done in PHP only, with no external programs (no need for Poppler, Ghostscript or similar). What weighs most is memory and execution time."
+msgstr ""
+
+msgid "Conversion progress"
+msgstr ""
+
+msgid "Convert document"
+msgstr ""
+
+msgid "Converted on:"
+msgstr ""
+
+msgid "Converting the document…"
+msgstr ""
+
+msgid "Copy the shortcode and paste it into the page or post where the document should appear."
+msgstr ""
+
+msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
+msgstr ""
+
+msgid "Could not convert \"%1$s\". %2$s"
+msgstr ""
+
+msgid "Could not copy the link."
+msgstr ""
+
+msgid "Could not reach the server. Check your connection and try again."
+msgstr ""
+
+msgid "Could not read the Markdown file."
+msgstr ""
+
+msgid "Could not read the PDF. Common causes: corrupted file, password-protected or not standard PDF. Technical detail: %s"
+msgstr ""
+
+msgid "Could not read the TXT file."
+msgstr ""
+
+msgid "Could not read the Word document: %s"
+msgstr ""
+
+msgid "Could not update the log."
+msgstr ""
+
+msgid "DOCX"
+msgstr ""
+
+msgid "Dark"
+msgstr ""
+
+msgid "Decrease text size"
+msgstr ""
+
+msgid "Default reading theme"
+msgstr ""
+
+msgid "Default reading-aloud speed"
+msgstr ""
+
+msgid "Default text size"
+msgstr ""
+
+msgid "Default: %s. Leave blank to go back to it."
+msgstr ""
+
+msgid "Delete the original file after converting"
+msgstr ""
+
+msgid "Delete the saved key when saving."
+msgstr ""
+
+msgid "Depending on the file size this can take from a few seconds to about a minute. Do not close or refresh this page."
+msgstr ""
+
+msgid "Descriptions (alt text) written in Word are kept. Images without a description, such as those from PDFs, get a temporary text and should be described by editing the document. Applies to future conversions."
+msgstr ""
+
+msgid "Descriptions (alt text) written in Word are kept. Images without one get a temporary text: edit the document and describe them, so screen reader users know what they show."
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Developed by %s. Free software, under the GPL v2 or later license."
+msgstr ""
+
+msgid "Display mode"
+msgstr ""
+
+msgid "Document converted successfully! %s"
+msgstr ""
+
+msgid "Document images"
+msgstr ""
+
+msgid "Document title"
+msgstr ""
+
+msgid "Document tutor"
+msgstr ""
+
+msgid "Documents"
+msgstr ""
+
+msgid "Documents converted with Jim"
+msgstr ""
+
+msgid "Done listening. Check the question and send it."
+msgstr ""
+
+msgid "EPUB books are not supported. Convert them to PDF or DOCX."
+msgstr ""
+
+msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
+msgstr ""
+
+msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
+msgstr ""
+
+msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
+msgstr ""
+
+msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
+msgstr ""
+
+msgid "Edit Document"
+msgstr ""
+
+msgid "Enlarge image"
+msgstr ""
+
+msgid "Enlarged image"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Every visitor"
+msgstr ""
+
+msgid "Explain a word"
+msgstr ""
+
+msgid "Explain the word: "
+msgstr ""
+
+msgid "Export CSV"
+msgstr ""
+
+msgid "Failed to write to the Media Library (folder permission or no disk space)."
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "File added: %s"
+msgstr ""
+
+msgid "File larger than the limit of %s."
+msgstr ""
+
+msgid "Files added: %s"
+msgstr ""
+
+msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
+msgstr ""
+
+msgid "Formats and sending several files"
+msgstr ""
+
+msgid "Free models end in \":free\". \"openrouter/free\" lets OpenRouter pick a free model that is available at the moment."
+msgstr ""
+
+msgid "Generate description, Open Graph, Twitter Card and structured data (JSON-LD) on pages that publish a document."
+msgstr ""
+
+msgid "Give an example"
+msgstr ""
+
+msgid "Give an example of: "
+msgstr ""
+
+msgid "Give the document a title (optional) and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr ""
+
+msgid "Greeting"
+msgstr ""
+
+msgid "HTML pages are not supported. Save the text as TXT or Markdown."
+msgstr ""
+
+msgid "HTTPS"
+msgstr ""
+
+msgid "Help the reader understand this document. Explain ideas step by step, point to the part of the text where the answer is, and when it helps, end with a short question to check understanding. If the reader asks for a summary, keep it brief."
+msgstr ""
+
+msgid "Hi! I can help you understand this document. Pick an option or type your question."
+msgstr ""
+
+msgid "Hide controls"
+msgstr ""
+
+msgid "Hide the tutor on this page"
+msgstr ""
+
+msgid "Hiding the bar, for readers who want the whole screen for the text."
+msgstr ""
+
+msgid "High contrast"
+msgstr ""
+
+msgid "High contrast (black background, white text and yellow highlights), which works from any theme."
+msgstr ""
+
+msgid "Highlight in blue"
+msgstr ""
+
+msgid "Highlight in green"
+msgstr ""
+
+msgid "Highlight in pink"
+msgstr ""
+
+msgid "Highlight in yellow"
+msgstr ""
+
+msgid "Highlight passage:"
+msgstr ""
+
+msgid "Highlight removed."
+msgstr ""
+
+msgid "How the tutor talks: tone, vocabulary, patience."
+msgstr ""
+
+msgid "If the site uses its own AI service (\"Other\" provider, such as an open-source model on its own server or an AI gateway), the data above goes to the address set by the site instead; when that model runs on the site's own server, it does not leave it."
+msgstr ""
+
+msgid "If this project was useful to you, please consider giving the repository a star on GitHub! It helps the project grow and reach more developers."
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image %1$d on page %2$d (no description)"
+msgstr ""
+
+msgid "Image %1$s of %2$s"
+msgstr ""
+
+msgid "Image %d of the document (no description)"
+msgstr ""
+
+msgid "Image embedded directly in the page content (BI…EI operator): the plugin only reads images that the PDF stores as separate objects."
+msgstr ""
+
+msgid "Image larger than 15 MB."
+msgstr ""
+
+msgid "Image limit per document reached (adjustable in Settings › Image limits)."
+msgstr ""
+
+msgid "Image limits"
+msgstr ""
+
+msgid "Image reading stopped at page %1$d. Reason: %2$s"
+msgstr ""
+
+msgid "Image with more than 40 million pixels: too large to convert without exhausting the server's memory."
+msgstr ""
+
+msgid "Image:"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "Images from PDF and DOCX files go to the Media Library, linked to the document, and are deleted with it."
+msgstr ""
+
+msgid "Images that could not be included, and the cause for each group:"
+msgstr ""
+
+msgid "Images:"
+msgstr ""
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Each question, with passages of the document, is sent to the provider you chose."
+msgstr ""
+
+msgid "Include the images from the PDF or DOCX in the converted document."
+msgstr ""
+
+msgid "Increase text size"
+msgstr ""
+
+msgid "Install counter: this plugin has not been published on WordPress.org yet (visible to administrators only)."
+msgstr ""
+
+msgid "Installed version: %s."
+msgstr ""
+
+msgid "Instant and free for repeated questions. Only the answer and the weight of each word of the question are kept, never the question text. Saved answers are discarded when the document or the tutor changes."
+msgstr ""
+
+msgid "Instructions (prompt)"
+msgstr ""
+
+msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
+msgstr ""
+
+msgid "Item"
+msgstr ""
+
+msgid "JBIG2 (JBIG2Decode filter): common in scanned PDFs; the plugin does not decode this format."
+msgstr ""
+
+msgid "JPEG 2000 (JPXDecode filter): this server cannot decode this format. It works when PHP has the Imagick extension with JPEG 2000 support; ask your host to enable it and convert the file again."
+msgstr ""
+
+msgid "JPEG 2000 images (common in PDFs of books): not supported on this server, so they are left out. They are converted when PHP has the Imagick extension with JPEG 2000 support; ask your host."
+msgstr ""
+
+msgid "JPEG 2000 images (common in PDFs of books): supported on this server."
+msgstr ""
+
+msgid "Jim - Accessible Converter"
+msgstr ""
+
+msgid "Jim - Accessible Converter: document not found."
+msgstr ""
+
+msgid "Jim - Accessible Converter: the vendor/ folder (PDF and Word libraries) is missing from the plugin. Reinstall the plugin from the official package; if you use the repository code, run \"composer install --no-dev\" in the plugin folder."
+msgstr ""
+
+msgid "Jim comes in %1$s, following the site language (or yours, in the dashboard). Language in use now: %2$s."
+msgstr ""
+
+msgid "Jim does not track visitors, sets no cookies and loads nothing from other sites. Reader choices and highlights stay in the reader's browser. The only outside contacts are api.wordpress.org (install counter, only if you use that shortcode) and the AI provider you choose (OpenRouter, Anthropic, OpenAI, Google or DeepSeek), when you test the connection or when readers use the tutor. Suggested policy text is available in Settings > Privacy > Policy Guide."
+msgstr ""
+
+msgid "Jim is open source, so more languages are welcome. If you find a mistake or want to add a language, you can review the translation files or translate online."
+msgstr ""
+
+msgid "Jim turns a PDF, Word (.docx), Markdown or TXT file into an accessible reading page inside your site. Instead of offering a file to download, the content becomes real text on the page: screen reader users can read it, people who need larger letters can enlarge them, and people who prefer listening get reading aloud from the browser itself."
+msgstr ""
+
+msgid "Languages and translations"
+msgstr ""
+
+msgid "Large books can take several minutes. You can keep working in another tab; do not close this one."
+msgstr ""
+
+msgid "Large illustrated books can exhaust the server, so there are limits on the number and total size of images, plus time and memory guards. When one is reached, the whole text is still converted, and the notice says which images were left out and why."
+msgstr ""
+
+msgid "Level"
+msgstr ""
+
+msgid "LibreOffice documents (.odt) are not supported. Use Save as › .docx (or export to PDF)."
+msgstr ""
+
+msgid "Light"
+msgstr ""
+
+msgid "Limits"
+msgstr ""
+
+msgid "Limits used in this conversion: up to %1$d images and %2$d MB in total."
+msgstr ""
+
+msgid "Link copied."
+msgstr ""
+
+msgid "List of shortcodes (one per line, ready to copy):"
+msgstr ""
+
+msgid "Listen"
+msgstr ""
+
+msgid "Listening… speak your question."
+msgstr ""
+
+msgid "Live updates paused."
+msgstr ""
+
+msgid "Log cleared."
+msgstr ""
+
+msgid "Log in to use the tutor."
+msgstr ""
+
+msgid "Loose images are not converted: the plugin converts text. For a scanned PDF, run OCR first."
+msgstr ""
+
+msgid "Mark the assistant as on (only works with a saved key for the provider above)."
+msgstr ""
+
+msgid "Maximum execution time (max_execution_time)"
+msgstr ""
+
+msgid "Maximum images per document:"
+msgstr ""
+
+msgid "Maximum size (MB)"
+msgstr ""
+
+msgid "Maximum total size of images (MB):"
+msgstr ""
+
+msgid "Maximum upload size"
+msgstr ""
+
+msgid "Memory limit (memory_limit)"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Minimum 120 s; recommended 300 s. Large PDFs take minutes to convert."
+msgstr ""
+
+msgid "Minimum 256 MB; recommended 512 MB for books with many pages and figures. The plugin tries to raise it up to WordPress's maximum limit (%s)."
+msgstr ""
+
+msgid "Minimum 7.4; recommended 8.1 or higher."
+msgstr ""
+
+msgid "Missing"
+msgstr ""
+
+msgid "Model"
+msgstr ""
+
+msgid "Most failures with big files are server limits (memory, execution time, upload size). The requirements table shows which one is short."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Name shown to readers"
+msgstr ""
+
+msgid "New Document"
+msgstr ""
+
+msgid "New conversation"
+msgstr ""
+
+msgid "New conversation started."
+msgstr ""
+
+msgid "Next image"
+msgstr ""
+
+msgid "No converted documents yet."
+msgstr ""
+
+msgid "No entries yet."
+msgstr ""
+
+msgid "No valid file was sent."
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Old .doc, .odt, .rtf, spreadsheets, presentations and EPUB are not converted. The error message tells you what to do (for example, save as .docx)."
+msgstr ""
+
+msgid "On the published page, a floating bar follows the reader while they scroll the document:"
+msgstr ""
+
+msgid "On this server"
+msgstr ""
+
+msgid "Once the plugin is published in the official WordPress directory, updates arrive on your site's Plugins screen like for any other plugin. Until then, each new version is published in the project repository."
+msgstr ""
+
+msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
+msgstr ""
+
+msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
+msgstr ""
+
+msgid "Only logged-in users"
+msgstr ""
+
+msgid "Open %s and choose the file (PDF, DOCX, TXT or Markdown)."
+msgstr ""
+
+msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
+msgstr ""
+
+msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
+msgstr ""
+
+msgid "Original file:"
+msgstr ""
+
+msgid "Other (OpenAI-compatible)"
+msgstr ""
+
+msgid "Other provider: set the address and the model first."
+msgstr ""
+
+msgid "Other provider: the address was not saved. Use a full http:// or https:// address, such as http://localhost:11434/v1."
+msgstr ""
+
+msgid "PDF"
+msgstr ""
+
+msgid "PDF (with selectable text; scanned, image-only PDFs have no text and are refused: there is no OCR), DOCX, TXT and Markdown (.md)."
+msgstr ""
+
+msgid "PDF pages"
+msgstr ""
+
+msgid "PDF, DOCX, TXT and Markdown"
+msgstr ""
+
+msgid "PHP execution time almost used up: image extraction was stopped so the server does not go down. Raise max_execution_time or upload the PDF in parts."
+msgstr ""
+
+msgid "PHP memory almost used up: image extraction was stopped so the server does not go down. Raise memory_limit or upload the PDF in parts."
+msgstr ""
+
+msgid "PHP version"
+msgstr ""
+
+msgid "Page %1$s of %2$s"
+msgstr ""
+
+msgid "Page %d"
+msgstr ""
+
+msgid "Passage highlighted."
+msgstr ""
+
+msgid "Paste the key here. It is never shown again and is stored encrypted."
+msgstr ""
+
+msgid "Patient, encouraging and clear. Uses simple words, short sentences and examples, and never makes the reader feel judged."
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Personality"
+msgstr ""
+
+msgid "Plugin website"
+msgstr ""
+
+msgid "Presentations are not converted. Export to PDF."
+msgstr ""
+
+msgid "Previous image"
+msgstr ""
+
+msgid "Privacy"
+msgstr ""
+
+msgid "Provider in use: %s."
+msgstr ""
+
+msgid "Provider used by the assistant"
+msgstr ""
+
+msgid "Publishes the converted document, with the reading controls."
+msgstr ""
+
+msgid "Questions per day on the whole site:"
+msgstr ""
+
+msgid "Questions per reader per hour:"
+msgstr ""
+
+msgid "Reader (with reading bar and voice)"
+msgstr ""
+
+msgid "Reader mode and blog post mode"
+msgstr ""
+
+msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
+msgstr ""
+
+msgid "Reading aloud uses the browser's built-in speech feature. The plugin does not send the text anywhere. Depending on the browser and the voice chosen, the browser itself may process speech on its vendor's servers."
+msgstr ""
+
+msgid "Reading aloud."
+msgstr ""
+
+msgid "Reading controls"
+msgstr ""
+
+msgid "Reading finished."
+msgstr ""
+
+msgid "Reading paused."
+msgstr ""
+
+msgid "Reading speed"
+msgstr ""
+
+msgid "Reading stopped."
+msgstr ""
+
+msgid "Reading the file structure…"
+msgstr ""
+
+msgid "Reading theme"
+msgstr ""
+
+msgid "Recommendation"
+msgstr ""
+
+msgid "Recommended. Without HTTPS, browsers block the Share button (copy link) in post mode."
+msgstr ""
+
+msgid "Recommended: keeps only the converted HTML, without storing the uploaded file."
+msgstr ""
+
+msgid "Refresh now"
+msgstr ""
+
+msgid "Remove highlight"
+msgstr ""
+
+msgid "Remove page markers (\"Page 1\", \"Page 2\"…)"
+msgstr ""
+
+msgid "Report a problem"
+msgstr ""
+
+msgid "Required: the exact model name on that service, for example llama3.2 or qwen2.5:7b on Ollama."
+msgstr ""
+
+msgid "Resume"
+msgstr ""
+
+msgid "Reuse the answer when a reader asks almost the same first question about the same document."
+msgstr ""
+
+msgid "Review translation"
+msgstr ""
+
+msgid "SEO"
+msgstr ""
+
+msgid "Save keys and models"
+msgstr ""
+
+msgid "Save tutor"
+msgstr ""
+
+msgid "Saved answers"
+msgstr ""
+
+msgid "Search Documents"
+msgstr ""
+
+msgid "See all converted documents and their shortcodes →"
+msgstr ""
+
+msgid "Send at most %d files at a time."
+msgstr ""
+
+msgid "Send one file at a time."
+msgstr ""
+
+msgid "Send question"
+msgstr ""
+
+msgid "Sending the file…"
+msgstr ""
+
+msgid "Sends one fixed sentence to %s using the saved key and model."
+msgstr ""
+
+msgid "Sepia"
+msgstr ""
+
+msgid "Server requirements"
+msgstr ""
+
+msgid "Services the site may contact"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Share"
+msgstr ""
+
+msgid "Shortcode"
+msgstr ""
+
+msgid "Shortcode:"
+msgstr ""
+
+msgid "Show controls"
+msgstr ""
+
+msgid "Show it on every document by default."
+msgstr ""
+
+msgid "Show reading controls"
+msgstr ""
+
+msgid "Show the tutor (%s)"
+msgstr ""
+
+msgid "Shows how many active installs the plugin has, according to the WordPress.org API."
+msgstr ""
+
+msgid "Skip to the document content"
+msgstr ""
+
+msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
+msgstr ""
+
+msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Step by step"
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "Suggested text. Review it and adjust it to how you use the plugin."
+msgstr ""
+
+msgid "Suggestions"
+msgstr ""
+
+msgid "Summarize a part"
+msgstr ""
+
+msgid "Summarize the part about: "
+msgstr ""
+
+msgid "Support the project"
+msgstr ""
+
+msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
+msgstr ""
+
+msgid "Technical detail: %s."
+msgstr ""
+
+msgid "Test connection"
+msgstr ""
+
+msgid "Text appearance"
+msgstr ""
+
+msgid "Text highlighter"
+msgstr ""
+
+msgid "Text size"
+msgstr ""
+
+msgid "Text size and reading theme (Light, Sepia or Dark)."
+msgstr ""
+
+msgid "Text size and theme"
+msgstr ""
+
+msgid "The .md file does not look like valid Markdown text."
+msgstr ""
+
+msgid "The Markdown file is empty."
+msgstr ""
+
+msgid "The PDF contains no extractable text (it may be a scanned/image-only PDF)."
+msgstr ""
+
+msgid "The RTF format is not supported. Open the file in Word or LibreOffice and use Save as › .docx."
+msgstr ""
+
+msgid "The TXT file is empty."
+msgstr ""
+
+msgid "The Word document seems to be empty."
+msgstr ""
+
+msgid "The WordPress.org page works once the plugin is listed in the official directory."
+msgstr ""
+
+msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
+msgstr ""
+
+msgid "The browser did not allow the microphone."
+msgstr ""
+
+msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
+msgstr ""
+
+msgid "The conversion failed."
+msgstr ""
+
+msgid "The conversion of \"%1$s\" stopped at page %2$d: the conversion page was closed or lost the connection before it finished. Send the file again and keep the page open until the end."
+msgstr ""
+
+msgid "The conversion stopped because PHP ran out of memory (memory_limit: %s). Try a smaller file, turn off images in Settings, or ask your host for more memory."
+msgstr ""
+
+msgid "The conversion stopped because it reached the PHP time limit (max_execution_time: %s s). Try a smaller file, turn off images in Settings, or ask your host for a longer limit."
+msgstr ""
+
+msgid "The document has no text to convert."
+msgstr ""
+
+msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
+msgstr ""
+
+msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
+msgstr ""
+
+msgid "The file \"%s\" is empty (0 bytes)."
+msgstr ""
+
+msgid "The file is too large for the server to accept (current limit: %s). Send a smaller file or ask your host to raise the PHP limits \"upload_max_filesize\" and \"post_max_size\"."
+msgstr ""
+
+msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
+msgstr ""
+
+msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
+msgstr ""
+
+msgid "The old Word format (.doc) is not supported. Open the file in Word or LibreOffice and use Save as › .docx."
+msgstr ""
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes nothing, to avoid duplicates. You can turn this off in Settings."
+msgstr ""
+
+msgid "The phpoffice/phpword library was not found. Run \"composer install\" in the plugin folder."
+msgstr ""
+
+msgid "The plugin keeps a short activity log (last 200 entries) for administrators, with file names, times, memory use and errors. It never records document text. It can be cleared or exported from the plugin settings."
+msgstr ""
+
+msgid "The server answered with an error (HTTP %s) before the conversion started."
+msgstr ""
+
+msgid "The server refused the file because it is too large (HTTP 413). Ask your host to raise the upload limit (nginx \"client_max_body_size\" or PHP \"upload_max_filesize\")."
+msgstr ""
+
+msgid "The server stopped the conversion several times around page %d without reporting an error, even in short steps. That part of the file may be too heavy for this hosting (often because of large images). Try again with images turned off in Settings, or split the PDF."
+msgstr ""
+
+msgid "The shortcode names are kept in Portuguese so that pages published with earlier versions keep working."
+msgstr ""
+
+msgid "The site default theme and the initial reading speed are in %s. Each reader can still change them on the spot, and their choice only applies to their own browser."
+msgstr ""
+
+msgid "The smalot/pdfparser library was not found. Run \"composer install\" in the plugin folder."
+msgstr ""
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim turns itself off on those pages."
+msgstr ""
+
+msgid "The text flows like in a digital book: sentences split at a page break are joined and the page numbers printed at the top or bottom are dropped. PDF only."
+msgstr ""
+
+msgid "The text was converted, but none of the images could be included. See why below. %s"
+msgstr ""
+
+msgid "The text was converted, but some images were left out. See why below. %s"
+msgstr ""
+
+msgid "The tutor could not answer right now. Try again in a moment."
+msgstr ""
+
+msgid "The tutor is not available for this document."
+msgstr ""
+
+msgid "The tutor needs the assistant turned on, with a working key, in the card above."
+msgstr ""
+
+msgid "The tutor reached its daily limit of questions on this site. Try again tomorrow."
+msgstr ""
+
+msgid "The whole text was converted; only the images from the following pages were left out."
+msgstr ""
+
+msgid "They keep the cost of your key under control. Readers are counted by account, or by a hashed IP address that is kept for one hour."
+msgstr ""
+
+msgid "Thinking…"
+msgstr ""
+
+msgid "This PDF has no selectable text: it is probably a scanned (image-only) document. The plugin does not do OCR. Run OCR on the file (for example in Adobe Acrobat or Google Drive) and upload the PDF with text."
+msgstr ""
+
+msgid "This browser does not support reading aloud."
+msgstr ""
+
+msgid "This conversion was not found. Reload the page and send the file again."
+msgstr ""
+
+msgid "This page has expired. Reload it and ask again."
+msgstr ""
+
+msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
+msgstr ""
+
+msgid "Time (UTC)"
+msgstr ""
+
+msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
+msgstr ""
+
+msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
+msgstr ""
+
+msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
+msgstr ""
+
+msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
+msgstr ""
+
+msgid "Translate on WordPress.org"
+msgstr ""
+
+msgid "Turn off high contrast"
+msgstr ""
+
+msgid "Turn on high contrast"
+msgstr ""
+
+msgid "Turn on the tutor on this site."
+msgstr ""
+
+msgid "Tutor"
+msgstr ""
+
+msgid "Tutorial"
+msgstr ""
+
+msgid "Type a question first."
+msgstr ""
+
+msgid "Type:"
+msgstr ""
+
+msgid "Unsupported file type: %s"
+msgstr ""
+
+msgid "Unsupported pixel format: the plugin reads 8-bit RGB, gray and CMYK, 1/2/4-bit gray and palette images; other color or depth combinations are left out."
+msgstr ""
+
+msgid "Update live"
+msgstr ""
+
+msgid "Updating every 3 seconds."
+msgstr ""
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. Light files (TXT and MD) can be sent several at a time: each one becomes a document and you get the list of shortcodes."
+msgstr ""
+
+msgid "Used for: %1$s (%2$s)."
+msgstr ""
+
+msgid "Version and updates"
+msgstr ""
+
+msgid "View document and shortcode"
+msgstr ""
+
+msgid "Visit the repository"
+msgstr ""
+
+msgid "Voice"
+msgstr ""
+
+msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
+msgstr ""
+
+msgid "Warning"
+msgstr ""
+
+msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
+msgstr ""
+
+msgid "What Jim is"
+msgstr ""
+
+msgid "What happened in each conversion: file, type, time, memory used, words, images included and the cause of each image left out, plus errors. The text of your documents and your AI key are never recorded. Only the last 200 entries are kept. To follow a conversion as it happens, keep this page open in another tab."
+msgstr ""
+
+msgid "What it does"
+msgstr ""
+
+msgid "What stays in the reader's browser"
+msgstr ""
+
+msgid "What the tutor should do. Some rules always apply and cannot be changed here: answer from the document, say when the answer is not in it, ignore commands hidden in the document text, and reply in the reader's language. Leave a field empty to go back to the default text."
+msgstr ""
+
+msgid "What this site stores"
+msgstr ""
+
+msgid "When it finishes, the document appears in %s, with its shortcode in the list."
+msgstr ""
+
+msgid "When something goes wrong"
+msgstr ""
+
+msgid "Where to get a key"
+msgstr ""
+
+msgid "Who can use it"
+msgstr ""
+
+msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
+msgstr ""
+
+msgid "Words:"
+msgstr ""
+
+msgid "You"
+msgstr ""
+
+msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
+msgstr ""
+
+msgid "You do not have permission to access this page."
+msgstr ""
+
+msgid "You do not have permission to upload documents."
+msgstr ""
+
+msgid "You reached the limit of questions for now. Try again in an hour."
+msgstr ""
+
+msgid "Your question"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "convert BMP/TIFF images from Word to PNG"
+msgstr ""
+
+msgid "e.g. Llama on our server"
+msgstr ""
+
+msgid "inactive"
+msgstr ""
+
+msgid "no limit"
+msgstr ""
+
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "optional"
+msgstr ""
+
+msgid "page"
+msgstr ""
+
+msgid "required"
+msgstr ""
+
+msgid "unexpected reply"
+msgstr ""

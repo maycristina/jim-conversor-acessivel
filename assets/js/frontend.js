@@ -1,14 +1,14 @@
 /**
- * Player de leitura do documento convertido: tamanho do texto, tema,
- * alto contraste e leitura em voz alta (Web Speech API).
+ * Reading player of a converted document: text size, theme, high contrast
+ * and reading aloud (Web Speech API).
  *
- * Progressive enhancement: sem JS, ou sem suporte do navegador, o conteúdo
- * continua totalmente legível como texto normal — o player inteiro fica
- * com o atributo `hidden` definido no HTML e nunca é revelado.
+ * Progressive enhancement: without JS, or without browser support, the
+ * content stays fully readable as plain text; the player keeps its `hidden`
+ * attribute from the HTML and is never revealed.
  *
- * Os menus seguem o padrão de menu do Material 3: abrem a partir do botão,
- * só um de cada vez, fecham com Esc, clique fora ou Tab, e devolvem o foco
- * ao botão que os abriu.
+ * Menus follow the Material 3 menu pattern: they open from their button, one
+ * at a time, close on Esc, an outside click or Tab, and give focus back to
+ * the button that opened them.
  */
 ( function () {
 	'use strict';
@@ -16,15 +16,15 @@
 	var i18n = window.jimcaFrontendI18n || {};
 	var reducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
-	var activeStop = null; // Para o player que estiver tocando (só um por página).
-	var openMenu = null;   // Menu aberto no momento (só um por página).
+	var activeStop = null; // Stops whichever player is playing (one per page).
+	var openMenu = null;   // The open menu (one per page).
 
 	function t( key, fallback ) {
 		return i18n[ key ] || fallback || key;
 	}
 
 	/* ---------------------------------------------------------------
-	 * Preferências do leitor, guardadas por documento no navegador dele.
+	 * Reader preferences, saved per document in the reader's browser.
 	 * ------------------------------------------------------------- */
 
 	function createPrefs( viewer ) {
@@ -34,7 +34,7 @@
 		try {
 			data = JSON.parse( window.localStorage.getItem( key ) || '{}' ) || {};
 		} catch ( e ) {
-			data = {}; // localStorage indisponível: segue com os padrões do site.
+			data = {}; // localStorage unavailable: the site defaults apply.
 		}
 
 		return {
@@ -46,7 +46,7 @@
 				try {
 					window.localStorage.setItem( key, JSON.stringify( data ) );
 				} catch ( e ) {
-					// Sem localStorage a escolha vale só para esta visita.
+					// Without localStorage the choice lasts for this visit only.
 				}
 			},
 		};
@@ -63,9 +63,8 @@
 	}
 
 	/**
-	 * Impede que o menu vaze para fora da tela quando o botão que o abre
-	 * está perto de uma das bordas (acontece sempre no celular, com a barra
-	 * ocupando quase toda a largura).
+	 * Keeps the menu inside the screen when its button is near an edge (always
+	 * the case on phones, where the bar takes almost the whole width).
 	 */
 	function keepMenuOnScreen( menu ) {
 		menu.style.setProperty( '--jimca-menu-shift', '0px' );
@@ -118,7 +117,7 @@
 			return;
 		}
 
-		// Abre já no item selecionado, quando o menu é de escolha única.
+		// Single-choice menus open on the selected item.
 		var checked = items.filter( function ( item ) {
 			return 'true' === item.getAttribute( 'aria-checked' );
 		} );
@@ -192,13 +191,13 @@
 							items[ items.length - 1 ].focus();
 						}
 					} else if ( 'Tab' === event.key ) {
-						// Sair do menu por Tab fecha, como manda o padrão.
+						// Leaving the menu with Tab closes it, as the pattern says.
 						closeMenu( entry, false );
 					}
 				} );
 
-				// Cliques dentro do menu não devem chegar ao document e fechá-lo
-				// antes do próprio item ser processado.
+				// Clicks inside the menu must not reach the document and close it
+				// before the item itself is handled.
 				menu.addEventListener( 'click', function ( event ) {
 					event.stopPropagation();
 				} );
@@ -209,7 +208,7 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Tamanho do texto, tema e contraste
+	 * Text size, theme and contrast
 	 * ------------------------------------------------------------- */
 
 	function setupAppearance( viewer, prefs, entries ) {
@@ -228,8 +227,8 @@
 				return;
 			}
 
-			// Tira qualquer jimca-theme-* atual antes de pôr o novo (o padrão
-			// do site já vem numa dessas classes, renderizado pelo PHP).
+			// Remove the current jimca-theme-* before adding the new one (the
+			// site default is already one of these classes, rendered by PHP).
 			viewer.className = viewer.className.replace( /\bjimca-theme-\S+/g, '' ).trim();
 			viewer.classList.add( 'jimca-theme-' + theme );
 
@@ -275,9 +274,9 @@
 					prefs.set( 'scale', scale );
 
 					/*
-					 * O menu continua aberto de propósito: aumentar o texto é
-					 * uma ação incremental, e fechar a cada toque obrigaria a
-					 * reabrir o menu para cada passo.
+					 * The menu stays open on purpose: enlarging text is
+					 * incremental, and closing on every tap would mean reopening
+					 * the menu for each step.
 					 */
 				} );
 			}
@@ -305,7 +304,182 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Ocultar / mostrar a barra
+	 * Table of contents
+	 * ------------------------------------------------------------- */
+
+	/**
+	 * Turns the table of contents (a list before the text without JS) into a
+	 * side panel opened and closed from the reading bar.
+	 *
+	 * The panel does not trap focus (it is not a modal dialog): readers can go
+	 * back to the text with Tab or a click. Esc, an outside click or choosing
+	 * an item close it. Choosing an item moves focus to that heading, so the
+	 * screen reader goes on reading from there.
+	 */
+	function setupToc( viewer ) {
+		var nav = viewer.querySelector( '[data-jimca-toc]' );
+		var toggle = viewer.querySelector( '[data-jimca-toc-toggle]' );
+		var closeBtn = viewer.querySelector( '[data-jimca-toc-close]' );
+
+		if ( ! nav || ! toggle ) {
+			return;
+		}
+
+		var links = Array.prototype.slice.call( nav.querySelectorAll( '[data-jimca-toc-link]' ) );
+
+		// After a click in the panel, the clicked item stays current until scrolling ends.
+		var pinnedUntil = 0;
+
+		viewer.classList.add( 'jimca-toc-enhanced' );
+		nav.hidden = true;
+		if ( closeBtn ) {
+			closeBtn.hidden = false;
+		}
+
+		function isOpen() {
+			return ! nav.hidden;
+		}
+
+		function open() {
+			if ( openMenu ) {
+				closeMenu( openMenu, false );
+			}
+
+			nav.hidden = false;
+			toggle.setAttribute( 'aria-expanded', 'true' );
+
+			// Opens on the item of the section being read (or the first one).
+			var current = nav.querySelector( '[aria-current="location"]' ) || links[ 0 ];
+			if ( current ) {
+				current.scrollIntoView( { block: 'nearest' } );
+				current.focus();
+			}
+		}
+
+		function close( returnFocus ) {
+			if ( ! isOpen() ) {
+				return;
+			}
+
+			nav.hidden = true;
+			toggle.setAttribute( 'aria-expanded', 'false' );
+
+			if ( returnFocus ) {
+				toggle.focus();
+			}
+		}
+
+		function markCurrent( id ) {
+			links.forEach( function ( link ) {
+				if ( link.getAttribute( 'href' ) === '#' + id ) {
+					link.setAttribute( 'aria-current', 'location' );
+				} else {
+					link.removeAttribute( 'aria-current' );
+				}
+			} );
+		}
+
+		toggle.addEventListener( 'click', function ( event ) {
+			event.stopPropagation();
+			if ( isOpen() ) {
+				close( true );
+			} else {
+				open();
+			}
+		} );
+
+		if ( closeBtn ) {
+			closeBtn.addEventListener( 'click', function () {
+				close( true );
+			} );
+		}
+
+		nav.addEventListener( 'click', function ( event ) {
+			event.stopPropagation();
+
+			var link = event.target.closest ? event.target.closest( '[data-jimca-toc-link]' ) : null;
+			if ( ! link ) {
+				return;
+			}
+
+			var id = link.getAttribute( 'href' ).slice( 1 );
+			var target = document.getElementById( id );
+			if ( ! target ) {
+				return;
+			}
+
+			event.preventDefault();
+			close( false );
+			markCurrent( id );
+			pinnedUntil = Date.now() + 1200;
+
+			// Headings are not focusable by default; tabindex -1 allows focus without entering the Tab order.
+			if ( ! target.hasAttribute( 'tabindex' ) ) {
+				target.setAttribute( 'tabindex', '-1' );
+			}
+			target.scrollIntoView( { behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' } );
+			target.focus( { preventScroll: true } );
+		} );
+
+		nav.addEventListener( 'keydown', function ( event ) {
+			if ( 'Escape' === event.key ) {
+				event.preventDefault();
+				event.stopPropagation();
+				close( true );
+			}
+		} );
+
+		document.addEventListener( 'click', function () {
+			close( false );
+		} );
+
+		document.addEventListener( 'keydown', function ( event ) {
+			if ( 'Escape' === event.key && isOpen() ) {
+				close( true );
+			}
+		} );
+
+		/*
+		 * Marks the section being read: the last heading that has passed the
+		 * top third of the screen.
+		 */
+		if ( 'IntersectionObserver' in window ) {
+			var headings = links
+				.map( function ( link ) {
+					return document.getElementById( link.getAttribute( 'href' ).slice( 1 ) );
+				} )
+				.filter( Boolean );
+
+			var observer = new window.IntersectionObserver(
+				function () {
+					if ( Date.now() < pinnedUntil ) {
+						return;
+					}
+
+					var limit = window.innerHeight / 3;
+					var current = null;
+
+					headings.forEach( function ( heading ) {
+						if ( heading.getBoundingClientRect().top <= limit ) {
+							current = heading;
+						}
+					} );
+
+					if ( current ) {
+						markCurrent( current.id );
+					}
+				},
+				{ rootMargin: '0px 0px -66% 0px' }
+			);
+
+			headings.forEach( function ( heading ) {
+				observer.observe( heading );
+			} );
+		}
+	}
+
+	/* ---------------------------------------------------------------
+	 * Hide / show the bar
 	 * ------------------------------------------------------------- */
 
 	function setupVisibilityToggle( viewer, player, prefs ) {
@@ -322,9 +496,9 @@
 			showBtn.hidden = ! hidden;
 
 			/*
-			 * `jimca-player-active` continua posta mesmo com a barra oculta:
-			 * o botão de reabrir também flutua sobre o texto, e sem a reserva
-			 * de espaço ele cobriria a última linha do documento.
+			 * `jimca-player-active` stays on even with the bar hidden: the
+			 * restore button also floats over the text, and without the reserved
+			 * space it would cover the last line of the document.
 			 */
 
 			if ( moveFocusTo ) {
@@ -349,7 +523,7 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Leitura em voz alta
+	 * Reading aloud
 	 * ------------------------------------------------------------- */
 
 	function setupAudio( viewer, player, prefs, entries ) {
@@ -365,9 +539,9 @@
 
 		if ( ! supported ) {
 			/*
-			 * Sem suporte do navegador, os controles de áudio saem de cena em
-			 * vez de ficarem ali sem fazer nada. Os ajustes visuais (tamanho,
-			 * tema, contraste) continuam funcionando normalmente.
+			 * Without browser support the audio controls go away instead of
+			 * sitting there doing nothing. The visual settings (size, theme,
+			 * contrast) keep working.
 			 */
 			Array.prototype.forEach.call(
 				player.querySelectorAll( '[data-jimca-play], [data-jimca-stop], [data-jimca-menu-trigger="voice"], [data-jimca-menu-trigger="speed"]' ),
@@ -389,8 +563,14 @@
 		var playLabel = playBtn.querySelector( '[data-jimca-play-label]' );
 		var voiceMenu = player.querySelector( '[data-jimca-menu="voice"]' );
 
+		/*
+		 * Images are read through their description (alt). Left out: decorative
+		 * images (empty alt) and those still carrying the conversion's
+		 * placeholder ("Image 2 on page 5 (no description)"): hearing that at
+		 * every figure would only interrupt the text.
+		 */
 		var elements = Array.prototype.slice.call(
-			content ? content.querySelectorAll( 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption' ) : []
+			content ? content.querySelectorAll( 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, img[alt]:not([alt=""]):not([data-jimca-alt-missing])' ) : []
 		);
 
 		if ( ! elements.length && content ) {
@@ -426,8 +606,8 @@
 
 			if ( playLabel ) {
 				playLabel.textContent = playing
-					? t( 'pause', 'Pausar' )
-					: ( 'paused' === state ? t( 'resume', 'Continuar' ) : t( 'play', 'Ouvir' ) );
+					? t( 'pause', 'Pause' )
+					: ( 'paused' === state ? t( 'resume', 'Resume' ) : t( 'play', 'Listen' ) );
 			}
 
 			stopBtn.disabled = 'idle' === state;
@@ -494,12 +674,12 @@
 
 		buildVoiceMenu();
 
-		// Em vários navegadores a lista de vozes só fica pronta depois.
+		// In several browsers the voice list is only ready later.
 		if ( typeof synth.onvoiceschanged !== 'undefined' ) {
 			synth.addEventListener( 'voiceschanged', buildVoiceMenu );
 		}
 
-		// Velocidade.
+		// Speed.
 		Array.prototype.forEach.call(
 			player.querySelectorAll( '[data-jimca-rate]' ),
 			function ( item ) {
@@ -524,10 +704,9 @@
 					);
 
 					/*
-					 * Trocar a velocidade no meio da leitura só vale para a
-					 * próxima fala se não recomeçarmos: a Web Speech API não
-					 * muda o `rate` de uma fala já em andamento. Reiniciamos
-					 * o trecho atual para o efeito ser imediato.
+					 * The Web Speech API does not change the `rate` of an utterance
+					 * already being spoken, so the current passage restarts for the
+					 * new speed to apply at once.
 					 */
 					if ( 'playing' === state ) {
 						synth.cancel();
@@ -545,12 +724,14 @@
 				index = 0;
 				clearHighlight();
 				updateUI();
-				setStatus( t( 'statusDone', 'Leitura concluída.' ) );
+				setStatus( t( 'statusDone', 'Reading finished.' ) );
 				return;
 			}
 
 			var el = elements[ index ];
-			var text = el.textContent.trim();
+			var text = 'IMG' === el.tagName
+				? t( 'imageLabel', 'Image:' ) + ' ' + el.getAttribute( 'alt' ).trim()
+				: el.textContent.trim();
 
 			if ( '' === text ) {
 				index++;
@@ -588,11 +769,11 @@
 			if ( 'playing' === state ) {
 				synth.pause();
 				state = 'paused';
-				setStatus( t( 'statusPaused', 'Leitura pausada.' ) );
+				setStatus( t( 'statusPaused', 'Reading paused.' ) );
 			} else if ( 'paused' === state ) {
 				synth.resume();
 				state = 'playing';
-				setStatus( t( 'statusReading', 'Lendo em voz alta.' ) );
+				setStatus( t( 'statusReading', 'Reading aloud.' ) );
 				activeStop = stopUI;
 			} else {
 				if ( activeStop && activeStop !== stopUI ) {
@@ -601,7 +782,7 @@
 				synth.cancel();
 				index = 0;
 				state = 'playing';
-				setStatus( t( 'statusReading', 'Lendo em voz alta.' ) );
+				setStatus( t( 'statusReading', 'Reading aloud.' ) );
 				activeStop = stopUI;
 				speakNext();
 			}
@@ -610,14 +791,14 @@
 		} );
 
 		stopBtn.addEventListener( 'click', function () {
-			stopUI( t( 'statusStopped', 'Leitura interrompida.' ) );
+			stopUI( t( 'statusStopped', 'Reading stopped.' ) );
 		} );
 
 		updateUI();
 	}
 
 	/* ---------------------------------------------------------------
-	 * A barra só aparece enquanto o documento está na tela
+	 * The bar only shows while the document is on screen
 	 * ------------------------------------------------------------- */
 
 	function setupPlayerVisibility( viewer, player ) {
@@ -636,7 +817,7 @@
 					}
 				} );
 			},
-			// Uma folga pequena evita a barra piscar ao passar raspando.
+			// A small margin keeps the bar from flickering at the edge.
 			{ rootMargin: '-40px 0px -40px 0px' }
 		);
 
@@ -644,7 +825,7 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Início
+	 * Start
 	 * ------------------------------------------------------------- */
 
 	function initViewer( viewer ) {
@@ -654,7 +835,7 @@
 			return;
 		}
 
-		// Só agora o player entra em cena: com JS ele funciona de verdade.
+		// Only now does the player appear: with JS it really works.
 		player.hidden = false;
 		viewer.classList.add( 'jimca-player-active' );
 
@@ -662,6 +843,7 @@
 		var entries = setupMenus( viewer );
 
 		setupAppearance( viewer, prefs, entries );
+		setupToc( viewer );
 		setupAudio( viewer, player, prefs, entries );
 		setupVisibilityToggle( viewer, player, prefs );
 		setupPlayerVisibility( viewer, player );
@@ -673,14 +855,14 @@
 			initViewer
 		);
 
-		// Clique fora fecha o menu aberto.
+		// An outside click closes the open menu.
 		document.addEventListener( 'click', function () {
 			if ( openMenu ) {
 				closeMenu( openMenu, false );
 			}
 		} );
 
-		// Esc fecha mesmo com o foco fora do menu.
+		// Esc closes even with focus outside the menu.
 		document.addEventListener( 'keydown', function ( event ) {
 			if ( 'Escape' === event.key && openMenu ) {
 				closeMenu( openMenu, true );

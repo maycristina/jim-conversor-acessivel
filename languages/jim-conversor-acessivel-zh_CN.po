@@ -1,0 +1,1300 @@
+# Jim - Accessible Converter translation catalog.
+# License: GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Jim - Accessible Converter 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/maycristina/jim-conversor-acessivel/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%1$d of %2$d documents converted."
+msgstr "已转换 %1$d / %2$d 个文档。"
+
+msgid "%1$s answered with an error (HTTP %2$d): %3$s"
+msgstr "%1$s 返回了错误（HTTP %2$d）：%3$s"
+
+msgid "%1$s: %2$s"
+msgstr "%1$s：%2$s"
+
+msgid "%1$s: connection working. Model that answered: %2$s."
+msgstr "%1$s：连接正常。回复的模型：%2$s。"
+
+msgid "%d new entries."
+msgstr "%d 条新记录。"
+
+msgid "%s active installs"
+msgstr "%s 次活跃安装"
+
+msgid "%s answered without any reply."
+msgstr "%s 没有返回任何回复。"
+
+msgid "%s converted"
+msgstr "已转换 %s"
+
+msgid "%s extension"
+msgstr "%s 扩展"
+
+msgid "%s image has no description: edit the document and describe it, so that screen reader users know what it shows."
+msgid_plural "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr[0] "有 %s 张图片没有描述：请编辑文档并为其添加描述，以便使用屏幕阅读器的用户了解图片内容。"
+
+msgid "%s image included."
+msgid_plural "%s images included."
+msgstr[0] "已包含 %s 张图片。"
+
+msgid "%s images so far"
+msgstr "目前已有 %s 张图片"
+
+msgid "%s min read"
+msgstr "阅读约 %s 分钟"
+
+msgid "%s: the key was not saved. It must be 16 to 300 characters long, with only letters, numbers and the symbols _ - . : (no spaces)."
+msgstr "%s：密钥未保存。密钥长度须为 16 到 300 个字符，只能包含字母、数字和符号 _ - . :（不含空格）。"
+
+msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
+msgstr "%s：模型未更改。只能使用字母、数字和符号 . _ - / :（不含空格）。"
+
+msgid "%s: there is no usable API key. Save the key again."
+msgstr "%s：没有可用的 API 密钥。请重新保存密钥。"
+
+msgid "(opens in a new tab)"
+msgstr "（在新标签页中打开）"
+
+msgid ".%s files are turned off in Jim › Settings › Allowed file types."
+msgstr ".%s 文件已在 Jim › 设置 › 允许的文件类型 中关闭。"
+
+msgid ".doc files (Word 97-2003) are not supported. Save the document as .docx and upload it again."
+msgstr "不支持 .doc 文件（Word 97-2003）。请将文档另存为 .docx 后重新上传。"
+
+msgid "1 new entry."
+msgstr "1 条新记录。"
+
+msgid "A chat bubble on the document page where readers ask questions about that document. Each question is sent, with the passages of the document that best match it and the last turns of the conversation, to the provider chosen above, using your key: every answer has a cost. Readers can hide the bubble."
+msgstr "文档页面上的聊天气泡，读者可在其中就该文档提问。每个问题会连同文档中最相关的段落和最近几轮对话，使用你的密钥发送给上方选择的服务商：每次回答都会产生费用。读者可以隐藏气泡。"
+
+msgid "A highlighter: select a passage and pick one of four colors. Highlights are saved only in that reader's browser."
+msgstr "荧光笔：选中一段文字并选择四种颜色之一。标记只保存在该读者的浏览器中。"
+
+msgid "A key is saved, ending in ••••%s. Leave blank to keep it, or type another to replace it."
+msgstr "已保存密钥，末尾为 ••••%s。留空则保留，或输入新密钥进行替换。"
+
+msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
+msgstr "侧边目录，列出文档的标题（Word 标题样式或 PDF 书签），可直接跳转到某一章。"
+
+msgid "A — default text size"
+msgstr "A — 默认文字大小"
+
+msgid "A+ — increase text size"
+msgstr "A+ — 增大文字"
+
+msgid "A- — decrease text size"
+msgstr "A- — 缩小文字"
+
+msgid "AI assistant"
+msgstr "AI 助手"
+
+msgid "AI assistant (API keys)"
+msgstr "AI 助手（API 密钥）"
+
+msgid "AI providers (OpenRouter, Anthropic, OpenAI, Google Gemini, DeepSeek): if an administrator presses a provider's \"Test connection\" button, the server sends it one fixed test sentence. If the AI tutor is on, each question a visitor asks, the last turns of that visitor's conversation and passages of the document are sent to the provider chosen by the site, which writes the answer. The visitor's IP address is not sent; it is kept only as a salted hash, for one hour, to limit the number of questions. The conversation stays in the visitor's browser until the tab is closed. Voice questions use the browser's speech recognition, which in some browsers sends the audio to the browser vendor."
+msgstr "AI 服务商（OpenRouter、Anthropic、OpenAI、Google Gemini、DeepSeek）：如果管理员点击某个服务商的“测试连接”按钮，服务器会向其发送一句固定的测试语句。如果开启了 AI 导师，访客的每个问题、其对话的最近几轮以及文档段落会发送给网站选择的服务商，由其撰写回答。访客的 IP 地址不会被发送；它仅以加盐哈希的形式保存一小时，用于限制提问次数。对话保存在访客的浏览器中，直到关闭标签页。语音提问使用浏览器的语音识别功能，部分浏览器会将音频发送给浏览器厂商。"
+
+msgid "AI tutor for readers"
+msgstr "面向读者的 AI 导师"
+
+msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
+msgstr "AI 生成的回答可能有误。你的问题和文档片段会发送给 %s。"
+
+msgid "API key"
+msgstr "API 密钥"
+
+msgid "API key (optional)"
+msgstr "API 密钥（可选）"
+
+msgid "About %s words."
+msgstr "约 %s 字。"
+
+msgid "Accepted formats: PDF, DOCX, TXT and MD (Markdown)."
+msgstr "接受的格式：PDF、DOCX、TXT 和 MD（Markdown）。"
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s. Several files at once: only TXT and MD (up to 20); PDF and DOCX are sent one at a time."
+msgstr "接受的类型：%1$s。每个文件最大 %2$s。一次多个文件：仅限 TXT 和 MD（最多 20 个）；PDF 和 DOCX 需逐个上传。"
+
+msgid "Accessible Document"
+msgstr "无障碍文档"
+
+msgid "Accessible Documents"
+msgstr "无障碍文档"
+
+msgid "Accessible documents, read aloud, in a few clicks."
+msgstr "无障碍文档，支持朗读，只需几次点击。"
+
+msgid "Activity log"
+msgstr "活动日志"
+
+msgid "Add New Document"
+msgstr "添加新文档"
+
+msgid "Address (URL)"
+msgstr "地址（URL）"
+
+msgid "All Documents"
+msgstr "所有文档"
+
+msgid "All highlights were removed."
+msgstr "已移除所有标记。"
+
+msgid "Allowed file types"
+msgstr "允许的文件类型"
+
+msgid "An unexpected error occurred while processing the file."
+msgstr "处理文件时发生意外错误。"
+
+msgid "Another SEO plugin is active on this site (Yoast, Rank Math, All in One SEO or SEOPress): Jim writes no tags, to avoid duplicating theirs, even with this option on."
+msgstr "此站点已启用其他 SEO 插件（Yoast、Rank Math、All in One SEO 或 SEOPress）：即使开启此选项，Jim 也不会写入标签，以免与它们重复。"
+
+msgid "Any service that uses the OpenAI Chat Completions format: open-source models on your own server (Ollama, vLLM, LM Studio, LocalAI, llama.cpp, Hugging Face TGI) or an AI gateway (LiteLLM, Portkey, Cloudflare AI Gateway and others). With a model on your own server, questions and passages do not leave it."
+msgstr "任何使用 OpenAI Chat Completions 格式的服务：部署在你自己服务器上的开源模型（Ollama、vLLM、LM Studio、LocalAI、llama.cpp、Hugging Face TGI），或 AI 网关（LiteLLM、Portkey、Cloudflare AI Gateway 等）。如果模型在你自己的服务器上，问题和片段不会离开该服务器。"
+
+msgid "Applied to all converted documents. Each reader can still change the theme on the spot, from the reading bar; their choice only applies to their own browser and does not change this default."
+msgstr "应用于所有已转换的文档。每位读者仍可通过阅读栏即时更改主题；其选择仅对其自己的浏览器有效，不会更改此默认值。"
+
+msgid "Ask about the document"
+msgstr "就文档提问"
+
+msgid "Ask by voice"
+msgstr "语音提问"
+
+msgid "Ask the tutor (%s)"
+msgstr "向导师提问（%s）"
+
+msgid "Assistant"
+msgstr "助手"
+
+msgid "Authorship"
+msgstr "作者信息"
+
+msgid "Automatic SEO"
+msgstr "自动 SEO"
+
+msgid "Available shortcodes"
+msgstr "可用的短代码"
+
+msgid "Blog post (converted HTML page)"
+msgstr "博客文章（转换后的 HTML 页面）"
+
+msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
+msgstr "CCITT 传真（CCITTFaxDecode 过滤器）：常见于黑白扫描的 PDF；插件不解码此格式。"
+
+msgid "Clear all"
+msgstr "全部清除"
+
+msgid "Clear log"
+msgstr "清空日志"
+
+msgid "Clear the whole log?"
+msgstr "要清空整个日志吗？"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Close contents"
+msgstr "关闭目录"
+
+msgid "Close menu"
+msgstr "关闭菜单"
+
+msgid "Contents"
+msgstr "目录"
+
+msgid "Conversation with the tutor"
+msgstr "与导师的对话"
+
+msgid "Conversion details"
+msgstr "转换详情"
+
+msgid "Conversion finished. Opening the result…"
+msgstr "转换完成。正在打开结果…"
+
+msgid "Conversion is done in PHP only, with no external programs (no need for Poppler, Ghostscript or similar). What weighs most is memory and execution time."
+msgstr "转换完全在 PHP 中完成，无需外部程序（不需要 Poppler、Ghostscript 等）。影响最大的是内存和执行时间。"
+
+msgid "Conversion progress"
+msgstr "转换进度"
+
+msgid "Convert document"
+msgstr "转换文档"
+
+msgid "Converted on:"
+msgstr "转换于："
+
+msgid "Converting the document…"
+msgstr "正在转换文档…"
+
+msgid "Copy the shortcode and paste it into the page or post where the document should appear."
+msgstr "复制短代码并粘贴到要显示该文档的页面或文章中。"
+
+msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
+msgstr "JPEG 已损坏，或带有插件无法还原的额外编码。"
+
+msgid "Could not convert \"%1$s\". %2$s"
+msgstr "无法转换“%1$s”。%2$s"
+
+msgid "Could not copy the link."
+msgstr "无法复制链接。"
+
+msgid "Could not reach the server. Check your connection and try again."
+msgstr "无法连接服务器。请检查网络连接后重试。"
+
+msgid "Could not read the Markdown file."
+msgstr "无法读取 Markdown 文件。"
+
+msgid "Could not read the PDF. Common causes: corrupted file, password-protected or not standard PDF. Technical detail: %s"
+msgstr "无法读取 PDF。常见原因：文件损坏、受密码保护或不符合 PDF 标准。技术细节：%s"
+
+msgid "Could not read the TXT file."
+msgstr "无法读取 TXT 文件。"
+
+msgid "Could not read the Word document: %s"
+msgstr "无法读取 Word 文档：%s"
+
+msgid "Could not update the log."
+msgstr "无法更新日志。"
+
+msgid "DOCX"
+msgstr "DOCX"
+
+msgid "Dark"
+msgstr "深色"
+
+msgid "Decrease text size"
+msgstr "缩小文字"
+
+msgid "Default reading theme"
+msgstr "默认阅读主题"
+
+msgid "Default reading-aloud speed"
+msgstr "默认朗读速度"
+
+msgid "Default text size"
+msgstr "默认文字大小"
+
+msgid "Default: %s. Leave blank to go back to it."
+msgstr "默认：%s。留空即恢复默认。"
+
+msgid "Delete the original file after converting"
+msgstr "转换后删除原始文件"
+
+msgid "Delete the saved key when saving."
+msgstr "保存时删除已保存的密钥。"
+
+msgid "Depending on the file size this can take from a few seconds to about a minute. Do not close or refresh this page."
+msgstr "根据文件大小，这可能需要几秒到大约一分钟。请勿关闭或刷新此页面。"
+
+msgid "Descriptions (alt text) written in Word are kept. Images without a description, such as those from PDFs, get a temporary text and should be described by editing the document. Applies to future conversions."
+msgstr "会保留在 Word 中编写的描述（替代文本）。没有描述的图片（例如来自 PDF 的图片）会获得临时文本，需要通过编辑文档来添加描述。适用于之后的转换。"
+
+msgid "Descriptions (alt text) written in Word are kept. Images without one get a temporary text: edit the document and describe them, so screen reader users know what they show."
+msgstr "会保留在 Word 中编写的描述（替代文本）。没有描述的图片会获得临时文本：请编辑文档并为其添加描述，以便屏幕阅读器用户了解图片内容。"
+
+msgid "Details"
+msgstr "详情"
+
+msgid "Developed by %s. Free software, under the GPL v2 or later license."
+msgstr "由 %s 开发。自由软件，采用 GPL v2 或更高版本许可证。"
+
+msgid "Display mode"
+msgstr "显示模式"
+
+msgid "Document converted successfully! %s"
+msgstr "文档转换成功！%s"
+
+msgid "Document images"
+msgstr "文档图片"
+
+msgid "Document title"
+msgstr "文档标题"
+
+msgid "Document tutor"
+msgstr "文档导师"
+
+msgid "Documents"
+msgstr "文档"
+
+msgid "Documents converted with Jim"
+msgstr "使用 Jim 转换的文档"
+
+msgid "Done listening. Check the question and send it."
+msgstr "已结束聆听。请检查问题后发送。"
+
+msgid "EPUB books are not supported. Convert them to PDF or DOCX."
+msgstr "不支持 EPUB 图书。请将其转换为 PDF 或 DOCX。"
+
+msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
+msgstr "每个转换后的文档都存储在你的 WordPress 中，并获得一个短代码，将其粘贴到任意页面或文章即可发布。"
+
+msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
+msgstr "每个文档以阅读器（带语音和主题的悬浮阅读栏）或博客文章（带阅读时长以及收听和分享按钮的栏）的形式显示。模式只能在文档列表中通过“快速编辑”或“显示模式”列选择，因此发布页面的人无法更改文档的性质。未做选择时，文档为阅读器。"
+
+msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
+msgstr "每张图片都会被解码、保存到媒体库并生成缩略图：含大量插图的书籍可能耗尽 PHP 的内存或时间，导致服务器宕机。达到任一限制（或 PHP 的时间或内存即将耗尽）时，图片提取会停止，整篇文本仍会被转换，并由提示说明原因。共享主机请保持较低的数值。"
+
+msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
+msgstr "每个简码都可以覆盖此设置：%1$s 显示导师，%2$s 隐藏导师。"
+
+msgid "Edit Document"
+msgstr "编辑文档"
+
+msgid "Enlarge image"
+msgstr "放大图片"
+
+msgid "Enlarged image"
+msgstr "放大的图片"
+
+msgid "Event"
+msgstr "事件"
+
+msgid "Every visitor"
+msgstr "所有访客"
+
+msgid "Explain a word"
+msgstr "解释一个词"
+
+msgid "Explain the word: "
+msgstr "解释这个词："
+
+msgid "Export CSV"
+msgstr "导出 CSV"
+
+msgid "Failed to write to the Media Library (folder permission or no disk space)."
+msgstr "写入媒体库失败（文件夹权限或磁盘空间不足）。"
+
+msgid "File"
+msgstr "文件"
+
+msgid "File added: %s"
+msgstr "已添加文件：%s"
+
+msgid "File larger than the limit of %s."
+msgstr "文件超过 %s 的限制。"
+
+msgid "Files added: %s"
+msgstr "已添加文件：%s"
+
+msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
+msgstr "管理员上传的文件会在此服务器上转换。默认情况下，转换后会删除原始文件；转换后的文本、其图片（在媒体库中）以及文件名、类型、字数和转换日期等信息会保留在站点数据库中。插件不收集访客的个人数据，也不使用 Cookie。"
+
+msgid "Formats and sending several files"
+msgstr "格式与一次上传多个文件"
+
+msgid "Free models end in \":free\". \"openrouter/free\" lets OpenRouter pick a free model that is available at the moment."
+msgstr "免费模型以“:free”结尾。“openrouter/free”会让 OpenRouter 选择当前可用的免费模型。"
+
+msgid "Generate description, Open Graph, Twitter Card and structured data (JSON-LD) on pages that publish a document."
+msgstr "在发布文档的页面上生成描述、Open Graph、Twitter Card 和结构化数据（JSON-LD）。"
+
+msgid "Give an example"
+msgstr "举个例子"
+
+msgid "Give an example of: "
+msgstr "举一个例子："
+
+msgid "Give the document a title (optional) and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr "为文档设置标题（可选），然后点击“转换文档”。大文件可能需要大约一分钟；请勿关闭或刷新页面。"
+
+msgid "Greeting"
+msgstr "欢迎语"
+
+msgid "HTML pages are not supported. Save the text as TXT or Markdown."
+msgstr "不支持 HTML 页面。请将文本另存为 TXT 或 Markdown。"
+
+msgid "HTTPS"
+msgstr "HTTPS"
+
+msgid "Help the reader understand this document. Explain ideas step by step, point to the part of the text where the answer is, and when it helps, end with a short question to check understanding. If the reader asks for a summary, keep it brief."
+msgstr "帮助读者理解本文档。逐步解释概念，指出答案所在的文本部分，必要时以一个简短的问题结尾以检验理解。如果读者要求摘要，请保持简短。"
+
+msgid "Hi! I can help you understand this document. Pick an option or type your question."
+msgstr "你好！我可以帮你理解这份文档。请选择一个选项或输入你的问题。"
+
+msgid "Hide controls"
+msgstr "隐藏控件"
+
+msgid "Hide the tutor on this page"
+msgstr "在此页面隐藏导师"
+
+msgid "Hiding the bar, for readers who want the whole screen for the text."
+msgstr "隐藏阅读栏，适合想让整个屏幕只显示文本的读者。"
+
+msgid "High contrast"
+msgstr "高对比度"
+
+msgid "High contrast (black background, white text and yellow highlights), which works from any theme."
+msgstr "高对比度（黑色背景、白色文字和黄色高亮），适用于任何主题。"
+
+msgid "Highlight in blue"
+msgstr "标记为蓝色"
+
+msgid "Highlight in green"
+msgstr "标记为绿色"
+
+msgid "Highlight in pink"
+msgstr "标记为粉色"
+
+msgid "Highlight in yellow"
+msgstr "标记为黄色"
+
+msgid "Highlight passage:"
+msgstr "标记文字："
+
+msgid "Highlight removed."
+msgstr "已移除标记。"
+
+msgid "How the tutor talks: tone, vocabulary, patience."
+msgstr "导师的说话方式：语气、用词、耐心。"
+
+msgid "If the site uses its own AI service (\"Other\" provider, such as an open-source model on its own server or an AI gateway), the data above goes to the address set by the site instead; when that model runs on the site's own server, it does not leave it."
+msgstr "如果网站使用自己的 AI 服务（“其他”服务商，例如部署在自己服务器上的开源模型或 AI 网关），上述数据会发送到网站设置的地址；如果该模型运行在网站自己的服务器上，数据不会离开该服务器。"
+
+msgid "If this project was useful to you, please consider giving the repository a star on GitHub! It helps the project grow and reach more developers."
+msgstr "如果这个项目对你有帮助，请考虑在 GitHub 上为仓库点一颗星（star）！这有助于项目成长，并触达更多开发者。"
+
+msgid "Image"
+msgstr "图片"
+
+msgid "Image %1$d on page %2$d (no description)"
+msgstr "第 %2$d 页的图片 %1$d（无描述）"
+
+msgid "Image %1$s of %2$s"
+msgstr "图片 %1$s / %2$s"
+
+msgid "Image %d of the document (no description)"
+msgstr "文档的图片 %d（无描述）"
+
+msgid "Image embedded directly in the page content (BI…EI operator): the plugin only reads images that the PDF stores as separate objects."
+msgstr "直接嵌入页面内容的图片（BI…EI 运算符）：插件只读取 PDF 作为独立对象存储的图片。"
+
+msgid "Image larger than 15 MB."
+msgstr "图片大于 15 MB。"
+
+msgid "Image limit per document reached (adjustable in Settings › Image limits)."
+msgstr "已达到每个文档的图片数量限制（可在 设置 › 图片限制 中调整）。"
+
+msgid "Image limits"
+msgstr "图片限制"
+
+msgid "Image reading stopped at page %1$d. Reason: %2$s"
+msgstr "图片读取已在第 %1$d 页停止。原因：%2$s"
+
+msgid "Image with more than 40 million pixels: too large to convert without exhausting the server's memory."
+msgstr "图片超过 4000 万像素：太大，转换会耗尽服务器内存。"
+
+msgid "Image:"
+msgstr "图片："
+
+msgid "Images"
+msgstr "图片"
+
+msgid "Images from PDF and DOCX files go to the Media Library, linked to the document, and are deleted with it."
+msgstr "PDF 和 DOCX 文件中的图片会进入媒体库，与文档关联，并随文档一起删除。"
+
+msgid "Images that could not be included, and the cause for each group:"
+msgstr "无法包含的图片，以及每组的原因："
+
+msgid "Images:"
+msgstr "图片："
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Each question, with passages of the document, is sent to the provider you chose."
+msgstr "在设置中，为 OpenRouter、Claude（Anthropic）、OpenAI、Gemini（Google）或 DeepSeek 保存 API 密钥（加密存储），选择模型并测试连接。然后即可开启 AI 导师：文档页面上的聊天气泡，读者可以通过文字或语音就该文档提问。你可以设置它的名称、性格、指令和欢迎语，以及它出现的位置和回答的问题数量。每个问题会连同文档段落发送给你选择的服务商。"
+
+msgid "Include the images from the PDF or DOCX in the converted document."
+msgstr "在转换后的文档中包含 PDF 或 DOCX 中的图片。"
+
+msgid "Increase text size"
+msgstr "增大文字"
+
+msgid "Install counter: this plugin has not been published on WordPress.org yet (visible to administrators only)."
+msgstr "安装计数器：此插件尚未在 WordPress.org 发布（仅管理员可见）。"
+
+msgid "Installed version: %s."
+msgstr "已安装版本：%s。"
+
+msgid "Instant and free for repeated questions. Only the answer and the weight of each word of the question are kept, never the question text. Saved answers are discarded when the document or the tutor changes."
+msgstr "重复的问题即时回答且不产生费用。只保存回答和问题中每个词的权重，绝不保存问题原文。文档或导师设置更改时，已保存的回答会被丢弃。"
+
+msgid "Instructions (prompt)"
+msgstr "指令（提示词）"
+
+msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
+msgstr "图片文件无效或类型未知（不是 JPEG、PNG、GIF 或 WebP，且无法转换）。"
+
+msgid "Item"
+msgstr "项目"
+
+msgid "JBIG2 (JBIG2Decode filter): common in scanned PDFs; the plugin does not decode this format."
+msgstr "JBIG2（JBIG2Decode 过滤器）：常见于扫描的 PDF；插件不解码此格式。"
+
+msgid "JPEG 2000 (JPXDecode filter): this server cannot decode this format. It works when PHP has the Imagick extension with JPEG 2000 support; ask your host to enable it and convert the file again."
+msgstr "JPEG 2000（JPXDecode 过滤器）：此服务器无法解码该格式。当 PHP 装有支持 JPEG 2000 的 Imagick 扩展时即可转换；请让主机商启用它，然后重新转换文件。"
+
+msgid "JPEG 2000 images (common in PDFs of books): not supported on this server, so they are left out. They are converted when PHP has the Imagick extension with JPEG 2000 support; ask your host."
+msgstr "JPEG 2000 图片（常见于书籍 PDF）：此服务器不支持，因此会被略过。当 PHP 装有支持 JPEG 2000 的 Imagick 扩展时会被转换；请咨询主机商。"
+
+msgid "JPEG 2000 images (common in PDFs of books): supported on this server."
+msgstr "JPEG 2000 图片（常见于书籍 PDF）：此服务器支持。"
+
+msgid "Jim - Accessible Converter"
+msgstr "Jim - 无障碍转换器"
+
+msgid "Jim - Accessible Converter: document not found."
+msgstr "Jim - 无障碍转换器：未找到文档。"
+
+msgid "Jim - Accessible Converter: the vendor/ folder (PDF and Word libraries) is missing from the plugin. Reinstall the plugin from the official package; if you use the repository code, run \"composer install --no-dev\" in the plugin folder."
+msgstr "Jim - 无障碍转换器：插件缺少 vendor/ 文件夹（PDF 和 Word 库）。请从官方安装包重新安装插件；如果使用仓库代码，请在插件文件夹中运行“composer install --no-dev”。"
+
+msgid "Jim comes in %1$s, following the site language (or yours, in the dashboard). Language in use now: %2$s."
+msgstr "Jim 提供以下语言：%1$s，跟随站点语言（或你在后台的语言）。当前使用的语言：%2$s。"
+
+msgid "Jim does not track visitors, sets no cookies and loads nothing from other sites. Reader choices and highlights stay in the reader's browser. The only outside contacts are api.wordpress.org (install counter, only if you use that shortcode) and the AI provider you choose (OpenRouter, Anthropic, OpenAI, Google or DeepSeek), when you test the connection or when readers use the tutor. Suggested policy text is available in Settings > Privacy > Policy Guide."
+msgstr "Jim 不追踪访客、不设置 Cookie，也不从其他网站加载任何内容。读者的选择和高亮保存在读者自己的浏览器中。唯一的外部连接是 api.wordpress.org（安装计数，仅在你使用该简码时）以及你选择的 AI 服务商（OpenRouter、Anthropic、OpenAI、Google 或 DeepSeek），在你测试连接或读者使用导师时。建议的隐私政策文本位于 设置 > 隐私 > 政策指南。"
+
+msgid "Jim is open source, so more languages are welcome. If you find a mistake or want to add a language, you can review the translation files or translate online."
+msgstr "Jim 是开源项目，欢迎添加更多语言。如果你发现错误或想添加语言，可以审阅翻译文件或在线翻译。"
+
+msgid "Jim turns a PDF, Word (.docx), Markdown or TXT file into an accessible reading page inside your site. Instead of offering a file to download, the content becomes real text on the page: screen reader users can read it, people who need larger letters can enlarge them, and people who prefer listening get reading aloud from the browser itself."
+msgstr "Jim 会把 PDF、Word（.docx）、Markdown 或 TXT 文件转换成你网站内的无障碍阅读页面。内容不再是供下载的文件，而是页面上的真实文本：使用屏幕阅读器的用户可以阅读，需要更大字号的人可以放大，喜欢听的人可以通过浏览器本身朗读。"
+
+msgid "Languages and translations"
+msgstr "语言与翻译"
+
+msgid "Large books can take several minutes. You can keep working in another tab; do not close this one."
+msgstr "大型书籍可能需要几分钟。你可以在其他标签页继续工作；请不要关闭此标签页。"
+
+msgid "Large illustrated books can exhaust the server, so there are limits on the number and total size of images, plus time and memory guards. When one is reached, the whole text is still converted, and the notice says which images were left out and why."
+msgstr "大型图文书籍可能耗尽服务器资源，因此对图片数量和总大小设有限制，并有时间和内存保护。达到任一限制时，整篇文本仍会被转换，提示会说明哪些图片被略过以及原因。"
+
+msgid "Level"
+msgstr "级别"
+
+msgid "LibreOffice documents (.odt) are not supported. Use Save as › .docx (or export to PDF)."
+msgstr "不支持 LibreOffice 文档（.odt）。请使用“另存为”› .docx（或导出为 PDF）。"
+
+msgid "Light"
+msgstr "浅色"
+
+msgid "Limits"
+msgstr "限制"
+
+msgid "Limits used in this conversion: up to %1$d images and %2$d MB in total."
+msgstr "本次转换使用的限制：最多 %1$d 张图片，总计 %2$d MB。"
+
+msgid "Link copied."
+msgstr "链接已复制。"
+
+msgid "List of shortcodes (one per line, ready to copy):"
+msgstr "短代码列表（每行一个，可直接复制）："
+
+msgid "Listen"
+msgstr "收听"
+
+msgid "Listening… speak your question."
+msgstr "正在聆听… 请说出你的问题。"
+
+msgid "Live updates paused."
+msgstr "实时更新已暂停。"
+
+msgid "Log cleared."
+msgstr "日志已清空。"
+
+msgid "Log in to use the tutor."
+msgstr "请登录后使用导师。"
+
+msgid "Loose images are not converted: the plugin converts text. For a scanned PDF, run OCR first."
+msgstr "不转换单独的图片：插件转换的是文本。对于扫描的 PDF，请先运行 OCR。"
+
+msgid "Mark the assistant as on (only works with a saved key for the provider above)."
+msgstr "将助手标记为开启（仅在为上方服务商保存了密钥时有效）。"
+
+msgid "Maximum execution time (max_execution_time)"
+msgstr "最长执行时间（max_execution_time）"
+
+msgid "Maximum images per document:"
+msgstr "每个文档的最大图片数："
+
+msgid "Maximum size (MB)"
+msgstr "最大大小（MB）"
+
+msgid "Maximum total size of images (MB):"
+msgstr "图片总大小上限（MB）："
+
+msgid "Maximum upload size"
+msgstr "最大上传大小"
+
+msgid "Memory limit (memory_limit)"
+msgstr "内存限制（memory_limit）"
+
+msgid "Message"
+msgstr "消息"
+
+msgid "Minimum 120 s; recommended 300 s. Large PDFs take minutes to convert."
+msgstr "至少 120 秒；建议 300 秒。大型 PDF 需要几分钟来转换。"
+
+msgid "Minimum 256 MB; recommended 512 MB for books with many pages and figures. The plugin tries to raise it up to WordPress's maximum limit (%s)."
+msgstr "至少 256 MB；对于页数和插图很多的书籍，建议 512 MB。插件会尝试将其提高到 WordPress 的最大限制（%s）。"
+
+msgid "Minimum 7.4; recommended 8.1 or higher."
+msgstr "至少 7.4；建议 8.1 或更高。"
+
+msgid "Missing"
+msgstr "缺失"
+
+msgid "Model"
+msgstr "模型"
+
+msgid "Most failures with big files are server limits (memory, execution time, upload size). The requirements table shows which one is short."
+msgstr "大文件的大多数失败都源于服务器限制（内存、执行时间、上传大小）。要求表会显示哪一项不足。"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Name shown to readers"
+msgstr "向读者显示的名称"
+
+msgid "New Document"
+msgstr "新建文档"
+
+msgid "New conversation"
+msgstr "新对话"
+
+msgid "New conversation started."
+msgstr "已开始新对话。"
+
+msgid "Next image"
+msgstr "下一张图片"
+
+msgid "No converted documents yet."
+msgstr "尚无已转换的文档。"
+
+msgid "No entries yet."
+msgstr "暂无记录。"
+
+msgid "No valid file was sent."
+msgstr "未发送任何有效文件。"
+
+msgid "OK"
+msgstr "正常"
+
+msgid "Old .doc, .odt, .rtf, spreadsheets, presentations and EPUB are not converted. The error message tells you what to do (for example, save as .docx)."
+msgstr "不转换旧版 .doc、.odt、.rtf、电子表格、演示文稿和 EPUB。错误信息会告诉你该怎么做（例如另存为 .docx）。"
+
+msgid "On the published page, a floating bar follows the reader while they scroll the document:"
+msgstr "在已发布的页面上，读者滚动文档时会有一个悬浮栏跟随："
+
+msgid "On this server"
+msgstr "此服务器"
+
+msgid "Once the plugin is published in the official WordPress directory, updates arrive on your site's Plugins screen like for any other plugin. Until then, each new version is published in the project repository."
+msgstr "插件在 WordPress 官方目录发布后，更新会像其他插件一样出现在你站点的“插件”页面。在此之前，每个新版本都发布在项目仓库中。"
+
+msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
+msgstr "每个服务商一个 API 密钥，加密存储。测试连接只向该服务商发送一句固定语句，不包含文档文本。下方的 AI 导师使用此处选择的服务商。"
+
+msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
+msgstr "仅在服务要求时填写；本地 Ollama 不需要。密钥将加密存储。"
+
+msgid "Only logged-in users"
+msgstr "仅限已登录用户"
+
+msgid "Open %s and choose the file (PDF, DOCX, TXT or Markdown)."
+msgstr "打开 %s 并选择文件（PDF、DOCX、TXT 或 Markdown）。"
+
+msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
+msgstr "在 %s 中打开“活动日志”和“服务器要求”表。日志会实时显示每次转换（时间、内存、字数、图片以及每张被略过图片的原因）和每个错误：转换期间请在另一个标签页保持设置页面打开。"
+
+msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
+msgstr "可选：未填标题时使用文件名。一次发送多个文件时，每个文档使用各自的文件名。"
+
+msgid "Original file:"
+msgstr "原始文件："
+
+msgid "Other (OpenAI-compatible)"
+msgstr "其他（兼容 OpenAI）"
+
+msgid "Other provider: set the address and the model first."
+msgstr "“其他”服务商：请先设置地址和模型。"
+
+msgid "Other provider: the address was not saved. Use a full http:// or https:// address, such as http://localhost:11434/v1."
+msgstr "“其他”服务商：地址未保存。请使用以 http:// 或 https:// 开头的完整地址，例如 http://localhost:11434/v1。"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PDF (with selectable text; scanned, image-only PDFs have no text and are refused: there is no OCR), DOCX, TXT and Markdown (.md)."
+msgstr "PDF（需含可选中的文本；仅含图片的扫描 PDF 没有文本，会被拒绝：没有 OCR）、DOCX、TXT 和 Markdown（.md）。"
+
+msgid "PDF pages"
+msgstr "PDF 页面"
+
+msgid "PDF, DOCX, TXT and Markdown"
+msgstr "PDF、DOCX、TXT 和 Markdown"
+
+msgid "PHP execution time almost used up: image extraction was stopped so the server does not go down. Raise max_execution_time or upload the PDF in parts."
+msgstr "PHP 执行时间即将用尽：为避免服务器宕机，图片提取已停止。请提高 max_execution_time，或分部分上传 PDF。"
+
+msgid "PHP memory almost used up: image extraction was stopped so the server does not go down. Raise memory_limit or upload the PDF in parts."
+msgstr "PHP 内存即将用尽：为避免服务器宕机，图片提取已停止。请提高 memory_limit，或分部分上传 PDF。"
+
+msgid "PHP version"
+msgstr "PHP 版本"
+
+msgid "Page %1$s of %2$s"
+msgstr "第 %1$s 页，共 %2$s 页"
+
+msgid "Page %d"
+msgstr "第 %d 页"
+
+msgid "Passage highlighted."
+msgstr "已标记文字。"
+
+msgid "Paste the key here. It is never shown again and is stored encrypted."
+msgstr "在此粘贴密钥。它不会再次显示，并以加密方式存储。"
+
+msgid "Patient, encouraging and clear. Uses simple words, short sentences and examples, and never makes the reader feel judged."
+msgstr "耐心、鼓励、清晰。使用简单的词语、短句和例子，绝不让读者感到被评判。"
+
+msgid "Pause"
+msgstr "暂停"
+
+msgid "Personality"
+msgstr "性格"
+
+msgid "Plugin website"
+msgstr "插件网站"
+
+msgid "Presentations are not converted. Export to PDF."
+msgstr "不转换演示文稿。请导出为 PDF。"
+
+msgid "Previous image"
+msgstr "上一张图片"
+
+msgid "Privacy"
+msgstr "隐私"
+
+msgid "Provider in use: %s."
+msgstr "当前服务商：%s。"
+
+msgid "Provider used by the assistant"
+msgstr "助手使用的服务商"
+
+msgid "Publishes the converted document, with the reading controls."
+msgstr "发布转换后的文档，并附带阅读控件。"
+
+msgid "Questions per day on the whole site:"
+msgstr "全站每天的提问数："
+
+msgid "Questions per reader per hour:"
+msgstr "每位读者每小时的提问数："
+
+msgid "Reader (with reading bar and voice)"
+msgstr "阅读器（带阅读栏和语音）"
+
+msgid "Reader mode and blog post mode"
+msgstr "阅读器模式和博客文章模式"
+
+msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
+msgstr "读者可以点击图片放大查看，用方向键切换图片，按 Esc 关闭。"
+
+msgid "Reading aloud uses the browser's built-in speech feature. The plugin does not send the text anywhere. Depending on the browser and the voice chosen, the browser itself may process speech on its vendor's servers."
+msgstr "朗读使用浏览器内置的语音功能。插件不会把文本发送到任何地方。根据浏览器和所选语音的不同，浏览器本身可能会在其厂商的服务器上处理语音。"
+
+msgid "Reading aloud."
+msgstr "正在朗读。"
+
+msgid "Reading controls"
+msgstr "阅读控件"
+
+msgid "Reading finished."
+msgstr "朗读完毕。"
+
+msgid "Reading paused."
+msgstr "朗读已暂停。"
+
+msgid "Reading speed"
+msgstr "朗读速度"
+
+msgid "Reading stopped."
+msgstr "朗读已停止。"
+
+msgid "Reading the file structure…"
+msgstr "正在读取文件结构…"
+
+msgid "Reading theme"
+msgstr "阅读主题"
+
+msgid "Recommendation"
+msgstr "建议"
+
+msgid "Recommended. Without HTTPS, browsers block the Share button (copy link) in post mode."
+msgstr "建议。没有 HTTPS 时，浏览器会阻止文章模式下的“分享”（复制链接）按钮。"
+
+msgid "Recommended: keeps only the converted HTML, without storing the uploaded file."
+msgstr "建议：只保留转换后的 HTML，不保存上传的文件。"
+
+msgid "Refresh now"
+msgstr "立即刷新"
+
+msgid "Remove highlight"
+msgstr "移除标记"
+
+msgid "Remove page markers (\"Page 1\", \"Page 2\"…)"
+msgstr "移除页码标记（“第 1 页”“第 2 页”…）"
+
+msgid "Report a problem"
+msgstr "报告问题"
+
+msgid "Required: the exact model name on that service, for example llama3.2 or qwen2.5:7b on Ollama."
+msgstr "必填：该服务中模型的准确名称，例如 Ollama 上的 llama3.2 或 qwen2.5:7b。"
+
+msgid "Resume"
+msgstr "继续"
+
+msgid "Reuse the answer when a reader asks almost the same first question about the same document."
+msgstr "当读者就同一文档提出几乎相同的第一个问题时，复用已有回答。"
+
+msgid "Review translation"
+msgstr "审阅翻译"
+
+msgid "SEO"
+msgstr "SEO"
+
+msgid "Save keys and models"
+msgstr "保存密钥和模型"
+
+msgid "Save tutor"
+msgstr "保存导师"
+
+msgid "Saved answers"
+msgstr "已保存的回答"
+
+msgid "Search Documents"
+msgstr "搜索文档"
+
+msgid "See all converted documents and their shortcodes →"
+msgstr "查看所有已转换的文档及其短代码 →"
+
+msgid "Send at most %d files at a time."
+msgstr "每次最多发送 %d 个文件。"
+
+msgid "Send one file at a time."
+msgstr "每次只发送一个文件。"
+
+msgid "Send question"
+msgstr "发送问题"
+
+msgid "Sending the file…"
+msgstr "正在发送文件…"
+
+msgid "Sends one fixed sentence to %s using the saved key and model."
+msgstr "使用已保存的密钥和模型向 %s 发送一句固定语句。"
+
+msgid "Sepia"
+msgstr "护眼"
+
+msgid "Server requirements"
+msgstr "服务器要求"
+
+msgid "Services the site may contact"
+msgstr "站点可能联系的服务"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Share"
+msgstr "分享"
+
+msgid "Shortcode"
+msgstr "短代码"
+
+msgid "Shortcode:"
+msgstr "短代码："
+
+msgid "Show controls"
+msgstr "显示控件"
+
+msgid "Show it on every document by default."
+msgstr "默认在所有文档上显示。"
+
+msgid "Show reading controls"
+msgstr "显示阅读控件"
+
+msgid "Show the tutor (%s)"
+msgstr "显示导师（%s）"
+
+msgid "Shows how many active installs the plugin has, according to the WordPress.org API."
+msgstr "根据 WordPress.org API 显示插件的活跃安装数。"
+
+msgid "Skip to the document content"
+msgstr "跳到文档内容"
+
+msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
+msgstr "upload_max_filesize 与 post_max_size 中较小的一个。建议：32 MB 或更大。"
+
+msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
+msgstr "不转换电子表格。请将内容导出为 PDF 或 DOCX。"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Step by step"
+msgstr "分步指南"
+
+msgid "Stop"
+msgstr "停止"
+
+msgid "Suggested text. Review it and adjust it to how you use the plugin."
+msgstr "建议文本。请审阅并根据你使用插件的方式进行调整。"
+
+msgid "Suggestions"
+msgstr "建议"
+
+msgid "Summarize a part"
+msgstr "总结一部分"
+
+msgid "Summarize the part about: "
+msgstr "总结关于以下内容的部分："
+
+msgid "Support the project"
+msgstr "支持项目"
+
+msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
+msgstr "TXT 和 Markdown 文件一次最多可发送 20 个。每个文件都会成为一个文档，并得到一份可直接复制的短代码列表。PDF 和 DOCX 转换较重，需逐个发送。"
+
+msgid "Technical detail: %s."
+msgstr "技术细节：%s。"
+
+msgid "Test connection"
+msgstr "测试连接"
+
+msgid "Text appearance"
+msgstr "文字外观"
+
+msgid "Text highlighter"
+msgstr "文字荧光笔"
+
+msgid "Text size"
+msgstr "文字大小"
+
+msgid "Text size and reading theme (Light, Sepia or Dark)."
+msgstr "文字大小和阅读主题（浅色、护眼或深色）。"
+
+msgid "Text size and theme"
+msgstr "文字大小和主题"
+
+msgid "The .md file does not look like valid Markdown text."
+msgstr ".md 文件看起来不是有效的 Markdown 文本。"
+
+msgid "The Markdown file is empty."
+msgstr "Markdown 文件为空。"
+
+msgid "The PDF contains no extractable text (it may be a scanned/image-only PDF)."
+msgstr "此 PDF 不含可提取的文本（可能是扫描的纯图片 PDF）。"
+
+msgid "The RTF format is not supported. Open the file in Word or LibreOffice and use Save as › .docx."
+msgstr "不支持 RTF 格式。请在 Word 或 LibreOffice 中打开文件，并使用“另存为”› .docx。"
+
+msgid "The TXT file is empty."
+msgstr "TXT 文件为空。"
+
+msgid "The Word document seems to be empty."
+msgstr "Word 文档似乎是空的。"
+
+msgid "The WordPress.org page works once the plugin is listed in the official directory."
+msgstr "插件在官方目录上架后，WordPress.org 页面才可用。"
+
+msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
+msgstr "API 的基础地址，例如 Ollama 的 http://localhost:11434/v1。缺少时会自动添加“/chat/completions”。"
+
+msgid "The browser did not allow the microphone."
+msgstr "浏览器未允许使用麦克风。"
+
+msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
+msgstr "“%1$s”的内容与 .%2$s 扩展名不符：文件已损坏，或由其他格式重命名而来。"
+
+msgid "The conversion failed."
+msgstr "转换失败。"
+
+msgid "The conversion of \"%1$s\" stopped at page %2$d: the conversion page was closed or lost the connection before it finished. Send the file again and keep the page open until the end."
+msgstr "“%1$s”的转换在第 %2$d 页停止：转换页面在完成前被关闭或断开了连接。请重新发送文件，并保持页面打开直到完成。"
+
+msgid "The conversion stopped because PHP ran out of memory (memory_limit: %s). Try a smaller file, turn off images in Settings, or ask your host for more memory."
+msgstr "转换已停止，因为 PHP 内存不足（memory_limit：%s）。请尝试更小的文件、在设置中关闭图片，或向主机商申请更多内存。"
+
+msgid "The conversion stopped because it reached the PHP time limit (max_execution_time: %s s). Try a smaller file, turn off images in Settings, or ask your host for a longer limit."
+msgstr "转换已停止，因为达到了 PHP 的时间限制（max_execution_time：%s 秒）。请尝试更小的文件、在设置中关闭图片，或向主机商申请更长的限制。"
+
+msgid "The document has no text to convert."
+msgstr "文档中没有可转换的文本。"
+
+msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
+msgstr "文档已创建，但其文本似乎无法阅读：此 PDF 使用的字体没有说明每个字符对应哪个字母，因此文本显示为符号（朗读时也会如此）。请检查文档。如果内容是乱码，请对 PDF 进行 OCR，或使用嵌入 Unicode 字体重新导出，然后再次转换。%s"
+
+msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
+msgstr "无法上传文件“%1$s”（服务器限制：%2$s）。请发送更小的文件，或请主机提供商提高“upload_max_filesize”和“post_max_size”。"
+
+msgid "The file \"%s\" is empty (0 bytes)."
+msgstr "文件“%s”为空（0 字节）。"
+
+msgid "The file is too large for the server to accept (current limit: %s). Send a smaller file or ask your host to raise the PHP limits \"upload_max_filesize\" and \"post_max_size\"."
+msgstr "文件太大，服务器无法接受（当前限制：%s）。请发送更小的文件，或请主机提供商提高 PHP 的“upload_max_filesize”和“post_max_size”限制。"
+
+msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
+msgstr "密钥未保存：此服务器缺少安全存储所需的加密功能（libsodium）。"
+
+msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
+msgstr "日志从不包含你的文档文本或 AI 密钥，因此在寻求帮助时可以放心导出并发送。"
+
+msgid "The old Word format (.doc) is not supported. Open the file in Word or LibreOffice and use Save as › .docx."
+msgstr "不支持旧版 Word 格式（.doc）。请在 Word 或 LibreOffice 中打开文件，并使用“另存为”› .docx。"
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes nothing, to avoid duplicates. You can turn this off in Settings."
+msgstr "包含短代码的页面会根据标题和文档开头生成 meta description 以及 Open Graph、Twitter Card 和 JSON-LD 标签。如果 Yoast SEO、Rank Math、All in One SEO 或 SEOPress 已启用，Jim 不会写入任何内容，以避免重复。你可以在设置中关闭此功能。"
+
+msgid "The phpoffice/phpword library was not found. Run \"composer install\" in the plugin folder."
+msgstr "未找到 phpoffice/phpword 库。请在插件文件夹中运行“composer install”。"
+
+msgid "The plugin keeps a short activity log (last 200 entries) for administrators, with file names, times, memory use and errors. It never records document text. It can be cleared or exported from the plugin settings."
+msgstr "插件为管理员保留一份简短的活动日志（最近 200 条），包含文件名、时间、内存使用和错误。它从不记录文档文本。可在插件设置中清空或导出。"
+
+msgid "The server answered with an error (HTTP %s) before the conversion started."
+msgstr "服务器在转换开始前返回了错误（HTTP %s）。"
+
+msgid "The server refused the file because it is too large (HTTP 413). Ask your host to raise the upload limit (nginx \"client_max_body_size\" or PHP \"upload_max_filesize\")."
+msgstr "服务器拒绝了该文件，因为文件太大（HTTP 413）。请让主机商提高上传限制（nginx 的“client_max_body_size”或 PHP 的“upload_max_filesize”）。"
+
+msgid "The server stopped the conversion several times around page %d without reporting an error, even in short steps. That part of the file may be too heavy for this hosting (often because of large images). Try again with images turned off in Settings, or split the PDF."
+msgstr "服务器在第 %d 页附近多次停止了转换且未报告错误，即使分成较短的步骤也是如此。文件的这一部分对当前主机来说可能过重（通常由于大图片）。请在设置中关闭图片后重试，或拆分 PDF。"
+
+msgid "The shortcode names are kept in Portuguese so that pages published with earlier versions keep working."
+msgstr "短代码名称保持为葡萄牙语，以便使用早期版本发布的页面继续正常工作。"
+
+msgid "The site default theme and the initial reading speed are in %s. Each reader can still change them on the spot, and their choice only applies to their own browser."
+msgstr "站点默认主题和初始朗读速度位于%s。每位读者仍可即时更改，其选择仅对其自己的浏览器有效。"
+
+msgid "The smalot/pdfparser library was not found. Run \"composer install\" in the plugin folder."
+msgstr "未找到 smalot/pdfparser 库。请在插件文件夹中运行“composer install”。"
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim turns itself off on those pages."
+msgstr "标签会放在短代码所在页面的 head 中，依据标题和文档开头生成。如果你安装了 SEO 插件，Jim 会在这些页面上自动关闭。"
+
+msgid "The text flows like in a digital book: sentences split at a page break are joined and the page numbers printed at the top or bottom are dropped. PDF only."
+msgstr "文本像电子书一样连续：在分页处被截断的句子会被合并，页面顶部或底部印刷的页码会被去掉。仅适用于 PDF。"
+
+msgid "The text was converted, but none of the images could be included. See why below. %s"
+msgstr "文本已转换，但没有任何图片能被包含。原因见下方。%s"
+
+msgid "The text was converted, but some images were left out. See why below. %s"
+msgstr "文本已转换，但部分图片被略过。原因见下方。%s"
+
+msgid "The tutor could not answer right now. Try again in a moment."
+msgstr "导师暂时无法回答。请稍后再试。"
+
+msgid "The tutor is not available for this document."
+msgstr "此文档不提供导师。"
+
+msgid "The tutor needs the assistant turned on, with a working key, in the card above."
+msgstr "导师需要在上方卡片中开启助手并配置可用的密钥。"
+
+msgid "The tutor reached its daily limit of questions on this site. Try again tomorrow."
+msgstr "导师已达到本站每日提问上限。请明天再试。"
+
+msgid "The whole text was converted; only the images from the following pages were left out."
+msgstr "整篇文本已转换；仅后续页面的图片被略过。"
+
+msgid "They keep the cost of your key under control. Readers are counted by account, or by a hashed IP address that is kept for one hour."
+msgstr "它们用于控制你的密钥费用。读者按账号计数，或按保存一小时的 IP 地址哈希计数。"
+
+msgid "Thinking…"
+msgstr "思考中…"
+
+msgid "This PDF has no selectable text: it is probably a scanned (image-only) document. The plugin does not do OCR. Run OCR on the file (for example in Adobe Acrobat or Google Drive) and upload the PDF with text."
+msgstr "此 PDF 没有可选中的文本：很可能是扫描文档（纯图片）。插件不做 OCR。请对文件运行 OCR（例如在 Adobe Acrobat 或 Google Drive 中），然后上传带文本的 PDF。"
+
+msgid "This browser does not support reading aloud."
+msgstr "此浏览器不支持朗读。"
+
+msgid "This conversion was not found. Reload the page and send the file again."
+msgstr "找不到此转换。请重新加载页面并再次发送文件。"
+
+msgid "This page has expired. Reload it and ask again."
+msgstr "此页面已过期。请重新加载后再提问。"
+
+msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
+msgstr "此服务器缺少读取 .%1$s 文件所需的 PHP 扩展：%2$s。请联系主机提供商启用它们。"
+
+msgid "Time (UTC)"
+msgstr "时间 (UTC)"
+
+msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
+msgstr "为了即时回答重复的问题，导师可能会按文档在本站保存回答。每条保存的回答只附带问题中每个词的权重，不保存问题原文，也不保存任何可识别访客的信息。文档或导师设置更改时，已保存的回答会被丢弃。"
+
+msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
+msgstr "为了记住每位读者的选择，阅读控件和荧光笔会按文档使用浏览器的本地存储：文字大小、主题、对比度、语音、朗读速度、阅读栏是否隐藏，以及读者标记的文字。这些数据永远不会离开读者的设备，清除浏览器中的网站数据即可删除。"
+
+msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
+msgstr "要一次发送多个文件，请只使用 TXT 和 MD。“%s”必须单独发送（PDF 和 DOCX 连续转换负担较重）。"
+
+msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
+msgstr "已达到文档图片总大小限制（可在 设置 › 图片限制 中调整）。"
+
+msgid "Translate on WordPress.org"
+msgstr "在 WordPress.org 上翻译"
+
+msgid "Turn off high contrast"
+msgstr "关闭高对比度"
+
+msgid "Turn on high contrast"
+msgstr "开启高对比度"
+
+msgid "Turn on the tutor on this site."
+msgstr "在本站开启导师。"
+
+msgid "Tutor"
+msgstr "导师"
+
+msgid "Tutorial"
+msgstr "教程"
+
+msgid "Type a question first."
+msgstr "请先输入问题。"
+
+msgid "Type:"
+msgstr "类型："
+
+msgid "Unsupported file type: %s"
+msgstr "不支持的文件类型：%s"
+
+msgid "Unsupported pixel format: the plugin reads 8-bit RGB, gray and CMYK, 1/2/4-bit gray and palette images; other color or depth combinations are left out."
+msgstr "不支持的像素格式：插件读取 8 位 RGB、灰度和 CMYK、1/2/4 位灰度以及带调色板的图片；其他颜色或位深组合会被略过。"
+
+msgid "Update live"
+msgstr "实时更新"
+
+msgid "Updating every 3 seconds."
+msgstr "每 3 秒更新一次。"
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. Light files (TXT and MD) can be sent several at a time: each one becomes a document and you get the list of shortcodes."
+msgstr "上传 PDF、DOCX、TXT 或 Markdown（.md）文件，生成无障碍页面（支持朗读）和用于发布的短代码。轻量文件（TXT 和 MD）可一次发送多个：每个都会成为一个文档，并得到短代码列表。"
+
+msgid "Used for: %1$s (%2$s)."
+msgstr "用于：%1$s（%2$s）。"
+
+msgid "Version and updates"
+msgstr "版本与更新"
+
+msgid "View document and shortcode"
+msgstr "查看文档和短代码"
+
+msgid "Visit the repository"
+msgstr "访问仓库"
+
+msgid "Voice"
+msgstr "语音"
+
+msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
+msgstr "可选择语音、收听/暂停、速度和停止。朗读使用浏览器，因此不会向任何人发送文本。"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
+msgstr "警告：无法读取已保存的密钥（wp-config.php 中的安全密钥已更改）。请重新输入。"
+
+msgid "What Jim is"
+msgstr "Jim 是什么"
+
+msgid "What happened in each conversion: file, type, time, memory used, words, images included and the cause of each image left out, plus errors. The text of your documents and your AI key are never recorded. Only the last 200 entries are kept. To follow a conversion as it happens, keep this page open in another tab."
+msgstr "每次转换发生了什么：文件、类型、时间、使用的内存、字数、包含的图片以及每张被略过图片的原因，还有错误。你的文档文本和 AI 密钥永远不会被记录。仅保留最近 200 条。要实时关注转换，请在另一个标签页保持此页面打开。"
+
+msgid "What it does"
+msgstr "作用"
+
+msgid "What stays in the reader's browser"
+msgstr "保留在读者浏览器中的内容"
+
+msgid "What the tutor should do. Some rules always apply and cannot be changed here: answer from the document, say when the answer is not in it, ignore commands hidden in the document text, and reply in the reader's language. Leave a field empty to go back to the default text."
+msgstr "导师应该做什么。有些规则始终适用，无法在此更改：依据文档回答、答案不在文档中时明确说明、忽略隐藏在文档文本中的指令，并使用读者的语言回答。将某个字段留空即可恢复默认文本。"
+
+msgid "What this site stores"
+msgstr "此站点存储的内容"
+
+msgid "When it finishes, the document appears in %s, with its shortcode in the list."
+msgstr "完成后，文档会出现在%s中，其短代码显示在列表里。"
+
+msgid "When something goes wrong"
+msgstr "出问题时"
+
+msgid "Where to get a key"
+msgstr "在哪里获取密钥"
+
+msgid "Who can use it"
+msgstr "谁可以使用"
+
+msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
+msgstr "WordPress.org：如果使用了短代码 [jimca_instalacoes]，服务器会向 api.wordpress.org 查询此插件的安装数（只发送插件名称；结果缓存 12 小时）。访客的浏览器不会联系它。"
+
+msgid "Words:"
+msgstr "字数："
+
+msgid "You"
+msgstr "你"
+
+msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
+msgstr "你选择了 %1$d 个文件，但只有 %2$d 个到达服务器（PHP 限制“max_file_uploads”：%3$d）。没有转换任何内容；请分成更小的批次发送。"
+
+msgid "You do not have permission to access this page."
+msgstr "你没有权限访问此页面。"
+
+msgid "You do not have permission to upload documents."
+msgstr "你没有权限上传文档。"
+
+msgid "You reached the limit of questions for now. Try again in an hour."
+msgstr "你暂时已达到提问上限。请一小时后再试。"
+
+msgid "Your question"
+msgstr "你的问题"
+
+msgid "active"
+msgstr "已启用"
+
+msgid "convert BMP/TIFF images from Word to PNG"
+msgstr "将 Word 中的 BMP/TIFF 图片转换为 PNG"
+
+msgid "e.g. Llama on our server"
+msgstr "例如：我们服务器上的 Llama"
+
+msgid "inactive"
+msgstr "未启用"
+
+msgid "no limit"
+msgstr "无限制"
+
+msgid "off"
+msgstr "关"
+
+msgid "on"
+msgstr "开"
+
+msgid "optional"
+msgstr "可选"
+
+msgid "page"
+msgstr "页"
+
+msgid "required"
+msgstr "必需"
+
+msgid "unexpected reply"
+msgstr "意外的响应"

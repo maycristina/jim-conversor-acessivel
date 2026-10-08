@@ -9,10 +9,10 @@ class JIMCA_Txt_Converter implements JIMCA_Converter_Interface {
 		$contents = file_get_contents( $file_path );
 
 		if ( false === $contents ) {
-			throw new JIMCA_Converter_Exception( esc_html__( 'Não foi possível ler o arquivo TXT.', 'jim-conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'Could not read the TXT file.', 'jim-conversor-acessivel' ) );
 		}
 
-		// Garante UTF-8 (arquivos .txt são comuns em Latin-1/Windows-1252).
+		// Plain-text files are often saved as Windows-1252 rather than UTF-8.
 		if ( ! mb_check_encoding( $contents, 'UTF-8' ) ) {
 			$contents = mb_convert_encoding( $contents, 'UTF-8', 'Windows-1252' );
 		}
@@ -30,7 +30,7 @@ class JIMCA_Txt_Converter implements JIMCA_Converter_Interface {
 		}
 
 		if ( '' === $html ) {
-			throw new JIMCA_Converter_Exception( esc_html__( 'O arquivo TXT está vazio.', 'jim-conversor-acessivel' ) );
+			throw new JIMCA_Converter_Exception( esc_html__( 'The TXT file is empty.', 'jim-conversor-acessivel' ) );
 		}
 
 		return $html;

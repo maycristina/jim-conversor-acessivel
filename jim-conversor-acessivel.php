@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Jim - Conversor Acessível
+ * Plugin Name:       Jim - Accessible Converter
  * Plugin URI:         https://jim.mabo.cc/
- * Description:       Converts PDF, Word and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
- * Version:            1.0.0
+ * Description:       Converts PDF, Word, Markdown and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
+ * Version:            2.0.0
  * Requires at least:  6.0
  * Requires PHP:       7.4
  * Author:             Mayara Nascimento
@@ -15,27 +15,39 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Acesso direto não permitido.
+	exit;
 }
 
-define( 'JIMCA_VERSION', '1.0.0' );
+define( 'JIMCA_VERSION', '2.0.0' );
 define( 'JIMCA_PLUGIN_FILE', __FILE__ );
 define( 'JIMCA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'JIMCA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'JIMCA_PLUGIN_SLUG', 'jim-conversor-acessivel' );
 
 /**
- * Endereços públicos do projeto, usados nos links da tela de Plugins e na
- * página de Tutorial. Ficam em constantes para existir um único lugar a
- * mudar quando algum deles mudar.
+ * The "?ver=" of a plugin CSS/JS file: plugin version plus the file's
+ * modification time, so a changed file reaches browsers and server/CDN
+ * caches without bumping the plugin version.
+ *
+ * @param string $relative Path relative to the plugin folder, e.g. "assets/css/frontend.css".
+ * @return string
+ */
+function jimca_asset_version( $relative ) {
+	$mtime = @filemtime( JIMCA_PLUGIN_DIR . $relative ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- a missing file just falls back to the plugin version.
+
+	return $mtime ? JIMCA_VERSION . '.' . $mtime : JIMCA_VERSION;
+}
+
+/**
+ * Public project addresses, used on the Plugins screen and the Tutorial page.
  */
 define( 'JIMCA_REPO_URL', 'https://github.com/maycristina/jim-conversor-acessivel' );
 define( 'JIMCA_SITE_URL', 'https://jim.mabo.cc/' );
 define( 'JIMCA_AUTHOR_URL', 'https://github.com/maycristina' );
 
 /**
- * Autoload das dependências do Composer (smalot/pdfparser, phpoffice/phpword).
- * Necessário rodar `composer install` na pasta do plugin antes de usar.
+ * Composer dependencies (smalot/pdfparser, phpoffice/phpword). The release
+ * zip ships vendor/; from the repository, run `composer install --no-dev`.
  */
 $jimca_autoload = JIMCA_PLUGIN_DIR . 'vendor/autoload.php';
 if ( file_exists( $jimca_autoload ) ) {
@@ -43,7 +55,8 @@ if ( file_exists( $jimca_autoload ) ) {
 }
 
 /**
- * Autoload simples das classes internas do plugin (prefixo JIMCA_).
+ * Plugin classes: JIMCA_Foo_Bar lives in class-foo-bar.php under includes/,
+ * includes/converters/ or admin/.
  */
 spl_autoload_register(
 	function ( $class_name ) {
@@ -70,16 +83,21 @@ spl_autoload_register(
 register_activation_hook( JIMCA_PLUGIN_FILE, array( 'JIMCA_Activator', 'activate' ) );
 register_deactivation_hook( JIMCA_PLUGIN_FILE, array( 'JIMCA_Deactivator', 'deactivate' ) );
 
-/**
- * Inicializa o plugin depois que todos os plugins foram carregados.
- */
 function jimca_run_plugin() {
 	if ( ! file_exists( JIMCA_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 		add_action(
 			'admin_notices',
 			function () {
-				echo '<div class="notice notice-error"><p>';
-				echo esc_html__( 'Jim - Conversor Acessível: as dependências do Composer não foram instaladas. Rode "composer install" na pasta do plugin.', 'jim-conversor-acessivel' );
+				// Only for whoever can fix it (reinstall the plugin), and only on the Plugins screen and Jim's own screens.
+				if ( ! current_user_can( 'activate_plugins' ) ) {
+					return;
+				}
+				$screen = get_current_screen();
+				if ( ! $screen || ( 'plugins' !== $screen->id && false === strpos( $screen->id, 'jimca' ) ) ) {
+					return;
+				}
+				echo '<div class="notice notice-error is-dismissible"><p>';
+				echo esc_html__( 'Jim - Accessible Converter: the vendor/ folder (PDF and Word libraries) is missing from the plugin. Reinstall the plugin from the official package; if you use the repository code, run "composer install --no-dev" in the plugin folder.', 'jim-conversor-acessivel' );
 				echo '</p></div>';
 			}
 		);

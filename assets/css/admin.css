@@ -1,7 +1,7 @@
 /*
- * Estilos das telas de administração do Jim - Conversor Acessível.
- * Carregado só nas telas do próprio plugin (ver JIMCA_Admin::enqueue_assets()),
- * então não interfere em nenhuma outra tela do wp-admin.
+ * Styles of the Jim - Accessible Converter admin screens. Loaded only on the
+ * plugin's own screens (see JIMCA_Admin::enqueue_admin_assets()), so no other
+ * wp-admin screen is affected.
  */
 
 :root {
@@ -98,7 +98,7 @@
 	padding-bottom: 1.1rem;
 }
 
-/* ---------- Página de Tutorial ---------- */
+/* ---------- Tutorial page ---------- */
 
 .jimca-admin-card h3 {
 	margin-bottom: 0.4rem;
@@ -135,10 +135,6 @@
 	background: #f0f0f1;
 	padding: 2px 6px;
 	border-radius: 3px;
-}
-
-.jimca-admin-card--author {
-	border-left: 4px solid var(--jimca-admin-accent);
 }
 
 .jimca-admin-links {
@@ -187,8 +183,8 @@
 }
 
 /*
- * Estado "convertendo…" do formulário de upload. Fica logo abaixo do botão
- * de envio, onde o olhar do usuário já está depois do clique.
+ * Upload progress, right below the submit button, where the eyes already are
+ * after the click.
  */
 .jimca-admin-progress[hidden] {
 	display: none;
@@ -235,7 +231,7 @@
 	}
 }
 
-/* Botão de envio enquanto o upload está em andamento. */
+/* Submit button while the upload is in progress. */
 .jimca-admin-card .button[aria-disabled="true"],
 .jimca-admin-card .button.is-busy {
 	opacity: 0.65;
@@ -259,8 +255,8 @@
 	}
 
 	/*
-	 * Sem o giro, o círculo sozinho não comunica "em andamento", então
-	 * mantemos um indicador estático de alto contraste no lugar.
+	 * Without the spin, the circle alone does not say "in progress", so a
+	 * static high-contrast indicator takes its place.
 	 */
 	.jimca-admin-spinner {
 		animation: none;
@@ -292,4 +288,87 @@
 	.jimca-admin-card .form-table th {
 		width: auto;
 	}
+}
+
+/* Activity log (Settings). The level is always written out; color only reinforces it. */
+.jimca-log-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1rem;
+}
+
+.jimca-log-scroll {
+	max-height: 26rem;
+	overflow: auto;
+	border: 1px solid #c3c4c7;
+}
+
+.jimca-log-scroll .jimca-admin-table {
+	border: 0;
+}
+
+.jimca-log-level--error {
+	color: #b32d2e;
+}
+
+.jimca-log-level--warning {
+	color: #8a4600;
+}
+
+.jimca-log-level--info {
+	color: #1d2327;
+}
+
+/*
+ * Admin notices on Jim's screens: no colored side border (WordPress core draws
+ * a gray/green/red one), black text. This sheet only loads on Jim's screens,
+ * so other wp-admin screens keep the default.
+ */
+.wrap .notice,
+.wrap div.updated,
+.wrap div.error {
+	border-left: 0;
+	color: #000;
+}
+
+/* AI card: one group per provider. */
+.jimca-ai-provider {
+	margin: 1rem 0;
+	padding: 0 1rem;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.jimca-ai-provider legend {
+	padding: 0 0.4rem;
+	font-weight: 600;
+}
+
+.jimca-admin-progress__bar {
+	display: block;
+	width: 100%;
+	max-width: 32rem;
+	height: 0.75rem;
+	margin-top: 0.5rem;
+	accent-color: var(--jimca-admin-accent);
+}
+
+.jimca-admin-progress__bar[hidden] {
+	display: none;
+}
+
+.jimca-admin-progress__detail {
+	display: block;
+	margin-top: 0.25rem;
+	color: #50575e;
+}
+
+.jimca-admin-progress.is-failed {
+	background: #fcf0f1;
+	border-color: #d63638;
+}
+
+.jimca-admin-progress.is-failed .jimca-admin-progress__detail {
+	color: #1d2327;
 }

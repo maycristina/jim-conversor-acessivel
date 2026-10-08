@@ -19,9 +19,14 @@ class JIMCA_Activator {
 
 	public static function default_settings() {
 		return array(
-			'allowed_types'          => array( 'pdf', 'docx', 'txt' ),
+			'settings_version'       => 3,
+			'allowed_types'          => array( 'pdf', 'docx', 'txt', 'md' ),
 			'max_file_size_mb'       => 10,
 			'delete_original_after'  => true,
+			'include_images'         => true,
+			'seo_enabled'            => true,
+			'max_images'             => JIMCA_Limits::DEFAULT_MAX_IMAGES,
+			'max_images_mb'          => JIMCA_Limits::DEFAULT_MAX_IMAGES_MB,
 			'wporg_slug'             => JIMCA_PLUGIN_SLUG,
 			'tts_default_rate'       => 1,
 			'theme'                  => 'light',

@@ -1,12 +1,11 @@
 /*
- * Visualizador de documento acessível.
+ * Accessible document viewer.
  *
- * Segue WCAG 2.1 AA (contraste mínimo 4.5:1 em texto, foco sempre visível,
- * medida de linha legível, respeito a prefers-reduced-motion) e, no player,
- * os tokens do Material Design 3: alvo de toque de 48dp, ícone de 24dp,
- * grade de 8dp, escala tipográfica (label-large 14/20/500/0.1px), formas
- * (extra-large 28dp na barra) e elevação (nível 3 na barra, nível 2 nos
- * menus).
+ * Follows WCAG 2.1 AA (4.5:1 minimum text contrast, always-visible focus,
+ * readable line length, prefers-reduced-motion) and, in the player, Material
+ * Design 3 tokens: 48dp touch target, 24dp icons, 8dp grid, type scale
+ * (label-large 14/20/500/0.1px), shapes (extra-large 28dp on the bar) and
+ * elevation (level 3 on the bar, level 2 on menus).
  */
 
 .jimca-viewer {
@@ -19,11 +18,9 @@
 	--jimca-highlight-border: #8a6d00;
 
 	/*
-	 * Player: superfície própria, que não acompanha o fundo do texto.
-	 * A barra flutua sobre o conteúdo e precisa se destacar dele.
-	 * `--jimca-player-fg` é o cinza neutro dos ícones em repouso e
-	 * `--jimca-player-fg-strong` o tom mais escuro usado quando a leitura
-	 * está em andamento.
+	 * Player: a surface of its own, independent of the text background, so
+	 * the floating bar stands out. `--jimca-player-fg` is the neutral gray of
+	 * idle icons; `--jimca-player-fg-strong` the darker tone while reading.
 	 */
 	--jimca-player-surface: #ffffff;
 	--jimca-player-fg: #44474a;
@@ -32,15 +29,15 @@
 	--jimca-player-selected: rgba(11, 74, 143, 0.12);
 	--jimca-player-state: rgba(0, 0, 0, 0.08);
 
-	/* Espaçamento interno do documento, em token para o conteúdo poder
-	   reservar espaço para a barra flutuante. */
+	/* Inner spacing of the document, as a token so the content can reserve
+	   room for the floating bar. */
 	--jimca-pad: 1.25rem;
 
-	/* Elevação Material 3. */
+	/* Material 3 elevation. */
 	--jimca-elev-2: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
 	--jimca-elev-3: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
 
-	/* Motion Material 3. */
+	/* Material 3 motion. */
 	--jimca-ease-in: cubic-bezier(0.3, 0, 0.8, 0.15);
 	--jimca-ease-out: cubic-bezier(0.05, 0.7, 0.1, 1);
 
@@ -49,21 +46,19 @@
 	max-width: 100%;
 	box-sizing: border-box;
 	padding: var(--jimca-pad);
-	border: 1px solid var(--jimca-border);
 	border-radius: 8px;
 	font-size: 1rem;
 	line-height: 1.6;
 }
 
 /*
- * Temas: "Claro" é o padrão acima. "Sépia" e "Escuro" usam uma classe
- * extra (`.jimca-viewer.jimca-theme-*`), com mais especificidade que a
- * regra base, então sempre vencem quando aplicadas — seja o padrão
- * definido pelo admin em Configurações, seja a escolha do leitor no menu
- * do player. `.jimca-high-contrast` vem depois (mesma especificidade,
- * ordem posterior) e tem prioridade sobre qualquer tema.
- * Os temas são explícitos e não seguem prefers-color-scheme: quem decide
- * é o admin (padrão do site) ou o leitor (na hora).
+ * Themes: "Light" is the default above. "Sepia" and "Dark" add a class
+ * (`.jimca-viewer.jimca-theme-*`) with higher specificity than the base rule,
+ * so they win whether set as the site default in Settings or chosen by the
+ * reader. `.jimca-high-contrast` comes later (same specificity, later order)
+ * and overrides any theme, including the default "Light".
+ * Themes are explicit and do not follow prefers-color-scheme: the site
+ * default or the reader decides.
  */
 .jimca-viewer.jimca-theme-sepia {
 	--jimca-fg: #3a2f1e;
@@ -99,29 +94,48 @@
 	--jimca-player-state: rgba(255, 255, 255, 0.10);
 }
 
+/*
+ * High contrast: black background, white text and yellow highlights, the
+ * classic high-contrast scheme (21:1 on text, 19.6:1 on yellow). A palette
+ * of its own, far from the three themes, so the change is obvious from any
+ * of them, including "Light", where dark-on-white would barely change.
+ */
 .jimca-viewer.jimca-high-contrast {
-	--jimca-fg: #000000;
-	--jimca-bg: #ffffff;
-	--jimca-border: #000000;
-	--jimca-accent: #0000ee;
-	--jimca-accent-fg: #ffffff;
-	--jimca-highlight-bg: #ffff00;
-	--jimca-highlight-border: #000000;
+	--jimca-fg: #ffffff;
+	--jimca-bg: #000000;
+	--jimca-border: #ffffff;
+	--jimca-accent: #ffff00;
+	--jimca-accent-fg: #000000;
+	--jimca-highlight-bg: #33331a;
+	--jimca-highlight-border: #ffff00;
 
-	--jimca-player-surface: #ffffff;
-	--jimca-player-fg: #000000;
-	--jimca-player-fg-strong: #000000;
-	--jimca-player-outline: #000000;
-	--jimca-player-selected: #ffff00;
-	--jimca-player-state: rgba(0, 0, 0, 0.14);
+	--jimca-player-surface: #000000;
+	--jimca-player-fg: #ffffff;
+	--jimca-player-fg-strong: #ffff00;
+	--jimca-player-outline: #ffffff;
+	--jimca-player-selected: #33331a;
+	--jimca-player-state: rgba(255, 255, 0, 0.18);
+}
+
+/* Yellow links and headings, and visible borders on the bar and menus. */
+.jimca-viewer.jimca-high-contrast .jimca-content a,
+.jimca-viewer.jimca-high-contrast .jimca-content :is(h1, h2, h3, h4, h5, h6) {
+	color: var(--jimca-accent);
+}
+
+.jimca-viewer.jimca-high-contrast .jimca-player__bar,
+.jimca-viewer.jimca-high-contrast .jimca-player__menu,
+.jimca-viewer.jimca-high-contrast .jimca-player__restore,
+.jimca-viewer.jimca-high-contrast.jimca-toc-enhanced .jimca-toc {
+	outline: 2px solid var(--jimca-player-outline);
 }
 
 .jimca-viewer * {
 	box-sizing: inherit;
 }
 
-/* Reserva espaço para a barra flutuante não cobrir as últimas linhas.
-   Só quando o player está ativo (classe posta pelo JS). */
+/* Room so the floating bar does not cover the last lines.
+   Only while the player is active (class set by the JS). */
 .jimca-viewer.jimca-player-active {
 	padding-bottom: calc(var(--jimca-pad) + 96px);
 }
@@ -169,14 +183,13 @@
 }
 
 /* ------------------------------------------------------------------
- * Player de leitura
+ * Reading player
  * ------------------------------------------------------------------ */
 
 /*
- * A barra flutua fixa no rodapé da janela enquanto o documento está à
- * vista. O JS acrescenta `is-visible` (via IntersectionObserver) para que
- * ela não fique sobrando por cima do resto da página quando o leitor já
- * passou do documento.
+ * The bar floats fixed at the bottom of the window while the document is in
+ * view. The JS adds `is-visible` (IntersectionObserver) so it does not linger
+ * over the rest of the page after the reader has gone past the document.
  */
 .jimca-player {
 	position: fixed;
@@ -188,7 +201,7 @@
 	display: flex;
 	justify-content: center;
 
-	/* Os vãos ao redor da barra não devem bloquear cliques no texto. */
+	/* The gaps around the bar must not block clicks on the text. */
 	pointer-events: none;
 
 	opacity: 0;
@@ -218,7 +231,7 @@
 	width: 100%;
 	padding: 8px;
 
-	/* Material 3: forma extra-large (28dp) e elevação nível 3. */
+	/* Material 3: extra-large shape (28dp) and level 3 elevation. */
 	border-radius: 28px;
 	background: var(--jimca-player-surface);
 	box-shadow: var(--jimca-elev-3);
@@ -241,10 +254,9 @@
 }
 
 /*
- * Botão de ícone. 48dp é o alvo de toque mínimo do Material 3; a largura
- * pode encolher até 40px em telas muito estreitas (sete botões a 48dp não
- * cabem num celular de 320px), o que continua bem acima do mínimo de
- * 24x24 CSS px exigido pelo WCAG 2.2 (2.5.8).
+ * Icon button. 48dp is Material 3's minimum touch target; the width may shrink
+ * to 40px on very narrow screens (seven 48dp buttons do not fit a 320px
+ * phone), still well above WCAG 2.2's 24x24 CSS px minimum (2.5.8).
  */
 .jimca-player__btn {
 	position: relative;
@@ -263,7 +275,7 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
-/* Camada de estado do Material 3: 8% no hover, 12% ao pressionar. */
+/* Material 3 state layer: 8% on hover, 12% when pressed. */
 .jimca-player__btn::before {
 	content: "";
 	position: absolute;
@@ -285,7 +297,7 @@
 
 .jimca-player__btn[disabled] {
 	cursor: default;
-	opacity: 0.38; /* Material 3: conteúdo desabilitado a 38%. */
+	opacity: 0.38; /* Material 3: disabled content at 38%. */
 }
 
 .jimca-player__btn[disabled]::before {
@@ -304,8 +316,7 @@
 }
 
 /*
- * Estado "tocando": o ícone vira pausa (trocado pelo JS) e o tom escurece,
- * como especificado no design.
+ * "Playing" state: the icon becomes pause (swapped by the JS) and the tone darkens.
  */
 .jimca-player__btn--play[aria-pressed="true"],
 .jimca-player__btn[aria-expanded="true"] {
@@ -316,7 +327,7 @@
 	opacity: 0.12;
 }
 
-/* Botão que traz a barra de volta depois de oculta. */
+/* Button that brings the bar back after it was hidden. */
 .jimca-player__restore {
 	display: inline-flex;
 	align-items: center;
@@ -342,27 +353,26 @@
 }
 
 /* ------------------------------------------------------------------
- * Menus do player (padrão FAB menu / menu do Material 3)
+ * Player menus (Material 3 FAB menu / menu pattern)
  * ------------------------------------------------------------------ */
 
 .jimca-player__menu {
 	position: absolute;
 	bottom: calc(100% + 8px);
 	left: 50%;
-	min-width: 112px; /* Material 3: largura mínima de menu. */
+	min-width: 112px; /* Material 3: minimum menu width. */
 	max-width: min(280px, calc(100vw - 32px));
 	max-height: 50vh;
 	overflow-y: auto;
 	padding: 8px 0;
 	margin: 0;
 
-	/* Raio de 10px e sombra leve, conforme o design enviado. */
 	border-radius: 10px;
 	background: var(--jimca-player-surface);
 	box-shadow: var(--jimca-elev-2);
 
-	/* `--jimca-menu-shift` é ajustado pelo JS para o menu não vazar da
-	   tela quando o botão está perto da borda. */
+	/* `--jimca-menu-shift` is set by the JS so the menu stays on screen
+	   when its button is near an edge. */
 	transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px)));
 	transform-origin: bottom center;
 	animation: jimca-menu-in 200ms var(--jimca-ease-out);
@@ -385,8 +395,8 @@
 }
 
 /*
- * Item de menu: altura mínima de 48dp e tipografia label-large do
- * Material 3 (14px / 20px / peso 500 / 0.1px de espaçamento).
+ * Menu item: 48dp minimum height and Material 3 label-large type
+ * (14px / 20px / weight 500 / 0.1px letter spacing).
  */
 .jimca-player__menuitem {
 	display: flex;
@@ -415,7 +425,7 @@
 	background: var(--jimca-player-selected);
 }
 
-/* Marca de seleção nos menus de escolha única (tema, voz, velocidade). */
+/* Check mark in single-choice menus (theme, voice, speed). */
 .jimca-player__menuitem[aria-checked="true"]::after {
 	content: "";
 	width: 16px;
@@ -434,7 +444,135 @@
 }
 
 /* ------------------------------------------------------------------
- * Conteúdo
+ * Table of contents
+ * ------------------------------------------------------------------ */
+
+/*
+ * Without JS: a box with the list of headings before the text, already a
+ * linked index.
+ */
+.jimca-toc {
+	margin: 0 0 1.5rem;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--jimca-border);
+	border-radius: 8px;
+}
+
+.jimca-toc__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.jimca-toc__title {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.jimca-toc__close[hidden] {
+	display: none;
+}
+
+.jimca-toc__list,
+.jimca-toc__list ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Each level is indented 16px, like the chapter list of an e-book reader. */
+.jimca-toc__list ol {
+	padding-left: 16px;
+}
+
+.jimca-toc__link {
+	display: block;
+	padding: 6px 8px;
+	border-radius: 6px;
+	color: inherit;
+	line-height: 1.35;
+	text-decoration: none;
+}
+
+.jimca-toc__link:hover {
+	text-decoration: underline;
+}
+
+/* First level stands out: parts and main chapters. */
+.jimca-toc__list > li > .jimca-toc__link {
+	font-weight: 600;
+}
+
+.jimca-toc__link[aria-current="location"] {
+	background: var(--jimca-player-selected);
+	box-shadow: inset 3px 0 0 var(--jimca-accent);
+}
+
+/*
+ * With JS: a side panel fixed on the left, over the page, opened from the
+ * reading bar. It sits above the bar (z-index 40) so the bar does not cover it
+ * on phones.
+ */
+.jimca-toc-enhanced .jimca-toc {
+	position: fixed;
+	z-index: 45;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: min(340px, 88vw);
+	margin: 0;
+	padding: 0 8px 24px;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	border: 0;
+	border-radius: 0 16px 16px 0;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	box-shadow: var(--jimca-elev-3);
+	font-size: 15px;
+	animation: jimca-toc-in 200ms var(--jimca-ease-out);
+}
+
+.jimca-toc-enhanced .jimca-toc[hidden] {
+	display: none;
+}
+
+/* Header stays at the top of the panel while the list scrolls. */
+.jimca-toc-enhanced .jimca-toc__header {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	padding: 12px 0 8px 8px;
+	background: var(--jimca-player-surface);
+}
+
+/* 44px touch target for the panel items. */
+.jimca-toc-enhanced .jimca-toc__link {
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+}
+
+.jimca-toc-enhanced .jimca-toc__link:hover {
+	text-decoration: none;
+	background: var(--jimca-player-state);
+}
+
+@keyframes jimca-toc-in {
+	from {
+		transform: translateX(-24px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+/* ------------------------------------------------------------------
+ * Content
  * ------------------------------------------------------------------ */
 
 .jimca-content {
@@ -445,6 +583,27 @@
 
 .jimca-content :is(h1, h2, h3, h4, h5, h6) {
 	line-height: 1.3;
+	scroll-margin-top: 1.5rem;
+}
+
+/*
+ * The content only gets focus from the "Skip to the document content" link
+ * (tabindex="-1", outside the Tab order). An outline around the whole
+ * document tells keyboard users nothing; the controls keep their focus outline.
+ */
+.jimca-viewer .jimca-content:focus,
+.jimca-viewer .jimca-content:focus-visible {
+	outline: none;
+}
+
+/* A heading focused from the table of contents gets focus without a button-like outline. */
+.jimca-content :is(h1, h2, h3, h4, h5, h6):focus {
+	outline: none;
+}
+
+.jimca-content :is(h1, h2, h3, h4, h5, h6):focus-visible {
+	outline: 3px solid var(--jimca-accent);
+	outline-offset: 4px;
 }
 
 .jimca-content h2.jimca-page-title {
@@ -461,7 +620,6 @@
 
 .jimca-content .jimca-reading {
 	background: var(--jimca-highlight-bg);
-	border-left: 4px solid var(--jimca-highlight-border);
 	padding-left: 0.5em;
 	margin-left: -0.5em;
 }
@@ -469,6 +627,77 @@
 .jimca-content img {
 	max-width: 100%;
 	height: auto;
+}
+
+.jimca-content .jimca-figure {
+	margin: 1.5em 0;
+}
+
+.jimca-content img.jimca-image {
+	display: block;
+	margin: 1em 0;
+}
+
+.jimca-content .jimca-figure img.jimca-image {
+	margin: 0;
+}
+
+/*
+ * Image being read aloud: an outline instead of the text background, and no
+ * indent, which on an image would shift the whole figure.
+ */
+.jimca-content img.jimca-reading {
+	background: none;
+	padding-left: 0;
+	margin-left: 0;
+	outline: 4px solid var(--jimca-highlight-border);
+	outline-offset: 4px;
+}
+
+/*
+ * In dark themes, drawings and charts with a transparent background (black
+ * lines, for instance) would vanish on the dark background. A light background
+ * behind the image keeps it as the author saw it.
+ */
+.jimca-theme-dark .jimca-content img.jimca-image,
+.jimca-viewer.jimca-high-contrast .jimca-content img.jimca-image {
+	background: #fff;
+}
+
+/*
+ * Printed table of contents from a PDF ("title ........ 87"): the title on
+ * the left, the page number on the right and a dotted leader between them,
+ * drawn in CSS (the text has no dots, which a screen reader would read one by
+ * one).
+ */
+.jimca-content .jimca-printed-toc {
+	list-style: none;
+	margin: 0 0 1.5em;
+	padding: 0;
+}
+
+.jimca-content .jimca-printed-toc li {
+	display: flex;
+	align-items: baseline;
+	gap: 0.4em;
+	margin: 0 0 0.35em;
+}
+
+.jimca-content .jimca-printed-toc__title {
+	flex: 0 1 auto;
+}
+
+.jimca-content .jimca-printed-toc__leader {
+	flex: 1 1 2em;
+	min-width: 2em;
+	border-bottom: 2px dotted currentColor;
+	opacity: 0.45;
+	transform: translateY(-0.25em);
+}
+
+.jimca-content .jimca-printed-toc__page {
+	flex: 0 0 auto;
+	font-variant-numeric: tabular-nums;
 }
 
 .jimca-content table {
@@ -480,7 +709,7 @@
 }
 
 /* ------------------------------------------------------------------
- * Preferências do sistema e telas pequenas
+ * System preferences and small screens
  * ------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -491,8 +720,8 @@
 	}
 }
 
-/* A barra do WordPress é fixa no topo e não interfere no rodapé, mas em
-   telas pequenas ela vira uma barra inferior em alguns temas de admin. */
+/* The WordPress toolbar is fixed at the top and does not touch the bottom, but
+   on small screens some admin themes turn it into a bottom bar. */
 @media (max-width: 600px) {
 	.jimca-viewer {
 		--jimca-pad: 1rem;
@@ -518,5 +747,620 @@
 	.jimca-player__bar {
 		gap: 0;
 		padding: 4px;
+	}
+
+	/*
+	 * With the table of contents button there are eight buttons: at 40px they
+	 * do not fit a 320px phone. 34px is still well above WCAG 2.2's 24x24
+	 * minimum (2.5.8), and the height stays 48px.
+	 */
+	.jimca-player__btn {
+		min-width: 34px;
+	}
+}
+
+/* The WordPress toolbar (logged-in users) is fixed at the top and would cover the panel. */
+body.admin-bar .jimca-toc-enhanced .jimca-toc {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	body.admin-bar .jimca-toc-enhanced .jimca-toc {
+		top: 46px;
+	}
+}
+
+/* ------------------------------------------------------------------
+ * "Blog post" mode: large title, time/listen/share bar and serif text,
+ * without the reader's floating bar.
+ * ------------------------------------------------------------------ */
+
+.jimca-mode-post .jimca-title {
+	margin: 0 0 1rem;
+	font-size: clamp(2rem, 6vw, 3rem);
+	font-weight: 800;
+	line-height: 1.15;
+	letter-spacing: -0.01em;
+}
+
+.jimca-postbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	min-height: 48px;
+	margin: 0 0 2rem;
+	padding: 0.25rem 0;
+	border-top: 1px solid color-mix(in srgb, var(--jimca-fg) 14%, transparent);
+	border-bottom: 1px solid color-mix(in srgb, var(--jimca-fg) 14%, transparent);
+	color: var(--jimca-fg);
+	max-width: 70ch;
+}
+
+.jimca-postbar__time {
+	margin: 0;
+	font-size: 0.875rem;
+	opacity: 0.8;
+}
+
+.jimca-postbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.jimca-postbar__actions[hidden] {
+	display: none;
+}
+
+.jimca-postbar__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.jimca-postbar__btn:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--jimca-fg) 8%, transparent);
+}
+
+.jimca-postbar__btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.jimca-postbar__btn [hidden] {
+	display: none;
+}
+
+.jimca-postbar__btn .jimca-player__icon {
+	--jimca-player-surface: var(--jimca-bg);
+}
+
+.jimca-mode-post .jimca-content {
+	font-family: Georgia, "Source Serif Pro", "Times New Roman", serif;
+	font-size: 1.25rem;
+	line-height: 1.7;
+}
+
+.jimca-mode-post .jimca-content :is(h1, h2, h3, h4, h5, h6) {
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+ * Image lightbox
+ * ------------------------------------------------------------------ */
+
+.jimca-lightbox-trigger {
+	display: inline-block;
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	line-height: 0;
+	cursor: zoom-in;
+}
+
+.jimca-lightbox-open {
+	overflow: hidden;
+}
+
+.jimca-lightbox {
+	width: 100vw;
+	max-width: 100vw;
+	height: 100vh;
+	max-height: 100vh;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: rgba(0, 0, 0, 0.9);
+	color: #ffffff;
+}
+
+.jimca-lightbox::backdrop {
+	background: rgba(0, 0, 0, 0.9);
+}
+
+.jimca-lightbox__stage {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: 56px 64px 16px;
+	box-sizing: border-box;
+}
+
+.jimca-lightbox__img {
+	display: block;
+	max-width: 100%;
+	max-height: calc(100vh - 150px);
+	object-fit: contain;
+	background: #ffffff;
+}
+
+.jimca-lightbox__caption {
+	max-width: 70ch;
+	margin: 12px 0 0;
+	font-size: 0.95rem;
+	text-align: center;
+}
+
+.jimca-lightbox__counter {
+	margin: 4px 0 0;
+	font-size: 0.8rem;
+	opacity: 0.8;
+}
+
+.jimca-lightbox__btn {
+	position: absolute;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 2px solid transparent;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.14);
+	color: #ffffff;
+	font-size: 2rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.jimca-lightbox__btn:hover {
+	background: rgba(255, 255, 255, 0.28);
+}
+
+.jimca-lightbox__btn:focus-visible {
+	outline: 3px solid #ffff00;
+	outline-offset: 2px;
+}
+
+.jimca-lightbox__btn[hidden] {
+	display: none;
+}
+
+.jimca-lightbox__close {
+	top: 8px;
+	right: 8px;
+}
+
+.jimca-lightbox__prev {
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.jimca-lightbox__next {
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@media (max-width: 600px) {
+	.jimca-lightbox__stage {
+		padding: 56px 8px 16px;
+	}
+}
+
+/* ------------------------------------------------------------------
+ * Highlighter
+ *
+ * Highlighted text is always dark on a light background, in any theme
+ * (dark included): the contrast comes from the highlight's own background and
+ * text colors, not from the theme.
+ * ------------------------------------------------------------------ */
+
+.jimca-content mark.jimca-mark {
+	padding: 0.05em 0.1em;
+	border-radius: 2px;
+	color: #1b1b1b;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+.jimca-mark--yellow {
+	background: #fff176;
+}
+
+.jimca-mark--green {
+	background: #b9f6ca;
+}
+
+.jimca-mark--blue {
+	background: #b3e5fc;
+}
+
+.jimca-mark--pink {
+	background: #f8bbd0;
+}
+
+/* High contrast: a single color plus an underline, so the highlight does not rely on color. */
+.jimca-viewer.jimca-high-contrast .jimca-content mark.jimca-mark {
+	background: #ffff00;
+	color: #000000;
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+}
+
+.jimca-marker {
+	position: fixed;
+	top: 16px;
+	left: 50%;
+	z-index: 100001;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	max-width: calc(100vw - 32px);
+	padding: 8px 12px;
+	transform: translateX(-50%);
+	border: 1px solid var(--jimca-player-outline, #c4c7c9);
+	border-radius: 28px;
+	background: var(--jimca-player-surface, #ffffff);
+	color: var(--jimca-player-fg-strong, #1a1c1e);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+	font-size: 0.875rem;
+}
+
+.jimca-marker[hidden] {
+	display: none;
+}
+
+.jimca-marker__swatch {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 2px solid #44474a;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.jimca-marker__swatch--yellow {
+	background: #fff176;
+}
+
+.jimca-marker__swatch--green {
+	background: #b9f6ca;
+}
+
+.jimca-marker__swatch--blue {
+	background: #b3e5fc;
+}
+
+.jimca-marker__swatch--pink {
+	background: #f8bbd0;
+}
+
+.jimca-marker__swatch:focus-visible,
+.jimca-marker__text:focus-visible {
+	outline: 3px solid var(--jimca-accent, #0b4a8f);
+	outline-offset: 2px;
+}
+
+.jimca-marker__text {
+	min-height: 32px;
+	padding: 4px 12px;
+	border: 1px solid var(--jimca-player-outline, #c4c7c9);
+	border-radius: 16px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.jimca-marker__text[hidden] {
+	display: none;
+}
+
+/* ---------------------------------------------------------------
+ * AI tutor: bubble in the bottom right corner and conversation panel,
+ * on Material 3 measures (64px top bar, 40px icon buttons, 48px field,
+ * label-small/body-small type). Colors come from the reading theme
+ * tokens, so it follows light, sepia, dark and high contrast; the font
+ * is the site's own.
+ * ------------------------------------------------------------- */
+.jimca-tutor[hidden],
+.jimca-tutor__panel[hidden],
+.jimca-tutor__chips[hidden],
+.jimca-tutor-restore[hidden],
+.jimca-tutor__icon-btn[hidden] {
+	display: none;
+}
+
+.jimca-tutor__fab {
+	position: fixed;
+	z-index: 41;
+	right: 16px;
+	bottom: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+	box-shadow: var(--jimca-elev-3);
+	cursor: pointer;
+}
+
+.jimca-tutor__panel {
+	position: fixed;
+	z-index: 45;
+	right: 16px;
+	bottom: 84px;
+	display: flex;
+	flex-direction: column;
+	width: min(360px, calc(100vw - 32px));
+	max-height: min(70vh, 600px);
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 16px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	box-shadow: var(--jimca-elev-3);
+	overflow: hidden;
+	font-family: inherit;
+}
+
+/* Top bar: title on the left, icon actions on the right, one line. */
+.jimca-tutor__header {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 4px;
+	min-height: 64px;
+	padding: 8px 8px 8px 20px;
+	box-sizing: border-box;
+}
+
+.jimca-viewer .jimca-tutor__title {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0.15px;
+	color: var(--jimca-player-fg-strong);
+}
+
+.jimca-tutor__icon-btn {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--jimca-player-fg);
+	cursor: pointer;
+}
+
+.jimca-tutor__icon-btn:hover {
+	background: var(--jimca-player-state);
+}
+
+.jimca-tutor__icon-btn:focus-visible,
+.jimca-tutor__chip:focus-visible,
+.jimca-tutor-restore__btn:focus-visible {
+	outline: 2px solid var(--jimca-accent);
+	outline-offset: 2px;
+}
+
+.jimca-tutor__icon-btn[aria-pressed="true"] {
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+}
+
+.jimca-tutor__icon-btn .jimca-player__icon {
+	width: 24px;
+	height: 24px;
+}
+
+/* Conversation */
+.jimca-tutor__log {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 12px;
+	min-height: 120px;
+	padding: 16px 20px;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+.jimca-tutor__msg {
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: var(--jimca-player-state);
+}
+
+.jimca-tutor__msg--user {
+	margin-left: 15%;
+	background: var(--jimca-player-selected);
+}
+
+.jimca-tutor__msg--error {
+	border: 1px solid currentColor;
+	background: transparent;
+}
+
+.jimca-tutor__msg.is-pending .jimca-tutor__text {
+	font-style: italic;
+}
+
+.jimca-viewer .jimca-tutor__who {
+	margin: 0 0 4px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 16px;
+	letter-spacing: 0.5px;
+	color: var(--jimca-player-fg);
+}
+
+/* Answers arrive as plain text: line breaks become paragraphs and lists. */
+.jimca-viewer .jimca-tutor__text {
+	margin: 0;
+	font-size: 15px;
+	line-height: 22px;
+	color: var(--jimca-player-fg-strong);
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+/* Suggestion chips under the greeting. */
+.jimca-tutor__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.jimca-tutor__chip {
+	min-height: 32px;
+	padding: 0 16px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 8px;
+	background: transparent;
+	color: var(--jimca-player-fg);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	letter-spacing: 0.1px;
+	cursor: pointer;
+}
+
+.jimca-tutor__chip:hover {
+	background: var(--jimca-player-selected);
+	color: var(--jimca-player-fg-strong);
+}
+
+/* Question field (outlined) and actions. */
+.jimca-tutor__form {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 12px 12px 4px 20px;
+	border-top: 1px solid var(--jimca-player-outline);
+}
+
+.jimca-tutor__input {
+	flex: 1 1 auto;
+	height: 48px;
+	max-height: 120px;
+	padding: 12px 16px;
+	box-sizing: border-box;
+	overflow-y: auto;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 8px;
+	background: var(--jimca-bg);
+	color: var(--jimca-fg);
+	font: inherit;
+	font-size: 15px;
+	line-height: 22px;
+	resize: none;
+}
+
+.jimca-tutor__input:focus {
+	padding: 11px 15px;
+	border: 2px solid var(--jimca-accent);
+	outline: none;
+}
+
+.jimca-tutor.is-listening .jimca-tutor__input {
+	border-color: var(--jimca-accent);
+}
+
+.jimca-tutor__form .jimca-tutor__icon-btn {
+	width: 48px;
+	height: 48px;
+}
+
+/* Send is the main action: a filled icon button. */
+.jimca-tutor__form .jimca-tutor__send {
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+}
+
+.jimca-tutor__form .jimca-tutor__send:hover {
+	background: var(--jimca-accent);
+	filter: brightness(1.15);
+}
+
+.jimca-viewer .jimca-tutor__note {
+	margin: 0;
+	padding: 4px 20px 16px;
+	font-size: 12px;
+	line-height: 16px;
+	letter-spacing: 0.4px;
+	color: var(--jimca-player-fg);
+}
+
+.jimca-tutor-restore {
+	margin: 1.5rem 0 0;
+}
+
+.jimca-tutor-restore__btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 0 16px;
+	border: 1px solid var(--jimca-border);
+	border-radius: 22px;
+	background: transparent;
+	color: var(--jimca-fg);
+	font: inherit;
+	cursor: pointer;
+}
+
+/* On narrow screens the reading bar takes the bottom: the bubble moves up so it does not cover it. */
+@media (max-width: 900px) {
+	.jimca-mode-reader .jimca-tutor__fab {
+		bottom: 92px;
+	}
+
+	.jimca-mode-reader .jimca-tutor__panel {
+		bottom: 160px;
+		max-height: calc(100vh - 180px);
 	}
 }

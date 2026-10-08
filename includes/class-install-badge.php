@@ -4,12 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shortcode [jimca_instalacoes] — mostra o número de instalações ativas
- * reportado pela API oficial do WordPress.org para este plugin.
- *
- * Os dados vêm de https://wordpress.org/plugins/jim-conversor-acessivel/.
- * Se a API não responder, o shortcode não exibe nada no site (mas mostra
- * um aviso para administradores logados).
+ * Shortcode [jimca_instalacoes]: the plugin's active install count, from the
+ * WordPress.org API (https://wordpress.org/plugins/jim-conversor-acessivel/).
+ * If the API does not answer, the shortcode shows nothing (administrators see
+ * a note).
  */
 class JIMCA_Install_Badge {
 
@@ -34,7 +32,7 @@ class JIMCA_Install_Badge {
 	public function render( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'formato' => 'texto', // texto|numero|badge
+				'formato' => 'texto', // "texto" or "numero". No image badge: loading one from a third party would send the visitor's IP there.
 			),
 			$atts,
 			self::TAG
@@ -43,13 +41,9 @@ class JIMCA_Install_Badge {
 		$slug = JIMCA_Admin::get_settings()['wporg_slug'];
 		$data = $this->get_active_installs( $slug );
 
-		if ( 'badge' === $atts['formato'] ) {
-			return $this->render_badge_image( $slug );
-		}
-
 		if ( null === $data ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				return '<p class="jimca-installs-notice">' . esc_html__( 'Contador de instalações: este plugin ainda não foi publicado no WordPress.org (visível só para administradores).', 'jim-conversor-acessivel' ) . '</p>';
+				return '<p class="jimca-installs-notice">' . esc_html__( 'Install counter: this plugin has not been published on WordPress.org yet (visible to administrators only).', 'jim-conversor-acessivel' ) . '</p>';
 			}
 			return '';
 		}
@@ -59,20 +53,15 @@ class JIMCA_Install_Badge {
 		}
 
 		return '<span class="jimca-installs-count">' . sprintf(
-			/* translators: %s: número de instalações ativas, formatado */
-			esc_html__( '%s instalações ativas', 'jim-conversor-acessivel' ),
+			/* translators: %s: number of active installs, formatted */
+			esc_html__( '%s active installs', 'jim-conversor-acessivel' ),
 			esc_html( number_format_i18n( $data ) )
 		) . '</span>';
 	}
 
-	private function render_badge_image( $slug ) {
-		$url = 'https://img.shields.io/wordpress/plugin/installs/' . rawurlencode( $slug ) . '.svg';
-		return '<img src="' . esc_url( $url ) . '" alt="' . esc_attr__( 'Número de instalações ativas no WordPress.org', 'jim-conversor-acessivel' ) . '" loading="lazy">';
-	}
-
 	/**
 	 * @param string $slug
-	 * @return int|null Número de instalações ativas, ou null se indisponível/não publicado.
+	 * @return int|null Active installs, or null when unavailable or not published.
 	 */
 	public function get_active_installs( $slug ) {
 		$cache_key = 'jimca_active_installs_' . $slug;
