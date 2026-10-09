@@ -80,6 +80,24 @@ Registrar data, leitor/navegador e resultado de cada item. **Ainda não executad
 | M8 | Celular físico | Barra e menus dentro da tela, também com o tema que alarga a página |
 | M9 | Ferramentas | axe DevTools, WAVE, Lighthouse e o validador HTML do W3C na página com o shortcode |
 
+## Teste em tela de celular emulada (2026-10-09)
+
+Chrome no Windows, WordPress Playground, página com o shortcode e 40 parágrafos, dentro de um
+`<iframe>` de **390 × 844 px** (a janela não pôde ser redimensionada; o iframe faz `innerWidth`
+e as media queries valerem 390 px), com `ontouchstart` definido e voz simulada.
+
+| Verificação | Resultado |
+|---|---|
+| `--jimca-vw` e rolagem horizontal | `390px`; sem rolagem horizontal, também no fim da página |
+| Barra de leitura | 8 a 367 px: inteira dentro da tela; 7 botões, 48 px de altura e 40 px de largura (mínimo WCAG 2.2: 24 px); nenhum fora da tela |
+| Menus de tamanho, voz e velocidade | Todos dentro da tela (8–116, 76–197, 185–293 px) |
+| Ouvir com o parágrafo 14 no topo | Começou no 14, não no início |
+| Parar | 0 trechos falados depois; aviso "Reading stopped."; sem destaque |
+| Links de atalho com foco | Aparecem (283 × 91 px, dentro da tela): conteúdo e controles; "controles" leva ao `toolbar` |
+
+**Limites:** é emulação, não aparelho. Faltam toque real, teclado virtual, voz do sistema, o tema
+do site que alarga a página (o caso do commit `e56a6a9`) e Safari/iOS. M8 segue **pendente**.
+
 ## Não verificado
 
 - Nenhum leitor de tela real (M3 a M5) e nenhum celular físico (M4, M8) nesta rodada.
