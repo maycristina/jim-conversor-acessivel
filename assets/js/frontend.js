@@ -849,7 +849,30 @@
 		setupPlayerVisibility( viewer, player );
 	}
 
+	/*
+	 * Real screen width for the CSS (`--jimca-vw`). Some themes and page
+	 * elements widen the layout viewport on phones, so `100%` and `100vw`
+	 * can be wider than the screen and the fixed bar and panels end up
+	 * partly off it. On touch devices the narrower of the layout width and
+	 * the screen width wins; `jimca-vp-expanded` marks the widened case so
+	 * the bar hugs the left edge instead of the (off-screen) center.
+	 */
+	function syncViewportWidth() {
+		var root = document.documentElement;
+		var layoutW = window.innerWidth || root.clientWidth;
+		var screenW = window.screen && window.screen.width ? window.screen.width : layoutW;
+		var touch = ( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 );
+		var width = touch ? Math.min( layoutW, screenW ) : layoutW;
+
+		root.style.setProperty( '--jimca-vw', width + 'px' );
+		root.classList.toggle( 'jimca-vp-expanded', touch && layoutW > width + 1 );
+	}
+
 	function init() {
+		syncViewportWidth();
+		window.addEventListener( 'resize', syncViewportWidth );
+		window.addEventListener( 'orientationchange', syncViewportWidth );
+
 		Array.prototype.forEach.call(
 			document.querySelectorAll( '[data-jimca-viewer]' ),
 			initViewer

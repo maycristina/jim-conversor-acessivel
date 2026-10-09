@@ -1299,3 +1299,108 @@ msgstr ""
 
 msgid "unexpected reply"
 msgstr ""
+
+msgid "Conversion review"
+msgstr ""
+
+msgid "Did you find problems in the conversion?"
+msgstr ""
+
+msgid "Click here"
+msgstr ""
+
+msgid "to review the conversion"
+msgstr ""
+
+msgid "Checks the document for headings that are not headings, text outside paragraphs, empty paragraphs and broken line breaks, which stop screen readers and the Listen button from working well."
+msgstr ""
+
+msgid "No semantic or structure problems were found."
+msgstr ""
+
+msgid "%s problem found."
+msgstr ""
+
+msgid "%s problems found."
+msgstr ""
+
+msgid "Fix all"
+msgstr ""
+
+msgid "Fix this"
+msgstr ""
+
+msgid "Fix this: %s"
+msgstr ""
+
+msgid "Structural error:"
+msgstr ""
+
+msgid "Warning:"
+msgstr ""
+
+msgid "Checked %1$s blocks in %2$s ms."
+msgstr ""
+
+msgid "The fixes change the editor only. Click \"Update\" to save them."
+msgstr ""
+
+msgid "Empty paragraph (used only as spacing). Screen readers announce it as \"blank\"."
+msgstr ""
+
+msgid "Empty heading: a screen reader announces a heading with nothing to read."
+msgstr ""
+
+msgid "Visual heading without a heading tag (%s): a screen reader reads it as plain text and \"jump to next heading\" skips it."
+msgstr ""
+
+msgid "it is all in bold"
+msgstr ""
+
+msgid "it has a large font"
+msgstr ""
+
+msgid "its class says it is a title"
+msgstr ""
+
+msgid "it starts like a chapter or section title"
+msgstr ""
+
+msgid "Line breaks (<br><br>) used instead of separate paragraphs. The reader pauses wrongly and announces the block as a single paragraph."
+msgstr ""
+
+msgid "A single sentence is broken over %s heading tags: the reader announces each piece as a separate heading."
+msgstr ""
+
+msgid "Long text inside a heading tag: it looks like a paragraph, and the heading list of the reader gets polluted."
+msgstr ""
+
+msgid "The heading level jumps from h%1$s to h%2$s. Readers that navigate by level lose the hierarchy."
+msgstr ""
+
+msgid "Text outside any paragraph (<p>): a screen reader may skip it, and the \"Listen\" button does not read it."
+msgstr ""
+
+msgid "Remove it."
+msgstr ""
+
+msgid "Change it to <h2>."
+msgstr ""
+
+msgid "Split it into separate paragraphs."
+msgstr ""
+
+msgid "Join them into one heading."
+msgstr ""
+
+msgid "Join them into one paragraph."
+msgstr ""
+
+msgid "Change it to a paragraph (<p>)."
+msgstr ""
+
+msgid "Change it to <%s>."
+msgstr ""
+
+msgid "Wrap it in paragraphs (<p>)."
+msgstr ""

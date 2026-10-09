@@ -160,3 +160,23 @@ instância; o servidor de teste precisa ser reiniciado a cada rodada.
     reduzem o risco, mas não o eliminam.
 11. **Playground não persiste dados** e tem filesystem sem travas; por isso alguns testes
     (desinstalação completa, medição de desempenho) ficam para um WordPress real.
+
+## 10. Revisão de semântica pós-conversão (2.0.1)
+
+Protocolos PROT-A11Y-CONV-001 e PROT-A11Y-JS-001. Testes automáticos em
+`documentacao/testes/auditor.test.js` (`npm install --no-save jsdom` e
+`node --test "documentacao/testes/*.test.js"`): 14 de 14 passam.
+
+| Caso | Como foi testado | Resultado |
+|---|---|---|
+| CT-001 / CT-001-JS título falso | `<p><strong>Capítulo 1</strong></p>` e `<p class="title" style="font-weight:bold;font-size:24px">` | Apontado, trecho destacado, sugere `<h2>`; corrige |
+| CT-002 parágrafos quebrados | Texto solto, `<span>`/`<br>`, frase em 3 `<h3>`, `<h2>` com parágrafo | Todos apontados e corrigidos; depois da correção nada é apontado |
+| CT-002-JS vazios e `<br>` | `<p>&nbsp;</p>`, `<p><br></p>`, `<br><br><br>` | Apontados; `<br>` simples e parágrafo só com imagem não são |
+| CT-003 falso positivo | Página bem convertida (sumário impresso, figura, tabela, poema) | Nenhum apontamento |
+| CT-007 desempenho | 60 páginas, 6.180 blocos | 1,1 s no jsdom (mais lento que o navegador); no Chrome, 6 blocos em 3 ms |
+| Tela real | Playground (WP 7.x, PHP 8.3), Chrome: caixa na edição, "Corrigir tudo" | OK; texto solto vira `<p>`, `<h2>`, `<br><br>` separado |
+| Causa do Sapiens | Documento salvo com texto sem `<p>` e exibido pelo shortcode | Exibe `<h2>` + 2 `<p>` (3 elementos lidos pela barra) |
+
+**Não verificado:** CT-004 a CT-006 (atalho de título, leitura contínua e anúncio do tipo de
+elemento) exigem um leitor de tela real (NVDA, VoiceOver, TalkBack); o PDF Sapiens original não
+foi reconvertido aqui; o conserto de celular não foi testado em aparelho (só o código foi portado).

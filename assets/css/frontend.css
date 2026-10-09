@@ -194,10 +194,18 @@
 .jimca-player {
 	position: fixed;
 	z-index: 40;
-	left: 50%;
+	left: 0;
+	right: 0;
 	bottom: 16px;
-	transform: translateX(-50%);
-	width: min(600px, calc(100% - 16px));
+	margin-inline: auto;
+
+	/*
+	 * `--jimca-vw` is the real screen width (set by the JS). With it the bar
+	 * never goes past the screen, even when the theme widens the layout
+	 * viewport.
+	 */
+	width: min(600px, calc(var(--jimca-vw, 100%) - 16px));
+	max-width: calc(100% - 16px);
 	display: flex;
 	justify-content: center;
 
@@ -361,7 +369,7 @@
 	bottom: calc(100% + 8px);
 	left: 50%;
 	min-width: 112px; /* Material 3: minimum menu width. */
-	max-width: min(280px, calc(100vw - 32px));
+	max-width: min(280px, calc(var(--jimca-vw, 100vw) - 32px));
 	max-height: 50vh;
 	overflow-y: auto;
 	padding: 8px 0;
@@ -520,7 +528,7 @@
 	top: 0;
 	bottom: 0;
 	left: 0;
-	width: min(340px, 88vw);
+	width: min(340px, calc(var(--jimca-vw, 100vw) * 0.88));
 	margin: 0;
 	padding: 0 8px 24px;
 	overflow-y: auto;
@@ -729,7 +737,21 @@
 
 	.jimca-player {
 		bottom: 8px;
-		width: calc(100% - 16px);
+	}
+
+	/* Nothing inside the document may be wider than the screen. */
+	.jimca-viewer {
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
+
+	.jimca-content :is(pre, code) {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	.jimca-content :is(video, iframe, svg, canvas) {
+		max-width: 100%;
 	}
 
 	.jimca-player__bar {
@@ -757,6 +779,16 @@
 	.jimca-player__btn {
 		min-width: 34px;
 	}
+}
+
+/*
+ * Layout viewport widened by some element of the page: the center of the
+ * viewport falls off the screen, so the fixed panels hug the left edge.
+ */
+.jimca-vp-expanded .jimca-player {
+	right: auto;
+	left: 8px;
+	margin-inline: 0;
 }
 
 /* The WordPress toolbar (logged-in users) is fixed at the top and would cover the panel. */
@@ -1025,7 +1057,7 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 8px;
-	max-width: calc(100vw - 32px);
+	max-width: calc(var(--jimca-vw, 100vw) - 32px);
 	padding: 8px 12px;
 	transform: translateX(-50%);
 	border: 1px solid var(--jimca-player-outline, #c4c7c9);
@@ -1127,7 +1159,7 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	bottom: 84px;
 	display: flex;
 	flex-direction: column;
-	width: min(360px, calc(100vw - 32px));
+	width: min(360px, calc(var(--jimca-vw, 100vw) - 32px));
 	max-height: min(70vh, 600px);
 	border: 1px solid var(--jimca-player-outline);
 	border-radius: 16px;

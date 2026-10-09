@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1 (2026-10-09)
+
+### Novo e corrigido
+- **Revisão da conversão** na tela de edição do documento ("Identificou problemas na conversão? Clique aqui"): aponta títulos que são só negrito, texto fora de `<p>`, título com parágrafo dentro, parágrafos vazios, `<br><br>` como espaçamento e saltos de nível de título, e corrige no editor. Ver D29.
+- **Correção:** o editor clássico gravava o documento sem as tags `<p>` e a barra de leitura não achava o que ler (caso do PDF Sapiens). Os parágrafos voltam na hora de exibir. Ver D29.
+- **Correção (celular):** barra e menus de leitura não passam mais da tela quando o tema alarga a página. Ver D29.
+
 ## 2.0.0 (em desenvolvimento, branch `v2.0`)
 
 ### Novo

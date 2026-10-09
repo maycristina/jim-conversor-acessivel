@@ -119,13 +119,19 @@ class JIMCA_Admin {
 		unset( $hook ); // get_current_screen() is enough here.
 		$screen                 = get_current_screen();
 		$documents_list_screen  = 'edit-' . JIMCA_Post_Type::POST_TYPE;
-		$is_plugin_screen       = $screen && ( false !== strpos( $screen->id, self::MENU_SLUG ) || $documents_list_screen === $screen->id );
+		$document_edit_screen   = $screen && 'post' === $screen->base && JIMCA_Post_Type::POST_TYPE === $screen->post_type;
+		$is_plugin_screen       = $screen && ( false !== strpos( $screen->id, self::MENU_SLUG ) || $documents_list_screen === $screen->id || $document_edit_screen );
 
 		if ( ! $is_plugin_screen ) {
 			return;
 		}
 
 		wp_enqueue_style( 'jimca-admin', JIMCA_PLUGIN_URL . 'assets/css/admin.css', array(), jimca_asset_version( 'assets/css/admin.css' ) );
+
+		if ( $document_edit_screen ) {
+			wp_enqueue_script( 'jimca-auditor', JIMCA_PLUGIN_URL . 'assets/js/auditor.js', array(), jimca_asset_version( 'assets/js/auditor.js' ), true );
+			wp_localize_script( 'jimca-auditor', 'jimcaAuditI18n', self::auditor_strings() );
+		}
 
 		if ( $documents_list_screen === $screen->id ) {
 			wp_enqueue_script( 'jimca-quick-edit', JIMCA_PLUGIN_URL . 'assets/js/quick-edit.js', array( 'inline-edit-post' ), jimca_asset_version( 'assets/js/quick-edit.js' ), true );
@@ -165,6 +171,55 @@ class JIMCA_Admin {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Texts of the conversion review (assets/js/auditor.js). Strings with
+	 * "<" are shown as text, never as HTML.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function auditor_strings() {
+		return array(
+			'none'              => __( 'No semantic or structure problems were found.', 'jim-conversor-acessivel' ),
+			/* translators: %s: number of problems */
+			'foundOne'          => __( '%s problem found.', 'jim-conversor-acessivel' ),
+			/* translators: %s: number of problems */
+			'foundMany'         => __( '%s problems found.', 'jim-conversor-acessivel' ),
+			'fixAll'            => __( 'Fix all', 'jim-conversor-acessivel' ),
+			'fixOne'            => __( 'Fix this', 'jim-conversor-acessivel' ),
+			/* translators: %s: start of the text with the problem */
+			'fixOneFor'         => __( 'Fix this: %s', 'jim-conversor-acessivel' ),
+			'levelError'        => __( 'Structural error:', 'jim-conversor-acessivel' ),
+			'levelWarning'      => __( 'Warning:', 'jim-conversor-acessivel' ),
+			/* translators: 1: number of blocks checked, 2: time in milliseconds */
+			'timing'            => __( 'Checked %1$s blocks in %2$s ms.', 'jim-conversor-acessivel' ),
+			'saveHint'          => __( 'The fixes change the editor only. Click "Update" to save them.', 'jim-conversor-acessivel' ),
+			'emptyParagraph'    => __( 'Empty paragraph (used only as spacing). Screen readers announce it as "blank".', 'jim-conversor-acessivel' ),
+			'emptyHeading'      => __( 'Empty heading: a screen reader announces a heading with nothing to read.', 'jim-conversor-acessivel' ),
+			/* translators: %s: why the paragraph looks like a heading, e.g. "it is all in bold" */
+			'fakeHeading'       => __( 'Visual heading without a heading tag (%s): a screen reader reads it as plain text and "jump to next heading" skips it.', 'jim-conversor-acessivel' ),
+			'whyBold'           => __( 'it is all in bold', 'jim-conversor-acessivel' ),
+			'whySize'           => __( 'it has a large font', 'jim-conversor-acessivel' ),
+			'whyClass'          => __( 'its class says it is a title', 'jim-conversor-acessivel' ),
+			'whyName'           => __( 'it starts like a chapter or section title', 'jim-conversor-acessivel' ),
+			'excessBr'          => __( 'Line breaks (<br><br>) used instead of separate paragraphs. The reader pauses wrongly and announces the block as a single paragraph.', 'jim-conversor-acessivel' ),
+			/* translators: %s: number of heading tags */
+			'splitHeading'      => __( 'A single sentence is broken over %s heading tags: the reader announces each piece as a separate heading.', 'jim-conversor-acessivel' ),
+			'longHeading'       => __( 'Long text inside a heading tag: it looks like a paragraph, and the heading list of the reader gets polluted.', 'jim-conversor-acessivel' ),
+			/* translators: 1: previous heading level, 2: level found (numbers) */
+			'headingSkip'       => __( 'The heading level jumps from h%1$s to h%2$s. Readers that navigate by level lose the hierarchy.', 'jim-conversor-acessivel' ),
+			'looseText'         => __( 'Text outside any paragraph (<p>): a screen reader may skip it, and the "Listen" button does not read it.', 'jim-conversor-acessivel' ),
+			'sugRemove'         => __( 'Remove it.', 'jim-conversor-acessivel' ),
+			'sugHeading'        => __( 'Change it to <h2>.', 'jim-conversor-acessivel' ),
+			'sugSplit'          => __( 'Split it into separate paragraphs.', 'jim-conversor-acessivel' ),
+			'sugMergeHeading'   => __( 'Join them into one heading.', 'jim-conversor-acessivel' ),
+			'sugMergeParagraph' => __( 'Join them into one paragraph.', 'jim-conversor-acessivel' ),
+			'sugParagraph'      => __( 'Change it to a paragraph (<p>).', 'jim-conversor-acessivel' ),
+			/* translators: %s: heading tag, e.g. "h3" */
+			'sugLevel'          => __( 'Change it to <%s>.', 'jim-conversor-acessivel' ),
+			'sugWrap'           => __( 'Wrap it in paragraphs (<p>).', 'jim-conversor-acessivel' ),
+		);
 	}
 
 	public function register_menu() {

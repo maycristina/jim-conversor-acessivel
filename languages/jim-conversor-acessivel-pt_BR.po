@@ -1300,3 +1300,108 @@ msgstr "obrigatória"
 
 msgid "unexpected reply"
 msgstr "resposta inesperada"
+
+msgid "Conversion review"
+msgstr "Revisão da conversão"
+
+msgid "Did you find problems in the conversion?"
+msgstr "Identificou problemas na conversão?"
+
+msgid "Click here"
+msgstr "Clique aqui"
+
+msgid "to review the conversion"
+msgstr "para revisar a conversão"
+
+msgid "Checks the document for headings that are not headings, text outside paragraphs, empty paragraphs and broken line breaks, which stop screen readers and the Listen button from working well."
+msgstr "Verifica se o documento tem títulos que não são títulos, texto fora de parágrafos, parágrafos vazios e quebras de linha erradas, que atrapalham os leitores de tela e o botão Ouvir."
+
+msgid "No semantic or structure problems were found."
+msgstr "Nenhum problema de semântica ou estrutura foi encontrado."
+
+msgid "%s problem found."
+msgstr "%s problema encontrado."
+
+msgid "%s problems found."
+msgstr "%s problemas encontrados."
+
+msgid "Fix all"
+msgstr "Corrigir tudo"
+
+msgid "Fix this"
+msgstr "Corrigir este"
+
+msgid "Fix this: %s"
+msgstr "Corrigir este: %s"
+
+msgid "Structural error:"
+msgstr "Erro estrutural:"
+
+msgid "Warning:"
+msgstr "Aviso:"
+
+msgid "Checked %1$s blocks in %2$s ms."
+msgstr "%1$s blocos verificados em %2$s ms."
+
+msgid "The fixes change the editor only. Click \"Update\" to save them."
+msgstr "As correções mudam só o editor. Clique em \"Atualizar\" para salvá-las."
+
+msgid "Empty paragraph (used only as spacing). Screen readers announce it as \"blank\"."
+msgstr "Parágrafo vazio (usado só como espaçamento). Os leitores de tela anunciam como \"em branco\"."
+
+msgid "Empty heading: a screen reader announces a heading with nothing to read."
+msgstr "Título vazio: o leitor de tela anuncia um título sem nada para ler."
+
+msgid "Visual heading without a heading tag (%s): a screen reader reads it as plain text and \"jump to next heading\" skips it."
+msgstr "Título só na aparência, sem a tag de título (%s): o leitor de tela lê como texto comum e o atalho \"próximo título\" o pula."
+
+msgid "it is all in bold"
+msgstr "está todo em negrito"
+
+msgid "it has a large font"
+msgstr "tem fonte grande"
+
+msgid "its class says it is a title"
+msgstr "a classe diz que é um título"
+
+msgid "it starts like a chapter or section title"
+msgstr "começa como título de capítulo ou seção"
+
+msgid "Line breaks (<br><br>) used instead of separate paragraphs. The reader pauses wrongly and announces the block as a single paragraph."
+msgstr "Quebras de linha (<br><br>) no lugar de parágrafos separados. A leitura faz pausas erradas e anuncia o bloco como um único parágrafo."
+
+msgid "A single sentence is broken over %s heading tags: the reader announces each piece as a separate heading."
+msgstr "Uma só frase está quebrada em %s tags de título: o leitor anuncia cada pedaço como um título separado."
+
+msgid "Long text inside a heading tag: it looks like a paragraph, and the heading list of the reader gets polluted."
+msgstr "Texto longo dentro de uma tag de título: parece um parágrafo e polui a lista de títulos do leitor."
+
+msgid "The heading level jumps from h%1$s to h%2$s. Readers that navigate by level lose the hierarchy."
+msgstr "O nível do título salta de h%1$s para h%2$s. Quem navega por nível perde a hierarquia."
+
+msgid "Text outside any paragraph (<p>): a screen reader may skip it, and the \"Listen\" button does not read it."
+msgstr "Texto fora de qualquer parágrafo (<p>): o leitor de tela pode pulá-lo e o botão \"Ouvir\" não o lê."
+
+msgid "Remove it."
+msgstr "Remover."
+
+msgid "Change it to <h2>."
+msgstr "Trocar por <h2>."
+
+msgid "Split it into separate paragraphs."
+msgstr "Separar em parágrafos."
+
+msgid "Join them into one heading."
+msgstr "Juntar em um só título."
+
+msgid "Join them into one paragraph."
+msgstr "Juntar em um só parágrafo."
+
+msgid "Change it to a paragraph (<p>)."
+msgstr "Trocar por um parágrafo (<p>)."
+
+msgid "Change it to <%s>."
+msgstr "Trocar por <%s>."
+
+msgid "Wrap it in paragraphs (<p>)."
+msgstr "Envolver em parágrafos (<p>)."

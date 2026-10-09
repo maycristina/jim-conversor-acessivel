@@ -372,3 +372,43 @@
 .jimca-admin-progress.is-failed .jimca-admin-progress__detail {
 	color: #1d2327;
 }
+
+/* Conversion review box (document edit screen). */
+.jimca-audit__summary,
+.jimca-audit__ok {
+	font-weight: 600;
+}
+
+.jimca-audit__list {
+	margin: 1rem 0 0;
+	padding-left: 1.25rem;
+}
+
+.jimca-audit__item {
+	margin: 0 0 1rem;
+	padding: 0.5rem 0.75rem;
+	border-left: 4px solid #996800;
+	background: #fcf9e8;
+}
+
+.jimca-audit__item--error {
+	border-left-color: #b32d2e;
+	background: #fcf0f1;
+}
+
+.jimca-audit__excerpt {
+	margin: 0.5rem 0;
+	padding: 0;
+}
+
+.jimca-audit__excerpt mark {
+	padding: 0.1rem 0.25rem;
+	background: #ffe58f;
+	color: #1d2327;
+}
+
+.jimca-audit__suggestion {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-style: italic;
+}

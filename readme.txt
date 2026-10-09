@@ -4,7 +4,7 @@ Tags: accessibility, pdf, docx, shortcode, text-to-speech
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,11 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 
 == Changelog ==
 
+= 2.0.1 =
+* New: "Conversion review" box on the document edit screen ("Did you find problems in the conversion? Click here"): checks for headings that are only bold text, text outside paragraphs, long text inside headings, empty paragraphs, `<br><br>` used as spacing and skipped heading levels, and fixes them in the editor.
+* Fix: documents edited in the classic editor lost their paragraph tags and the reading bar found nothing to read; paragraphs are now restored when the document is shown.
+* Fix: reading bar and menus no longer run off the screen on phones whose theme widens the page.
+
 = 2.0.0 =
 * New: English source strings with Brazilian Portuguese, Spanish, French, Simplified Chinese, Hindi, Russian and German translations, and a "Languages and translations" card with a "Review translation" button.
 * New: activity log in the settings, live, with CSV export.
@@ -175,6 +180,9 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Adds a conversion review tool, and fixes documents that lost their paragraphs after being edited and the reading bar on phones.
 
 = 2.0.0 =
 Images are now stored in the Media Library (existing documents keep their old images). The `badge` format of `[jimca_instalacoes]` was removed.

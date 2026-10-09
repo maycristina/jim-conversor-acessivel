@@ -55,7 +55,7 @@ class JIMCA_Shortcode {
 		// text extracted from an uploaded file, so a document containing
 		// "[some-shortcode]" would run it. The HTML was already built and passed
 		// through wp_kses_post() at conversion time.
-		$content    = $post->post_content;
+		$content    = self::ensure_paragraphs( $post->post_content );
 		$word_count = (int) get_post_meta( $post->ID, '_jimca_word_count', true );
 		$uid        = 'jimca-' . $post->ID . '-' . wp_unique_id();
 
@@ -75,6 +75,24 @@ class JIMCA_Shortcode {
 		ob_start();
 		include JIMCA_PLUGIN_DIR . 'templates/document-viewer.php';
 		return ob_get_clean();
+	}
+
+	/**
+	 * Wraps text that sits outside any <p> in paragraphs.
+	 *
+	 * The classic editor saves a document without its <p> tags (paragraphs
+	 * become blank lines) and relies on wpautop() at display time, which the
+	 * shortcode skips on purpose (see render()). Without it the text is bare
+	 * in the page and the reading bar finds nothing to read.
+	 *
+	 * Only wpautop(), not the_content: it adds <p> and runs no shortcode.
+	 * Text that already has <p> is left as it is.
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public static function ensure_paragraphs( $content ) {
+		return wpautop( $content, false );
 	}
 
 	/**

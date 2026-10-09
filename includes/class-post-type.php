@@ -180,6 +180,35 @@ class JIMCA_Post_Type {
 			'side',
 			'high'
 		);
+
+		add_meta_box(
+			'jimca_documento_audit',
+			__( 'Conversion review', 'jim-conversor-acessivel' ),
+			array( $this, 'render_audit_meta_box' ),
+			self::POST_TYPE,
+			'normal',
+			'high'
+		);
+	}
+
+	/**
+	 * "Did you find problems in the conversion? Click here": runs the
+	 * semantic review in the browser (assets/js/auditor.js) over the content
+	 * of the editor and offers to fix what it finds.
+	 */
+	public function render_audit_meta_box() {
+		?>
+		<p id="jimca-audit-question"><?php esc_html_e( 'Did you find problems in the conversion?', 'jim-conversor-acessivel' ); ?></p>
+		<p>
+			<button type="button" class="button button-primary" id="jimca-audit-run" aria-describedby="jimca-audit-question jimca-audit-help">
+				<?php esc_html_e( 'Click here', 'jim-conversor-acessivel' ); ?><span class="screen-reader-text"> <?php esc_html_e( 'to review the conversion', 'jim-conversor-acessivel' ); ?></span>
+			</button>
+		</p>
+		<p class="description" id="jimca-audit-help">
+			<?php esc_html_e( 'Checks the document for headings that are not headings, text outside paragraphs, empty paragraphs and broken line breaks, which stop screen readers and the Listen button from working well.', 'jim-conversor-acessivel' ); ?>
+		</p>
+		<div id="jimca-audit-result" class="jimca-audit" role="status" aria-live="polite"></div>
+		<?php
 	}
 
 	public function render_info_meta_box( $post ) {
