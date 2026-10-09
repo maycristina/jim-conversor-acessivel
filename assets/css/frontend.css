@@ -152,18 +152,40 @@
 	border: 0;
 }
 
-.jimca-skip-link:focus {
-	position: static !important;
-	width: auto;
-	height: auto;
+/*
+ * Skip links: out of sight until one of them gets focus (Tab), then all of
+ * them show together at the top of the viewer.
+ */
+.jimca-skip:not(:focus-within) {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.jimca-skip:focus-within {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
 	margin: 0 0 1rem;
-	padding: 0.5rem 0.75rem;
-	clip: auto;
+}
+
+.jimca-skip__link {
 	display: inline-block;
+	padding: 0.5rem 0.75rem;
 	background: var(--jimca-accent);
 	color: var(--jimca-accent-fg);
 	border-radius: 4px;
 	text-decoration: none;
+}
+
+.jimca-skip__link[hidden] {
+	display: none;
 }
 
 .jimca-viewer :focus-visible {

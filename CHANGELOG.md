@@ -3,6 +3,10 @@
 ## 2.0.1 (2026-10-09)
 
 ### Novo e corrigido
+- **Correção:** o botão Ouvir começa no trecho em que a pessoa está (texto selecionado, título com foco
+  ou primeiro parágrafo na tela), em vez de voltar ao início da página. Ver D30.
+- **Links de atalho** no topo do documento (conteúdo, controles de leitura e sumário), visíveis só
+  com o foco do teclado (WCAG 2.4.1). Ver D30.
 - **Revisão da conversão** na tela de edição do documento ("Identificou problemas na conversão? Clique aqui"): aponta títulos que são só negrito, texto fora de `<p>`, título com parágrafo dentro, parágrafos vazios, `<br><br>` como espaçamento e saltos de nível de título, e corrige no editor. Ver D29.
 - **Correção:** o editor clássico gravava o documento sem as tags `<p>` e a barra de leitura não achava o que ler (caso do PDF Sapiens). Os parágrafos voltam na hora de exibir. Ver D29.
 - **Correção (celular):** barra e menus de leitura não passam mais da tela quando o tema alarga a página. Ver D29.

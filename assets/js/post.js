@@ -88,6 +88,37 @@
 			);
 		}
 
+		/*
+		 * Reading begins where the reader is, not at the top: the start of a
+		 * selection inside the post, else the first element on screen, else
+		 * the first one when the post is below the screen.
+		 */
+		function startIndex() {
+			var selection = window.getSelection ? window.getSelection() : null;
+
+			if ( selection && selection.rangeCount && ! selection.isCollapsed && content.contains( selection.anchorNode ) ) {
+				var node = selection.getRangeAt( 0 ).startContainer;
+				var el = 3 === node.nodeType ? node.parentNode : node;
+				for ( var i = 0; i < items.length; i++ ) {
+					if ( items[ i ].contains( el ) ) {
+						return i;
+					}
+				}
+			}
+
+			for ( var j = 0; j < items.length; j++ ) {
+				var rect = items[ j ].getBoundingClientRect();
+				if ( rect.bottom > 48 && rect.top < window.innerHeight ) {
+					return j;
+				}
+				if ( rect.top >= window.innerHeight ) {
+					break;
+				}
+			}
+
+			return 0;
+		}
+
 		function finish( message ) {
 			clearHighlight();
 			state = 'idle';
@@ -147,7 +178,7 @@
 
 			collect();
 			synth.cancel();
-			index = 0;
+			index = startIndex();
 			state = 'playing';
 			render();
 			speakNext();

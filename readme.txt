@@ -143,6 +143,8 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 == Changelog ==
 
 = 2.0.1 =
+* Fix: "Listen" now starts at the passage you are on (selected text, focused heading or the first paragraph on screen) instead of jumping back to the top of the page.
+* New: skip links at the top of each document (to the content, the reading controls and the contents list), hidden until they receive focus (WCAG 2.4.1 Bypass Blocks).
 * New: "Conversion review" box on the document edit screen ("Did you find problems in the conversion? Click here"): checks for headings that are only bold text, text outside paragraphs, long text inside headings, empty paragraphs, `<br><br>` used as spacing and skipped heading levels, and fixes them in the editor.
 * Fix: documents edited in the classic editor lost their paragraph tags and the reading bar found nothing to read; paragraphs are now restored when the document is shown.
 * Fix: reading bar and menus no longer run off the screen on phones whose theme widens the page.

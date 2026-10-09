@@ -1404,3 +1404,12 @@ msgstr ""
 
 msgid "Wrap it in paragraphs (<p>)."
 msgstr ""
+
+msgid "Skip links"
+msgstr ""
+
+msgid "Skip to the reading controls"
+msgstr ""
+
+msgid "Skip to the contents list"
+msgstr ""

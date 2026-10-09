@@ -29,9 +29,30 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 ?>
 <section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
 
-	<a class="jimca-skip-link jimca-visually-hidden" href="#<?php echo esc_attr( $uid ); ?>-content">
-		<?php esc_html_e( 'Skip to the document content', 'jim-conversor-acessivel' ); ?>
-	</a>
+	<?php
+	/*
+	 * Skip links (WCAG 2.4.1 Bypass Blocks; W3C in-page navigation, WebAIM
+	 * "Skip Navigation Links"): the first Tab stops of the viewer, hidden
+	 * until they receive focus. "Reading controls" is revealed by the JS
+	 * (without JS the bar does not exist); the contents link is for the no-JS
+	 * list only, since with JS the contents open from the bar.
+	 */
+	?>
+	<nav class="jimca-skip" aria-label="<?php esc_attr_e( 'Skip links', 'jim-conversor-acessivel' ); ?>">
+		<a class="jimca-skip__link" href="#<?php echo esc_attr( $uid ); ?>-content">
+			<?php esc_html_e( 'Skip to the document content', 'jim-conversor-acessivel' ); ?>
+		</a>
+		<?php if ( 'reader' === $mode ) : ?>
+		<a class="jimca-skip__link" href="#<?php echo esc_attr( $uid ); ?>-controls" data-jimca-skip-controls hidden>
+			<?php esc_html_e( 'Skip to the reading controls', 'jim-conversor-acessivel' ); ?>
+		</a>
+		<?php endif; ?>
+		<?php if ( $toc ) : ?>
+		<a class="jimca-skip__link" href="#<?php echo esc_attr( $uid ); ?>-toc" data-jimca-skip-toc>
+			<?php esc_html_e( 'Skip to the contents list', 'jim-conversor-acessivel' ); ?>
+		</a>
+		<?php endif; ?>
+	</nav>
 
 	<h2 id="<?php echo esc_attr( $uid ); ?>-title" class="jimca-title"><?php echo esc_html( get_the_title( $post ) ); ?></h2>
 
@@ -103,7 +124,7 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 	?>
 	<div class="jimca-player" data-jimca-player hidden>
 
-		<div class="jimca-player__bar" role="toolbar" aria-label="<?php esc_attr_e( 'Reading controls', 'jim-conversor-acessivel' ); ?>" data-jimca-player-bar>
+		<div class="jimca-player__bar" id="<?php echo esc_attr( $uid ); ?>-controls" tabindex="-1" role="toolbar" aria-label="<?php esc_attr_e( 'Reading controls', 'jim-conversor-acessivel' ); ?>" data-jimca-player-bar>
 
 			<?php if ( $toc ) : ?>
 				<?php // Only when the document has headings. ?>

@@ -579,6 +579,58 @@
 
 		var index = 0;
 		var state = 'idle'; // idle | playing | paused
+
+		/*
+		 * Where reading begins: the passage the reader is at, not the top of
+		 * the document. In order: the start of a text selection inside the
+		 * document, the element that has focus inside it (a heading reached
+		 * from the contents or a skip link), the first element on screen, or
+		 * the first one when the document is below the screen.
+		 */
+		function startIndex() {
+			if ( ! content ) {
+				return 0;
+			}
+
+			function indexWithin( node ) {
+				var el = 3 === node.nodeType ? node.parentNode : node;
+				for ( var i = 0; i < elements.length; i++ ) {
+					if ( elements[ i ] === el || elements[ i ].contains( el ) || ( el.contains && el.contains( elements[ i ] ) && el !== content ) ) {
+						return i;
+					}
+				}
+				return -1;
+			}
+
+			var selection = window.getSelection ? window.getSelection() : null;
+			if ( selection && selection.rangeCount && ! selection.isCollapsed && content.contains( selection.anchorNode ) ) {
+				var fromSelection = indexWithin( selection.getRangeAt( 0 ).startContainer );
+				if ( fromSelection > -1 ) {
+					return fromSelection;
+				}
+			}
+
+			var active = document.activeElement;
+			if ( active && active !== content && content.contains( active ) ) {
+				var fromFocus = indexWithin( active );
+				if ( fromFocus > -1 ) {
+					return fromFocus;
+				}
+			}
+
+			for ( var j = 0; j < elements.length; j++ ) {
+				var rect = elements[ j ].getBoundingClientRect();
+				// First element still (mostly) in view, below any fixed header.
+				if ( rect.bottom > 48 && rect.top < window.innerHeight ) {
+					return j;
+				}
+				if ( rect.top >= window.innerHeight ) {
+					break;
+				}
+			}
+
+			return 0;
+		}
 		var rate = parseFloat( prefs.get( 'rate', 1 ) ) || 1;
 		var voiceName = prefs.get( 'voice', '' );
 
@@ -780,7 +832,7 @@
 					activeStop();
 				}
 				synth.cancel();
-				index = 0;
+				index = startIndex();
 				state = 'playing';
 				setStatus( t( 'statusReading', 'Reading aloud.' ) );
 				activeStop = stopUI;
@@ -828,6 +880,38 @@
 	 * Start
 	 * ------------------------------------------------------------- */
 
+	/*
+	 * Skip links: "reading controls" is revealed (the bar exists only with JS)
+	 * and lands on the bar, or on the restore button when the bar is hidden;
+	 * the contents link goes away, since the contents open from the bar.
+	 */
+	function setupSkipLinks( viewer, player ) {
+		var controls = viewer.querySelector( '[data-jimca-skip-controls]' );
+		var toc = viewer.querySelector( '[data-jimca-skip-toc]' );
+
+		if ( toc && viewer.querySelector( '[data-jimca-toc-toggle]' ) ) {
+			toc.parentNode.removeChild( toc );
+		}
+
+		if ( ! controls ) {
+			return;
+		}
+
+		controls.hidden = false;
+		controls.addEventListener( 'click', function ( event ) {
+			var bar = player.querySelector( '[data-jimca-player-bar]' );
+			var restore = player.querySelector( '[data-jimca-show]' );
+			var target = bar && ! bar.hidden ? bar : restore;
+
+			event.preventDefault();
+			if ( target ) {
+				// The player is only shown while the document is on screen.
+				player.classList.add( 'is-visible' );
+				target.focus();
+			}
+		} );
+	}
+
 	function initViewer( viewer ) {
 		var player = viewer.querySelector( '[data-jimca-player]' );
 
@@ -838,6 +922,8 @@
 		// Only now does the player appear: with JS it really works.
 		player.hidden = false;
 		viewer.classList.add( 'jimca-player-active' );
+
+		setupSkipLinks( viewer, player );
 
 		var prefs = createPrefs( viewer );
 		var entries = setupMenus( viewer );

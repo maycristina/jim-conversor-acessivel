@@ -1405,3 +1405,12 @@ msgstr "Trocar por <%s>."
 
 msgid "Wrap it in paragraphs (<p>)."
 msgstr "Envolver em parágrafos (<p>)."
+
+msgid "Skip links"
+msgstr "Links de atalho"
+
+msgid "Skip to the reading controls"
+msgstr "Pular para os controles de leitura"
+
+msgid "Skip to the contents list"
+msgstr "Pular para o sumário"
