@@ -3,6 +3,10 @@
 ## 2.0.1 (2026-10-09)
 
 ### Novo e corrigido
+- **Correção:** o botão **Parar** não interrompia a leitura: ela seguia falando e voltava ao início.
+  Agora corta de vez (também depois de Pausar, de trocar a velocidade ou de Ouvir de novo). Ver D31.
+- **Testes de acessibilidade** (W3C, WebAIM, WCAG 2.1 AA) e de regressão do leitor em
+  `documentacao/testes/` (44 testes) e roteiro em `documentacao/TESTES-DE-ACESSIBILIDADE.md`. Ver D31.
 - **Correção:** o botão Ouvir começa no trecho em que a pessoa está (texto selecionado, título com foco
   ou primeiro parágrafo na tela), em vez de voltar ao início da página. Ver D30.
 - **Links de atalho** no topo do documento (conteúdo, controles de leitura e sumário), visíveis só

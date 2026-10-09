@@ -581,6 +581,24 @@
 		var state = 'idle'; // idle | playing | paused
 
 		/*
+		 * Identifies the current reading. speechSynthesis.cancel() makes the
+		 * browser fire `error` ("canceled"/"interrupted") on the utterance it
+		 * cut, AFTER our code has already moved on. Without this token that
+		 * late event advanced the reading and spoke the next passage right
+		 * after Stop (or after a speed change or a new start). Every handler
+		 * of an utterance acts only while its token is still the current one.
+		 */
+		var run = 0;
+
+		/** Cuts the speech and makes every pending event of it harmless. */
+		function cutSpeech() {
+			run++;
+			synth.cancel();
+			// Some browsers stay paused after a cancel() made while paused, and the next reading would be silent.
+			synth.resume();
+		}
+
+		/*
 		 * Where reading begins: the passage the reader is at, not the top of
 		 * the document. In order: the start of a text selection inside the
 		 * document, the element that has focus inside it (a heading reached
@@ -666,7 +684,7 @@
 		}
 
 		function stopUI( statusText ) {
-			synth.cancel();
+			cutSpeech();
 			state = 'idle';
 			index = 0;
 			clearHighlight();
@@ -761,7 +779,7 @@
 					 * new speed to apply at once.
 					 */
 					if ( 'playing' === state ) {
-						synth.cancel();
+						cutSpeech();
 						speakNext();
 					}
 
@@ -800,15 +818,19 @@
 
 			utterance.rate = rate;
 
-			utterance.onend = function () {
-				index++;
-				speakNext();
-			};
+			var mine = run;
 
-			utterance.onerror = function () {
+			// A late event of a cut utterance, or one that arrives after Stop or Pause, does nothing.
+			function next() {
+				if ( mine !== run || 'playing' !== state ) {
+					return;
+				}
 				index++;
 				speakNext();
-			};
+			}
+
+			utterance.onend = next;
+			utterance.onerror = next;
 
 			clearHighlight();
 			el.classList.add( 'jimca-reading' );
@@ -831,7 +853,7 @@
 				if ( activeStop && activeStop !== stopUI ) {
 					activeStop();
 				}
-				synth.cancel();
+				cutSpeech();
 				index = startIndex();
 				state = 'playing';
 				setStatus( t( 'statusReading', 'Reading aloud.' ) );

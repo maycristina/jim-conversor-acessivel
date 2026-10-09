@@ -53,6 +53,13 @@
 		var state = 'idle'; // idle | playing | paused
 		var current = null;
 
+		/*
+		 * Identifies the current reading: cancel() makes the browser fire
+		 * `end`/`error` on the utterance it cut, late, and that must not
+		 * advance a reading that was stopped or restarted (see frontend.js).
+		 */
+		var run = 0;
+
 		if ( ! synth || 'undefined' === typeof SpeechSynthesisUtterance || ! content ) {
 			button.disabled = true;
 			button.addEventListener( 'click', function () {} );
@@ -136,6 +143,7 @@
 			}
 
 			var el = items[ index ];
+			var mine = run;
 			var utterance = new SpeechSynthesisUtterance( textOf( el ) );
 			utterance.rate = rate;
 			utterance.lang = document.documentElement.lang || 'pt-BR';
@@ -146,14 +154,14 @@
 				el.classList.add( 'jimca-reading' );
 			};
 			utterance.onend = function () {
-				if ( 'idle' === state ) {
+				if ( mine !== run || 'playing' !== state ) {
 					return;
 				}
 				index += 1;
 				speakNext();
 			};
 			utterance.onerror = function () {
-				if ( 'idle' !== state ) {
+				if ( mine === run && 'idle' !== state ) {
 					finish();
 				}
 			};
@@ -177,6 +185,7 @@
 			}
 
 			collect();
+			run += 1;
 			synth.cancel();
 			index = startIndex();
 			state = 'playing';
@@ -186,6 +195,7 @@
 
 		window.addEventListener( 'pagehide', function () {
 			state = 'idle';
+			run += 1;
 			synth.cancel();
 		} );
 	}
