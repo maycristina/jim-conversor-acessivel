@@ -61,4 +61,4 @@
 - Título do documento agora é opcional no envio.
 
 ### Pendente
-- Assistente de IA em si.
+- Testar o tutor com os demais provedores disponíveis no sistema (Claude, OpenAI, Gemini, DeepSeek e "Outro"); a OpenRouter já foi testada com chave real e funciona.
