@@ -22,6 +22,15 @@ msgstr "%1$s: %2$s"
 msgid "%1$s: connection working. Model that answered: %2$s."
 msgstr "%1$s: conexión funcionando. Modelo que respondió: %2$s."
 
+msgid "%1$s: schedule for %2$s was cancelled"
+msgstr "%1$s: se canceló la programación para %2$s"
+
+msgid "%1$s: scheduled for %2$s"
+msgstr "%1$s: programado para %2$s"
+
+msgid "%1$s: scheduled publication for %2$s failed"
+msgstr "%1$s: falló la publicación programada para %2$s"
+
 msgid "%d new entries."
 msgstr "%d entradas nuevas."
 
@@ -59,6 +68,9 @@ msgstr "%s: la clave no se guardó. Debe tener de 16 a 300 caracteres, solo con 
 msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
 msgstr "%s: el modelo no se cambió. Usa solo letras, números y los símbolos . _ - / : (sin espacios)."
 
+msgid "%s: the post no longer exists"
+msgstr "%s: la entrada ya no existe"
+
 msgid "%s: there is no usable API key. Save the key again."
 msgstr "%s: no hay una clave de API utilizable. Guarda la clave de nuevo."
 
@@ -85,6 +97,9 @@ msgstr "Hay una clave guardada, terminada en ••••%s. Déjalo en blanco p
 
 msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
 msgstr "Índice lateral con los títulos del documento (estilos de título de Word o marcadores del PDF), para ir directo a un capítulo."
+
+msgid "A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want."
+msgstr "Un recorrido paso a paso por la pantalla Nuevo documento muestra dónde está cada opción y qué hace. Empieza solo la primera vez tras la instalación y puedes abrirlo de nuevo cuando quieras."
 
 msgid "A — default text size"
 msgstr "A — tamaño de texto predeterminado"
@@ -134,6 +149,12 @@ msgstr "Documentos accesibles"
 msgid "Accessible documents, read aloud, in a few clicks."
 msgstr "Documentos accesibles, con lectura en voz alta, en pocos clics."
 
+msgid "Accessible reader"
+msgstr "Lector accesible"
+
+msgid "Accessible reader and standard blog modes"
+msgstr "Modos Lector accesible y Blog estándar"
+
 msgid "Activity log"
 msgstr "Registro de actividad"
 
@@ -143,6 +164,9 @@ msgstr "Añadir nuevo documento"
 msgid "Address (URL)"
 msgstr "Dirección (URL)"
 
+msgid "After picking a type you choose the status: publish now, draft, pending, private or Schedule. A schedule uses the site clock and becomes an Action Scheduler event, where you can see or cancel it under Tools > Scheduled Actions."
+msgstr "Tras elegir el tipo, eliges el estado: publicar ahora, borrador, pendiente, privado o Programar. La programación usa el reloj del sitio y se convierte en un evento de Action Scheduler, donde puedes verlo o cancelarlo en Herramientas > Scheduled Actions (Action Scheduler)."
+
 msgid "All Documents"
 msgstr "Todos los documentos"
 
@@ -151,6 +175,9 @@ msgstr "Se eliminaron todas las marcas."
 
 msgid "Allowed file types"
 msgstr "Tipos de archivo permitidos"
+
+msgid "Also publish in"
+msgstr "Publicar también en"
 
 msgid "An unexpected error occurred while processing the file."
 msgstr "Se produjo un error inesperado al procesar el archivo."
@@ -185,11 +212,20 @@ msgstr "SEO automático"
 msgid "Available shortcodes"
 msgstr "Shortcodes disponibles"
 
-msgid "Blog post (converted HTML page)"
-msgstr "Entrada de blog (página HTML convertida)"
+msgid "Back"
+msgstr "Atrás"
 
 msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
 msgstr "Fax CCITT (filtro CCITTFaxDecode): común en PDF escaneados en blanco y negro; el plugin no decodifica este formato."
+
+msgid "Categories and tags"
+msgstr "Categorías y etiquetas"
+
+msgid "Choose how the document looks on the page: Accessible reader, with reading bar, voice and themes, or Standard blog, a plain blog post with the converted text. You can change it later in the documents list."
+msgstr "Elige cómo se ve el documento en la página: Lector accesible, con barra de lectura, voz y temas, o Blog estándar, una entrada de blog simple con el texto convertido. Puedes cambiarlo después en la lista de documentos."
+
+msgid "Choose the file"
+msgstr "Elige el archivo"
 
 msgid "Clear all"
 msgstr "Borrar todas"
@@ -199,6 +235,12 @@ msgstr "Borrar registro"
 
 msgid "Clear the whole log?"
 msgstr "¿Borrar todo el registro?"
+
+msgid "Click \"Convert document\". Large files can take up to a minute: keep the page open. When it finishes, a notice shows the shortcode, the link to the post and, if you scheduled, the name of the event."
+msgstr "Haz clic en \"Convertir documento\". Los archivos grandes pueden tardar hasta un minuto: mantén la página abierta. Al terminar, un aviso muestra el shortcode, el enlace a la entrada y, si programaste, el nombre del evento."
+
+msgid "Click here to open the tutorial"
+msgstr "Haz clic aquí para abrir el tutorial"
 
 msgid "Close"
 msgstr "Cerrar"
@@ -227,6 +269,9 @@ msgstr "La conversión se hace solo en PHP, sin programas externos (no hacen fal
 msgid "Conversion progress"
 msgstr "Progreso de la conversión"
 
+msgid "Convert"
+msgstr "Convertir"
+
 msgid "Convert document"
 msgstr "Convertir documento"
 
@@ -236,8 +281,8 @@ msgstr "Convertido el:"
 msgid "Converting the document…"
 msgstr "Convirtiendo el documento…"
 
-msgid "Copy the shortcode and paste it into the page or post where the document should appear."
-msgstr "Copia el shortcode y pégalo en la página o entrada donde debe aparecer el documento."
+msgid "Copy the shortcode and paste it into the page or post where the document should appear (not needed if you used \"Also publish in\")."
+msgstr "Copia el shortcode y pégalo en la página o entrada donde debe aparecer el documento (no hace falta si usaste \"Publicar también en\")."
 
 msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
 msgstr "JPEG dañado, o con una codificación adicional que el plugin no pudo deshacer."
@@ -266,11 +311,17 @@ msgstr "No se pudo leer el documento de Word: %s"
 msgid "Could not update the log."
 msgstr "No se pudo actualizar el registro."
 
+msgid "Creates one post for each file, with the shortcode already inside, so you do not have to copy and paste them. The document stays in the Jim panel either way. The address (slug) of each post is the file name: \"annual-report.pdf\" becomes \"annual-report\"."
+msgstr "Crea una entrada por cada archivo, con el shortcode ya incluido, para que no tengas que copiarlos y pegarlos. El documento permanece en el panel de Jim en cualquier caso. La dirección (slug) de cada entrada es el nombre del archivo: \"annual-report.pdf\" se convierte en \"annual-report\"."
+
 msgid "DOCX"
 msgstr "DOCX"
 
 msgid "Dark"
 msgstr "Oscuro"
+
+msgid "Date and time by the site clock, not by your computer: timezone %1$s, now %2$s."
+msgstr "Fecha y hora según el reloj del sitio, no el de tu ordenador: zona horaria %1$s, ahora %2$s."
 
 msgid "Decrease text size"
 msgstr "Reducir el tamaño del texto"
@@ -332,17 +383,26 @@ msgstr "Documentos convertidos con Jim"
 msgid "Done listening. Check the question and send it."
 msgstr "He terminado de escuchar. Revisa la pregunta y envíala."
 
+msgid "Draft"
+msgstr "Borrador"
+
 msgid "EPUB books are not supported. Convert them to PDF or DOCX."
 msgstr "Los libros EPUB no son compatibles. Conviértelos a PDF o DOCX."
 
 msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
 msgstr "Cada documento convertido se guarda en tu WordPress y recibe un shortcode que pegas en cualquier página o entrada para publicarlo."
 
-msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
-msgstr "Cada documento se muestra como lector (barra de lectura flotante, con voz y temas) o como entrada de blog (barra con tiempo de lectura y botones de escuchar y compartir). El modo solo se elige en la lista de documentos, con la Edición rápida o la columna \"Modo de visualización\", para que quien publica la página no cambie la naturaleza del documento. Sin elección, el documento es un lector."
+msgid "Each document is shown either as an Accessible reader (floating reading bar with voice and themes) or as a Standard blog (a reading-time bar with listen and share buttons). You choose the mode when you import the file, and can change it later in the documents list, with Quick Edit or the \"Display mode\" column. It is never set in the shortcode, so whoever publishes the page cannot change what the document is. Without a choice, the document is an Accessible reader."
+msgstr "Cada documento se muestra como Lector accesible (barra de lectura flotante, con voz y temas) o como Blog estándar (barra con tiempo de lectura y botones de escuchar y compartir). Eliges el modo al importar el archivo y puedes cambiarlo después en la lista de documentos, con la Edición rápida o la columna \"Modo de visualización\". Nunca se define en el shortcode, para que quien publica la página no cambie la naturaleza del documento. Sin elección, el documento es un Lector accesible."
 
 msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
 msgstr "Cada imagen se decodifica, se guarda en la Biblioteca de medios y recibe miniaturas: los libros con muchas figuras pueden agotar la memoria o el tiempo de PHP y tumbar el servidor. Al alcanzar cualquier límite (o al acercarse al tiempo o la memoria de PHP), la extracción de imágenes se detiene, el texto se convierte completo y el aviso explica el motivo. En hosting compartido, usa valores bajos."
+
+msgid "Each scheduled post is an event of Action Scheduler. The document is converted right away and the post is created at the chosen time. When the upload ends, the notice shows the name of the event (for example \"Jim import 2026-10-11 15:10 #ab12\"). To learn more or cancel, open %s and look for that name."
+msgstr "Cada entrada programada es un evento de Action Scheduler. El documento se convierte al instante y la entrada se crea a la hora elegida. Cuando termina el envío, el aviso muestra el nombre del evento (por ejemplo \"Jim import 2026-10-11 15:10 #ab12\"). Para saber más o cancelar, abre %s y busca ese nombre."
+
+msgid "Each scheduled post is an event of Action Scheduler: it is created at the chosen time, and you can see or cancel it under Tools > Scheduled Actions."
+msgstr "Cada entrada programada es un evento de Action Scheduler: se crea a la hora elegida y puedes verla o cancelarla en Herramientas > Scheduled Actions."
 
 msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
 msgstr "Cada shortcode puede cambiarlo: %1$s muestra el tutor, %2$s lo oculta."
@@ -389,6 +449,9 @@ msgstr "Archivos añadidos: %s"
 msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
 msgstr "Los archivos que suben los administradores se convierten en este servidor. De forma predeterminada, el archivo original se borra tras la conversión; el texto convertido, sus imágenes (en la Biblioteca de medios) y datos como el nombre del archivo, el tipo, el número de palabras y la fecha de conversión quedan en la base de datos del sitio. El plugin no recopila datos personales de los visitantes y no usa cookies."
 
+msgid "Finish"
+msgstr "Terminar"
+
 msgid "Formats and sending several files"
 msgstr "Formatos y envío de varios archivos"
 
@@ -409,6 +472,9 @@ msgstr "Ponle un título al documento (opcional) y haz clic en \"Convertir docum
 
 msgid "Greeting"
 msgstr "Bienvenida"
+
+msgid "Guided tour"
+msgstr "Recorrido guiado"
 
 msgid "HTML pages are not supported. Save the text as TXT or Markdown."
 msgstr "Las páginas HTML no son compatibles. Guarda el texto como TXT o Markdown."
@@ -454,6 +520,12 @@ msgstr "Marcar fragmento:"
 
 msgid "Highlight removed."
 msgstr "Marca eliminada."
+
+msgid "Hours between one file and the next"
+msgstr "Horas entre un archivo y el siguiente"
+
+msgid "How the document looks on the page where you publish it: Accessible reader (reading bar, voice and themes) or Standard blog (a plain blog post with the converted text). You can change it later in the documents list (Quick Edit)."
+msgstr "Cómo se ve el documento en la página donde lo publicas: Lector accesible (barra de lectura, voz y temas) o Blog estándar (una entrada de blog simple con el texto convertido). Puedes cambiarlo después en la lista de documentos (Edición rápida)."
 
 msgid "How the tutor talks: tone, vocabulary, patience."
 msgstr "Cómo habla el tutor: tono, vocabulario, paciencia."
@@ -533,6 +605,9 @@ msgstr "Instrucciones (prompt)"
 msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
 msgstr "Archivo de imagen no válido o de tipo desconocido (no es JPEG, PNG, GIF ni WebP, y no se pudo convertir)."
 
+msgid "It opens the New Document screen with the tour running. Press Esc to leave it at any time."
+msgstr "Abre la pantalla Nuevo documento con el recorrido en marcha. Pulsa Esc para salir en cualquier momento."
+
 msgid "Item"
 msgstr "Elemento"
 
@@ -550,6 +625,9 @@ msgstr "Imágenes JPEG 2000 (comunes en PDF de libros): compatibles con este ser
 
 msgid "Jim - Accessible Converter"
 msgstr "Jim - Conversor Accesible"
+
+msgid "Jim - Accessible Converter is ready."
+msgstr "Jim - Conversor Accesible está listo."
 
 msgid "Jim - Accessible Converter: document not found."
 msgstr "Jim - Conversor Accesible: documento no encontrado."
@@ -674,6 +752,9 @@ msgstr "Nueva conversación"
 msgid "New conversation started."
 msgstr "Nueva conversación iniciada."
 
+msgid "Next"
+msgstr "Siguiente"
+
 msgid "Next image"
 msgstr "Imagen siguiente"
 
@@ -685,6 +766,18 @@ msgstr "Aún no hay entradas."
 
 msgid "No valid file was sent."
 msgstr "No se envió ningún archivo válido."
+
+msgid "No, thanks"
+msgstr "No, gracias"
+
+msgid "None created yet."
+msgstr "Ninguna creada todavía."
+
+msgid "Not published in another post type"
+msgstr "No publicado en otro tipo de contenido"
+
+msgid "Nowhere: only in the Jim documents panel"
+msgstr "En ningún sitio: solo en el panel de documentos de Jim"
 
 msgid "OK"
 msgstr "OK"
@@ -704,6 +797,9 @@ msgstr "Cuando el plugin esté publicado en el directorio oficial de WordPress, 
 msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
 msgstr "Una clave de API por proveedor, guardada cifrada. La prueba de conexión envía una frase fija solo a ese proveedor, sin texto de documentos. El tutor de IA (abajo) usa el proveedor elegido aquí."
 
+msgid "Only administrators can open Scheduled Actions. If an event is cancelled, the document stays in the Jim panel and the documents list shows that the schedule was cancelled."
+msgstr "Solo los administradores pueden abrir Scheduled Actions. Si se cancela un evento, el documento permanece en el panel de Jim y la lista de documentos indica que la programación se canceló."
+
 msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
 msgstr "Solo si el servicio la pide; un Ollama local no la pide. Se guarda cifrada."
 
@@ -715,6 +811,9 @@ msgstr "Abre %s y elige el archivo (PDF, DOCX, TXT o Markdown)."
 
 msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
 msgstr "Abre el \"Registro de actividad\" y la tabla \"Requisitos del servidor\" en %s. El registro muestra cada conversión (tiempo, memoria, palabras, imágenes y la causa de cada imagen que quedó fuera) y cada error, en vivo: deja los Ajustes abiertos en otra pestaña mientras se ejecuta una conversión."
+
+msgid "Optional: choose the display mode and use \"Also publish in\" to have Jim create the post, page or custom post type item that shows the document. See the next sections."
+msgstr "Opcional: elige el modo de visualización y usa \"Publicar también en\" para que Jim cree la entrada, la página o el elemento de tipo personalizado que muestra el documento. Consulta las siguientes secciones."
 
 msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
 msgstr "Opcional: sin título, se usa el nombre del archivo. Al enviar varios archivos, cada documento usa el nombre de su archivo."
@@ -770,11 +869,26 @@ msgstr "Paciente, alentador y claro. Usa palabras sencillas, frases cortas y eje
 msgid "Pause"
 msgstr "Pausar"
 
+msgid "Pending review"
+msgstr "Pendiente de revisión"
+
 msgid "Personality"
 msgstr "Personalidad"
 
+msgid "Pick a PDF, DOCX, TXT or Markdown file. TXT and Markdown can be sent up to 20 at a time; PDF and DOCX one at a time."
+msgstr "Elige un archivo PDF, DOCX, TXT o Markdown. TXT y Markdown se pueden enviar hasta 20 a la vez; PDF y DOCX, de uno en uno."
+
+msgid "Pick posts, pages or a custom post type and Jim creates one post per file with the shortcode already inside, so you do not have to copy and paste shortcodes. Choose \"Nowhere\" to keep the documents only in the Jim panel."
+msgstr "Elige entradas, páginas o un tipo personalizado y Jim crea una entrada por archivo, con el shortcode ya incluido, para que no tengas que copiar y pegar shortcodes. Elige \"En ningún sitio\" para dejar los documentos solo en el panel de Jim."
+
 msgid "Plugin website"
 msgstr "Sitio del plugin"
+
+msgid "Post created: %1$s (%2$s)."
+msgstr "Entrada creada: %1$s (%2$s)."
+
+msgid "Posts loaded successfully: event \"%1$s\" was created. To learn more or cancel, go to %2$s and look for \"%1$s\"."
+msgstr "Entradas cargadas correctamente: se creó el evento \"%1$s\". Para saber más o cancelar, ve a %2$s y busca \"%1$s\"."
 
 msgid "Presentations are not converted. Export to PDF."
 msgstr "Las presentaciones no se convierten. Exporta a PDF."
@@ -785,26 +899,41 @@ msgstr "Imagen anterior"
 msgid "Privacy"
 msgstr "Privacidad"
 
+msgid "Private"
+msgstr "Privado"
+
 msgid "Provider in use: %s."
 msgstr "Proveedor en uso: %s."
 
 msgid "Provider used by the assistant"
 msgstr "Proveedor que usa el asistente"
 
+msgid "Publication status"
+msgstr "Estado de publicación"
+
+msgid "Publish now"
+msgstr "Publicar ahora"
+
+msgid "Publish on"
+msgstr "Publicar el"
+
+msgid "Published in"
+msgstr "Publicado en"
+
+msgid "Published in:"
+msgstr "Publicado en:"
+
 msgid "Publishes the converted document, with the reading controls."
 msgstr "Publica el documento convertido, con los controles de lectura."
+
+msgid "Publishing in posts, pages and custom post types"
+msgstr "Publicar en entradas, páginas y tipos personalizados"
 
 msgid "Questions per day on the whole site:"
 msgstr "Preguntas por día en todo el sitio:"
 
 msgid "Questions per reader per hour:"
 msgstr "Preguntas por lector por hora:"
-
-msgid "Reader (with reading bar and voice)"
-msgstr "Lector (con barra de lectura y voz)"
-
-msgid "Reader mode and blog post mode"
-msgstr "Modo lector y modo entrada de blog"
 
 msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
 msgstr "El lector puede hacer clic en una imagen para abrirla más grande, con las flechas del teclado para cambiar de imagen y Esc para cerrar."
@@ -881,6 +1010,18 @@ msgstr "Guardar tutor"
 msgid "Saved answers"
 msgstr "Respuestas guardadas"
 
+msgid "Schedule"
+msgstr "Programar"
+
+msgid "Scheduled events run when your site receives visits (WP-Cron). On a site with little traffic, a real server cron job makes them run on time."
+msgstr "Los eventos programados se ejecutan cuando el sitio recibe visitas (WP-Cron). En un sitio con poco tráfico, un cron real del servidor hace que se ejecuten a tiempo."
+
+msgid "Scheduled for %s"
+msgstr "Programado para %s"
+
+msgid "Scheduling"
+msgstr "Programación"
+
 msgid "Search Documents"
 msgstr "Buscar documentos"
 
@@ -901,6 +1042,9 @@ msgstr "Enviando el archivo…"
 
 msgid "Sends one fixed sentence to %s using the saved key and model."
 msgstr "Envía una frase fija a %s con la clave y el modelo guardados."
+
+msgid "Separate with commas. Names that do not exist yet are created (if you may create them)."
+msgstr "Separa con comas. Los nombres que aún no existen se crean (si tienes permiso para crearlos)."
 
 msgid "Sepia"
 msgstr "Sepia"
@@ -941,14 +1085,32 @@ msgstr "Muestra cuántas instalaciones activas tiene el plugin, según la API de
 msgid "Skip to the document content"
 msgstr "Saltar al contenido del documento"
 
+msgid "Skip tour"
+msgstr "Omitir recorrido"
+
 msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
 msgstr "El menor entre upload_max_filesize y post_max_size. Recomendado: 32 MB o más."
 
 msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
 msgstr "Las hojas de cálculo no se convierten. Exporta el contenido a PDF o DOCX."
 
+msgid "Standard blog"
+msgstr "Blog estándar"
+
+msgid "Start the tour"
+msgstr "Iniciar el recorrido"
+
 msgid "Status"
 msgstr "Estado"
+
+msgid "Status and schedule"
+msgstr "Estado y programación"
+
+msgid "Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead."
+msgstr "Estado: publicar ahora, borrador, pendiente de revisión, privado o programar. Quien no puede publicar en ese tipo envía los elementos a revisión."
+
+msgid "Step %1$s of %2$s"
+msgstr "Paso %1$s de %2$s"
 
 msgid "Step by step"
 msgstr "Paso a paso"
@@ -974,6 +1136,9 @@ msgstr "Apoya el proyecto"
 msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
 msgstr "Los archivos TXT y Markdown se pueden enviar hasta 20 a la vez. Cada uno se convierte en un documento y recibes una lista de shortcodes lista para copiar. PDF y DOCX se envían de uno en uno porque son pesados de convertir."
 
+msgid "Take the guided tour"
+msgstr "Hacer el recorrido guiado"
+
 msgid "Technical detail: %s."
 msgstr "Detalle técnico: %s."
 
@@ -994,6 +1159,9 @@ msgstr "Tamaño del texto y tema de lectura (Claro, Sepia u Oscuro)."
 
 msgid "Text size and theme"
 msgstr "Tamaño del texto y tema"
+
+msgid "That is it"
+msgstr "¡Eso es todo!"
 
 msgid "The .md file does not look like valid Markdown text."
 msgstr "El archivo .md no parece un texto Markdown válido."
@@ -1016,11 +1184,20 @@ msgstr "El documento de Word parece estar vacío."
 msgid "The WordPress.org page works once the plugin is listed in the official directory."
 msgstr "La página de WordPress.org funciona cuando el plugin esté incluido en el directorio oficial."
 
+msgid "The address (slug) of each item is the file name: \"annual-report.pdf\" becomes \"annual-report\". If that address is taken, WordPress adds -2."
+msgstr "La dirección (slug) de cada elemento es el nombre del archivo: \"annual-report.pdf\" se convierte en \"annual-report\". Si esa dirección ya existe, WordPress añade -2."
+
 msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
 msgstr "La dirección base de la API, por ejemplo http://localhost:11434/v1 para Ollama. \"/chat/completions\" se añade si falta."
 
 msgid "The browser did not allow the microphone."
 msgstr "El navegador no permitió el micrófono."
+
+msgid "The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it."
+msgstr "Las categorías y etiquetas de WordPress también clasifican los documentos de Jim y aparecen como columnas en la lista de documentos. Los campos del tipo elegido, como sus propias taxonomías, aparecen al seleccionarlo."
+
+msgid "The categories and tags you choose classify the Jim document and, when the post type uses them, the new post. The fields of the chosen type appear here too."
+msgstr "Las categorías y etiquetas que elijas clasifican el documento de Jim y, si el tipo de contenido las usa, la nueva entrada. Los campos del tipo elegido también aparecen aquí."
 
 msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
 msgstr "El contenido de \"%1$s\" no coincide con la extensión .%2$s: el archivo está dañado o fue renombrado desde otro formato."
@@ -1040,8 +1217,14 @@ msgstr "La conversión se detuvo porque llegó al límite de tiempo de PHP (max_
 msgid "The document has no text to convert."
 msgstr "El documento no tiene texto para convertir."
 
+msgid "The document is in the Jim panel, but the post was not created: %s"
+msgstr "El documento está en el panel de Jim, pero no se creó la entrada: %s"
+
 msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
 msgstr "El documento se creó, pero su texto parece ilegible: este PDF usa fuentes que no indican qué letra es cada carácter, así que el texto sale como símbolos (y se leería en voz alta así). Revisa el documento. Si está desordenado, aplica OCR al PDF o expórtalo de nuevo con fuentes Unicode incrustadas y vuelve a convertirlo. %s"
+
+msgid "The documents list has a \"Published in\" column that links to the item. The document stays in the Jim panel either way."
+msgstr "La lista de documentos tiene la columna \"Publicado en\", que enlaza con el elemento. El documento permanece en el panel de Jim en cualquier caso."
 
 msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
 msgstr "No se pudo subir el archivo \"%1$s\" (límite del servidor: %2$s). Envía un archivo más pequeño o pide a tu hosting que aumente \"upload_max_filesize\" y \"post_max_size\"."
@@ -1054,6 +1237,9 @@ msgstr "El archivo es demasiado grande para que el servidor lo acepte (límite a
 
 msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
 msgstr "No se guardó la clave: este servidor no tiene el cifrado (libsodium) necesario para guardarla de forma segura."
+
+msgid "The list shows posts, pages and the custom post types of your site that have a public page and the editor. Internal types (field groups, templates and the like) are not listed."
+msgstr "La lista muestra entradas, páginas y los tipos personalizados de tu sitio que tienen página pública y editor. Los tipos internos (grupos de campos, plantillas y similares) no aparecen."
 
 msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
 msgstr "El registro nunca contiene el texto de tus documentos ni tu clave de IA, así que es seguro exportarlo y enviarlo al pedir ayuda."
@@ -1136,8 +1322,14 @@ msgstr "Esta página ha caducado. Recárgala y pregunta de nuevo."
 msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
 msgstr "Este servidor no tiene las extensiones de PHP necesarias para leer archivos .%1$s: %2$s. Pide a tu hosting que las active."
 
+msgid "This short tour shows how to turn a file into an accessible page and publish it. You can leave it at any time with the Esc key, and open it again from the Tutorial."
+msgstr "Este breve recorrido muestra cómo convertir un archivo en una página accesible y publicarla. Puedes salir en cualquier momento con la tecla Esc y abrirlo de nuevo desde Tutorial."
+
 msgid "Time (UTC)"
 msgstr "Hora (UTC)"
+
+msgid "Title (optional)"
+msgstr "Título (opcional)"
 
 msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
 msgstr "Para responder al instante a preguntas repetidas, el tutor puede guardar sus respuestas en este sitio, por documento. Con cada respuesta guardada solo conserva el peso de cada palabra de la pregunta, no el texto de la pregunta, ni nada que identifique al visitante. Las respuestas guardadas se descartan cuando cambian el documento o los ajustes del tutor."
@@ -1145,8 +1337,14 @@ msgstr "Para responder al instante a preguntas repetidas, el tutor puede guardar
 msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
 msgstr "Para recordar las elecciones de cada lector, los controles de lectura y el marcador usan el almacenamiento local del navegador, por documento: tamaño del texto, tema, contraste, voz, velocidad de lectura, si la barra está oculta y los fragmentos que el lector marcó. Estos datos nunca salen del dispositivo del lector y se pueden borrar limpiando los datos del sitio en el navegador."
 
+msgid "To schedule, choose a date and time in the future, by the site clock: it is now %1$s (%2$s)."
+msgstr "Para programar, elige una fecha y hora en el futuro según el reloj del sitio: ahora son las %1$s (%2$s)."
+
 msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
 msgstr "Para enviar varios archivos a la vez, usa solo TXT y MD. \"%s\" debe enviarse solo (PDF y DOCX son pesados de convertir en secuencia)."
+
+msgid "Tools > Scheduled Actions"
+msgstr "Herramientas > Scheduled Actions (Action Scheduler)"
 
 msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
 msgstr "Se alcanzó el límite de tamaño total de las imágenes del documento (ajustable en Ajustes › Límites de imágenes)."
@@ -1174,6 +1372,9 @@ msgstr "Escribe una pregunta primero."
 
 msgid "Type:"
 msgstr "Tipo:"
+
+msgid "Under \"Also publish in\" on the New Document screen, choose where the document goes besides the Jim panel. For each file Jim creates an item of that type with the shortcode already inside, so you do not copy and paste shortcodes one by one."
+msgstr "En \"Publicar también en\", en la pantalla Nuevo documento, elige adónde va el documento además del panel de Jim. Por cada archivo Jim crea un elemento de ese tipo con el shortcode ya incluido, para que no copies y pegues shortcodes uno por uno."
 
 msgid "Unsupported file type: %s"
 msgstr "Tipo de archivo no compatible: %s"
@@ -1208,11 +1409,17 @@ msgstr "Voz"
 msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
 msgstr "Elección de la voz, escuchar/pausar, velocidad y detener. La lectura en voz alta usa el navegador, así que no se envía texto a nadie."
 
+msgid "Want a one-minute guided tour of how to convert and publish your first document?"
+msgstr "¿Quieres un recorrido guiado de un minuto sobre cómo convertir y publicar tu primer documento?"
+
 msgid "Warning"
 msgstr "Atención"
 
 msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
 msgstr "Atención: no se pudo leer la clave guardada (cambiaron las claves de seguridad de wp-config.php). Escríbela de nuevo."
+
+msgid "Welcome to Jim"
+msgstr "Te damos la bienvenida a Jim"
 
 msgid "What Jim is"
 msgstr "Qué es Jim"
@@ -1238,11 +1445,23 @@ msgstr "Al terminar, el documento aparece en %s, con su shortcode en la lista."
 msgid "When something goes wrong"
 msgstr "Cuando algo sale mal"
 
+msgid "When you choose Schedule, set the date and time by the site clock (shown in the form), not by your computer. With several files, set the hours between one and the next."
+msgstr "Al elegir Programar, indica la fecha y la hora según el reloj del sitio (que se muestra en el formulario), no el de tu ordenador. Con varios archivos, indica las horas entre uno y el siguiente."
+
+msgid "When you send several files, each one is scheduled this many hours after the previous one. Use 0 to schedule all of them at the same time."
+msgstr "Al enviar varios archivos, cada uno se programa estas horas después del anterior. Usa 0 para programarlos todos a la misma hora."
+
 msgid "Where to get a key"
 msgstr "Dónde conseguir una clave"
 
 msgid "Who can use it"
 msgstr "Quién puede usarlo"
+
+msgid "Without a title, Jim uses the file name. The file name is also the address (slug) of the post if you publish it below."
+msgstr "Sin título, Jim usa el nombre del archivo. El nombre del archivo también es la dirección (slug) de la entrada si la publicas más abajo."
+
+msgid "WooCommerce > Status > Scheduled Actions"
+msgstr "WooCommerce > Estado > Scheduled Actions (Action Scheduler)"
 
 msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
 msgstr "WordPress.org: si se usa el shortcode [jimca_instalacoes], el servidor consulta api.wordpress.org para obtener el número de instalaciones de este plugin (solo se envía el nombre del plugin; la respuesta se guarda en caché 12 horas). Los navegadores de los visitantes no lo contactan."
@@ -1252,6 +1471,9 @@ msgstr "Palabras:"
 
 msgid "You"
 msgstr "Tú"
+
+msgid "You cannot create content in the chosen post type."
+msgstr "No puedes crear contenido en el tipo de contenido elegido."
 
 msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
 msgstr "Elegiste %1$d archivos, pero solo %2$d llegaron al servidor (límite de PHP \"max_file_uploads\": %3$d). No se convirtió nada; envíalos en lotes más pequeños."
@@ -1264,6 +1486,9 @@ msgstr "No tienes permiso para subir documentos."
 
 msgid "You reached the limit of questions for now. Try again in an hour."
 msgstr "Has alcanzado el límite de preguntas por ahora. Inténtalo de nuevo dentro de una hora."
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "Tus documentos están en Jim > Documentos accesibles, con columnas para el shortcode, el modo de visualización y dónde se publicó cada uno. La página Tutorial explica cada opción y desde allí puedes abrir este recorrido de nuevo."
 
 msgid "Your question"
 msgstr "Tu pregunta"
@@ -1300,3 +1525,4 @@ msgstr "obligatoria"
 
 msgid "unexpected reply"
 msgstr "respuesta inesperada"
+

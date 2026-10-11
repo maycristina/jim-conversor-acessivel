@@ -135,9 +135,43 @@ Os testes de formatos, fluxos e limitações estão em
 
 ## Modo de exibição
 
-Em **Documentos Acessíveis**, a Edição rápida de cada documento define se ele é um **leitor**
-(barra flutuante, voz, temas, sumário) ou um **post de blog** (página HTML com tempo de leitura,
-ouvir e compartilhar). Só o painel configura isso; o shortcode não tem atributo para o modo.
+Na tela **Novo Documento** (ao importar) e depois na Edição rápida de **Documentos Acessíveis**, cada
+documento é definido como **Leitor acessível** (barra flutuante, voz, temas, sumário) ou **Padrão blog**
+(página HTML com tempo de leitura, ouvir e compartilhar). Só o painel configura isso; o shortcode não
+tem atributo para o modo.
+
+## Publicar direto em posts, páginas e tipos personalizados
+
+Em **Novo Documento › Também publicar em**, escolha um tipo de conteúdo do site. Para cada arquivo, o
+Jim cria um item desse tipo com o shortcode já dentro, sem copiar e colar um a um. O documento continua
+no painel do Jim.
+
+- **Tipos:** posts, páginas e tipos personalizados públicos que têm editor. Tipos internos (grupos de
+  campos, modelos e semelhantes) não aparecem. O filtro `jimca_destination_post_types` ajusta a lista.
+- **Endereço (slug):** o nome do arquivo sem extensão (`relatorio-anual.pdf` vira `relatorio-anual`).
+- **Status:** publicar agora, rascunho, pendente, privado ou agendar.
+- **Categorias e tags** do WordPress também classificam os documentos do Jim (colunas e filtros na
+  lista), e o item criado recebe as do tipo escolhido, inclusive taxonomias próprias.
+- A coluna **Publicado em** da lista de documentos leva ao item.
+
+### Agendamento
+
+Ao escolher **Agendar**, a data vale pelo **relógio do site** (o formulário mostra a hora atual dele).
+Cada arquivo vira um evento do [Action Scheduler](https://actionscheduler.org/) (biblioteca embutida, a
+mesma do WooCommerce): o documento é convertido na hora e o item só é criado na hora marcada. O aviso
+depois do envio traz o nome do evento ("Jim import AAAA-MM-DD HH:MM #xxxx"); para ver, executar ou
+cancelar, abra **Ferramentas › Scheduled Actions** (no WooCommerce: **WooCommerce › Status › Scheduled
+Actions**) e procure por esse nome. Só administradores abrem essa tela. Com vários arquivos, o campo
+"horas entre um arquivo e o próximo" espaça as publicações.
+
+## Tour guiado
+
+Na primeira instalação, a tela **Novo Documento** abre sozinha um tour de 9 passos (arquivo, título,
+modo de exibição, onde publicar, status e agendamento, categorias e tags, conversão). Ele pode ser
+reaberto quando quiser: pelo botão **Fazer o tour guiado** da própria tela ou pelo botão **Clique aqui
+para abrir o tutorial** na aba **Tutorial**. É acessível: um diálogo com nome e descrição que recebe o
+foco a cada passo, botões reais, **Esc** para sair, contorno no campo destacado (também em alto
+contraste) e nenhuma animação. Testes em `documentacao/testes/tour.test.js`.
 
 ## PDF: títulos, sumário impresso e marcação de páginas
 
@@ -195,6 +229,8 @@ includes/
   class-activator.php          Ativação (opções padrão)
   class-deactivator.php
   class-post-type.php          CPT "jimca_documento" + coluna com o shortcode
+  class-destination.php        "Também publicar em": tipo, status, agendamento (Action Scheduler), categorias e tags
+  class-tour.php               Tour guiado: passos, início na primeira instalação, convite
   class-converter.php          Dispatcher por extensão + checagem de extensões do PHP
   class-converter-interface.php
   class-converter-exception.php
@@ -223,6 +259,7 @@ assets/
   css/admin.css                Telas do painel
   js/frontend.js               Player: menus, temas, Web Speech API
   js/admin.js                  Envio com progresso (conduz as etapas da conversão)
+  js/tour.js                   Tour guiado (diálogo acessível, sem biblioteca externa)
   js/tutor.js                  Balão do tutor: conversa, streaming, voz
 bin/build-zip.sh               Gera o pacote instalável em dist/
 dist/jim-conversor-acessivel.zip  Pacote pronto para "Enviar plugin" (com vendor/)

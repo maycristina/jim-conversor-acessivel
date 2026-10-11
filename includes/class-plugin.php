@@ -92,6 +92,7 @@ class JIMCA_Plugin {
 		add_action( 'init', array( $this, 'load_bundled_translations' ), 0 );
 
 		JIMCA_Post_Type::get_instance()->init();
+		JIMCA_Destination::register_hooks();
 		JIMCA_Shortcode::get_instance()->init();
 		JIMCA_Install_Badge::get_instance()->init();
 		JIMCA_SEO::get_instance()->init();

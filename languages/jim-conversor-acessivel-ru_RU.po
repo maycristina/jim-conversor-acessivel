@@ -22,6 +22,15 @@ msgstr "%1$s: %2$s"
 msgid "%1$s: connection working. Model that answered: %2$s."
 msgstr "%1$s: соединение работает. Ответившая модель: %2$s."
 
+msgid "%1$s: schedule for %2$s was cancelled"
+msgstr "%1$s: публикация на %2$s отменена"
+
+msgid "%1$s: scheduled for %2$s"
+msgstr "%1$s: запланировано на %2$s"
+
+msgid "%1$s: scheduled publication for %2$s failed"
+msgstr "%1$s: запланированная на %2$s публикация не удалась"
+
 msgid "%d new entries."
 msgstr "Новых записей: %d."
 
@@ -61,6 +70,9 @@ msgstr "%s: ключ не сохранён. Он должен содержать
 msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
 msgstr "%s: модель не изменена. Используйте только буквы, цифры и символы . _ - / : (без пробелов)."
 
+msgid "%s: the post no longer exists"
+msgstr "%s: запись больше не существует"
+
 msgid "%s: there is no usable API key. Save the key again."
 msgstr "%s: нет пригодного API-ключа. Сохраните ключ ещё раз."
 
@@ -87,6 +99,9 @@ msgstr "Ключ сохранён, оканчивается на ••••%s.
 
 msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
 msgstr "Боковое оглавление с заголовками документа (стили заголовков Word или закладки PDF) для быстрого перехода к нужной главе."
+
+msgid "A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want."
+msgstr "Пошаговый тур по экрану «Новый документ» показывает, где находится каждый параметр и что он делает. Он запускается сам при первом открытии после установки, и вы можете открыть его снова в любой момент."
 
 msgid "A — default text size"
 msgstr "A — размер текста по умолчанию"
@@ -136,6 +151,12 @@ msgstr "Доступные документы"
 msgid "Accessible documents, read aloud, in a few clicks."
 msgstr "Доступные документы с озвучиванием — в несколько кликов."
 
+msgid "Accessible reader"
+msgstr "Доступный режим чтения"
+
+msgid "Accessible reader and standard blog modes"
+msgstr "Режимы «Доступный режим чтения» и «Стандартный блог»"
+
 msgid "Activity log"
 msgstr "Журнал действий"
 
@@ -145,6 +166,9 @@ msgstr "Добавить документ"
 msgid "Address (URL)"
 msgstr "Адрес (URL)"
 
+msgid "After picking a type you choose the status: publish now, draft, pending, private or Schedule. A schedule uses the site clock and becomes an Action Scheduler event, where you can see or cancel it under Tools > Scheduled Actions."
+msgstr "Выбрав тип, выберите статус: опубликовать сейчас, черновик, на проверке, личное или запланировать. Планирование идёт по часам сайта и становится событием Action Scheduler, которое можно посмотреть или отменить в разделе Инструменты > Scheduled Actions (Action Scheduler)."
+
 msgid "All Documents"
 msgstr "Все документы"
 
@@ -153,6 +177,9 @@ msgstr "Все выделения удалены."
 
 msgid "Allowed file types"
 msgstr "Разрешённые типы файлов"
+
+msgid "Also publish in"
+msgstr "Также опубликовать в"
 
 msgid "An unexpected error occurred while processing the file."
 msgstr "При обработке файла произошла непредвиденная ошибка."
@@ -187,11 +214,20 @@ msgstr "Автоматическое SEO"
 msgid "Available shortcodes"
 msgstr "Доступные шорткоды"
 
-msgid "Blog post (converted HTML page)"
-msgstr "Запись блога (преобразованная HTML-страница)"
+msgid "Back"
+msgstr "Назад"
 
 msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
 msgstr "Факс CCITT (фильтр CCITTFaxDecode): часто встречается в чёрно-белых отсканированных PDF; плагин не декодирует этот формат."
+
+msgid "Categories and tags"
+msgstr "Рубрики и метки"
+
+msgid "Choose how the document looks on the page: Accessible reader, with reading bar, voice and themes, or Standard blog, a plain blog post with the converted text. You can change it later in the documents list."
+msgstr "Выберите, как документ выглядит на странице: Доступный режим чтения — с панелью чтения, голосом и темами, или Стандартный блог — обычная запись блога с преобразованным текстом. Позже это можно изменить в списке документов."
+
+msgid "Choose the file"
+msgstr "Выберите файл"
 
 msgid "Clear all"
 msgstr "Очистить всё"
@@ -201,6 +237,12 @@ msgstr "Очистить журнал"
 
 msgid "Clear the whole log?"
 msgstr "Очистить весь журнал?"
+
+msgid "Click \"Convert document\". Large files can take up to a minute: keep the page open. When it finishes, a notice shows the shortcode, the link to the post and, if you scheduled, the name of the event."
+msgstr "Нажмите «Преобразовать документ». Большие файлы могут обрабатываться до минуты: не закрывайте страницу. По завершении уведомление покажет шорткод, ссылку на запись и, если вы планировали публикацию, название события."
+
+msgid "Click here to open the tutorial"
+msgstr "Нажмите здесь, чтобы открыть руководство"
 
 msgid "Close"
 msgstr "Закрыть"
@@ -229,6 +271,9 @@ msgstr "Преобразование выполняется только на PH
 msgid "Conversion progress"
 msgstr "Ход конвертации"
 
+msgid "Convert"
+msgstr "Преобразовать"
+
 msgid "Convert document"
 msgstr "Преобразовать документ"
 
@@ -238,8 +283,8 @@ msgstr "Преобразован:"
 msgid "Converting the document…"
 msgstr "Преобразование документа…"
 
-msgid "Copy the shortcode and paste it into the page or post where the document should appear."
-msgstr "Скопируйте шорткод и вставьте его на страницу или в запись, где должен появиться документ."
+msgid "Copy the shortcode and paste it into the page or post where the document should appear (not needed if you used \"Also publish in\")."
+msgstr "Скопируйте шорткод и вставьте его на страницу или в запись, где должен появиться документ (не нужно, если вы использовали «Также опубликовать в»)."
 
 msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
 msgstr "Повреждённый JPEG или с дополнительной кодировкой, которую плагин не смог снять."
@@ -268,11 +313,17 @@ msgstr "Не удалось прочитать документ Word: %s"
 msgid "Could not update the log."
 msgstr "Не удалось обновить журнал."
 
+msgid "Creates one post for each file, with the shortcode already inside, so you do not have to copy and paste them. The document stays in the Jim panel either way. The address (slug) of each post is the file name: \"annual-report.pdf\" becomes \"annual-report\"."
+msgstr "Создаёт по одной записи для каждого файла с уже вставленным шорткодом, чтобы вам не нужно было копировать и вставлять их вручную. Документ в любом случае остаётся в панели Jim. Адрес (слаг) каждой записи — имя файла: «annual-report.pdf» превращается в «annual-report»."
+
 msgid "DOCX"
 msgstr "DOCX"
 
 msgid "Dark"
 msgstr "Тёмная"
+
+msgid "Date and time by the site clock, not by your computer: timezone %1$s, now %2$s."
+msgstr "Дата и время — по часам сайта, а не вашего компьютера: часовой пояс %1$s, сейчас %2$s."
 
 msgid "Decrease text size"
 msgstr "Уменьшить текст"
@@ -334,17 +385,26 @@ msgstr "Документы, преобразованные с помощью Jim
 msgid "Done listening. Check the question and send it."
 msgstr "Я закончил слушать. Проверьте вопрос и отправьте его."
 
+msgid "Draft"
+msgstr "Черновик"
+
 msgid "EPUB books are not supported. Convert them to PDF or DOCX."
 msgstr "Книги EPUB не поддерживаются. Преобразуйте их в PDF или DOCX."
 
 msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
 msgstr "Каждый преобразованный документ хранится в вашем WordPress и получает шорткод, который вы вставляете на любую страницу или в запись, чтобы опубликовать его."
 
-msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
-msgstr "Каждый документ показывается либо как читалка (плавающая панель чтения с голосом и темами), либо как запись блога (панель со временем чтения и кнопками «Слушать» и «Поделиться»). Режим выбирается только в списке документов — через «Быстрое редактирование» или столбец «Режим отображения», чтобы тот, кто публикует страницу, не мог изменить природу документа. Без выбора документ — читалка."
+msgid "Each document is shown either as an Accessible reader (floating reading bar with voice and themes) or as a Standard blog (a reading-time bar with listen and share buttons). You choose the mode when you import the file, and can change it later in the documents list, with Quick Edit or the \"Display mode\" column. It is never set in the shortcode, so whoever publishes the page cannot change what the document is. Without a choice, the document is an Accessible reader."
+msgstr "Каждый документ отображается либо как «Доступный режим чтения» (плавающая панель чтения с голосом и темами), либо как «Стандартный блог» (панель со временем чтения и кнопками «Слушать» и «Поделиться»). Режим выбирается при импорте файла, а позже его можно изменить в списке документов через быстрое редактирование или столбец «Режим отображения». В шорткоде он не задаётся никогда, чтобы тот, кто публикует страницу, не мог изменить суть документа. Если выбор не сделан, документ отображается в режиме «Доступный режим чтения»."
 
 msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
 msgstr "Каждое изображение декодируется, сохраняется в медиатеке и получает миниатюры: книги с множеством иллюстраций могут исчерпать память или время PHP и обрушить сервер. При достижении любого лимита (или когда время или память PHP на исходе) извлечение изображений останавливается, весь текст всё равно преобразуется, а уведомление объясняет причину. На виртуальном хостинге держите низкие значения."
+
+msgid "Each scheduled post is an event of Action Scheduler. The document is converted right away and the post is created at the chosen time. When the upload ends, the notice shows the name of the event (for example \"Jim import 2026-10-11 15:10 #ab12\"). To learn more or cancel, open %s and look for that name."
+msgstr "Каждая запланированная запись — это событие Action Scheduler. Документ преобразуется сразу, а запись создаётся в выбранное время. Когда загрузка завершится, уведомление покажет название события (например, «Jim import 2026-10-11 15:10 #ab12»). Чтобы узнать больше или отменить, откройте %s и найдите это название."
+
+msgid "Each scheduled post is an event of Action Scheduler: it is created at the chosen time, and you can see or cancel it under Tools > Scheduled Actions."
+msgstr "Каждая запланированная запись — это событие Action Scheduler: она создаётся в выбранное время, и вы можете увидеть или отменить её в разделе «Инструменты > Scheduled Actions»."
 
 msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
 msgstr "Каждый шорткод может это изменить: %1$s показывает тьютора, %2$s скрывает его."
@@ -391,6 +451,9 @@ msgstr "Файлы добавлены: %s"
 msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
 msgstr "Файлы, загруженные администраторами, преобразуются на этом сервере. По умолчанию исходный файл удаляется после преобразования; преобразованный текст, его изображения (в медиатеке) и данные вроде имени файла, типа, числа слов и даты преобразования остаются в базе данных сайта. Плагин не собирает персональные данные посетителей и не использует cookie."
 
+msgid "Finish"
+msgstr "Готово"
+
 msgid "Formats and sending several files"
 msgstr "Форматы и загрузка нескольких файлов"
 
@@ -411,6 +474,9 @@ msgstr "Укажите название документа (необязател
 
 msgid "Greeting"
 msgstr "Приветствие"
+
+msgid "Guided tour"
+msgstr "Обучающий тур"
 
 msgid "HTML pages are not supported. Save the text as TXT or Markdown."
 msgstr "HTML-страницы не поддерживаются. Сохраните текст как TXT или Markdown."
@@ -456,6 +522,12 @@ msgstr "Выделить фрагмент:"
 
 msgid "Highlight removed."
 msgstr "Выделение удалено."
+
+msgid "Hours between one file and the next"
+msgstr "Часов между одним файлом и следующим"
+
+msgid "How the document looks on the page where you publish it: Accessible reader (reading bar, voice and themes) or Standard blog (a plain blog post with the converted text). You can change it later in the documents list (Quick Edit)."
+msgstr "Как документ выглядит на странице, где вы его публикуете: «Доступный режим чтения» (панель чтения, голос и темы) или «Стандартный блог» (обычная запись блога с преобразованным текстом). Позже это можно изменить в списке документов (быстрое редактирование)."
 
 msgid "How the tutor talks: tone, vocabulary, patience."
 msgstr "Как говорит тьютор: тон, словарь, терпение."
@@ -535,6 +607,9 @@ msgstr "Инструкции (промпт)"
 msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
 msgstr "Недопустимый файл изображения или неизвестный тип (не JPEG, PNG, GIF и не WebP, преобразовать не удалось)."
 
+msgid "It opens the New Document screen with the tour running. Press Esc to leave it at any time."
+msgstr "Откроется экран «Новый документ» с запущенным туром. Нажмите Esc, чтобы выйти в любой момент."
+
 msgid "Item"
 msgstr "Параметр"
 
@@ -552,6 +627,9 @@ msgstr "Изображения JPEG 2000 (часто встречаются в P
 
 msgid "Jim - Accessible Converter"
 msgstr "Jim — Доступный конвертер"
+
+msgid "Jim - Accessible Converter is ready."
+msgstr "Jim — Доступный конвертер готов к работе."
 
 msgid "Jim - Accessible Converter: document not found."
 msgstr "Jim — Доступный конвертер: документ не найден."
@@ -676,6 +754,9 @@ msgstr "Новый разговор"
 msgid "New conversation started."
 msgstr "Начат новый разговор."
 
+msgid "Next"
+msgstr "Далее"
+
 msgid "Next image"
 msgstr "Следующее изображение"
 
@@ -687,6 +768,18 @@ msgstr "Записей пока нет."
 
 msgid "No valid file was sent."
 msgstr "Не отправлено ни одного допустимого файла."
+
+msgid "No, thanks"
+msgstr "Нет, спасибо"
+
+msgid "None created yet."
+msgstr "Пока ничего не создано."
+
+msgid "Not published in another post type"
+msgstr "Не опубликовано в другом типе записей"
+
+msgid "Nowhere: only in the Jim documents panel"
+msgstr "Нигде: только в панели документов Jim"
 
 msgid "OK"
 msgstr "OK"
@@ -706,6 +799,9 @@ msgstr "Когда плагин будет опубликован в офици�
 msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
 msgstr "По одному API-ключу на поставщика, в зашифрованном виде. Проверка соединения отправляет одну фиксированную фразу только этому поставщику, без текста документов. ИИ-тьютор (ниже) использует выбранного здесь поставщика."
 
+msgid "Only administrators can open Scheduled Actions. If an event is cancelled, the document stays in the Jim panel and the documents list shows that the schedule was cancelled."
+msgstr "Открыть Scheduled Actions могут только администраторы. Если событие отменено, документ остаётся в панели Jim, а список документов показывает, что планирование отменено."
+
 msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
 msgstr "Только если сервис его требует; локальный Ollama не требует. Хранится в зашифрованном виде."
 
@@ -717,6 +813,9 @@ msgstr "Откройте %s и выберите файл (PDF, DOCX, TXT или 
 
 msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
 msgstr "Откройте «Журнал действий» и таблицу «Требования к серверу» в %s. Журнал показывает каждое преобразование (время, память, слова, изображения и причину пропуска каждого изображения) и каждую ошибку в реальном времени: держите Настройки открытыми в другой вкладке во время преобразования."
+
+msgid "Optional: choose the display mode and use \"Also publish in\" to have Jim create the post, page or custom post type item that shows the document. See the next sections."
+msgstr "По желанию: выберите режим отображения и используйте «Также опубликовать в», чтобы Jim сам создал запись, страницу или элемент пользовательского типа, показывающий документ. См. следующие разделы."
 
 msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
 msgstr "Необязательно: без названия используется имя файла. При отправке нескольких файлов каждый документ получает имя своего файла."
@@ -772,11 +871,26 @@ msgstr "Терпеливый, ободряющий и понятный. Испо
 msgid "Pause"
 msgstr "Пауза"
 
+msgid "Pending review"
+msgstr "На проверке"
+
 msgid "Personality"
 msgstr "Характер"
 
+msgid "Pick a PDF, DOCX, TXT or Markdown file. TXT and Markdown can be sent up to 20 at a time; PDF and DOCX one at a time."
+msgstr "Выберите файл PDF, DOCX, TXT или Markdown. TXT и Markdown можно отправлять по 20 за раз; PDF и DOCX — по одному."
+
+msgid "Pick posts, pages or a custom post type and Jim creates one post per file with the shortcode already inside, so you do not have to copy and paste shortcodes. Choose \"Nowhere\" to keep the documents only in the Jim panel."
+msgstr "Выберите записи, страницы или пользовательский тип, и Jim создаст по одной записи на файл с уже вставленным шорткодом — копировать и вставлять шорткоды не нужно. Выберите «Нигде», чтобы документы остались только в панели Jim."
+
 msgid "Plugin website"
 msgstr "Сайт плагина"
+
+msgid "Post created: %1$s (%2$s)."
+msgstr "Запись создана: %1$s (%2$s)."
+
+msgid "Posts loaded successfully: event \"%1$s\" was created. To learn more or cancel, go to %2$s and look for \"%1$s\"."
+msgstr "Записи успешно загружены: создано событие «%1$s». Чтобы узнать больше или отменить, откройте %2$s и найдите «%1$s»."
 
 msgid "Presentations are not converted. Export to PDF."
 msgstr "Презентации не преобразуются. Экспортируйте в PDF."
@@ -787,26 +901,41 @@ msgstr "Предыдущее изображение"
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
+msgid "Private"
+msgstr "Личное"
+
 msgid "Provider in use: %s."
 msgstr "Используемый поставщик: %s."
 
 msgid "Provider used by the assistant"
 msgstr "Поставщик, которого использует ассистент"
 
+msgid "Publication status"
+msgstr "Статус публикации"
+
+msgid "Publish now"
+msgstr "Опубликовать сейчас"
+
+msgid "Publish on"
+msgstr "Дата публикации"
+
+msgid "Published in"
+msgstr "Опубликовано в"
+
+msgid "Published in:"
+msgstr "Опубликовано в:"
+
 msgid "Publishes the converted document, with the reading controls."
 msgstr "Публикует преобразованный документ с элементами управления чтением."
+
+msgid "Publishing in posts, pages and custom post types"
+msgstr "Публикация в записях, страницах и пользовательских типах"
 
 msgid "Questions per day on the whole site:"
 msgstr "Вопросов в день на весь сайт:"
 
 msgid "Questions per reader per hour:"
 msgstr "Вопросов на читателя в час:"
-
-msgid "Reader (with reading bar and voice)"
-msgstr "Читалка (с панелью чтения и голосом)"
-
-msgid "Reader mode and blog post mode"
-msgstr "Режим читалки и режим записи блога"
 
 msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
 msgstr "Читатели могут нажать на изображение, чтобы открыть его крупнее; стрелки на клавиатуре переключают изображения, Esc закрывает."
@@ -883,6 +1012,18 @@ msgstr "Сохранить тьютора"
 msgid "Saved answers"
 msgstr "Сохранённые ответы"
 
+msgid "Schedule"
+msgstr "Запланировать"
+
+msgid "Scheduled events run when your site receives visits (WP-Cron). On a site with little traffic, a real server cron job makes them run on time."
+msgstr "Запланированные события выполняются, когда на сайт заходят посетители (WP-Cron). На сайте с малой посещаемостью настоящее задание cron на сервере обеспечит выполнение вовремя."
+
+msgid "Scheduled for %s"
+msgstr "Запланировано на %s"
+
+msgid "Scheduling"
+msgstr "Планирование"
+
 msgid "Search Documents"
 msgstr "Искать документы"
 
@@ -903,6 +1044,9 @@ msgstr "Отправка файла…"
 
 msgid "Sends one fixed sentence to %s using the saved key and model."
 msgstr "Отправляет одну фиксированную фразу на %s с сохранёнными ключом и моделью."
+
+msgid "Separate with commas. Names that do not exist yet are created (if you may create them)."
+msgstr "Разделяйте запятыми. Названия, которых ещё нет, будут созданы (если у вас есть на это права)."
 
 msgid "Sepia"
 msgstr "Сепия"
@@ -943,14 +1087,32 @@ msgstr "Показывает, сколько активных установок
 msgid "Skip to the document content"
 msgstr "Перейти к содержимому документа"
 
+msgid "Skip tour"
+msgstr "Пропустить тур"
+
 msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
 msgstr "Меньшее из значений upload_max_filesize и post_max_size. Рекомендуется: 32 МБ или больше."
 
 msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
 msgstr "Электронные таблицы не преобразуются. Экспортируйте содержимое в PDF или DOCX."
 
+msgid "Standard blog"
+msgstr "Стандартный блог"
+
+msgid "Start the tour"
+msgstr "Начать тур"
+
 msgid "Status"
 msgstr "Состояние"
+
+msgid "Status and schedule"
+msgstr "Статус и планирование"
+
+msgid "Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead."
+msgstr "Статус: опубликовать сейчас, черновик, на проверке, личное или запланировать. Тот, у кого нет прав публиковать в этом типе, отправляет элементы на проверку."
+
+msgid "Step %1$s of %2$s"
+msgstr "Шаг %1$s из %2$s"
 
 msgid "Step by step"
 msgstr "Шаг за шагом"
@@ -976,6 +1138,9 @@ msgstr "Поддержать проект"
 msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
 msgstr "Файлы TXT и Markdown можно отправлять до 20 за раз. Каждый станет документом, и вы получите готовый к копированию список шорткодов. PDF и DOCX отправляются по одному, потому что их тяжело преобразовывать."
 
+msgid "Take the guided tour"
+msgstr "Пройти обучающий тур"
+
 msgid "Technical detail: %s."
 msgstr "Технические подробности: %s."
 
@@ -996,6 +1161,9 @@ msgstr "Размер текста и тема чтения (Светлая, Се
 
 msgid "Text size and theme"
 msgstr "Размер текста и тема"
+
+msgid "That is it"
+msgstr "Вот и всё"
 
 msgid "The .md file does not look like valid Markdown text."
 msgstr "Файл .md не похож на корректный текст Markdown."
@@ -1018,11 +1186,20 @@ msgstr "Документ Word, похоже, пуст."
 msgid "The WordPress.org page works once the plugin is listed in the official directory."
 msgstr "Страница WordPress.org заработает, когда плагин появится в официальном каталоге."
 
+msgid "The address (slug) of each item is the file name: \"annual-report.pdf\" becomes \"annual-report\". If that address is taken, WordPress adds -2."
+msgstr "Адрес (слаг) каждого элемента — имя файла: «annual-report.pdf» превращается в «annual-report». Если такой адрес занят, WordPress добавит -2."
+
 msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
 msgstr "Базовый адрес API, например http://localhost:11434/v1 для Ollama. «/chat/completions» добавляется, если его нет."
 
 msgid "The browser did not allow the microphone."
 msgstr "Браузер не разрешил доступ к микрофону."
+
+msgid "The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it."
+msgstr "Рубрики и метки WordPress также классифицируют документы Jim и отображаются столбцами в списке документов. Поля выбранного типа, например его собственные таксономии, появляются, когда вы его выбираете."
+
+msgid "The categories and tags you choose classify the Jim document and, when the post type uses them, the new post. The fields of the chosen type appear here too."
+msgstr "Выбранные рубрики и метки классифицируют документ Jim и, если тип записи их использует, новую запись. Поля выбранного типа тоже появляются здесь."
 
 msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
 msgstr "Содержимое «%1$s» не соответствует расширению .%2$s: файл повреждён или переименован из другого формата."
@@ -1042,8 +1219,14 @@ msgstr "Конвертация остановлена: достигнут лим
 msgid "The document has no text to convert."
 msgstr "В документе нет текста для преобразования."
 
+msgid "The document is in the Jim panel, but the post was not created: %s"
+msgstr "Документ находится в панели Jim, но запись не создана: %s"
+
 msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
 msgstr "Документ создан, но его текст выглядит нечитаемым: этот PDF использует шрифты, которые не сообщают, какой букве соответствует каждый символ, поэтому текст получается в виде символов (и так же читался бы вслух). Проверьте документ. Если он искажён, распознайте PDF через OCR или экспортируйте его заново со встроенными шрифтами Unicode и сконвертируйте ещё раз. %s"
+
+msgid "The documents list has a \"Published in\" column that links to the item. The document stays in the Jim panel either way."
+msgstr "В списке документов есть столбец «Опубликовано в» со ссылкой на элемент. Документ в любом случае остаётся в панели Jim."
 
 msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
 msgstr "Файл «%1$s» не удалось загрузить (лимит сервера: %2$s). Отправьте файл поменьше или попросите хостинг увеличить «upload_max_filesize» и «post_max_size»."
@@ -1056,6 +1239,9 @@ msgstr "Файл слишком велик для сервера (текущий
 
 msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
 msgstr "Ключ не сохранён: на этом сервере нет шифрования (libsodium), необходимого для его безопасного хранения."
+
+msgid "The list shows posts, pages and the custom post types of your site that have a public page and the editor. Internal types (field groups, templates and the like) are not listed."
+msgstr "В списке — записи, страницы и пользовательские типы вашего сайта, у которых есть публичная страница и редактор. Служебные типы (группы полей, шаблоны и подобные) не показываются."
 
 msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
 msgstr "В журнале никогда нет текста ваших документов и вашего ключа ИИ, поэтому его безопасно экспортировать и отправлять, когда просите о помощи."
@@ -1138,8 +1324,14 @@ msgstr "Срок действия страницы истёк. Перезагр�
 msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
 msgstr "На этом сервере нет расширений PHP, необходимых для чтения файлов .%1$s: %2$s. Попросите хостинг включить их."
 
+msgid "This short tour shows how to turn a file into an accessible page and publish it. You can leave it at any time with the Esc key, and open it again from the Tutorial."
+msgstr "Этот короткий тур показывает, как превратить файл в доступную страницу и опубликовать её. Выйти можно в любой момент клавишей Esc, а открыть тур снова — на странице «Руководство»."
+
 msgid "Time (UTC)"
 msgstr "Время (UTC)"
+
+msgid "Title (optional)"
+msgstr "Заголовок (необязательно)"
 
 msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
 msgstr "Чтобы мгновенно отвечать на повторные вопросы, тьютор может сохранять ответы на этом сайте для каждого документа. Вместе с ответом сохраняется только вес каждого слова вопроса, а не сам текст и не данные, по которым можно узнать посетителя. Сохранённые ответы удаляются при изменении документа или настроек тьютора."
@@ -1147,8 +1339,14 @@ msgstr "Чтобы мгновенно отвечать на повторные �
 msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
 msgstr "Чтобы запоминать выбор каждого читателя, элементы управления чтением и маркер используют локальное хранилище браузера — отдельно для каждого документа: размер текста, тема, контраст, голос, скорость чтения, скрыта ли панель и выделенные читателем фрагменты. Эти данные никогда не покидают устройство читателя, и их можно удалить, очистив данные сайта в браузере."
 
+msgid "To schedule, choose a date and time in the future, by the site clock: it is now %1$s (%2$s)."
+msgstr "Чтобы запланировать публикацию, выберите дату и время в будущем по часам сайта: сейчас %1$s (%2$s)."
+
 msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
 msgstr "Чтобы отправить несколько файлов сразу, используйте только TXT и MD. «%s» нужно отправлять отдельно (PDF и DOCX тяжело преобразовывать подряд)."
+
+msgid "Tools > Scheduled Actions"
+msgstr "Инструменты > Scheduled Actions (Action Scheduler)"
 
 msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
 msgstr "Достигнут лимит общего размера изображений документа (настраивается в Настройки › Лимиты изображений)."
@@ -1176,6 +1374,9 @@ msgstr "Сначала напишите вопрос."
 
 msgid "Type:"
 msgstr "Тип:"
+
+msgid "Under \"Also publish in\" on the New Document screen, choose where the document goes besides the Jim panel. For each file Jim creates an item of that type with the shortcode already inside, so you do not copy and paste shortcodes one by one."
+msgstr "В поле «Также опубликовать в» на экране «Новый документ» выберите, куда попадёт документ помимо панели Jim. Для каждого файла Jim создаёт элемент этого типа с уже вставленным шорткодом, чтобы не копировать шорткоды по одному."
 
 msgid "Unsupported file type: %s"
 msgstr "Неподдерживаемый тип файла: %s"
@@ -1210,11 +1411,17 @@ msgstr "Голос"
 msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
 msgstr "Выбор голоса, слушать/пауза, скорость и стоп. Озвучивание использует браузер, поэтому текст никому не отправляется."
 
+msgid "Want a one-minute guided tour of how to convert and publish your first document?"
+msgstr "Хотите пройти минутный тур о том, как преобразовать и опубликовать первый документ?"
+
 msgid "Warning"
 msgstr "Внимание"
 
 msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
 msgstr "Внимание: сохранённый ключ не удалось прочитать (изменились ключи безопасности в wp-config.php). Введите его снова."
+
+msgid "Welcome to Jim"
+msgstr "Добро пожаловать в Jim"
 
 msgid "What Jim is"
 msgstr "Что такое Jim"
@@ -1240,11 +1447,23 @@ msgstr "По завершении документ появится в %s, а е
 msgid "When something goes wrong"
 msgstr "Когда что-то идёт не так"
 
+msgid "When you choose Schedule, set the date and time by the site clock (shown in the form), not by your computer. With several files, set the hours between one and the next."
+msgstr "Выбрав «Запланировать», задавайте дату и время по часам сайта (они показаны в форме), а не вашего компьютера. Для нескольких файлов укажите число часов между соседними."
+
+msgid "When you send several files, each one is scheduled this many hours after the previous one. Use 0 to schedule all of them at the same time."
+msgstr "При отправке нескольких файлов каждый следующий планируется на указанное число часов позже предыдущего. Укажите 0, чтобы запланировать все на одно и то же время."
+
 msgid "Where to get a key"
 msgstr "Где получить ключ"
 
 msgid "Who can use it"
 msgstr "Кто может пользоваться"
+
+msgid "Without a title, Jim uses the file name. The file name is also the address (slug) of the post if you publish it below."
+msgstr "Без заголовка Jim использует имя файла. Имя файла также становится адресом (слагом) записи, если вы публикуете её ниже."
+
+msgid "WooCommerce > Status > Scheduled Actions"
+msgstr "WooCommerce > Статус > Scheduled Actions (Action Scheduler)"
 
 msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
 msgstr "WordPress.org: если используется шорткод [jimca_instalacoes], сервер запрашивает у api.wordpress.org число установок этого плагина (отправляется только название плагина; ответ кэшируется на 12 часов). Браузеры посетителей к нему не обращаются."
@@ -1254,6 +1473,9 @@ msgstr "Слов:"
 
 msgid "You"
 msgstr "Вы"
+
+msgid "You cannot create content in the chosen post type."
+msgstr "Вы не можете создавать записи выбранного типа."
 
 msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
 msgstr "Вы выбрали файлов: %1$d, но на сервер дошло только %2$d (лимит PHP «max_file_uploads»: %3$d). Ничего не преобразовано; отправляйте меньшими партиями."
@@ -1266,6 +1488,9 @@ msgstr "У вас нет прав для загрузки документов."
 
 msgid "You reached the limit of questions for now. Try again in an hour."
 msgstr "Вы пока исчерпали лимит вопросов. Попробуйте через час."
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "Ваши документы находятся в Jim > Доступные документы: там есть столбцы с шорткодом, режимом отображения и местом публикации каждого. Страница «Руководство» объясняет все параметры, и оттуда этот тур можно открыть снова."
 
 msgid "Your question"
 msgstr "Ваш вопрос"
@@ -1302,3 +1527,4 @@ msgstr "обязательно"
 
 msgid "unexpected reply"
 msgstr "неожиданный ответ"
+

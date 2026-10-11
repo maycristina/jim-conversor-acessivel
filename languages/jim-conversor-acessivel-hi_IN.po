@@ -22,6 +22,15 @@ msgstr "%1$s: %2$s"
 msgid "%1$s: connection working. Model that answered: %2$s."
 msgstr "%1$s: कनेक्शन काम कर रहा है। जवाब देने वाला मॉडल: %2$s।"
 
+msgid "%1$s: schedule for %2$s was cancelled"
+msgstr "%1$s: %2$s के लिए शेड्यूल रद्द कर दिया गया"
+
+msgid "%1$s: scheduled for %2$s"
+msgstr "%1$s: %2$s के लिए शेड्यूल"
+
+msgid "%1$s: scheduled publication for %2$s failed"
+msgstr "%1$s: %2$s के लिए शेड्यूल की गई प्रकाशन विफल रही"
+
 msgid "%d new entries."
 msgstr "%d नई प्रविष्टियाँ।"
 
@@ -59,6 +68,9 @@ msgstr "%s: कुंजी सहेजी नहीं गई। इसमे�
 msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
 msgstr "%s: मॉडल नहीं बदला गया। केवल अक्षर, अंक और चिह्न . _ - / : इस्तेमाल करें (बिना स्पेस)।"
 
+msgid "%s: the post no longer exists"
+msgstr "%s: पोस्ट अब मौजूद नहीं है"
+
 msgid "%s: there is no usable API key. Save the key again."
 msgstr "%s: कोई उपयोग योग्य API कुंजी नहीं है। कुंजी फिर से सहेजें।"
 
@@ -85,6 +97,9 @@ msgstr "एक कुंजी सहेजी गई है, जो •••�
 
 msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
 msgstr "दस्तावेज़ के शीर्षकों (Word शीर्षक शैलियाँ या PDF बुकमार्क) के साथ एक साइड विषय-सूची, जिससे सीधे किसी अध्याय पर जाया जा सके।"
+
+msgid "A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want."
+msgstr "नया दस्तावेज़ स्क्रीन का चरण-दर-चरण टूर दिखाता है कि हर विकल्प कहाँ है और क्या करता है। यह इंस्टॉल के बाद पहली बार अपने आप शुरू होता है, और आप इसे जब चाहें फिर खोल सकते हैं।"
 
 msgid "A — default text size"
 msgstr "A — डिफ़ॉल्ट पाठ आकार"
@@ -134,6 +149,12 @@ msgstr "सुलभ दस्तावेज़"
 msgid "Accessible documents, read aloud, in a few clicks."
 msgstr "सुलभ दस्तावेज़, ज़ोर से पढ़कर सुनाने के साथ, बस कुछ क्लिक में।"
 
+msgid "Accessible reader"
+msgstr "सुलभ रीडर"
+
+msgid "Accessible reader and standard blog modes"
+msgstr "सुलभ रीडर और मानक ब्लॉग मोड"
+
 msgid "Activity log"
 msgstr "गतिविधि लॉग"
 
@@ -143,6 +164,9 @@ msgstr "नया दस्तावेज़ जोड़ें"
 msgid "Address (URL)"
 msgstr "पता (URL)"
 
+msgid "After picking a type you choose the status: publish now, draft, pending, private or Schedule. A schedule uses the site clock and becomes an Action Scheduler event, where you can see or cancel it under Tools > Scheduled Actions."
+msgstr "प्रकार चुनने के बाद स्थिति चुनें: अभी प्रकाशित करें, ड्राफ़्ट, लंबित, निजी या शेड्यूल करें। शेड्यूल साइट की घड़ी का उपयोग करता है और Action Scheduler की इवेंट बन जाता है, जिसे आप टूल्स > Scheduled Actions (Action Scheduler) में देख या रद्द कर सकते हैं।"
+
 msgid "All Documents"
 msgstr "सभी दस्तावेज़"
 
@@ -151,6 +175,9 @@ msgstr "सभी हाइलाइट हटा दिए गए।"
 
 msgid "Allowed file types"
 msgstr "अनुमत फ़ाइल प्रकार"
+
+msgid "Also publish in"
+msgstr "इसमें भी प्रकाशित करें"
 
 msgid "An unexpected error occurred while processing the file."
 msgstr "फ़ाइल संसाधित करते समय एक अप्रत्याशित त्रुटि हुई।"
@@ -185,11 +212,20 @@ msgstr "स्वचालित SEO"
 msgid "Available shortcodes"
 msgstr "उपलब्ध शॉर्टकोड"
 
-msgid "Blog post (converted HTML page)"
-msgstr "ब्लॉग पोस्ट (बदला हुआ HTML पृष्ठ)"
+msgid "Back"
+msgstr "पीछे"
 
 msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
 msgstr "CCITT फ़ैक्स (CCITTFaxDecode फ़िल्टर): श्वेत-श्याम स्कैन किए PDF में आम; प्लगइन इस प्रारूप को डिकोड नहीं करता।"
+
+msgid "Categories and tags"
+msgstr "श्रेणियाँ और टैग"
+
+msgid "Choose how the document looks on the page: Accessible reader, with reading bar, voice and themes, or Standard blog, a plain blog post with the converted text. You can change it later in the documents list."
+msgstr "चुनें कि दस्तावेज़ पेज पर कैसा दिखे: सुलभ रीडर (रीडिंग बार, आवाज़ और थीम के साथ) या मानक ब्लॉग (बदले हुए टेक्स्ट वाली सामान्य ब्लॉग पोस्ट)। आप इसे बाद में दस्तावेज़ सूची में बदल सकते हैं।"
+
+msgid "Choose the file"
+msgstr "फ़ाइल चुनें"
 
 msgid "Clear all"
 msgstr "सब साफ़ करें"
@@ -199,6 +235,12 @@ msgstr "लॉग साफ़ करें"
 
 msgid "Clear the whole log?"
 msgstr "पूरा लॉग साफ़ करें?"
+
+msgid "Click \"Convert document\". Large files can take up to a minute: keep the page open. When it finishes, a notice shows the shortcode, the link to the post and, if you scheduled, the name of the event."
+msgstr "\"दस्तावेज़ बदलें\" पर क्लिक करें। बड़ी फ़ाइलों में एक मिनट तक लग सकता है: पेज खुला रखें। पूरा होने पर एक सूचना शॉर्टकोड, पोस्ट का लिंक और, यदि आपने शेड्यूल किया है, इवेंट का नाम दिखाती है।"
+
+msgid "Click here to open the tutorial"
+msgstr "ट्यूटोरियल खोलने के लिए यहाँ क्लिक करें"
 
 msgid "Close"
 msgstr "बंद करें"
@@ -227,6 +269,9 @@ msgstr "रूपांतरण केवल PHP में होता है,
 msgid "Conversion progress"
 msgstr "बदलाव की प्रगति"
 
+msgid "Convert"
+msgstr "बदलें"
+
 msgid "Convert document"
 msgstr "दस्तावेज़ बदलें"
 
@@ -236,8 +281,8 @@ msgstr "बदला गया:"
 msgid "Converting the document…"
 msgstr "दस्तावेज़ बदला जा रहा है…"
 
-msgid "Copy the shortcode and paste it into the page or post where the document should appear."
-msgstr "शॉर्टकोड कॉपी करें और उस पृष्ठ या पोस्ट में चिपकाएँ जहाँ दस्तावेज़ दिखना चाहिए।"
+msgid "Copy the shortcode and paste it into the page or post where the document should appear (not needed if you used \"Also publish in\")."
+msgstr "शॉर्टकोड कॉपी करें और उस पेज या पोस्ट में चिपकाएँ जहाँ दस्तावेज़ दिखना चाहिए (यदि आपने \"इसमें भी प्रकाशित करें\" का उपयोग किया है तो इसकी ज़रूरत नहीं)।"
 
 msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
 msgstr "खराब JPEG, या ऐसी अतिरिक्त एन्कोडिंग वाला जिसे प्लगइन खोल नहीं सका।"
@@ -266,11 +311,17 @@ msgstr "Word दस्तावेज़ पढ़ा नहीं जा सक
 msgid "Could not update the log."
 msgstr "लॉग अपडेट नहीं हो सका।"
 
+msgid "Creates one post for each file, with the shortcode already inside, so you do not have to copy and paste them. The document stays in the Jim panel either way. The address (slug) of each post is the file name: \"annual-report.pdf\" becomes \"annual-report\"."
+msgstr "हर फ़ाइल के लिए एक पोस्ट बनाता है, जिसमें शॉर्टकोड पहले से डला होता है, ताकि आपको उन्हें कॉपी-पेस्ट न करना पड़े। दस्तावेज़ हर हाल में Jim पैनल में रहता है। हर पोस्ट का पता (स्लग) फ़ाइल का नाम होता है: \"annual-report.pdf\" बन जाता है \"annual-report\"।"
+
 msgid "DOCX"
 msgstr "DOCX"
 
 msgid "Dark"
 msgstr "गहरा"
+
+msgid "Date and time by the site clock, not by your computer: timezone %1$s, now %2$s."
+msgstr "तारीख और समय साइट की घड़ी के अनुसार, आपके कंप्यूटर के नहीं: समय क्षेत्र %1$s, अभी %2$s।"
 
 msgid "Decrease text size"
 msgstr "पाठ छोटा करें"
@@ -332,17 +383,26 @@ msgstr "Jim से बदले गए दस्तावेज़"
 msgid "Done listening. Check the question and send it."
 msgstr "सुनना पूरा हुआ। सवाल जाँचें और भेजें।"
 
+msgid "Draft"
+msgstr "ड्राफ़्ट"
+
 msgid "EPUB books are not supported. Convert them to PDF or DOCX."
 msgstr "EPUB पुस्तकें समर्थित नहीं हैं। उन्हें PDF या DOCX में बदलें।"
 
 msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
 msgstr "हर बदला हुआ दस्तावेज़ आपके WordPress में सहेजा जाता है और उसे एक शॉर्टकोड मिलता है, जिसे आप किसी भी पृष्ठ या पोस्ट में चिपकाकर उसे प्रकाशित करते हैं।"
 
-msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
-msgstr "हर दस्तावेज़ या तो रीडर (आवाज़ और थीम के साथ तैरती पठन पट्टी) के रूप में दिखता है या ब्लॉग पोस्ट (पढ़ने के समय और सुनने व साझा करने के बटन वाली पट्टी) के रूप में। मोड केवल दस्तावेज़ों की सूची में, त्वरित संपादन या \"प्रदर्शन मोड\" कॉलम से चुना जाता है, ताकि पृष्ठ प्रकाशित करने वाला दस्तावेज़ का स्वरूप न बदल सके। चुनाव न होने पर दस्तावेज़ रीडर होता है।"
+msgid "Each document is shown either as an Accessible reader (floating reading bar with voice and themes) or as a Standard blog (a reading-time bar with listen and share buttons). You choose the mode when you import the file, and can change it later in the documents list, with Quick Edit or the \"Display mode\" column. It is never set in the shortcode, so whoever publishes the page cannot change what the document is. Without a choice, the document is an Accessible reader."
+msgstr "हर दस्तावेज़ या तो सुलभ रीडर (वॉइस और थीम वाला तैरता रीडिंग बार) के रूप में दिखता है या मानक ब्लॉग (पढ़ने के समय वाला बार, सुनने और साझा करने के बटन) के रूप में। मोड आप फ़ाइल आयात करते समय चुनते हैं और बाद में दस्तावेज़ सूची में क्विक एडिट या \"प्रदर्शन मोड\" कॉलम से बदल सकते हैं। इसे शॉर्टकोड में कभी तय नहीं किया जाता, ताकि पेज प्रकाशित करने वाला दस्तावेज़ की प्रकृति न बदल सके। चुनाव न करने पर दस्तावेज़ सुलभ रीडर होता है।"
 
 msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
 msgstr "हर छवि डिकोड की जाती है, मीडिया लाइब्रेरी में सहेजी जाती है और उसके थंबनेल बनते हैं: बहुत चित्रों वाली पुस्तकें PHP की मेमोरी या समय खत्म कर सकती हैं और सर्वर गिरा सकती हैं। कोई सीमा पूरी होने पर (या PHP का समय या मेमोरी खत्म होने के करीब होने पर) छवि निकालना रुक जाता है, पूरा पाठ फिर भी बदला जाता है और सूचना कारण बताती है। साझा होस्टिंग में मान कम रखें।"
+
+msgid "Each scheduled post is an event of Action Scheduler. The document is converted right away and the post is created at the chosen time. When the upload ends, the notice shows the name of the event (for example \"Jim import 2026-10-11 15:10 #ab12\"). To learn more or cancel, open %s and look for that name."
+msgstr "हर शेड्यूल की गई पोस्ट Action Scheduler की एक इवेंट है। दस्तावेज़ तुरंत बदल दिया जाता है और पोस्ट चुने गए समय पर बनती है। अपलोड पूरा होने पर सूचना इवेंट का नाम दिखाती है (उदाहरण: \"Jim import 2026-10-11 15:10 #ab12\")। अधिक जानने या रद्द करने के लिए %s खोलें और वह नाम खोजें।"
+
+msgid "Each scheduled post is an event of Action Scheduler: it is created at the chosen time, and you can see or cancel it under Tools > Scheduled Actions."
+msgstr "हर शेड्यूल की गई पोस्ट Action Scheduler की एक इवेंट है: वह चुने गए समय पर बनती है, और आप उसे टूल्स > Scheduled Actions में देख या रद्द कर सकते हैं।"
 
 msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
 msgstr "हर शॉर्टकोड इसे बदल सकता है: %1$s ट्यूटर दिखाता है, %2$s उसे छिपाता है।"
@@ -389,6 +449,9 @@ msgstr "फ़ाइलें जोड़ी गईं: %s"
 msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
 msgstr "प्रशासकों द्वारा अपलोड की गई फ़ाइलें इसी सर्वर पर बदली जाती हैं। डिफ़ॉल्ट रूप से रूपांतरण के बाद मूल फ़ाइल हटा दी जाती है; बदला हुआ पाठ, उसकी छवियाँ (मीडिया लाइब्रेरी में) और फ़ाइल का नाम, प्रकार, शब्द संख्या और रूपांतरण की तारीख जैसे विवरण साइट के डेटाबेस में रहते हैं। प्लगइन आगंतुकों का कोई व्यक्तिगत डेटा एकत्र नहीं करता और कुकी का उपयोग नहीं करता।"
 
+msgid "Finish"
+msgstr "समाप्त करें"
+
 msgid "Formats and sending several files"
 msgstr "प्रारूप और एक साथ कई फ़ाइलें भेजना"
 
@@ -409,6 +472,9 @@ msgstr "दस्तावेज़ को शीर्षक दें (वै�
 
 msgid "Greeting"
 msgstr "स्वागत संदेश"
+
+msgid "Guided tour"
+msgstr "गाइडेड टूर"
 
 msgid "HTML pages are not supported. Save the text as TXT or Markdown."
 msgstr "HTML पृष्ठ समर्थित नहीं हैं। पाठ को TXT या Markdown के रूप में सहेजें।"
@@ -454,6 +520,12 @@ msgstr "अंश हाइलाइट करें:"
 
 msgid "Highlight removed."
 msgstr "हाइलाइट हटाया गया।"
+
+msgid "Hours between one file and the next"
+msgstr "एक फ़ाइल से अगली फ़ाइल के बीच घंटे"
+
+msgid "How the document looks on the page where you publish it: Accessible reader (reading bar, voice and themes) or Standard blog (a plain blog post with the converted text). You can change it later in the documents list (Quick Edit)."
+msgstr "जिस पेज पर आप दस्तावेज़ प्रकाशित करते हैं, वहाँ वह कैसा दिखेगा: सुलभ रीडर (रीडिंग बार, आवाज़ और थीम) या मानक ब्लॉग (बदले हुए टेक्स्ट वाली सामान्य ब्लॉग पोस्ट)। आप इसे बाद में दस्तावेज़ सूची (क्विक एडिट) में बदल सकते हैं।"
 
 msgid "How the tutor talks: tone, vocabulary, patience."
 msgstr "ट्यूटर कैसे बात करता है: लहजा, शब्दावली, धैर्य।"
@@ -533,6 +605,9 @@ msgstr "निर्देश (प्रॉम्प्ट)"
 msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
 msgstr "अमान्य छवि फ़ाइल या अज्ञात प्रकार (JPEG, PNG, GIF या WebP नहीं, और बदली नहीं जा सकी)।"
 
+msgid "It opens the New Document screen with the tour running. Press Esc to leave it at any time."
+msgstr "नया दस्तावेज़ स्क्रीन खुलती है और टूर चल रहा होता है। कभी भी बाहर निकलने के लिए Esc दबाएँ।"
+
 msgid "Item"
 msgstr "आइटम"
 
@@ -550,6 +625,9 @@ msgstr "JPEG 2000 छवियाँ (किताबों की PDF में
 
 msgid "Jim - Accessible Converter"
 msgstr "Jim - सुलभ कन्वर्टर"
+
+msgid "Jim - Accessible Converter is ready."
+msgstr "Jim - सुलभ कन्वर्टर तैयार है।"
 
 msgid "Jim - Accessible Converter: document not found."
 msgstr "Jim - सुलभ कन्वर्टर: दस्तावेज़ नहीं मिला।"
@@ -674,6 +752,9 @@ msgstr "नई बातचीत"
 msgid "New conversation started."
 msgstr "नई बातचीत शुरू हुई।"
 
+msgid "Next"
+msgstr "आगे"
+
 msgid "Next image"
 msgstr "अगली छवि"
 
@@ -685,6 +766,18 @@ msgstr "अभी कोई प्रविष्टि नहीं।"
 
 msgid "No valid file was sent."
 msgstr "कोई मान्य फ़ाइल नहीं भेजी गई।"
+
+msgid "No, thanks"
+msgstr "नहीं, धन्यवाद"
+
+msgid "None created yet."
+msgstr "अभी तक कोई नहीं बनाई गई।"
+
+msgid "Not published in another post type"
+msgstr "किसी अन्य सामग्री प्रकार में प्रकाशित नहीं"
+
+msgid "Nowhere: only in the Jim documents panel"
+msgstr "कहीं नहीं: केवल Jim दस्तावेज़ पैनल में"
 
 msgid "OK"
 msgstr "ठीक"
@@ -704,6 +797,9 @@ msgstr "प्लगइन के आधिकारिक WordPress निर�
 msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
 msgstr "हर प्रदाता के लिए एक API कुंजी, एन्क्रिप्टेड रूप में। कनेक्शन जाँच केवल उसी प्रदाता को एक तय वाक्य भेजती है, बिना दस्तावेज़ के टेक्स्ट के। AI ट्यूटर (नीचे) यहाँ चुने गए प्रदाता का इस्तेमाल करता है।"
 
+msgid "Only administrators can open Scheduled Actions. If an event is cancelled, the document stays in the Jim panel and the documents list shows that the schedule was cancelled."
+msgstr "केवल व्यवस्थापक Scheduled Actions खोल सकते हैं। यदि कोई इवेंट रद्द हो जाता है, तो दस्तावेज़ Jim पैनल में ही रहता है और दस्तावेज़ सूची दिखाती है कि शेड्यूल रद्द हुआ।"
+
 msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
 msgstr "केवल तब, जब सेवा माँगे; लोकल Ollama नहीं माँगता। यह एन्क्रिप्ट करके रखी जाती है।"
 
@@ -715,6 +811,9 @@ msgstr "%s खोलें और फ़ाइल चुनें (PDF, DOCX, TX
 
 msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
 msgstr "%s में \"गतिविधि लॉग\" और \"सर्वर आवश्यकताएँ\" तालिका खोलें। लॉग हर रूपांतरण (समय, मेमोरी, शब्द, छवियाँ और छोड़ी गई हर छवि का कारण) और हर त्रुटि लाइव दिखाता है: रूपांतरण चलते समय सेटिंग को दूसरे टैब में खुला रखें।"
+
+msgid "Optional: choose the display mode and use \"Also publish in\" to have Jim create the post, page or custom post type item that shows the document. See the next sections."
+msgstr "वैकल्पिक: प्रदर्शन मोड चुनें और \"इसमें भी प्रकाशित करें\" का उपयोग करें, ताकि Jim दस्तावेज़ दिखाने वाली पोस्ट, पेज या कस्टम पोस्ट टाइप की प्रविष्टि बना दे। अगले अनुभाग देखें।"
 
 msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
 msgstr "वैकल्पिक: शीर्षक न होने पर फ़ाइल का नाम उपयोग होता है। कई फ़ाइलें भेजने पर हर दस्तावेज़ अपनी फ़ाइल का नाम लेता है।"
@@ -770,11 +869,26 @@ msgstr "धैर्यवान, प्रोत्साहित करने
 msgid "Pause"
 msgstr "रोकें"
 
+msgid "Pending review"
+msgstr "समीक्षा लंबित"
+
 msgid "Personality"
 msgstr "व्यक्तित्व"
 
+msgid "Pick a PDF, DOCX, TXT or Markdown file. TXT and Markdown can be sent up to 20 at a time; PDF and DOCX one at a time."
+msgstr "PDF, DOCX, TXT या Markdown फ़ाइल चुनें। TXT और Markdown एक बार में 20 तक भेजी जा सकती हैं; PDF और DOCX एक बार में एक।"
+
+msgid "Pick posts, pages or a custom post type and Jim creates one post per file with the shortcode already inside, so you do not have to copy and paste shortcodes. Choose \"Nowhere\" to keep the documents only in the Jim panel."
+msgstr "पोस्ट, पेज या कस्टम पोस्ट टाइप चुनें और Jim हर फ़ाइल के लिए शॉर्टकोड के साथ एक पोस्ट बना देता है, ताकि आपको शॉर्टकोड कॉपी-पेस्ट न करने पड़ें। दस्तावेज़ों को केवल Jim पैनल में रखने के लिए \"कहीं नहीं\" चुनें।"
+
 msgid "Plugin website"
 msgstr "प्लगइन की वेबसाइट"
+
+msgid "Post created: %1$s (%2$s)."
+msgstr "पोस्ट बनाई गई: %1$s (%2$s)।"
+
+msgid "Posts loaded successfully: event \"%1$s\" was created. To learn more or cancel, go to %2$s and look for \"%1$s\"."
+msgstr "पोस्ट सफलतापूर्वक लोड हुईं: इवेंट \"%1$s\" बनाया गया। अधिक जानने या रद्द करने के लिए %2$s में जाएँ और \"%1$s\" खोजें।"
 
 msgid "Presentations are not converted. Export to PDF."
 msgstr "प्रस्तुतियाँ नहीं बदली जातीं। PDF में निर्यात करें।"
@@ -785,26 +899,41 @@ msgstr "पिछली छवि"
 msgid "Privacy"
 msgstr "गोपनीयता"
 
+msgid "Private"
+msgstr "निजी"
+
 msgid "Provider in use: %s."
 msgstr "इस्तेमाल हो रहा प्रदाता: %s।"
 
 msgid "Provider used by the assistant"
 msgstr "सहायक द्वारा इस्तेमाल किया जाने वाला प्रदाता"
 
+msgid "Publication status"
+msgstr "प्रकाशन स्थिति"
+
+msgid "Publish now"
+msgstr "अभी प्रकाशित करें"
+
+msgid "Publish on"
+msgstr "प्रकाशन तिथि"
+
+msgid "Published in"
+msgstr "इसमें प्रकाशित"
+
+msgid "Published in:"
+msgstr "इसमें प्रकाशित:"
+
 msgid "Publishes the converted document, with the reading controls."
 msgstr "बदले हुए दस्तावेज़ को पठन नियंत्रणों के साथ प्रकाशित करता है।"
+
+msgid "Publishing in posts, pages and custom post types"
+msgstr "पोस्ट, पेज और कस्टम पोस्ट टाइप में प्रकाशित करना"
 
 msgid "Questions per day on the whole site:"
 msgstr "पूरी साइट पर प्रति दिन सवाल:"
 
 msgid "Questions per reader per hour:"
 msgstr "प्रति पाठक प्रति घंटा सवाल:"
-
-msgid "Reader (with reading bar and voice)"
-msgstr "रीडर (पठन पट्टी और आवाज़ के साथ)"
-
-msgid "Reader mode and blog post mode"
-msgstr "रीडर मोड और ब्लॉग पोस्ट मोड"
 
 msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
 msgstr "पाठक किसी छवि पर क्लिक करके उसे बड़ा खोल सकते हैं, छवियों के बीच जाने के लिए तीर कुंजियाँ और बंद करने के लिए Esc।"
@@ -881,6 +1010,18 @@ msgstr "ट्यूटर सहेजें"
 msgid "Saved answers"
 msgstr "सहेजे गए जवाब"
 
+msgid "Schedule"
+msgstr "शेड्यूल करें"
+
+msgid "Scheduled events run when your site receives visits (WP-Cron). On a site with little traffic, a real server cron job makes them run on time."
+msgstr "शेड्यूल किए गए इवेंट तब चलते हैं जब आपकी साइट पर विज़िट आती हैं (WP-Cron)। कम ट्रैफ़िक वाली साइट पर असली सर्वर cron जॉब उन्हें समय पर चलाता है।"
+
+msgid "Scheduled for %s"
+msgstr "%s के लिए शेड्यूल किया गया"
+
+msgid "Scheduling"
+msgstr "शेड्यूलिंग"
+
 msgid "Search Documents"
 msgstr "दस्तावेज़ खोजें"
 
@@ -901,6 +1042,9 @@ msgstr "फ़ाइल भेजी जा रही है…"
 
 msgid "Sends one fixed sentence to %s using the saved key and model."
 msgstr "सहेजी गई कुंजी और मॉडल से %s को एक तय वाक्य भेजता है।"
+
+msgid "Separate with commas. Names that do not exist yet are created (if you may create them)."
+msgstr "अल्पविराम से अलग करें। जो नाम अभी मौजूद नहीं हैं, वे बना दिए जाते हैं (यदि आपको उन्हें बनाने की अनुमति है)।"
 
 msgid "Sepia"
 msgstr "सेपिया"
@@ -941,14 +1085,32 @@ msgstr "WordPress.org API के अनुसार प्लगइन के �
 msgid "Skip to the document content"
 msgstr "दस्तावेज़ की सामग्री पर जाएँ"
 
+msgid "Skip tour"
+msgstr "टूर छोड़ें"
+
 msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
 msgstr "upload_max_filesize और post_max_size में से छोटा। अनुशंसित: 32 MB या अधिक।"
 
 msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
 msgstr "स्प्रेडशीट नहीं बदली जातीं। सामग्री को PDF या DOCX में निर्यात करें।"
 
+msgid "Standard blog"
+msgstr "मानक ब्लॉग"
+
+msgid "Start the tour"
+msgstr "टूर शुरू करें"
+
 msgid "Status"
 msgstr "स्थिति"
+
+msgid "Status and schedule"
+msgstr "स्थिति और शेड्यूल"
+
+msgid "Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead."
+msgstr "स्थिति: अभी प्रकाशित करें, ड्राफ़्ट, समीक्षा लंबित, निजी या शेड्यूल करें। जो व्यक्ति उस प्रकार में प्रकाशित नहीं कर सकता, उसकी प्रविष्टियाँ समीक्षा के लिए भेजी जाती हैं।"
+
+msgid "Step %1$s of %2$s"
+msgstr "चरण %1$s / %2$s"
 
 msgid "Step by step"
 msgstr "चरण दर चरण"
@@ -974,6 +1136,9 @@ msgstr "प्रोजेक्ट का समर्थन करें"
 msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
 msgstr "TXT और Markdown फ़ाइलें एक बार में 20 तक भेजी जा सकती हैं। हर फ़ाइल एक दस्तावेज़ बनती है, और आपको कॉपी करने के लिए तैयार शॉर्टकोड सूची मिलती है। PDF और DOCX एक-एक करके भेजे जाते हैं क्योंकि उन्हें बदलना भारी है।"
 
+msgid "Take the guided tour"
+msgstr "गाइडेड टूर लें"
+
 msgid "Technical detail: %s."
 msgstr "तकनीकी विवरण: %s।"
 
@@ -994,6 +1159,9 @@ msgstr "पाठ का आकार और पठन थीम (हल्क�
 
 msgid "Text size and theme"
 msgstr "पाठ का आकार और थीम"
+
+msgid "That is it"
+msgstr "बस इतना ही"
 
 msgid "The .md file does not look like valid Markdown text."
 msgstr ".md फ़ाइल मान्य Markdown पाठ जैसी नहीं लगती।"
@@ -1016,11 +1184,20 @@ msgstr "Word दस्तावेज़ खाली लगता है।"
 msgid "The WordPress.org page works once the plugin is listed in the official directory."
 msgstr "WordPress.org का पृष्ठ तभी काम करता है जब प्लगइन आधिकारिक निर्देशिका में सूचीबद्ध हो जाए।"
 
+msgid "The address (slug) of each item is the file name: \"annual-report.pdf\" becomes \"annual-report\". If that address is taken, WordPress adds -2."
+msgstr "हर प्रविष्टि का पता (स्लग) फ़ाइल का नाम होता है: \"annual-report.pdf\" बन जाता है \"annual-report\"। यदि वह पता पहले से है, तो WordPress -2 जोड़ देता है।"
+
 msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
 msgstr "API का मूल पता, जैसे Ollama के लिए http://localhost:11434/v1। \"/chat/completions\" न हो तो जोड़ दिया जाता है।"
 
 msgid "The browser did not allow the microphone."
 msgstr "ब्राउज़र ने माइक्रोफ़ोन की अनुमति नहीं दी।"
+
+msgid "The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it."
+msgstr "WordPress की श्रेणियाँ और टैग Jim के दस्तावेज़ों को भी वर्गीकृत करते हैं और दस्तावेज़ सूची में कॉलम के रूप में दिखते हैं। चुने गए प्रकार के फ़ील्ड, जैसे उसकी अपनी टैक्सोनॉमी, उसे चुनते ही दिखाई देते हैं।"
+
+msgid "The categories and tags you choose classify the Jim document and, when the post type uses them, the new post. The fields of the chosen type appear here too."
+msgstr "आप जो श्रेणियाँ और टैग चुनते हैं, वे Jim दस्तावेज़ को और, यदि पोस्ट टाइप उनका उपयोग करता है, नई पोस्ट को वर्गीकृत करते हैं। चुने गए प्रकार के फ़ील्ड भी यहीं दिखाई देते हैं।"
 
 msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
 msgstr "\"%1$s\" की सामग्री .%2$s एक्सटेंशन से मेल नहीं खाती: फ़ाइल खराब है या किसी अन्य प्रारूप से नाम बदलकर बनाई गई है।"
@@ -1040,8 +1217,14 @@ msgstr "बदलाव रुक गया क्योंकि PHP की स
 msgid "The document has no text to convert."
 msgstr "दस्तावेज़ में बदलने के लिए कोई पाठ नहीं है।"
 
+msgid "The document is in the Jim panel, but the post was not created: %s"
+msgstr "दस्तावेज़ Jim पैनल में है, लेकिन पोस्ट नहीं बनी: %s"
+
 msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
 msgstr "दस्तावेज़ बन गया, लेकिन उसका टेक्स्ट पढ़ने लायक नहीं लगता: यह PDF ऐसे फ़ॉन्ट इस्तेमाल करती है जो यह नहीं बताते कि हर वर्ण कौन-सा अक्षर है, इसलिए टेक्स्ट चिह्नों के रूप में आता है (और ज़ोर से भी ऐसे ही पढ़ा जाएगा)। दस्तावेज़ जाँचें। अगर वह गड़बड़ है, तो PDF पर OCR चलाएँ या उसे एम्बेडेड यूनिकोड फ़ॉन्ट के साथ फिर से एक्सपोर्ट करें, फिर दोबारा बदलें। %s"
+
+msgid "The documents list has a \"Published in\" column that links to the item. The document stays in the Jim panel either way."
+msgstr "दस्तावेज़ सूची में \"इसमें प्रकाशित\" कॉलम है, जो उस प्रविष्टि से जोड़ता है। दस्तावेज़ हर हाल में Jim पैनल में रहता है।"
 
 msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
 msgstr "फ़ाइल \"%1$s\" अपलोड नहीं हो सकी (सर्वर सीमा: %2$s)। छोटी फ़ाइल भेजें या अपनी होस्टिंग से \"upload_max_filesize\" और \"post_max_size\" बढ़ाने को कहें।"
@@ -1054,6 +1237,9 @@ msgstr "फ़ाइल सर्वर के स्वीकार करन�
 
 msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
 msgstr "कुंजी सहेजी नहीं गई: इस सर्वर में उसे सुरक्षित रूप से रखने के लिए ज़रूरी एन्क्रिप्शन (libsodium) नहीं है।"
+
+msgid "The list shows posts, pages and the custom post types of your site that have a public page and the editor. Internal types (field groups, templates and the like) are not listed."
+msgstr "सूची में आपकी साइट के वे पोस्ट, पेज और कस्टम पोस्ट टाइप दिखते हैं जिनका सार्वजनिक पेज और एडिटर है। आंतरिक प्रकार (फ़ील्ड ग्रुप, टेम्पलेट आदि) सूचीबद्ध नहीं होते।"
 
 msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
 msgstr "लॉग में आपके दस्तावेज़ों का पाठ या आपकी AI कुंजी कभी नहीं होती, इसलिए मदद माँगते समय उसे निर्यात करके भेजना सुरक्षित है।"
@@ -1136,8 +1322,14 @@ msgstr "इस पेज की अवधि समाप्त हो गई।
 msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
 msgstr "इस सर्वर में .%1$s फ़ाइलें पढ़ने के लिए ज़रूरी PHP एक्सटेंशन नहीं हैं: %2$s। अपनी होस्टिंग से उन्हें चालू करने को कहें।"
 
+msgid "This short tour shows how to turn a file into an accessible page and publish it. You can leave it at any time with the Esc key, and open it again from the Tutorial."
+msgstr "यह छोटा टूर दिखाता है कि किसी फ़ाइल को सुलभ पेज में कैसे बदलें और प्रकाशित करें। आप Esc कुंजी से कभी भी बाहर निकल सकते हैं, और ट्यूटोरियल पेज से इसे फिर खोल सकते हैं।"
+
 msgid "Time (UTC)"
 msgstr "समय (UTC)"
+
+msgid "Title (optional)"
+msgstr "शीर्षक (वैकल्पिक)"
 
 msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
 msgstr "दोहराए गए सवालों का तुरंत जवाब देने के लिए ट्यूटर हर दस्तावेज़ के जवाब इस साइट पर सहेज सकता है। हर सहेजे गए जवाब के साथ केवल सवाल के हर शब्द का भार रखा जाता है, सवाल का टेक्स्ट नहीं, और ऐसा कुछ नहीं जिससे आगंतुक की पहचान हो। दस्तावेज़ या ट्यूटर की सेटिंग्स बदलने पर सहेजे गए जवाब हटा दिए जाते हैं।"
@@ -1145,8 +1337,14 @@ msgstr "दोहराए गए सवालों का तुरंत ज�
 msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
 msgstr "हर पाठक की पसंद याद रखने के लिए पठन नियंत्रण और हाइलाइटर प्रति दस्तावेज़ ब्राउज़र के स्थानीय संग्रहण का उपयोग करते हैं: पाठ का आकार, थीम, कंट्रास्ट, आवाज़, पढ़ने की गति, पट्टी छिपी है या नहीं, और पाठक द्वारा हाइलाइट किए गए अंश। यह डेटा कभी पाठक के डिवाइस से बाहर नहीं जाता और ब्राउज़र में साइट डेटा साफ़ करके हटाया जा सकता है।"
 
+msgid "To schedule, choose a date and time in the future, by the site clock: it is now %1$s (%2$s)."
+msgstr "शेड्यूल करने के लिए साइट की घड़ी के अनुसार भविष्य की तारीख और समय चुनें: अभी %1$s (%2$s) है।"
+
 msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
 msgstr "एक साथ कई फ़ाइलें भेजने के लिए केवल TXT और MD का उपयोग करें। \"%s\" को अकेले भेजना होगा (PDF और DOCX को लगातार बदलना भारी है)।"
+
+msgid "Tools > Scheduled Actions"
+msgstr "टूल्स > Scheduled Actions (Action Scheduler)"
 
 msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
 msgstr "दस्तावेज़ की छवियों के कुल आकार की सीमा पूरी हो गई (सेटिंग › छवि सीमाएँ में बदली जा सकती है)।"
@@ -1174,6 +1372,9 @@ msgstr "पहले कोई सवाल लिखें।"
 
 msgid "Type:"
 msgstr "प्रकार:"
+
+msgid "Under \"Also publish in\" on the New Document screen, choose where the document goes besides the Jim panel. For each file Jim creates an item of that type with the shortcode already inside, so you do not copy and paste shortcodes one by one."
+msgstr "\"नया दस्तावेज़\" स्क्रीन पर \"इसमें भी प्रकाशित करें\" में चुनें कि Jim पैनल के अलावा दस्तावेज़ कहाँ जाए। हर फ़ाइल के लिए Jim उस प्रकार की एक प्रविष्टि बनाता है, जिसमें शॉर्टकोड पहले से होता है, ताकि आपको शॉर्टकोड एक-एक करके कॉपी-पेस्ट न करने पड़ें।"
 
 msgid "Unsupported file type: %s"
 msgstr "असमर्थित फ़ाइल प्रकार: %s"
@@ -1208,11 +1409,17 @@ msgstr "आवाज़"
 msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
 msgstr "आवाज़ का चुनाव, सुनें/रोकें, गति और बंद करें। ज़ोर से पढ़ना ब्राउज़र का उपयोग करता है, इसलिए किसी को पाठ नहीं भेजा जाता।"
 
+msgid "Want a one-minute guided tour of how to convert and publish your first document?"
+msgstr "क्या आप अपना पहला दस्तावेज़ बदलने और प्रकाशित करने का एक मिनट का गाइडेड टूर चाहेंगे?"
+
 msgid "Warning"
 msgstr "चेतावनी"
 
 msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
 msgstr "चेतावनी: सहेजी हुई कुंजी पढ़ी नहीं जा सकी (wp-config.php की सुरक्षा कुंजियाँ बदल गईं)। उसे फिर से लिखें।"
+
+msgid "Welcome to Jim"
+msgstr "Jim में आपका स्वागत है"
 
 msgid "What Jim is"
 msgstr "Jim क्या है"
@@ -1238,11 +1445,23 @@ msgstr "पूरा होने पर दस्तावेज़ %s मे�
 msgid "When something goes wrong"
 msgstr "जब कुछ गलत हो"
 
+msgid "When you choose Schedule, set the date and time by the site clock (shown in the form), not by your computer. With several files, set the hours between one and the next."
+msgstr "\"शेड्यूल करें\" चुनने पर तारीख और समय साइट की घड़ी (फ़ॉर्म में दिखती है) के अनुसार तय करें, अपने कंप्यूटर के अनुसार नहीं। कई फ़ाइलें भेजने पर एक से अगली के बीच के घंटे तय करें।"
+
+msgid "When you send several files, each one is scheduled this many hours after the previous one. Use 0 to schedule all of them at the same time."
+msgstr "कई फ़ाइलें भेजने पर, हर फ़ाइल पिछली फ़ाइल के इतने घंटे बाद शेड्यूल होती है। सभी को एक ही समय पर शेड्यूल करने के लिए 0 रखें।"
+
 msgid "Where to get a key"
 msgstr "कुंजी कहाँ से पाएँ"
 
 msgid "Who can use it"
 msgstr "कौन इस्तेमाल कर सकता है"
+
+msgid "Without a title, Jim uses the file name. The file name is also the address (slug) of the post if you publish it below."
+msgstr "शीर्षक न होने पर Jim फ़ाइल का नाम उपयोग करता है। यदि आप नीचे प्रकाशित करते हैं, तो फ़ाइल का नाम पोस्ट का पता (स्लग) भी बनता है।"
+
+msgid "WooCommerce > Status > Scheduled Actions"
+msgstr "WooCommerce > स्थिति > Scheduled Actions (Action Scheduler)"
 
 msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
 msgstr "WordPress.org: यदि शॉर्टकोड [jimca_instalacoes] इस्तेमाल होता है, तो सर्वर api.wordpress.org से इस प्लगइन के इंस्टॉलेशन की संख्या पूछता है (केवल प्लगइन का नाम भेजा जाता है; उत्तर 12 घंटे कैश रहता है)। आगंतुकों के ब्राउज़र उससे संपर्क नहीं करते।"
@@ -1252,6 +1471,9 @@ msgstr "शब्द:"
 
 msgid "You"
 msgstr "आप"
+
+msgid "You cannot create content in the chosen post type."
+msgstr "आप चुने गए सामग्री प्रकार में सामग्री नहीं बना सकते।"
 
 msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
 msgstr "आपने %1$d फ़ाइलें चुनीं, पर केवल %2$d सर्वर तक पहुँचीं (PHP सीमा \"max_file_uploads\": %3$d)। कुछ नहीं बदला गया; उन्हें छोटे समूहों में भेजें।"
@@ -1264,6 +1486,9 @@ msgstr "आपको दस्तावेज़ अपलोड करने �
 
 msgid "You reached the limit of questions for now. Try again in an hour."
 msgstr "आप फ़िलहाल सवालों की सीमा तक पहुँच गए हैं। एक घंटे बाद फिर से कोशिश करें।"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "आपके दस्तावेज़ Jim > सुलभ दस्तावेज़ में हैं, जहाँ शॉर्टकोड, प्रदर्शन मोड और हर दस्तावेज़ कहाँ प्रकाशित हुआ, इसके कॉलम हैं। ट्यूटोरियल पेज हर विकल्प समझाता है, और आप वहीं से यह टूर फिर खोल सकते हैं।"
 
 msgid "Your question"
 msgstr "आपका सवाल"
@@ -1300,3 +1525,4 @@ msgstr "अनिवार्य"
 
 msgid "unexpected reply"
 msgstr "अप्रत्याशित उत्तर"
+

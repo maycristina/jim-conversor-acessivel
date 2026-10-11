@@ -36,6 +36,7 @@ class JIMCA_Admin {
 		JIMCA_Log::register_hooks();
 		JIMCA_AI::register_hooks();
 		JIMCA_Conversion_Job::register_hooks();
+		JIMCA_Tour::register_hooks();
 		JIMCA_Privacy::get_instance()->init();
 	}
 
@@ -138,6 +139,7 @@ class JIMCA_Admin {
 		}
 
 		if ( self::MENU_SLUG === $screen->id || 'toplevel_page_' . self::MENU_SLUG === $screen->id ) {
+			JIMCA_Tour::enqueue();
 			wp_enqueue_script( 'jimca-admin', JIMCA_PLUGIN_URL . 'assets/js/admin.js', array(), jimca_asset_version( 'assets/js/admin.js' ), true );
 			wp_localize_script(
 				'jimca-admin',
@@ -315,14 +317,15 @@ class JIMCA_Admin {
 	}
 
 	/**
-	 * Display modes: reader (floating bar, voice, themes) or blog post
-	 * (converted HTML page without the player). Chosen only in the documents
-	 * list (Quick Edit), never in the shortcode.
+	 * Display modes: Accessible reader (floating bar, voice, themes) or
+	 * Standard blog (converted HTML page without the player). Chosen when the
+	 * file is imported and later in the documents list (Quick Edit), never in
+	 * the shortcode.
 	 */
 	public static function get_display_modes() {
 		return array(
-			'reader' => __( 'Reader (with reading bar and voice)', 'jim-conversor-acessivel' ),
-			'post'   => __( 'Blog post (converted HTML page)', 'jim-conversor-acessivel' ),
+			'reader' => __( 'Accessible reader', 'jim-conversor-acessivel' ),
+			'post'   => __( 'Standard blog', 'jim-conversor-acessivel' ),
 		);
 	}
 
@@ -386,6 +389,10 @@ class JIMCA_Admin {
 			<div class="jimca-admin-card">
 				<p><?php esc_html_e( 'Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. Light files (TXT and MD) can be sent several at a time: each one becomes a document and you get the list of shortcodes.', 'jim-conversor-acessivel' ); ?></p>
 
+				<p class="jimca-tour-button">
+					<a class="button" href="<?php echo esc_url( JIMCA_Tour::open_url() ); ?>" data-jimca-tour-start><?php esc_html_e( 'Take the guided tour', 'jim-conversor-acessivel' ); ?></a>
+				</p>
+
 				<div id="jimca-file-toast" class="jimca-admin-toast" role="status" aria-live="polite" hidden></div>
 
 				<form id="jimca-upload-form" method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
@@ -427,6 +434,7 @@ class JIMCA_Admin {
 								<p class="description" id="jimca_remove_pages_help"><?php esc_html_e( 'The text flows like in a digital book: sentences split at a page break are joined and the page numbers printed at the top or bottom are dropped. PDF only.', 'jim-conversor-acessivel' ); ?></p>
 							</td>
 						</tr>
+						<?php JIMCA_Destination::render_form_rows(); ?>
 					</table>
 
 					<?php submit_button( __( 'Convert document', 'jim-conversor-acessivel' ) ); ?>
@@ -553,7 +561,9 @@ class JIMCA_Admin {
 	public function notify_converted( $post_id ) {
 		$report = get_post_meta( $post_id, '_jimca_image_report', true );
 		$report = is_array( $report ) ? $report : array();
-		$link   = '<a href="' . esc_url( get_edit_post_link( $post_id, '' ) ) . '">' . esc_html__( 'View document and shortcode', 'jim-conversor-acessivel' ) . '</a>';
+		$link   = '<a href="' . esc_url( get_edit_post_link( $post_id, '' ) ) . '">' . esc_html__( 'View document and shortcode', 'jim-conversor-acessivel' ) . '</a>' . JIMCA_Destination::notice_html( $post_id );
+		$events = JIMCA_Destination::event_notice_html( array( $post_id ) );
+		$link  .= '' !== $events ? '<br>' . $events : '';
 		$lost   = ! empty( $report['skipped'] ) || ! empty( $report['stopped'] );
 
 		if ( get_post_meta( $post_id, '_jimca_unreadable', true ) ) {
@@ -666,6 +676,7 @@ class JIMCA_Admin {
 
 		$title = isset( $_POST['jimca_title'] ) ? sanitize_text_field( wp_unslash( $_POST['jimca_title'] ) ) : '';
 		$remove_pages = ! empty( $_POST['jimca_remove_pages'] );
+		$destination  = JIMCA_Destination::from_request();
 
 		JIMCA_Limits::raise_for_conversion();
 
@@ -674,7 +685,8 @@ class JIMCA_Admin {
 
 		foreach ( $files as $file ) {
 			try {
-				$done[] = $this->process_file( $file, $multiple ? '' : $title, $remove_pages );
+				// The position among the converted files spaces out scheduled posts.
+				$done[] = $this->process_file( $file, $multiple ? '' : $title, $remove_pages, $destination, count( $done ) );
 			} catch ( JIMCA_Converter_Exception $e ) {
 				if ( ! $multiple ) {
 					throw $e;
@@ -696,6 +708,7 @@ class JIMCA_Admin {
 		foreach ( $done as $post_id ) {
 			$shortcodes[] = '[' . JIMCA_Shortcode::TAG . ' id="' . $post_id . '"]';
 			$details     .= '<li><a href="' . esc_url( get_edit_post_link( $post_id, '' ) ) . '">' . esc_html( get_the_title( $post_id ) ) . '</a>'
+				. JIMCA_Destination::notice_html( $post_id )
 				. JIMCA_Image_Store::render_report( get_post_meta( $post_id, '_jimca_image_report', true ) ) . '</li>';
 		}
 
@@ -704,6 +717,13 @@ class JIMCA_Admin {
 		}
 
 		$details .= '</ul>';
+
+		// Scheduled publications: the event(s) created for this upload, once.
+		$events = JIMCA_Destination::event_notice_html( $done );
+
+		if ( '' !== $events ) {
+			$details .= '<p>' . $events . '</p>';
+		}
 
 		if ( ! $multiple ) {
 			$this->notify_converted( $done[0] );
@@ -855,11 +875,13 @@ class JIMCA_Admin {
 	 * @param array  $file         name, tmp_name, size (see collect_uploaded_files()).
 	 * @param string $title        Title; empty = file name without extension.
 	 * @param bool   $remove_pages PDF: leave out the "Page N" markers.
+	 * @param array  $destination  JIMCA_Destination::from_request().
+	 * @param int    $index        Position among the files of this upload.
 	 * @return int ID of the document.
 	 * @throws JIMCA_Converter_Exception
 	 */
-	private function process_file( array $file, $title, $remove_pages ) {
-		return $this->convert_received( $this->receive_file( $file ), $title, $remove_pages );
+	private function process_file( array $file, $title, $remove_pages, array $destination = array(), $index = 0 ) {
+		return $this->convert_received( $this->receive_file( $file ), $title, $remove_pages, null, $destination, $index );
 	}
 
 	/**
@@ -967,10 +989,12 @@ class JIMCA_Admin {
 	 * @param string        $title        Title; empty = file name.
 	 * @param bool          $remove_pages Leave out the "Page N" markers (PDF).
 	 * @param callable|null $progress     Gets (stage, done, total, images) during the conversion.
+	 * @param array         $destination  JIMCA_Destination::from_request(); empty = only the panel.
+	 * @param int           $index        Position among the files of this upload.
 	 * @return int ID of the document.
 	 * @throws JIMCA_Converter_Exception
 	 */
-	public function convert_received( array $received, $title, $remove_pages, $progress = null ) {
+	public function convert_received( array $received, $title, $remove_pages, $progress = null, array $destination = array(), $index = 0 ) {
 		$settings  = self::get_settings();
 		$extension = $received['ext'];
 		$html      = '';
@@ -1016,7 +1040,7 @@ class JIMCA_Admin {
 			self::cleanup_original( $received );
 		}
 
-		return $this->create_document( $received, $html, $image_store, $title, $started );
+		return $this->create_document( $received, $html, $image_store, $title, $started, $destination, $index );
 	}
 
 	/**
@@ -1056,10 +1080,12 @@ class JIMCA_Admin {
 	 * @param JIMCA_Image_Store|null $image_store
 	 * @param string                 $title       Title; empty = file name.
 	 * @param float                  $started     microtime( true ) when the conversion started.
+	 * @param array                  $destination JIMCA_Destination::from_request(); empty = only the panel.
+	 * @param int                    $index       Position among the files of this upload.
 	 * @return int ID of the document.
 	 * @throws JIMCA_Converter_Exception
 	 */
-	public function create_document( array $received, $html, $image_store, $title, $started ) {
+	public function create_document( array $received, $html, $image_store, $title, $started, array $destination = array(), $index = 0 ) {
 		$settings  = self::get_settings();
 		$extension = $received['ext'];
 		$file      = array(
@@ -1170,6 +1196,9 @@ class JIMCA_Admin {
 		}
 
 		$this->image_store_in_progress = null;
+
+		// Categories, tags and the post with the shortcode. Never undoes the conversion.
+		JIMCA_Destination::apply( $post_id, $destination, $index, $file['name'], $title );
 
 		return $post_id;
 	}
@@ -1292,6 +1321,13 @@ class JIMCA_Admin {
 			</div>
 
 			<div class="jimca-admin-card">
+				<h2><?php esc_html_e( 'Guided tour', 'jim-conversor-acessivel' ); ?></h2>
+				<p><?php esc_html_e( 'A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want.', 'jim-conversor-acessivel' ); ?></p>
+				<p><a class="button button-primary" href="<?php echo esc_url( JIMCA_Tour::open_url() ); ?>"><?php esc_html_e( 'Click here to open the tutorial', 'jim-conversor-acessivel' ); ?></a></p>
+				<p class="description"><?php esc_html_e( 'It opens the New Document screen with the tour running. Press Esc to leave it at any time.', 'jim-conversor-acessivel' ); ?></p>
+			</div>
+
+			<div class="jimca-admin-card">
 				<h2><?php esc_html_e( 'Step by step', 'jim-conversor-acessivel' ); ?></h2>
 				<ol class="jimca-admin-steps">
 					<li>
@@ -1304,6 +1340,7 @@ class JIMCA_Admin {
 						?>
 					</li>
 					<li><?php esc_html_e( 'Give the document a title (optional) and click "Convert document". Large files can take up to about a minute; do not close or refresh the page.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Optional: choose the display mode and use "Also publish in" to have Jim create the post, page or custom post type item that shows the document. See the next sections.', 'jim-conversor-acessivel' ); ?></li>
 					<li>
 						<?php
 						printf(
@@ -1313,7 +1350,7 @@ class JIMCA_Admin {
 						);
 						?>
 					</li>
-					<li><?php esc_html_e( 'Copy the shortcode and paste it into the page or post where the document should appear.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Copy the shortcode and paste it into the page or post where the document should appear (not needed if you used "Also publish in").', 'jim-conversor-acessivel' ); ?></li>
 				</ol>
 
 				<h3><?php esc_html_e( 'Available shortcodes', 'jim-conversor-acessivel' ); ?></h3>
@@ -1358,10 +1395,40 @@ class JIMCA_Admin {
 			</div>
 
 			<div class="jimca-admin-card">
-				<h2><?php esc_html_e( 'Reader mode and blog post mode', 'jim-conversor-acessivel' ); ?></h2>
+				<h2><?php esc_html_e( 'Accessible reader and standard blog modes', 'jim-conversor-acessivel' ); ?></h2>
 				<p>
-					<?php esc_html_e( 'Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the "Display mode" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader.', 'jim-conversor-acessivel' ); ?>
+					<?php esc_html_e( 'Each document is shown either as an Accessible reader (floating reading bar with voice and themes) or as a Standard blog (a reading-time bar with listen and share buttons). You choose the mode when you import the file, and can change it later in the documents list, with Quick Edit or the "Display mode" column. It is never set in the shortcode, so whoever publishes the page cannot change what the document is. Without a choice, the document is an Accessible reader.', 'jim-conversor-acessivel' ); ?>
 				</p>
+			</div>
+
+			<div class="jimca-admin-card">
+				<h2><?php esc_html_e( 'Publishing in posts, pages and custom post types', 'jim-conversor-acessivel' ); ?></h2>
+				<p><?php esc_html_e( 'Under "Also publish in" on the New Document screen, choose where the document goes besides the Jim panel. For each file Jim creates an item of that type with the shortcode already inside, so you do not copy and paste shortcodes one by one.', 'jim-conversor-acessivel' ); ?></p>
+				<ul class="jimca-admin-list">
+					<li><?php esc_html_e( 'The list shows posts, pages and the custom post types of your site that have a public page and the editor. Internal types (field groups, templates and the like) are not listed.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The address (slug) of each item is the file name: "annual-report.pdf" becomes "annual-report". If that address is taken, WordPress adds -2.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The documents list has a "Published in" column that links to the item. The document stays in the Jim panel either way.', 'jim-conversor-acessivel' ); ?></li>
+				</ul>
+			</div>
+
+			<div class="jimca-admin-card">
+				<h2><?php esc_html_e( 'Scheduling', 'jim-conversor-acessivel' ); ?></h2>
+				<p><?php esc_html_e( 'When you choose Schedule, set the date and time by the site clock (shown in the form), not by your computer. With several files, set the hours between one and the next.', 'jim-conversor-acessivel' ); ?></p>
+				<p>
+					<?php
+					printf(
+						/* translators: %s: menu path of Scheduled Actions (a link for administrators) */
+						esc_html__( 'Each scheduled post is an event of Action Scheduler. The document is converted right away and the post is created at the chosen time. When the upload ends, the notice shows the name of the event (for example "Jim import 2026-10-11 15:10 #ab12"). To learn more or cancel, open %s and look for that name.', 'jim-conversor-acessivel' ),
+						wp_kses_post( JIMCA_Destination::scheduler_menu_html() )
+					);
+					?>
+				</p>
+				<ul class="jimca-admin-list">
+					<li><?php esc_html_e( 'Only administrators can open Scheduled Actions. If an event is cancelled, the document stays in the Jim panel and the documents list shows that the schedule was cancelled.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Scheduled events run when your site receives visits (WP-Cron). On a site with little traffic, a real server cron job makes them run on time.', 'jim-conversor-acessivel' ); ?></li>
+				</ul>
 			</div>
 
 			<div class="jimca-admin-card">

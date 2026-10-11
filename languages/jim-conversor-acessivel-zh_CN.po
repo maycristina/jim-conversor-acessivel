@@ -22,6 +22,15 @@ msgstr "%1$s：%2$s"
 msgid "%1$s: connection working. Model that answered: %2$s."
 msgstr "%1$s：连接正常。回复的模型：%2$s。"
 
+msgid "%1$s: schedule for %2$s was cancelled"
+msgstr "%1$s：%2$s 的定时发布已取消"
+
+msgid "%1$s: scheduled for %2$s"
+msgstr "%1$s：定时发布于 %2$s"
+
+msgid "%1$s: scheduled publication for %2$s failed"
+msgstr "%1$s：%2$s 的定时发布失败"
+
 msgid "%d new entries."
 msgstr "%d 条新记录。"
 
@@ -57,6 +66,9 @@ msgstr "%s：密钥未保存。密钥长度须为 16 到 300 个字符，只能�
 msgid "%s: the model was not changed. Use only letters, numbers and the symbols . _ - / : (no spaces)."
 msgstr "%s：模型未更改。只能使用字母、数字和符号 . _ - / :（不含空格）。"
 
+msgid "%s: the post no longer exists"
+msgstr "%s：该文章已不存在"
+
 msgid "%s: there is no usable API key. Save the key again."
 msgstr "%s：没有可用的 API 密钥。请重新保存密钥。"
 
@@ -83,6 +95,9 @@ msgstr "已保存密钥，末尾为 ••••%s。留空则保留，或输入
 
 msgid "A side table of contents with the document headings (Word heading styles or PDF bookmarks), to jump straight to a chapter."
 msgstr "侧边目录，列出文档的标题（Word 标题样式或 PDF 书签），可直接跳转到某一章。"
+
+msgid "A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want."
+msgstr "“新建文档”页面的分步导览会告诉您每个选项在哪里、有什么作用。安装后首次使用时它会自动开始，您也可以随时再次打开。"
 
 msgid "A — default text size"
 msgstr "A — 默认文字大小"
@@ -132,6 +147,12 @@ msgstr "无障碍文档"
 msgid "Accessible documents, read aloud, in a few clicks."
 msgstr "无障碍文档，支持朗读，只需几次点击。"
 
+msgid "Accessible reader"
+msgstr "无障碍阅读器"
+
+msgid "Accessible reader and standard blog modes"
+msgstr "无障碍阅读器与标准博客模式"
+
 msgid "Activity log"
 msgstr "活动日志"
 
@@ -141,6 +162,9 @@ msgstr "添加新文档"
 msgid "Address (URL)"
 msgstr "地址（URL）"
 
+msgid "After picking a type you choose the status: publish now, draft, pending, private or Schedule. A schedule uses the site clock and becomes an Action Scheduler event, where you can see or cancel it under Tools > Scheduled Actions."
+msgstr "选好类型后再选择状态：立即发布、草稿、待审核、私密或定时发布。定时发布以站点时钟为准，并成为 Action Scheduler 的一个事件，您可在 工具 > Scheduled Actions（Action Scheduler） 中查看或取消。"
+
 msgid "All Documents"
 msgstr "所有文档"
 
@@ -149,6 +173,9 @@ msgstr "已移除所有标记。"
 
 msgid "Allowed file types"
 msgstr "允许的文件类型"
+
+msgid "Also publish in"
+msgstr "同时发布到"
 
 msgid "An unexpected error occurred while processing the file."
 msgstr "处理文件时发生意外错误。"
@@ -183,11 +210,20 @@ msgstr "自动 SEO"
 msgid "Available shortcodes"
 msgstr "可用的短代码"
 
-msgid "Blog post (converted HTML page)"
-msgstr "博客文章（转换后的 HTML 页面）"
+msgid "Back"
+msgstr "上一步"
 
 msgid "CCITT fax (CCITTFaxDecode filter): common in black-and-white scanned PDFs; the plugin does not decode this format."
 msgstr "CCITT 传真（CCITTFaxDecode 过滤器）：常见于黑白扫描的 PDF；插件不解码此格式。"
+
+msgid "Categories and tags"
+msgstr "分类和标签"
+
+msgid "Choose how the document looks on the page: Accessible reader, with reading bar, voice and themes, or Standard blog, a plain blog post with the converted text. You can change it later in the documents list."
+msgstr "选择文档在页面上的显示方式：无障碍阅读器（带朗读栏、语音和主题），或 标准博客（只含转换后文本的普通博客文章）。之后可在文档列表中更改。"
+
+msgid "Choose the file"
+msgstr "选择文件"
 
 msgid "Clear all"
 msgstr "全部清除"
@@ -197,6 +233,12 @@ msgstr "清空日志"
 
 msgid "Clear the whole log?"
 msgstr "要清空整个日志吗？"
+
+msgid "Click \"Convert document\". Large files can take up to a minute: keep the page open. When it finishes, a notice shows the shortcode, the link to the post and, if you scheduled, the name of the event."
+msgstr "点击“转换文档”。大文件最多可能需要一分钟：请保持页面打开。完成后，通知会显示短代码、文章链接，以及（如果您设置了定时）事件名称。"
+
+msgid "Click here to open the tutorial"
+msgstr "点击此处打开教程"
 
 msgid "Close"
 msgstr "关闭"
@@ -225,6 +267,9 @@ msgstr "转换完全在 PHP 中完成，无需外部程序（不需要 Poppler�
 msgid "Conversion progress"
 msgstr "转换进度"
 
+msgid "Convert"
+msgstr "转换"
+
 msgid "Convert document"
 msgstr "转换文档"
 
@@ -234,8 +279,8 @@ msgstr "转换于："
 msgid "Converting the document…"
 msgstr "正在转换文档…"
 
-msgid "Copy the shortcode and paste it into the page or post where the document should appear."
-msgstr "复制短代码并粘贴到要显示该文档的页面或文章中。"
+msgid "Copy the shortcode and paste it into the page or post where the document should appear (not needed if you used \"Also publish in\")."
+msgstr "复制短代码，粘贴到文档要显示的页面或文章中（如果您使用了“同时发布到”，则无需这一步）。"
 
 msgid "Corrupted JPEG, or with an extra encoding the plugin could not undo."
 msgstr "JPEG 已损坏，或带有插件无法还原的额外编码。"
@@ -264,11 +309,17 @@ msgstr "无法读取 Word 文档：%s"
 msgid "Could not update the log."
 msgstr "无法更新日志。"
 
+msgid "Creates one post for each file, with the shortcode already inside, so you do not have to copy and paste them. The document stays in the Jim panel either way. The address (slug) of each post is the file name: \"annual-report.pdf\" becomes \"annual-report\"."
+msgstr "为每个文件创建一篇文章，并已内置短代码，您无需复制粘贴。无论如何，文档都会保留在 Jim 面板中。每篇文章的地址（别名）就是文件名：\"annual-report.pdf\" 会变成 \"annual-report\"。"
+
 msgid "DOCX"
 msgstr "DOCX"
 
 msgid "Dark"
 msgstr "深色"
+
+msgid "Date and time by the site clock, not by your computer: timezone %1$s, now %2$s."
+msgstr "日期和时间以站点时钟为准，而不是您电脑的时钟：时区 %1$s，当前 %2$s。"
 
 msgid "Decrease text size"
 msgstr "缩小文字"
@@ -330,17 +381,26 @@ msgstr "使用 Jim 转换的文档"
 msgid "Done listening. Check the question and send it."
 msgstr "已结束聆听。请检查问题后发送。"
 
+msgid "Draft"
+msgstr "草稿"
+
 msgid "EPUB books are not supported. Convert them to PDF or DOCX."
 msgstr "不支持 EPUB 图书。请将其转换为 PDF 或 DOCX。"
 
 msgid "Each converted document is stored in your WordPress and gets a shortcode that you paste into any page or post to publish it."
 msgstr "每个转换后的文档都存储在你的 WordPress 中，并获得一个短代码，将其粘贴到任意页面或文章即可发布。"
 
-msgid "Each document is shown either as a reader (floating reading bar with voice and themes) or as a blog post (a reading-time bar with listen and share buttons). The mode is chosen only in the documents list, with Quick Edit or the \"Display mode\" column, so whoever publishes the page cannot change what the document is. Without a choice, the document is a reader."
-msgstr "每个文档以阅读器（带语音和主题的悬浮阅读栏）或博客文章（带阅读时长以及收听和分享按钮的栏）的形式显示。模式只能在文档列表中通过“快速编辑”或“显示模式”列选择，因此发布页面的人无法更改文档的性质。未做选择时，文档为阅读器。"
+msgid "Each document is shown either as an Accessible reader (floating reading bar with voice and themes) or as a Standard blog (a reading-time bar with listen and share buttons). You choose the mode when you import the file, and can change it later in the documents list, with Quick Edit or the \"Display mode\" column. It is never set in the shortcode, so whoever publishes the page cannot change what the document is. Without a choice, the document is an Accessible reader."
+msgstr "每个文档以“无障碍阅读器”（悬浮朗读栏，含语音和主题）或“标准博客”（带阅读时间栏及收听、分享按钮）的形式显示。您在导入文件时选择模式，之后可在文档列表中通过快速编辑或“显示模式”列更改。短代码中永远不设置它，因此发布页面的人无法改变文档的性质。未选择时，文档为“无障碍阅读器”。"
 
 msgid "Each image is decoded, saved to the Media Library and gets thumbnails: books with many figures can exhaust PHP's memory or time and take the server down. When any limit is reached (or PHP's time or memory is close to running out), image extraction stops, the whole text is still converted and the notice explains why. On shared hosting, keep low values."
 msgstr "每张图片都会被解码、保存到媒体库并生成缩略图：含大量插图的书籍可能耗尽 PHP 的内存或时间，导致服务器宕机。达到任一限制（或 PHP 的时间或内存即将耗尽）时，图片提取会停止，整篇文本仍会被转换，并由提示说明原因。共享主机请保持较低的数值。"
+
+msgid "Each scheduled post is an event of Action Scheduler. The document is converted right away and the post is created at the chosen time. When the upload ends, the notice shows the name of the event (for example \"Jim import 2026-10-11 15:10 #ab12\"). To learn more or cancel, open %s and look for that name."
+msgstr "每篇定时文章都是 Action Scheduler 的一个事件。文档会立即转换，文章则在所选时间创建。上传结束后，通知会显示事件名称（例如“Jim import 2026-10-11 15:10 #ab12”）。如需了解详情或取消，请打开 %s 并搜索该名称。"
+
+msgid "Each scheduled post is an event of Action Scheduler: it is created at the chosen time, and you can see or cancel it under Tools > Scheduled Actions."
+msgstr "每篇定时文章都是 Action Scheduler 的一个事件：它会在所选时间创建，您可在“工具 > Scheduled Actions”中查看或取消。"
 
 msgid "Each shortcode can override this: %1$s shows the tutor, %2$s hides it."
 msgstr "每个简码都可以覆盖此设置：%1$s 显示导师，%2$s 隐藏导师。"
@@ -387,6 +447,9 @@ msgstr "已添加文件：%s"
 msgid "Files that administrators upload are converted on this server. By default the original file is deleted after conversion; the converted text, its images (in the Media Library) and details such as file name, type, word count and conversion date stay in the site database. The plugin does not collect personal data about visitors and does not set cookies."
 msgstr "管理员上传的文件会在此服务器上转换。默认情况下，转换后会删除原始文件；转换后的文本、其图片（在媒体库中）以及文件名、类型、字数和转换日期等信息会保留在站点数据库中。插件不收集访客的个人数据，也不使用 Cookie。"
 
+msgid "Finish"
+msgstr "完成"
+
 msgid "Formats and sending several files"
 msgstr "格式与一次上传多个文件"
 
@@ -407,6 +470,9 @@ msgstr "为文档设置标题（可选），然后点击“转换文档”。大
 
 msgid "Greeting"
 msgstr "欢迎语"
+
+msgid "Guided tour"
+msgstr "导览"
 
 msgid "HTML pages are not supported. Save the text as TXT or Markdown."
 msgstr "不支持 HTML 页面。请将文本另存为 TXT 或 Markdown。"
@@ -452,6 +518,12 @@ msgstr "标记文字："
 
 msgid "Highlight removed."
 msgstr "已移除标记。"
+
+msgid "Hours between one file and the next"
+msgstr "相邻两个文件之间的间隔（小时）"
+
+msgid "How the document looks on the page where you publish it: Accessible reader (reading bar, voice and themes) or Standard blog (a plain blog post with the converted text). You can change it later in the documents list (Quick Edit)."
+msgstr "文档在发布页面上的显示方式：“无障碍阅读器”（朗读栏、语音和主题）或“标准博客”（只含转换后文本的普通博客文章）。之后可在文档列表中更改（快速编辑）。"
 
 msgid "How the tutor talks: tone, vocabulary, patience."
 msgstr "导师的说话方式：语气、用词、耐心。"
@@ -531,6 +603,9 @@ msgstr "指令（提示词）"
 msgid "Invalid image file or unknown type (not JPEG, PNG, GIF or WebP, and it could not be converted)."
 msgstr "图片文件无效或类型未知（不是 JPEG、PNG、GIF 或 WebP，且无法转换）。"
 
+msgid "It opens the New Document screen with the tour running. Press Esc to leave it at any time."
+msgstr "会打开“新建文档”页面并开始导览。随时按 Esc 键即可退出。"
+
 msgid "Item"
 msgstr "项目"
 
@@ -548,6 +623,9 @@ msgstr "JPEG 2000 图片（常见于书籍 PDF）：此服务器支持。"
 
 msgid "Jim - Accessible Converter"
 msgstr "Jim - 无障碍转换器"
+
+msgid "Jim - Accessible Converter is ready."
+msgstr "Jim - 无障碍转换器 已就绪。"
 
 msgid "Jim - Accessible Converter: document not found."
 msgstr "Jim - 无障碍转换器：未找到文档。"
@@ -672,6 +750,9 @@ msgstr "新对话"
 msgid "New conversation started."
 msgstr "已开始新对话。"
 
+msgid "Next"
+msgstr "下一步"
+
 msgid "Next image"
 msgstr "下一张图片"
 
@@ -683,6 +764,18 @@ msgstr "暂无记录。"
 
 msgid "No valid file was sent."
 msgstr "未发送任何有效文件。"
+
+msgid "No, thanks"
+msgstr "不用了"
+
+msgid "None created yet."
+msgstr "尚未创建。"
+
+msgid "Not published in another post type"
+msgstr "未发布到其他内容类型"
+
+msgid "Nowhere: only in the Jim documents panel"
+msgstr "不发布：仅保留在 Jim 文档面板"
 
 msgid "OK"
 msgstr "正常"
@@ -702,6 +795,9 @@ msgstr "插件在 WordPress 官方目录发布后，更新会像其他插件一�
 msgid "One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here."
 msgstr "每个服务商一个 API 密钥，加密存储。测试连接只向该服务商发送一句固定语句，不包含文档文本。下方的 AI 导师使用此处选择的服务商。"
 
+msgid "Only administrators can open Scheduled Actions. If an event is cancelled, the document stays in the Jim panel and the documents list shows that the schedule was cancelled."
+msgstr "只有管理员能打开 Scheduled Actions。如果某个事件被取消，文档仍保留在 Jim 面板中，文档列表会显示该定时发布已取消。"
+
 msgid "Only if the service asks for one; a local Ollama does not. It is stored encrypted."
 msgstr "仅在服务要求时填写；本地 Ollama 不需要。密钥将加密存储。"
 
@@ -713,6 +809,9 @@ msgstr "打开 %s 并选择文件（PDF、DOCX、TXT 或 Markdown）。"
 
 msgid "Open the \"Activity log\" and the \"Server requirements\" table in %s. The log shows each conversion (time, memory, words, images and the cause of each image left out) and every error, live: keep Settings open in another tab while a conversion runs."
 msgstr "在 %s 中打开“活动日志”和“服务器要求”表。日志会实时显示每次转换（时间、内存、字数、图片以及每张被略过图片的原因）和每个错误：转换期间请在另一个标签页保持设置页面打开。"
+
+msgid "Optional: choose the display mode and use \"Also publish in\" to have Jim create the post, page or custom post type item that shows the document. See the next sections."
+msgstr "可选：选择显示模式，并使用“同时发布到”让 Jim 创建用于展示该文档的文章、页面或自定义内容类型条目。详见下面的章节。"
 
 msgid "Optional: without a title, the file name is used. When sending several files, each document uses its own file name."
 msgstr "可选：未填标题时使用文件名。一次发送多个文件时，每个文档使用各自的文件名。"
@@ -768,11 +867,26 @@ msgstr "耐心、鼓励、清晰。使用简单的词语、短句和例子，绝
 msgid "Pause"
 msgstr "暂停"
 
+msgid "Pending review"
+msgstr "待审核"
+
 msgid "Personality"
 msgstr "性格"
 
+msgid "Pick a PDF, DOCX, TXT or Markdown file. TXT and Markdown can be sent up to 20 at a time; PDF and DOCX one at a time."
+msgstr "选择 PDF、DOCX、TXT 或 Markdown 文件。TXT 和 Markdown 一次最多可发送 20 个；PDF 和 DOCX 一次一个。"
+
+msgid "Pick posts, pages or a custom post type and Jim creates one post per file with the shortcode already inside, so you do not have to copy and paste shortcodes. Choose \"Nowhere\" to keep the documents only in the Jim panel."
+msgstr "选择文章、页面或自定义内容类型，Jim 会为每个文件创建一篇已内置短代码的文章，您无需复制粘贴短代码。选择“不发布”则文档只保留在 Jim 面板中。"
+
 msgid "Plugin website"
 msgstr "插件网站"
+
+msgid "Post created: %1$s (%2$s)."
+msgstr "已创建文章：%1$s（%2$s）。"
+
+msgid "Posts loaded successfully: event \"%1$s\" was created. To learn more or cancel, go to %2$s and look for \"%1$s\"."
+msgstr "文章已成功加载：已创建事件“%1$s”。如需了解详情或取消，请前往 %2$s 并搜索“%1$s”。"
 
 msgid "Presentations are not converted. Export to PDF."
 msgstr "不转换演示文稿。请导出为 PDF。"
@@ -783,26 +897,41 @@ msgstr "上一张图片"
 msgid "Privacy"
 msgstr "隐私"
 
+msgid "Private"
+msgstr "私密"
+
 msgid "Provider in use: %s."
 msgstr "当前服务商：%s。"
 
 msgid "Provider used by the assistant"
 msgstr "助手使用的服务商"
 
+msgid "Publication status"
+msgstr "发布状态"
+
+msgid "Publish now"
+msgstr "立即发布"
+
+msgid "Publish on"
+msgstr "发布时间"
+
+msgid "Published in"
+msgstr "发布于"
+
+msgid "Published in:"
+msgstr "发布于："
+
 msgid "Publishes the converted document, with the reading controls."
 msgstr "发布转换后的文档，并附带阅读控件。"
+
+msgid "Publishing in posts, pages and custom post types"
+msgstr "发布到文章、页面和自定义内容类型"
 
 msgid "Questions per day on the whole site:"
 msgstr "全站每天的提问数："
 
 msgid "Questions per reader per hour:"
 msgstr "每位读者每小时的提问数："
-
-msgid "Reader (with reading bar and voice)"
-msgstr "阅读器（带阅读栏和语音）"
-
-msgid "Reader mode and blog post mode"
-msgstr "阅读器模式和博客文章模式"
 
 msgid "Readers can click an image to open it larger, with arrow keys to move between images and Esc to close."
 msgstr "读者可以点击图片放大查看，用方向键切换图片，按 Esc 关闭。"
@@ -879,6 +1008,18 @@ msgstr "保存导师"
 msgid "Saved answers"
 msgstr "已保存的回答"
 
+msgid "Schedule"
+msgstr "定时发布"
+
+msgid "Scheduled events run when your site receives visits (WP-Cron). On a site with little traffic, a real server cron job makes them run on time."
+msgstr "定时事件会在站点收到访问时运行（WP-Cron）。访问量很小的站点可使用真正的服务器 cron 任务，让事件准时运行。"
+
+msgid "Scheduled for %s"
+msgstr "定时发布于 %s"
+
+msgid "Scheduling"
+msgstr "定时发布"
+
 msgid "Search Documents"
 msgstr "搜索文档"
 
@@ -899,6 +1040,9 @@ msgstr "正在发送文件…"
 
 msgid "Sends one fixed sentence to %s using the saved key and model."
 msgstr "使用已保存的密钥和模型向 %s 发送一句固定语句。"
+
+msgid "Separate with commas. Names that do not exist yet are created (if you may create them)."
+msgstr "用逗号分隔。尚不存在的名称会被创建（前提是您有权创建）。"
 
 msgid "Sepia"
 msgstr "护眼"
@@ -939,14 +1083,32 @@ msgstr "根据 WordPress.org API 显示插件的活跃安装数。"
 msgid "Skip to the document content"
 msgstr "跳到文档内容"
 
+msgid "Skip tour"
+msgstr "跳过导览"
+
 msgid "Smaller of upload_max_filesize and post_max_size. Recommended: 32 MB or more."
 msgstr "upload_max_filesize 与 post_max_size 中较小的一个。建议：32 MB 或更大。"
 
 msgid "Spreadsheets are not converted. Export the content to PDF or DOCX."
 msgstr "不转换电子表格。请将内容导出为 PDF 或 DOCX。"
 
+msgid "Standard blog"
+msgstr "标准博客"
+
+msgid "Start the tour"
+msgstr "开始导览"
+
 msgid "Status"
 msgstr "状态"
+
+msgid "Status and schedule"
+msgstr "状态与定时"
+
+msgid "Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead."
+msgstr "状态：立即发布、草稿、待审核、私密或定时发布。无权在该类型中发布的人，其条目会提交审核。"
+
+msgid "Step %1$s of %2$s"
+msgstr "第 %1$s 步，共 %2$s 步"
 
 msgid "Step by step"
 msgstr "分步指南"
@@ -972,6 +1134,9 @@ msgstr "支持项目"
 msgid "TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert."
 msgstr "TXT 和 Markdown 文件一次最多可发送 20 个。每个文件都会成为一个文档，并得到一份可直接复制的短代码列表。PDF 和 DOCX 转换较重，需逐个发送。"
 
+msgid "Take the guided tour"
+msgstr "开始导览"
+
 msgid "Technical detail: %s."
 msgstr "技术细节：%s。"
 
@@ -992,6 +1157,9 @@ msgstr "文字大小和阅读主题（浅色、护眼或深色）。"
 
 msgid "Text size and theme"
 msgstr "文字大小和主题"
+
+msgid "That is it"
+msgstr "导览结束"
 
 msgid "The .md file does not look like valid Markdown text."
 msgstr ".md 文件看起来不是有效的 Markdown 文本。"
@@ -1014,11 +1182,20 @@ msgstr "Word 文档似乎是空的。"
 msgid "The WordPress.org page works once the plugin is listed in the official directory."
 msgstr "插件在官方目录上架后，WordPress.org 页面才可用。"
 
+msgid "The address (slug) of each item is the file name: \"annual-report.pdf\" becomes \"annual-report\". If that address is taken, WordPress adds -2."
+msgstr "每个条目的地址（别名）就是文件名：\"annual-report.pdf\" 会变成 \"annual-report\"。如果该地址已被占用，WordPress 会添加 -2。"
+
 msgid "The base address of the API, for example http://localhost:11434/v1 for Ollama. \"/chat/completions\" is added when missing."
 msgstr "API 的基础地址，例如 Ollama 的 http://localhost:11434/v1。缺少时会自动添加“/chat/completions”。"
 
 msgid "The browser did not allow the microphone."
 msgstr "浏览器未允许使用麦克风。"
+
+msgid "The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it."
+msgstr "WordPress 的分类和标签同样可用于归类 Jim 文档，并在文档列表中显示为列。所选类型的字段（例如它自己的分类法）会在您选择该类型后出现。"
+
+msgid "The categories and tags you choose classify the Jim document and, when the post type uses them, the new post. The fields of the chosen type appear here too."
+msgstr "您选择的分类和标签会归类 Jim 文档；如果所选内容类型使用它们，也会归类新文章。所选类型的字段也会出现在这里。"
 
 msgid "The content of \"%1$s\" does not match the .%2$s extension: the file is corrupted or was renamed from another format."
 msgstr "“%1$s”的内容与 .%2$s 扩展名不符：文件已损坏，或由其他格式重命名而来。"
@@ -1038,8 +1215,14 @@ msgstr "转换已停止，因为达到了 PHP 的时间限制（max_execution_ti
 msgid "The document has no text to convert."
 msgstr "文档中没有可转换的文本。"
 
+msgid "The document is in the Jim panel, but the post was not created: %s"
+msgstr "文档已在 Jim 面板中，但未能创建文章：%s"
+
 msgid "The document was created, but its text looks unreadable: this PDF uses fonts that do not say which letter each character is, so the text comes out as symbols (and would be read aloud that way). Check the document. If it is garbled, run OCR on the PDF or export it again with embedded Unicode fonts, then convert it again. %s"
 msgstr "文档已创建，但其文本似乎无法阅读：此 PDF 使用的字体没有说明每个字符对应哪个字母，因此文本显示为符号（朗读时也会如此）。请检查文档。如果内容是乱码，请对 PDF 进行 OCR，或使用嵌入 Unicode 字体重新导出，然后再次转换。%s"
+
+msgid "The documents list has a \"Published in\" column that links to the item. The document stays in the Jim panel either way."
+msgstr "文档列表中有“发布于”列，可链接到该条目。无论如何，文档都会保留在 Jim 面板中。"
 
 msgid "The file \"%1$s\" could not be uploaded (server limit: %2$s). Send a smaller file or ask your host to raise \"upload_max_filesize\" and \"post_max_size\"."
 msgstr "无法上传文件“%1$s”（服务器限制：%2$s）。请发送更小的文件，或请主机提供商提高“upload_max_filesize”和“post_max_size”。"
@@ -1052,6 +1235,9 @@ msgstr "文件太大，服务器无法接受（当前限制：%s）。请发送�
 
 msgid "The key was not saved: this server lacks the encryption (libsodium) needed to store it safely."
 msgstr "密钥未保存：此服务器缺少安全存储所需的加密功能（libsodium）。"
+
+msgid "The list shows posts, pages and the custom post types of your site that have a public page and the editor. Internal types (field groups, templates and the like) are not listed."
+msgstr "列表显示您站点中有公开页面和编辑器的文章、页面和自定义内容类型。内部类型（字段组、模板等）不会列出。"
 
 msgid "The log never contains the text of your documents or your AI key, so it is safe to export and send when asking for help."
 msgstr "日志从不包含你的文档文本或 AI 密钥，因此在寻求帮助时可以放心导出并发送。"
@@ -1134,8 +1320,14 @@ msgstr "此页面已过期。请重新加载后再提问。"
 msgid "This server lacks the PHP extensions needed to read .%1$s files: %2$s. Ask your host to enable them."
 msgstr "此服务器缺少读取 .%1$s 文件所需的 PHP 扩展：%2$s。请联系主机提供商启用它们。"
 
+msgid "This short tour shows how to turn a file into an accessible page and publish it. You can leave it at any time with the Esc key, and open it again from the Tutorial."
+msgstr "这个简短的导览会演示如何把文件变成无障碍页面并发布。您可以随时按 Esc 键退出，也可以在“教程”页面再次打开。"
+
 msgid "Time (UTC)"
 msgstr "时间 (UTC)"
+
+msgid "Title (optional)"
+msgstr "标题（可选）"
 
 msgid "To answer repeated questions instantly, the tutor may keep its answers on this site, per document. With each saved answer it keeps only the weight of each word of the question, not the question text, and nothing that identifies the visitor. Saved answers are discarded when the document or the tutor settings change."
 msgstr "为了即时回答重复的问题，导师可能会按文档在本站保存回答。每条保存的回答只附带问题中每个词的权重，不保存问题原文，也不保存任何可识别访客的信息。文档或导师设置更改时，已保存的回答会被丢弃。"
@@ -1143,8 +1335,14 @@ msgstr "为了即时回答重复的问题，导师可能会按文档在本站保
 msgid "To remember each reader's choices, the reading controls and the highlighter use the browser's local storage, per document: text size, theme, contrast, voice, reading speed, whether the toolbar is hidden, and the passages the reader highlighted. This data never leaves the reader's device and can be deleted by clearing the browser's site data."
 msgstr "为了记住每位读者的选择，阅读控件和荧光笔会按文档使用浏览器的本地存储：文字大小、主题、对比度、语音、朗读速度、阅读栏是否隐藏，以及读者标记的文字。这些数据永远不会离开读者的设备，清除浏览器中的网站数据即可删除。"
 
+msgid "To schedule, choose a date and time in the future, by the site clock: it is now %1$s (%2$s)."
+msgstr "要定时发布，请按站点时钟选择未来的日期和时间：当前为 %1$s（%2$s）。"
+
 msgid "To send several files at once, use only TXT and MD. \"%s\" must be sent alone (PDF and DOCX are heavy to convert in sequence)."
 msgstr "要一次发送多个文件，请只使用 TXT 和 MD。“%s”必须单独发送（PDF 和 DOCX 连续转换负担较重）。"
+
+msgid "Tools > Scheduled Actions"
+msgstr "工具 > Scheduled Actions（Action Scheduler）"
 
 msgid "Total image size limit for the document reached (adjustable in Settings › Image limits)."
 msgstr "已达到文档图片总大小限制（可在 设置 › 图片限制 中调整）。"
@@ -1172,6 +1370,9 @@ msgstr "请先输入问题。"
 
 msgid "Type:"
 msgstr "类型："
+
+msgid "Under \"Also publish in\" on the New Document screen, choose where the document goes besides the Jim panel. For each file Jim creates an item of that type with the shortcode already inside, so you do not copy and paste shortcodes one by one."
+msgstr "在“新建文档”页面的“同时发布到”中选择文档除 Jim 面板外还要发布到哪里。Jim 会为每个文件创建一个该类型的条目，并已内置短代码，您无需逐个复制粘贴。"
 
 msgid "Unsupported file type: %s"
 msgstr "不支持的文件类型：%s"
@@ -1206,11 +1407,17 @@ msgstr "语音"
 msgid "Voice choice, listen/pause, speed and stop. Reading aloud uses the browser, so no text is sent to anyone."
 msgstr "可选择语音、收听/暂停、速度和停止。朗读使用浏览器，因此不会向任何人发送文本。"
 
+msgid "Want a one-minute guided tour of how to convert and publish your first document?"
+msgstr "想用一分钟的导览了解如何转换并发布您的第一个文档吗？"
+
 msgid "Warning"
 msgstr "警告"
 
 msgid "Warning: the saved key could not be read (the security keys in wp-config.php changed). Type it again."
 msgstr "警告：无法读取已保存的密钥（wp-config.php 中的安全密钥已更改）。请重新输入。"
+
+msgid "Welcome to Jim"
+msgstr "欢迎使用 Jim"
 
 msgid "What Jim is"
 msgstr "Jim 是什么"
@@ -1236,11 +1443,23 @@ msgstr "完成后，文档会出现在%s中，其短代码显示在列表里。"
 msgid "When something goes wrong"
 msgstr "出问题时"
 
+msgid "When you choose Schedule, set the date and time by the site clock (shown in the form), not by your computer. With several files, set the hours between one and the next."
+msgstr "选择“定时发布”时，请按站点时钟（表单中会显示）设置日期和时间，而不是按您电脑的时钟。发送多个文件时，请设置相邻文件之间的间隔小时数。"
+
+msgid "When you send several files, each one is scheduled this many hours after the previous one. Use 0 to schedule all of them at the same time."
+msgstr "一次发送多个文件时，每个文件会比上一个晚这么多小时发布。填 0 表示全部在同一时间发布。"
+
 msgid "Where to get a key"
 msgstr "在哪里获取密钥"
 
 msgid "Who can use it"
 msgstr "谁可以使用"
+
+msgid "Without a title, Jim uses the file name. The file name is also the address (slug) of the post if you publish it below."
+msgstr "没有标题时，Jim 会使用文件名。如果您在下方选择发布，文件名也会成为文章的地址（别名）。"
+
+msgid "WooCommerce > Status > Scheduled Actions"
+msgstr "WooCommerce > 状态 > Scheduled Actions（Action Scheduler）"
 
 msgid "WordPress.org: if the [jimca_instalacoes] shortcode is used, the server asks api.wordpress.org for this plugin's install count (only the plugin name is sent; the answer is cached for 12 hours). Visitors' browsers do not contact it."
 msgstr "WordPress.org：如果使用了短代码 [jimca_instalacoes]，服务器会向 api.wordpress.org 查询此插件的安装数（只发送插件名称；结果缓存 12 小时）。访客的浏览器不会联系它。"
@@ -1250,6 +1469,9 @@ msgstr "字数："
 
 msgid "You"
 msgstr "你"
+
+msgid "You cannot create content in the chosen post type."
+msgstr "您无法在所选内容类型中创建内容。"
 
 msgid "You chose %1$d files, but only %2$d reached the server (PHP limit \"max_file_uploads\": %3$d). Nothing was converted; send them in smaller batches."
 msgstr "你选择了 %1$d 个文件，但只有 %2$d 个到达服务器（PHP 限制“max_file_uploads”：%3$d）。没有转换任何内容；请分成更小的批次发送。"
@@ -1262,6 +1484,9 @@ msgstr "你没有权限上传文档。"
 
 msgid "You reached the limit of questions for now. Try again in an hour."
 msgstr "你暂时已达到提问上限。请一小时后再试。"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "您的文档位于 Jim > 无障碍文档，列表中有短代码、显示模式以及每个文档发布位置等列。“教程”页面会解释每个选项，您也可以在那里再次打开此导览。"
 
 msgid "Your question"
 msgstr "你的问题"
@@ -1298,3 +1523,4 @@ msgstr "必需"
 
 msgid "unexpected reply"
 msgstr "意外的响应"
+

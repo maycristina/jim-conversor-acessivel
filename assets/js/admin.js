@@ -325,9 +325,58 @@
 		} );
 	}
 
+	/**
+	 * "Also publish in": shows only the fields that apply to the chosen post
+	 * type and status. Fields of hidden rows are disabled, so they are not sent.
+	 * Without JavaScript everything stays visible and the server reads what
+	 * matches the chosen type.
+	 */
+	function initDestination() {
+		var type   = document.getElementById( 'jimca_dest_type' );
+		var status = document.getElementById( 'jimca_dest_status' );
+		var date   = document.getElementById( 'jimca_dest_date' );
+
+		if ( ! type || ! status ) {
+			return;
+		}
+
+		function toggle( row, visible ) {
+			row.hidden = ! visible;
+			Array.prototype.forEach.call( row.querySelectorAll( 'input, select, textarea' ), function ( field ) {
+				field.disabled = ! visible;
+			} );
+		}
+
+		function update() {
+			var chosen   = type.value;
+			var schedule = '' !== chosen && 'future' === status.value;
+
+			Array.prototype.forEach.call( document.querySelectorAll( '[data-jimca-dest-only]' ), function ( row ) {
+				toggle( row, '' !== chosen );
+			} );
+
+			Array.prototype.forEach.call( document.querySelectorAll( '[data-jimca-dest-schedule]' ), function ( row ) {
+				toggle( row, schedule );
+			} );
+
+			Array.prototype.forEach.call( document.querySelectorAll( '[data-jimca-dest-type]' ), function ( row ) {
+				toggle( row, row.getAttribute( 'data-jimca-dest-type' ) === chosen );
+			} );
+
+			if ( date ) {
+				date.required = schedule;
+			}
+		}
+
+		type.addEventListener( 'change', update );
+		status.addEventListener( 'change', update );
+		update();
+	}
+
 	function boot() {
 		init();
 		initUpload();
+		initDestination();
 	}
 
 	if ( 'loading' === document.readyState ) {

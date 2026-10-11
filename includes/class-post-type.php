@@ -74,6 +74,7 @@ class JIMCA_Post_Type {
 			if ( 'title' === $key ) {
 				$new_columns['jimca_shortcode'] = __( 'Shortcode', 'jim-conversor-acessivel' );
 				$new_columns['jimca_mode']      = __( 'Display mode', 'jim-conversor-acessivel' );
+				$new_columns['jimca_published'] = __( 'Published in', 'jim-conversor-acessivel' );
 			}
 		}
 
@@ -85,6 +86,32 @@ class JIMCA_Post_Type {
 			$mode  = self::get_mode( $post_id );
 			$modes = JIMCA_Admin::get_display_modes();
 			echo '<span data-jimca-mode="' . esc_attr( $mode ) . '">' . esc_html( $modes[ $mode ] ) . '</span>';
+			return;
+		}
+
+		if ( 'jimca_published' === $column ) {
+			$state  = JIMCA_Destination::state( $post_id );
+			$target = 'post' === $state['kind'] ? $state['post_id'] : 0;
+
+			if ( $target ) {
+				$type = get_post_type_object( get_post_type( $target ) );
+
+				printf(
+					'<a href="%1$s">%2$s</a><br><span class="description">%3$s · %4$s</span>',
+					esc_url( get_edit_post_link( $target, '' ) ),
+					esc_html( get_the_title( $target ) ),
+					esc_html( $type ? $type->labels->singular_name : '' ),
+					esc_html( JIMCA_Destination::status_label_of( $target ) )
+				);
+			} elseif ( in_array( $state['kind'], array( 'scheduled', 'canceled', 'failed', 'removed' ), true ) ) {
+				echo esc_html( JIMCA_Destination::state_label( $state ) );
+
+				if ( '' !== $state['event'] ) {
+					echo '<br><span class="description">' . esc_html( $state['event'] ) . '</span>';
+				}
+			} else {
+				echo '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'Not published in another post type', 'jim-conversor-acessivel' ) . '</span>';
+			}
 			return;
 		}
 
@@ -225,6 +252,14 @@ class JIMCA_Post_Type {
 		$report = JIMCA_Image_Store::render_report( get_post_meta( $post->ID, '_jimca_image_report', true ), true );
 		if ( '' !== $report ) {
 			echo '<hr><p><strong>' . esc_html__( 'Images:', 'jim-conversor-acessivel' ) . '</strong></p>' . wp_kses_post( $report );
+		}
+
+		$state = JIMCA_Destination::state( $post->ID );
+		if ( 'post' === $state['kind'] ) {
+			$target = $state['post_id'];
+			echo '<p><strong>' . esc_html__( 'Published in:', 'jim-conversor-acessivel' ) . '</strong><br><a href="' . esc_url( get_edit_post_link( $target, '' ) ) . '">' . esc_html( get_the_title( $target ) ) . '</a> (' . esc_html( JIMCA_Destination::status_label_of( $target ) ) . ')</p>';
+		} elseif ( in_array( $state['kind'], array( 'scheduled', 'canceled', 'failed', 'removed' ), true ) ) {
+			echo '<p><strong>' . esc_html__( 'Published in:', 'jim-conversor-acessivel' ) . '</strong><br>' . esc_html( JIMCA_Destination::state_label( $state ) ) . '</p>';
 		}
 
 		echo '<hr>';

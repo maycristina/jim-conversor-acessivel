@@ -79,7 +79,8 @@ class JIMCA_Conversion_Job {
 				throw new JIMCA_Converter_Exception( esc_html__( 'Send one file at a time.', 'jim-conversor-acessivel' ) );
 			}
 
-			$received = $admin->receive_file( $files[0] );
+			$received    = $admin->receive_file( $files[0] );
+			$destination = JIMCA_Destination::from_request();
 		} catch ( \Throwable $e ) {
 			wp_send_json_error( array( 'message' => $admin->record_failure( $e ) ) );
 		}
@@ -91,6 +92,7 @@ class JIMCA_Conversion_Job {
 			'received'     => $received,
 			'title'        => isset( $_POST['jimca_title'] ) ? sanitize_text_field( wp_unslash( $_POST['jimca_title'] ) ) : '',
 			'remove_pages' => ! empty( $_POST['jimca_remove_pages'] ),
+			'destination'  => $destination,
 			'stage'        => 'queued',
 			'done'         => 0,
 			'total'        => 0,
@@ -250,7 +252,7 @@ class JIMCA_Conversion_Job {
 		wp_delete_file( $file );
 		JIMCA_Admin::cleanup_original( $job['received'] );
 
-		$post_id = $admin->create_document( $job['received'], wp_kses_post( JIMCA_Pdf_Converter::finish( $html ) ), $store, $job['title'], (float) $job['started'] );
+		$post_id = $admin->create_document( $job['received'], wp_kses_post( JIMCA_Pdf_Converter::finish( $html ) ), $store, $job['title'], (float) $job['started'], self::destination_of( $job ) );
 
 		$job['status']    = 'done';
 		$job['post_id']   = $post_id;
@@ -268,7 +270,7 @@ class JIMCA_Conversion_Job {
 	 */
 	private static function run_single_step( array $job ) {
 		$admin   = JIMCA_Admin::get_instance();
-		$post_id = $admin->convert_received( $job['received'], $job['title'], $job['remove_pages'], array( __CLASS__, 'on_progress' ) );
+		$post_id = $admin->convert_received( $job['received'], $job['title'], $job['remove_pages'], array( __CLASS__, 'on_progress' ), self::destination_of( $job ) );
 
 		$job            = self::$running;
 		$job['status']  = 'done';
@@ -562,6 +564,16 @@ class JIMCA_Conversion_Job {
 		}
 
 		return $job;
+	}
+
+	/**
+	 * Where the import goes besides the panel; jobs saved before this option existed have none.
+	 *
+	 * @param array $job
+	 * @return array
+	 */
+	private static function destination_of( array $job ) {
+		return isset( $job['destination'] ) && is_array( $job['destination'] ) ? $job['destination'] : array();
 	}
 
 	/** @param array $job */

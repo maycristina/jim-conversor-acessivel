@@ -12,6 +12,8 @@ class JIMCA_Activator {
 
 		if ( false === get_option( 'jimca_settings' ) ) {
 			add_option( 'jimca_settings', self::default_settings() );
+			// A fresh installation: the guided tour starts by itself once (see JIMCA_Tour).
+			JIMCA_Tour::mark_pending();
 		}
 
 		flush_rewrite_rules();

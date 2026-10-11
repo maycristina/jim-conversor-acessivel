@@ -10,6 +10,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 $jimca_post_type = 'jimca_documento';
 
+// Publications still scheduled would find no document: take them off the queue (if Action Scheduler is loaded by another plugin).
+if ( function_exists( 'as_unschedule_all_actions' ) ) {
+	as_unschedule_all_actions( 'jimca_publish_scheduled_document' );
+}
+
 $jimca_post_ids = get_posts(
 	array(
 		'post_type'      => $jimca_post_type,
@@ -67,6 +72,9 @@ delete_option( 'jimca_ai' );
 delete_option( 'jimca_tutor' );
 delete_option( 'jimca_log' );
 delete_option( 'jimca_jobs' );
+delete_option( 'jimca_tour_pending' );
+delete_metadata( 'user', 0, 'jimca_tour_done', '', true );
+delete_metadata( 'user', 0, 'jimca_destination_prefs', '', true );
 
 global $wpdb;
 

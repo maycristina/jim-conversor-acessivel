@@ -3,7 +3,7 @@
  * Plugin Name:       Jim - Accessible Converter
  * Plugin URI:         https://jim.mabo.cc/
  * Description:       Converts PDF, Word, Markdown and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
- * Version:            2.0.1
+ * Version:            2.1.0
  * Requires at least:  6.0
  * Requires PHP:       7.4
  * Author:             Mayara Nascimento
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JIMCA_VERSION', '2.0.1' );
+define( 'JIMCA_VERSION', '2.1.0' );
 define( 'JIMCA_PLUGIN_FILE', __FILE__ );
 define( 'JIMCA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'JIMCA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -52,6 +52,18 @@ define( 'JIMCA_AUTHOR_URL', 'https://github.com/maycristina' );
 $jimca_autoload = JIMCA_PLUGIN_DIR . 'vendor/autoload.php';
 if ( file_exists( $jimca_autoload ) ) {
 	require_once $jimca_autoload;
+}
+
+/**
+ * Action Scheduler (woocommerce/action-scheduler), which runs the scheduled
+ * publications and lists them under Tools > Scheduled Actions. It must be
+ * loaded before `plugins_loaded`: if another plugin (WooCommerce, for
+ * example) ships a newer copy, the library itself picks the newest one.
+ * Without it, scheduled posts fall back to WordPress's own "future" status.
+ */
+$jimca_scheduler = JIMCA_PLUGIN_DIR . 'vendor/woocommerce/action-scheduler/action-scheduler.php';
+if ( file_exists( $jimca_scheduler ) ) {
+	require_once $jimca_scheduler;
 }
 
 /**

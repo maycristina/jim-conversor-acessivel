@@ -21,13 +21,14 @@ npm install --no-save jsdom
 node --test "documentacao/testes/*.test.js"
 ```
 
-São 3 arquivos, 44 testes, sem PHP e sem navegador:
+São 4 arquivos, 58 testes, sem PHP e sem navegador:
 
 | Arquivo | O que faz |
 |---|---|
 | `a11y.test.js` | Lê CSS, template e JS e confere critérios WCAG/W3C/WebAIM (tabela abaixo). |
 | `leitor.test.js` | Roda o `frontend.js` de verdade num DOM (jsdom) com um sintetizador de voz que age como o do Chrome (`cancel()` dispara `error` depois). Testa Parar, Pausar, Ouvir e o ponto de partida. |
 | `auditor.test.js` | Revisão de semântica pós-conversão (PROT-A11Y-CONV-001 e PROT-A11Y-JS-001). |
+| `tour.test.js` | Tour guiado da tela Novo Documento (`tour.js`): diálogo com papel, nome e descrição, foco a cada passo, Esc devolvendo o foco, contorno no campo destacado, Pular/Concluir, texto sem HTML. |
 
 Para ver o teste pegar o defeito, aponte para um `frontend.js` antigo:
 `JIMCA_FRONTEND_JS=/caminho/antigo.js node --test documentacao/testes/leitor.test.js`
@@ -79,6 +80,7 @@ Registrar data, leitor/navegador e resultado de cada item. **Ainda não executad
 | M7 | Só teclado | Todos os menus (tamanho, tema, voz, velocidade, sumário) abrem, navegam e fecham com Esc, devolvendo o foco |
 | M8 | Celular físico | Barra e menus dentro da tela, também com o tema que alarga a página |
 | M9 | Ferramentas | axe DevTools, WAVE, Lighthouse e o validador HTML do W3C na página com o shortcode |
+| M10 | Tour guiado com leitor de tela e só teclado | Na tela Novo Documento, abrir "Fazer o tour guiado": o leitor anuncia o diálogo, o título e o texto de cada passo; Tab chega a Voltar, Avançar e Pular; Esc fecha e o foco volta ao botão. Repetir em 200% de ampliação e com tema de alto contraste (o contorno do campo deve aparecer) |
 
 ## Teste em tela de celular emulada (2026-10-09)
 

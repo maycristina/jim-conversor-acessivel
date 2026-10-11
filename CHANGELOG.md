@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.1.0 (2026-10-11)
+
+### Novo
+- **Modo de exibição na importação:** a tela Novo Documento ganhou "Modo de exibição" (**Leitor acessível** ou
+  **Padrão blog**, nomes que substituem "Leitor (com barra de leitura e voz)" e "Post de blog (página HTML
+  convertida)" em todo o plugin), que antes só mudava na Edição rápida da lista. A Edição rápida continua valendo. Ver D32.
+- **Também publicar em:** na tela Novo Documento, a pessoa escolhe um tipo de conteúdo (post, página ou
+  tipo personalizado). Cada arquivo importado vira um documento no painel do Jim **e** um post nesse tipo
+  com o shortcode já dentro (bloco de shortcode no editor de blocos). Status: publicar, rascunho,
+  pendente, privado ou agendar (com intervalo em horas entre os arquivos de um lote). O endereço (slug)
+  é o nome do arquivo. Categorias e tags do WordPress também classificam os documentos do Jim (coluna e
+  filtro na lista); os campos mudam conforme o tipo escolhido. Ver D32.
+- **Tour guiado** da tela Novo Documento (9 passos, `assets/js/tour.js` + `includes/class-tour.php`): abre sozinho na
+  primeira visita depois de uma instalação nova (opção `jimca_tour_pending`, por pessoa em `jimca_tour_done`), com
+  convite no Painel e em Plugins; reabre pelo botão da própria tela, pelo botão "Clique aqui para abrir o tutorial" da aba
+  Tutorial ou por `&jimca_tour=1`. Diálogo não modal que recebe o foco a cada passo, Esc sai, contorno no campo (também em
+  alto contraste), sem animação. 14 testes em `documentacao/testes/tour.test.js`. Ver D33.
+- **Tutorial atualizado:** cartões novos (Tour guiado, Publicar em posts/páginas/tipos personalizados, Agendamento).
+- **Agendamento pelo Action Scheduler:** "Agendar" não usa mais o status `future` do WordPress. Cada arquivo vira
+  um evento (grupo "Jim import AAAA-MM-DD HH:MM #xxxx") em Ferramentas > Scheduled Actions, onde dá para ver,
+  executar ou cancelar; o post só é criado na hora marcada. O aviso depois do envio traz o nome do evento e o link.
+  Sem a biblioteca, cai no agendamento nativo do WordPress.
+- **Correção:** a data do agendamento era lida no fuso do site, mas escolhida pelo relógio do navegador (com fuso
+  diferente a data "futura" era recusada e o envio não terminava). O formulário agora mostra o relógio do site, limita a
+  data mínima e a mensagem de erro diz que horas são no site.
+- **Correção:** a lista "Também publicar em" trazia tipos internos (grupos de campos do ACF, modelos, etc.). Agora só
+  entram posts, páginas e tipos personalizados públicos com editor.
+
 ## 2.0.1 (2026-10-09)
 
 ### Novo e corrigido

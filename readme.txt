@@ -4,7 +4,7 @@ Tags: accessibility, pdf, docx, shortcode, text-to-speech
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,10 @@ Converts PDF, Word (.docx), Markdown and TXT files into responsive, accessible p
 * Contrast, visible focus and keyboard navigation across all controls.
 * A table of contents side panel, built from Word heading styles or the PDF bookmarks (outline).
 * Optional removal of the "Página 1, Página 2…" page markers from PDFs, joining sentences split across pages and dropping printed page numbers.
-* Two display modes per document, chosen in the documents list (Quick Edit): **reader** (default) or **blog post**, which adds a reading-time bar with listen and share buttons.
+* Two display modes per document, chosen when you import the file or later in the documents list (Quick Edit): **Accessible reader** (default) or **Standard blog**, which adds a reading-time bar with listen and share buttons.
+* **Also publish in**: pick posts, pages or a custom post type and each imported file also becomes an item there, with the shortcode already inside, so you stop pasting shortcodes one by one. The address (slug) is the file name; choose the status (publish now, draft, pending, private or schedule) and the categories and tags.
+* **Scheduling with [Action Scheduler](https://actionscheduler.org/)**: a scheduled publication is an event you can see, run or cancel under Tools > Scheduled Actions.
+* A **guided tour** of the New Document screen that starts by itself after a fresh installation and can be opened again from the Tutorial tab. It is keyboard and screen reader friendly.
 * Images from PDF and DOCX files are saved to the **Media Library**, linked to the document, with the alternative text written in Word; images without a description are flagged so the author can describe them. An accessible lightbox opens them full size.
 * Limits on the number and total size of images, plus time and memory guards, so large illustrated books don't bring the server down. Each image left out is listed with its cause.
 * Automatic SEO tags (meta description, Open Graph, Twitter Card, JSON-LD) on the page that contains the shortcode. They are skipped when Yoast SEO, Rank Math, All in One SEO or SEOPress is active.
@@ -60,12 +63,14 @@ The plugin's source code is public: https://github.com/maycristina/jim-conversor
 
 The `vendor/` folder contains unmodified, human-readable PHP libraries installed with Composer: [smalot/pdfparser](https://github.com/smalot/pdfparser) and [phpoffice/phpword](https://github.com/PHPOffice/PHPWord) (both LGPL), plus their dependencies. Their exact versions are listed in `vendor/composer/installed.json`.
 
+The same folder holds [Action Scheduler](https://actionscheduler.org/) (woocommerce/action-scheduler, GPLv3), the library WooCommerce and many plugins use to run scheduled tasks. Jim uses it to publish scheduled posts at the chosen time; if WooCommerce or another plugin ships a newer copy, the library loads only the newest one.
+
 == Installation ==
 
 1. In **Plugins > Add New > Upload Plugin**, send the plugin zip (or upload the plugin folder to `wp-content/plugins/`). The libraries it needs are already included; no Composer step is required.
 2. Activate the plugin under **Plugins > Installed Plugins**.
-3. Go to **Jim - Accessible Converter > New Document** to upload a file.
-4. Copy the generated shortcode (`[documento_acessivel id="X"]`) and paste it into any page or post.
+3. Go to **Jim - Accessible Converter > New Document** to upload a file. A short guided tour starts by itself the first time; you can open it again from the Tutorial tab.
+4. Copy the generated shortcode (`[documento_acessivel id="X"]`) and paste it into any page or post, or use **Also publish in** and let Jim create the post or page for you.
 
 If you are running the code straight from the GitHub repository instead of the zip, run `composer install --no-dev` inside the plugin folder first.
 
@@ -84,6 +89,18 @@ By default, no — the plugin extracts the content and deletes the original uplo
 Yes, by default (this can be turned off under **Jim - Accessible Converter > Settings**). Each image becomes an attachment in the Media Library, linked to its document; deleting the document (emptying the trash) deletes its images, and uninstalling the plugin deletes all of them. In DOCX files each image stays where it was in the text and keeps the alternative text written in Word ("Edit Alt Text"); images marked as decorative get an empty `alt`. In PDF files the images of each page are placed after that page's text, with a placeholder description. After converting, the dashboard notice says how many images still need a description — edit the document to describe them.
 
 Supported: JPEG, PNG, GIF and WebP (DOCX; BMP/TIFF are converted to PNG when PHP's GD extension is available), and, in PDFs, JPEG, 8-bit RGB/gray/CMYK, 1/2/4-bit gray and palette (indexed) images, with transparency. JPEG 2000, fax-encoded (CCITT), JBIG2 and inline (BI … EI) PDF images are skipped and counted in the notice, with the cause. The number of images and their total size per document are limited (configurable under Settings).
+
+= How do I publish many imported files without pasting each shortcode? =
+
+On the New Document screen, open **Also publish in** and choose posts, pages or a custom post type. For each file Jim creates an item of that type with the shortcode inside. The item's address (slug) is the file name, and you choose its status and its categories and tags. Only public post types with the editor are listed, so internal ones (field groups, templates and the like) never show up.
+
+= How does scheduling work, and where do I cancel it? =
+
+Choose **Schedule** and set the date and time by the **site clock** (the form shows what time it is on the site, which may differ from your computer). Each file becomes an Action Scheduler event: the document is converted right away and the item is created at the chosen time. When the upload finishes, the notice gives the event's name (for example "Jim import 2026-10-11 15:10 #ab12"). To learn more, run it now or cancel, open **Tools > Scheduled Actions** (with WooCommerce: **WooCommerce > Status > Scheduled Actions**) and search for that name. Only administrators can open that screen. Events run through WP-Cron, so on a site with very little traffic a real server cron job keeps them on time.
+
+= Where is the guided tour? =
+
+It starts by itself the first time someone opens **New Document** after a fresh installation. To open it again, click **Take the guided tour** on that screen, or **Click here to open the tutorial** on the **Tutorial** tab. Press Esc to leave it at any time.
 
 = Can I choose how the converted document looks? =
 
@@ -142,6 +159,16 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 
 == Changelog ==
 
+= 2.1.0 =
+* New: "Also publish in" on the New Document screen. Choose a post type (posts, pages or a custom post type with a public page and the editor; field groups, templates and other internal types are not listed) and each imported file also becomes a post there, with the shortcode already inside, so you no longer copy and paste shortcodes one by one. The post address (slug) is the file name.
+* New: choose the publication status of those posts (publish now, draft, pending, private or schedule, with an interval in hours between the files of a batch). Scheduled posts are events of [Action Scheduler](https://actionscheduler.org/): the post is created at the chosen time, and you can see, run or cancel the event under Tools > Scheduled Actions. The date is read by the site clock, which the form now shows.
+* New: "Display mode" (Accessible reader, with reading bar and voice, or Standard blog) can now be chosen when you import, not only in the documents list.
+* New: WordPress categories and tags now also classify the Jim documents (columns and filters in the documents list), and fields for the taxonomies of the chosen post type appear in the import form.
+* New: "Published in" column in the documents list, linking to the post that shows each document.
+* New: a guided tour of the New Document screen (9 steps), shown by itself after a fresh installation and available from a button on that screen and from the Tutorial tab. It is a non-modal dialog that takes focus at each step, works with the keyboard (Esc leaves it), outlines the control it explains and never animates.
+* The Tutorial tab now explains publishing in posts, pages and custom post types, scheduling and the display modes.
+* All new texts are translated into the seven bundled languages.
+
 = 2.0.1 =
 * Fix: the "Stop" button now really stops the reading; before, it kept speaking and went back to the start of the page (also fixed after Pause, a speed change, or pressing Listen again).
 * Fix: "Listen" now starts at the passage you are on (selected text, focused heading or the first paragraph on screen) instead of jumping back to the top of the page.
@@ -167,7 +194,7 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Fix: DOCX tables (for example exported from Google Docs) no longer turn every cell into a header, and cells no longer get a dark red background from Word's "auto" shading.
 * Fix: CSS and JavaScript files carry their modification time in the URL, so style fixes reach browsers and caches without a version change.
 * New: rewritten Tutorial screen and suggested privacy-policy text.
-* New: per-document display mode (reader or blog post), with a reading-time bar, listen and share buttons.
+* New: per-document display mode (reader or blog), with a reading-time bar, listen and share buttons.
 * New: images are saved to the Media Library, linked to the document and deleted with it; accessible lightbox.
 * New: Markdown (.md) support and sending several TXT/MD files at once, with a ready-to-copy shortcode list.
 * New: image count/size limits and time/memory guards, with the cause of each image left out.
@@ -183,6 +210,9 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+New "Also publish in" option: importing files can now create posts or pages (or custom post types) with the shortcode inside, schedule them with Action Scheduler, and choose the display mode at import. A guided tour explains it all. Nothing changes if you do not use it.
 
 = 2.0.1 =
 Adds a conversion review tool, and fixes documents that lost their paragraphs after being edited and the reading bar on phones.
