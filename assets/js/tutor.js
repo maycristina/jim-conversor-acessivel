@@ -40,6 +40,9 @@
 		var form     = root.querySelector( '[data-jimca-tutor-form]' );
 		var input    = root.querySelector( '[data-jimca-tutor-input]' );
 		var mic      = root.querySelector( '[data-jimca-tutor-mic]' );
+		var exporter = root.querySelector( '[data-jimca-tutor-export]' );
+		var quickBtn = root.querySelector( '[data-jimca-tutor-quick]' );
+		var quickMenu = root.querySelector( '[data-jimca-tutor-quick-menu]' );
 		var status   = root.querySelector( '[data-jimca-tutor-status]' );
 		var restore  = viewer ? viewer.querySelector( '[data-jimca-tutor-restore]' ) : null;
 		var doc      = root.getAttribute( 'data-doc' );
@@ -50,6 +53,7 @@
 		var hiddenKey = HIDDEN_KEY + '-' + doc;
 		var history  = load();
 		var waiting  = false;
+		var freshNext = false;
 
 		function load() {
 			try {
@@ -107,21 +111,192 @@
 			return item;
 		}
 
+		// Empty: the orb, the greeting and suggestions. With turns: only the conversation.
 		function render() {
+			closeQuick( false );
 			log.textContent = '';
-			if ( greeting ) {
-				bubble( 'assistant', greeting );
-			}
+			panel.setAttribute( 'data-state', history.length ? 'chatting' : 'empty' );
+			toggleExport();
 			if ( ! history.length ) {
-				suggestions();
+				welcome();
 			}
 			history.forEach( function ( turn ) {
 				bubble( turn.role, turn.content );
 			} );
 		}
 
+		function welcome() {
+			var stage = document.createElement( 'div' );
+			var orb   = document.createElement( 'span' );
+			var text  = document.createElement( 'p' );
+
+			stage.className = 'jimca-tutor__stage';
+			stage.setAttribute( 'data-jimca-tutor-stage', '' );
+			orb.className = 'jimca-tutor__orb';
+			orb.setAttribute( 'aria-hidden', 'true' );
+			text.className = 'jimca-tutor__welcome';
+			text.textContent = greeting;
+
+			stage.appendChild( orb );
+			if ( greeting ) {
+				stage.appendChild( text );
+			}
+			log.appendChild( stage );
+			suggestions( stage );
+		}
+
+		// Grows the field with the text, up to its max-height in the stylesheet.
+		function grow() {
+			input.style.height = 'auto';
+			input.style.height = input.scrollHeight + 'px';
+		}
+
+		function toggleExport() {
+			if ( exporter ) {
+				exporter.hidden = ! history.length;
+			}
+		}
+
+		/** The whole conversation as a text file, for the reader to keep. */
+		function exportConversation() {
+			if ( ! history.length ) {
+				return;
+			}
+
+			var heading = viewer && viewer.getAttribute( 'data-jimca-title' ) ? viewer.getAttribute( 'data-jimca-title' ) : document.title;
+			var lines   = [ heading, window.location.href.split( '#' )[ 0 ], new Date().toLocaleString(), '' ];
+
+			history.forEach( function ( turn ) {
+				lines.push( ( 'user' === turn.role ? t( 'you', 'You' ) : name ) + ':' );
+				lines.push( turn.content );
+				lines.push( '' );
+			} );
+
+			var file = heading.replace( /[^\p{L}\p{N}]+/gu, '-' ).replace( /^-+|-+$/g, '' ).slice( 0, 40 ) || 'jim';
+			var url  = window.URL.createObjectURL( new Blob( [ lines.join( '\n' ) ], { type: 'text/plain;charset=utf-8' } ) );
+			var link = document.createElement( 'a' );
+
+			link.href     = url;
+			link.download = file + '-conversation.txt';
+			document.body.appendChild( link );
+			link.click();
+			document.body.removeChild( link );
+			window.setTimeout( function () {
+				window.URL.revokeObjectURL( url );
+			}, 1000 );
+			announce( t( 'exported', 'Conversation downloaded.' ) );
+		}
+
+		/**
+		 * A suggestion: the beginning of a question goes in front of what is already typed;
+		 * a challenge goes out at once, as a new question every time, and the draft stays.
+		 */
+		function useChip( chip ) {
+			var draft = input.value.trim();
+
+			if ( chip[2] ) {
+				input.value = chip[1];
+				freshNext   = true;
+				form.requestSubmit ? form.requestSubmit() : form.dispatchEvent( new Event( 'submit', { cancelable: true } ) );
+				input.value = draft;
+				grow();
+				return;
+			}
+
+			input.value = chip[1] + draft;
+			grow();
+			input.focus();
+			input.setSelectionRange( input.value.length, input.value.length );
+		}
+
+		/**
+		 * Quick texts: the same suggestions as at the start, in a menu that opens
+		 * from the field at any point of the conversation.
+		 */
+		function setupQuick() {
+			var chips = i18n.chips || [];
+
+			if ( ! quickBtn || ! quickMenu || ! chips.length ) {
+				return;
+			}
+
+			quickBtn.hidden = false;
+
+			chips.forEach( function ( chip ) {
+				var item = document.createElement( 'button' );
+
+				item.type      = 'button';
+				item.className = 'jimca-tutor__quick-item';
+				item.setAttribute( 'role', 'menuitem' );
+				item.textContent = chip[0];
+				item.addEventListener( 'click', function () {
+					closeQuick( false );
+					useChip( chip );
+				} );
+				quickMenu.appendChild( item );
+			} );
+
+			quickBtn.addEventListener( 'click', function () {
+				if ( quickMenu.hidden ) {
+					openQuick();
+				} else {
+					closeQuick( true );
+				}
+			} );
+
+			quickMenu.addEventListener( 'keydown', function ( event ) {
+				var items = Array.prototype.slice.call( quickMenu.querySelectorAll( '[role="menuitem"]' ) );
+				var index = items.indexOf( document.activeElement );
+				var next  = -1;
+
+				if ( 'ArrowDown' === event.key ) {
+					next = ( index + 1 ) % items.length;
+				} else if ( 'ArrowUp' === event.key ) {
+					next = ( index - 1 + items.length ) % items.length;
+				} else if ( 'Home' === event.key ) {
+					next = 0;
+				} else if ( 'End' === event.key ) {
+					next = items.length - 1;
+				} else if ( 'Tab' === event.key ) {
+					closeQuick( false );
+					return;
+				}
+
+				if ( next > -1 ) {
+					event.preventDefault();
+					items[ next ].focus();
+				}
+			} );
+
+			// A tap or click anywhere else closes it.
+			document.addEventListener( 'click', function ( event ) {
+				if ( ! quickMenu.hidden && ! quickMenu.contains( event.target ) && ! quickBtn.contains( event.target ) ) {
+					closeQuick( false );
+				}
+			} );
+		}
+
+		function openQuick() {
+			quickMenu.hidden = false;
+			quickBtn.setAttribute( 'aria-expanded', 'true' );
+			quickMenu.querySelector( '[role="menuitem"]' ).focus();
+		}
+
+		function closeQuick( refocus ) {
+			if ( ! quickMenu || quickMenu.hidden ) {
+				return;
+			}
+
+			quickMenu.hidden = true;
+			quickBtn.setAttribute( 'aria-expanded', 'false' );
+
+			if ( refocus ) {
+				quickBtn.focus();
+			}
+		}
+
 		// Starting points under the greeting: a click puts the beginning of a question in the field.
-		function suggestions() {
+		function suggestions( parent ) {
 			var chips = i18n.chips || [];
 			if ( ! chips.length ) {
 				return;
@@ -137,13 +312,11 @@
 				button.className = 'jimca-tutor__chip';
 				button.textContent = chip[0];
 				button.addEventListener( 'click', function () {
-					input.value = chip[1];
-					input.focus();
-					input.setSelectionRange( input.value.length, input.value.length );
+					useChip( chip );
 				} );
 				group.appendChild( button );
 			} );
-			log.appendChild( group );
+			parent.appendChild( group );
 		}
 
 		function open() {
@@ -168,7 +341,7 @@
 			}
 		}
 
-		function ask( question ) {
+		function ask( question, fresh ) {
 			var data      = new FormData();
 			var asking    = bubble( 'assistant', t( 'thinking', 'Thinking…' ) );
 			var text      = asking.querySelector( '.jimca-tutor__text' );
@@ -177,6 +350,7 @@
 			asking.classList.add( 'is-pending' );
 			// aria-busy keeps screen readers from announcing every streamed piece; the answer is read once complete.
 			log.setAttribute( 'aria-busy', 'true' );
+			root.classList.add( 'is-busy' );
 			waiting = true;
 
 			data.append( 'action', t( 'action', '' ) );
@@ -184,6 +358,9 @@
 			data.append( 'nonce', nonce );
 			data.append( 'question', question );
 			data.append( 'history', JSON.stringify( history.slice( -MAX_HISTORY ) ) );
+			if ( fresh ) {
+				data.append( 'fresh', '1' );
+			}
 			if ( streaming ) {
 				data.append( 'stream', '1' );
 			}
@@ -194,6 +371,7 @@
 				renderText( text, answer );
 				history.push( { role: 'user', content: question }, { role: 'assistant', content: answer } );
 				save();
+				toggleExport();
 			}
 
 			function failed( message ) {
@@ -275,6 +453,7 @@
 				.then( function () {
 					waiting = false;
 					log.removeAttribute( 'aria-busy' );
+					root.classList.remove( 'is-busy' );
 				} );
 		}
 
@@ -289,14 +468,19 @@
 				input.focus();
 				return;
 			}
-			var chips = log.querySelector( '[data-jimca-tutor-chips]' );
-			if ( chips ) {
-				chips.remove();
+			var stage = log.querySelector( '[data-jimca-tutor-stage]' );
+			if ( stage ) {
+				stage.remove();
 			}
+			panel.setAttribute( 'data-state', 'chatting' );
 			bubble( 'user', question );
 			input.value = '';
-			ask( question );
+			grow();
+			ask( question, freshNext );
+			freshNext = false;
 		} );
+
+		input.addEventListener( 'input', grow );
 
 		// Enter sends; Shift+Enter breaks the line.
 		input.addEventListener( 'keydown', function ( event ) {
@@ -316,8 +500,16 @@
 
 		root.querySelector( '[data-jimca-tutor-close]' ).addEventListener( 'click', close );
 
+		if ( exporter ) {
+			exporter.addEventListener( 'click', exportConversation );
+		}
+
 		panel.addEventListener( 'keydown', function ( event ) {
 			if ( 'Escape' === event.key ) {
+				if ( quickMenu && ! quickMenu.hidden ) {
+					closeQuick( true );
+					return;
+				}
 				close();
 			}
 		} );
@@ -353,6 +545,7 @@
 		}
 
 		setupVoice();
+		setupQuick();
 		render();
 		showWidget( ! ( local && '1' === local.getItem( hiddenKey ) ) );
 
@@ -397,6 +590,7 @@
 						text += event.results[ i ][ 0 ].transcript;
 					}
 					input.value = base + text;
+					grow();
 				};
 				recognition.onerror = function ( event ) {
 					if ( 'not-allowed' === event.error || 'service-not-allowed' === event.error ) {

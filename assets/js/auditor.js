@@ -586,7 +586,106 @@
 		}
 	}
 
+	/**
+	 * Tells the server a review ran, and from where ("edit" or "list"), for the
+	 * activity log. Best effort: the review itself never depends on it.
+	 */
+	function logRun( docId, origin, issues ) {
+		var cfg = global.jimcaReview;
+
+		if ( ! cfg || ! global.fetch || ! global.FormData ) {
+			return;
+		}
+
+		var data = new global.FormData();
+		data.append( 'action', cfg.actionLog );
+		data.append( 'nonce', cfg.nonce );
+		data.append( 'doc', docId );
+		data.append( 'origin', origin );
+		data.append( 'issues', String( issues ) );
+
+		global.fetch( cfg.ajaxUrl, { method: 'POST', body: data, credentials: 'same-origin' } ).catch( function () {} );
+	}
+
+	/**
+	 * Documents list: a "Review" button per row runs the same review without
+	 * opening the document. The result goes under the button, with a link to
+	 * the document when there is something to fix there.
+	 */
+	function initList() {
+		var cfg = global.jimcaReview;
+		var buttons = document.querySelectorAll( '[data-jimca-review]' );
+
+		if ( ! cfg || ! buttons.length || ! global.fetch ) {
+			return;
+		}
+
+		Array.prototype.forEach.call( buttons, function ( button ) {
+			var docId = button.getAttribute( 'data-jimca-review' );
+			var status = document.getElementById( 'jimca-review-status-' + docId );
+
+			function say( text, edit ) {
+				status.textContent = text;
+
+				if ( edit ) {
+					var link = document.createElement( 'a' );
+					link.href = edit;
+					link.textContent = t( 'openToFix', 'Open to fix' );
+					status.appendChild( document.createTextNode( ' ' ) );
+					status.appendChild( link );
+				}
+			}
+
+			button.addEventListener( 'click', function () {
+				if ( button.getAttribute( 'aria-busy' ) ) {
+					return;
+				}
+
+				var data = new global.FormData();
+				data.append( 'action', cfg.actionContent );
+				data.append( 'nonce', cfg.nonce );
+				data.append( 'doc', docId );
+
+				button.setAttribute( 'aria-busy', 'true' );
+				say( t( 'reviewing', 'Reviewing…' ) );
+
+				global.fetch( cfg.ajaxUrl, { method: 'POST', body: data, credentials: 'same-origin' } )
+					.then( function ( response ) {
+						return response.json();
+					} )
+					.then( function ( answer ) {
+						if ( ! answer || ! answer.success ) {
+							throw new Error( 'review' );
+						}
+
+						var result = audit( parse( answer.data.html ) );
+						var count = result.issues.length;
+
+						logRun( docId, 'list', count );
+
+						if ( ! count ) {
+							say( t( 'none', 'No semantic or structure problems were found.' ) );
+							return;
+						}
+
+						say(
+							fmt( 1 === count ? t( 'foundOne', '%s problem found.' ) : t( 'foundMany', '%s problems found.' ), count ),
+							button.getAttribute( 'data-jimca-edit' )
+						);
+					} )
+					.catch( function () {
+						say( t( 'reviewFailed', 'The review could not run. Try again.' ) );
+					} )
+					.then( function () {
+						button.removeAttribute( 'aria-busy' );
+					} );
+			} );
+		} );
+	}
+
 	function init() {
+		initList();
+
 		var run = document.getElementById( 'jimca-audit-run' );
 		var out = document.getElementById( 'jimca-audit-result' );
 
@@ -661,14 +760,22 @@
 			title.focus();
 		}
 
-		function review() {
+		function review( started ) {
 			var root = parse( readHtml() );
 			var result = audit( root );
 			state = { root: root, issues: result.issues, stats: result.stats };
 			render();
+
+			// Only a review the person started is logged, not the one that follows a fix.
+			if ( true === started ) {
+				var postId = document.getElementById( 'post_ID' );
+				logRun( postId ? postId.value : '', 'edit', result.issues.length );
+			}
 		}
 
-		run.addEventListener( 'click', review );
+		run.addEventListener( 'click', function () {
+			review( true );
+		} );
 
 		out.addEventListener( 'click', function ( event ) {
 			var button = event.target.closest ? event.target.closest( 'button' ) : null;

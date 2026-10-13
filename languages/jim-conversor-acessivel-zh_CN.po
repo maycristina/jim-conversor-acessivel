@@ -120,8 +120,8 @@ msgstr "AI 服务商（OpenRouter、Anthropic、OpenAI、Google Gemini、DeepSee
 msgid "AI tutor for readers"
 msgstr "面向读者的 AI 导师"
 
-msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
-msgstr "AI 生成的回答可能有误。你的问题和文档片段会发送给 %s。"
+msgid "Jim AI: may make mistakes. Don't type personal data. Your messages are processed by an external service."
+msgstr "Jim AI：可能出错。请勿输入个人信息。你的消息由外部服务处理。"
 
 msgid "API key"
 msgstr "API 密钥"
@@ -1523,4 +1523,307 @@ msgstr "必需"
 
 msgid "unexpected reply"
 msgstr "意外的响应"
+
+msgid "The server's firewall blocked this file (HTTP %s) before it reached WordPress, so Jim never received it. Ask your host to check the firewall log for the request to admin-ajax.php (the rule ID) and allow it."
+msgstr "服务器防火墙在文件到达 WordPress 之前就将其拦截了（HTTP %s），所以 Jim 没有收到它。请让你的主机商查看针对 admin-ajax.php 请求的防火墙日志（规则 ID），并放行该请求。"
+
+msgid "File %1$s of %2$s: %3$s"
+msgstr "文件 %1$s / %2$s：%3$s"
+
+msgid "%1$s of %2$s files converted."
+msgstr "已转换 %1$s / %2$s 个文件。"
+
+msgid "View documents"
+msgstr "查看文档"
+
+msgid "JIM - Assistant"
+msgstr "JIM - 助手"
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your AI account, so every answer has a cost."
+msgstr "读者与 JIM 交流他们正在阅读的文档。JIM 通过你的 AI 账户回答，因此每次回答都有费用。"
+
+msgid "Provider"
+msgstr "服务商"
+
+msgid "1. Connect"
+msgstr "1. 连接"
+
+msgid "Sends one test sentence, with no document text."
+msgstr "发送一句测试语句，不含文档文本。"
+
+msgid "2. Choose the model"
+msgstr "2. 选择模型"
+
+msgid "3. Turn on"
+msgstr "3. 开启"
+
+msgid "JIM"
+msgstr "JIM"
+
+msgid "Turn JIM on"
+msgstr "开启 JIM"
+
+msgid "JIM is on: it appears on every document."
+msgstr "JIM 已开启：它会出现在每个文档中。"
+
+msgid "JIM stays hidden until a key is saved and this is turned on."
+msgstr "在保存密钥并开启之前，JIM 不会显示。"
+
+msgid "To hide JIM on one page: %s"
+msgstr "要在某个页面隐藏 JIM：%s"
+
+msgid "Advanced: name, instructions and limits"
+msgstr "高级：名称、指令和限制"
+
+msgid "What JIM should do. It always answers from the document, ignores commands hidden in it and replies in the reader's language. Empty = default text."
+msgstr "JIM 应该做什么。它始终依据文档回答，忽略文档中隐藏的命令，并使用读者的语言回复。留空 = 默认文本。"
+
+msgid "They keep the cost of your key under control."
+msgstr "它们能控制你的密钥产生的费用。"
+
+msgid "Save JIM"
+msgstr "保存 JIM"
+
+msgid "Objective and direct. No introductions or greetings."
+msgstr "客观直接，不寒暄、不开场白。"
+
+msgid "You are an objective, direct reading assistant. Keep answers short (3 sentences at most) and go straight to the point, with no introductions or greetings. Golden rule: never give spoilers. Answer strictly what I ask, guiding me through the document without revealing outcomes, conclusions or big twists. If the answer requires revealing what happens later in the text, only tell me which section I can find that answer in, without spoiling the surprise."
+msgstr "你是一个客观、直接的阅读助手。回答要简短（最多 3 句话），直奔主题，不要开场白或问候。黄金规则：绝不剧透。严格只回答我的问题，引导我阅读文档，但不透露结局、结论或重大转折。如果回答需要透露文中后面发生的事，只需告诉我可以在哪一节找到答案，不要破坏惊喜。"
+
+msgid "Share as image"
+msgstr "分享为图片"
+
+msgid "Download as text"
+msgstr "下载为文本"
+
+msgid "Image ready."
+msgstr "图片已生成。"
+
+msgid "Text file downloaded."
+msgstr "文本文件已下载。"
+
+msgid "Could not create the image."
+msgstr "无法生成图片。"
+
+msgid "Download the conversation"
+msgstr "下载对话"
+
+msgid "Conversation downloaded."
+msgstr "对话已下载。"
+
+msgid "Challenge me"
+msgstr "考考我"
+
+msgid "Ask me one challenging question about this document. Wait for my answer before giving the correct one."
+msgstr "就这份文档向我提一个有挑战性的问题。先等我回答，再给出正确答案。"
+
+msgid "Memory game"
+msgstr "记忆游戏"
+
+msgid "Play a memory game: pick a short passage of this document and show it with some key words replaced by ____. I will try to remember them; wait for my answer before revealing the words."
+msgstr "来玩记忆游戏：从这份文档中挑一小段，把其中几个关键词替换成 ____ 后展示给我。我会努力回忆；在揭晓这些词之前，请先等我回答。"
+
+msgid "Quick texts"
+msgstr "快捷文本"
+
+msgid "This PDF (%1$s) is too large for this server's memory, which converts PDFs up to about %2$s. Split it into parts, or ask your host to raise the PHP memory limit."
+msgstr "这个 PDF（%1$s）对本服务器的内存来说太大了，本服务器最多可转换约 %2$s 的 PDF。请把它拆分成几份，或请主机商提高 PHP 内存限制。"
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "接受的类型：%1$s。每个文件最大：%2$s（PDF：本服务器约 %4$s）。一次最多 %3$d 个文件，会依次转换：请保持此页面打开，直到最后一个完成。"
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. You can send several files at a time: each one becomes a document and you get the list of shortcodes."
+msgstr "上传 PDF、DOCX、TXT 或 Markdown（.md）文件，生成无障碍页面（带朗读）和用于发布的短代码。你可以一次发送多个文件：每个文件都会成为一个文档，并得到短代码列表。"
+
+msgid "Choose up to %s files at a time."
+msgstr "一次最多选择 %s 个文件。"
+
+msgid "This file is %1$s; the limit here is %2$s."
+msgstr "此文件为 %1$s；这里的限制是 %2$s。"
+
+msgid "Created, but the text is unreadable: the PDF fonts do not say which letter each character is. Try another copy of the PDF, or run OCR on it first."
+msgstr "已创建，但文本无法阅读：PDF 的字体没有说明每个字符对应哪个字母。请尝试该 PDF 的另一份副本，或先对它做 OCR。"
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (you can raise this limit in %5$s; PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "接受的类型：%1$s。每个文件最大：%2$s（你可以在%5$s中提高此限制；PDF：本服务器约 %4$s）。一次最多 %3$d 个文件，会依次转换：请保持此页面打开，直到最后一个完成。"
+
+msgid "Review"
+msgstr "检查"
+
+msgid "Reviewing…"
+msgstr "正在检查…"
+
+msgid "The review could not run. Try again."
+msgstr "无法运行检查。请重试。"
+
+msgid "Open to fix"
+msgstr "打开并修复"
+
+msgid "Parts of the document"
+msgstr "文档分段"
+
+msgid "Previous part"
+msgstr "上一段"
+
+msgid "Next part"
+msgstr "下一段"
+
+msgid "Part %1$s of %2$s"
+msgstr "第 %1$s 段，共 %2$s 段"
+
+msgid "Go to part"
+msgstr "跳到段"
+
+msgid "Search in the document"
+msgstr "在文档中搜索"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Could not load this part. Try again."
+msgstr "无法加载这一段。请重试。"
+
+msgid "Searching…"
+msgstr "正在搜索…"
+
+msgid "Type at least 2 letters."
+msgstr "请至少输入 2 个字符。"
+
+msgid "The search could not run. Try again."
+msgstr "无法执行搜索。请重试。"
+
+msgid "Too many searches in a short time. Wait a minute and try again."
+msgstr "短时间内搜索次数过多。请等待一分钟后重试。"
+
+msgid "No results."
+msgstr "没有结果。"
+
+msgid "%s result."
+msgstr "%s 条结果。"
+
+msgid "%s results."
+msgstr "%s 条结果。"
+
+msgid "Show more results"
+msgstr "显示更多结果"
+
+msgid "Navigation"
+msgstr "导航"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Theme"
+msgstr "主题"
+
+msgid "Narrator"
+msgstr "朗读者"
+
+msgid "Female"
+msgstr "女声"
+
+msgid "Male"
+msgstr "男声"
+
+msgid "Automatic"
+msgstr "自动"
+
+msgid "Type of voice"
+msgstr "声音类型"
+
+msgid "All voices"
+msgstr "所有声音"
+
+msgid "Reading speed: %s"
+msgstr "朗读速度：%s"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "你的文档位于 Jim > 无障碍文档，列表中有短代码、显示模式以及各文档发布位置的列。在设置中，你可以连接 AI 助手并选择它的快捷文本（读者在聊天中看到的建议）。教程页面会解释每个选项，你也可以从那里重新打开本导览。"
+
+msgid "Settings tour (assistant and quick texts)"
+msgstr "设置导览（助手和快捷文本）"
+
+msgid "Welcome to Settings"
+msgstr "欢迎来到设置"
+
+msgid "This short tour shows the rules for uploaded files and the JIM assistant, the chat where readers ask about a document, including the quick texts you can choose. Leave it at any time with the Esc key."
+msgstr "这个简短的导览会介绍上传文件的规则和 JIM 助手（读者就文档提问的聊天），包括你可以选择的快捷文本。随时按 Esc 键即可退出。"
+
+msgid "File rules"
+msgstr "文件规则"
+
+msgid "Choose which file types can be converted and the largest size accepted. Your host may have a smaller limit than the one set here."
+msgstr "选择可以转换的文件类型和接受的最大大小。你的主机可能有比这里设置更小的限制。"
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your own AI account, so every answer has a cost."
+msgstr "读者与 JIM 聊他们正在阅读的文档。JIM 通过你自己的 AI 账户回答，因此每个回答都有成本。"
+
+msgid "Connect and turn on"
+msgstr "连接并开启"
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Until then JIM stays hidden from readers."
+msgstr "选择服务商，保存你的密钥（加密存储），选择模型并开启 JIM。在此之前，JIM 对读者保持隐藏。"
+
+msgid "Advanced options"
+msgstr "高级选项"
+
+msgid "Open \"Advanced\" to set who can use JIM, its name, personality, instructions, greeting, quick texts, limits and saved answers."
+msgstr "打开“高级”可设置谁能使用 JIM、它的名称、性格、指令、欢迎语、快捷文本、限制和已保存的回答。"
+
+msgid "These are the suggestions readers see at the start of the chat and under the = button. Tick which ones to show, rename them, change the text they put in the field, add your own (up to 12) or turn them all off. \"Send at once\" sends the text without the reader typing, good for challenges. Tick \"Restore the standard quick texts\" to go back to the original five."
+msgstr "这些是读者在聊天开头和 = 按钮下看到的建议。勾选要显示的项，重命名，修改它们放入输入框的文本，添加你自己的（最多 12 个）或全部关闭。“立即发送”会在读者无需输入的情况下发送文本，适合挑战类提问。勾选“恢复标准快捷文本”可回到最初的五个。"
+
+msgid "Click \"Save JIM\" for the changes to reach the readers. They appear the next time a document page is loaded."
+msgstr "点击“保存 JIM”，更改才会到达读者。它们会在下次加载文档页面时出现。"
+
+msgid "Tour of the Settings (assistant and quick texts)"
+msgstr "设置导览（助手和快捷文本）"
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Under Settings > JIM > Advanced > Quick texts you also choose the suggestions readers see at the start of the chat and under the = button: show or hide each one, rename it, change its text, add your own (up to 12), make it send at once or turn them all off. Each question, with passages of the document, is sent to the provider you chose."
+msgstr "在设置中，为 OpenRouter、Claude（Anthropic）、OpenAI、Gemini（Google）或 DeepSeek 保存 API 密钥（加密存储），选择模型并测试连接。然后即可开启 AI 导师：文档页面上的聊天气泡，读者可以通过文字或语音就该文档提问。你可以设置它的名称、性格、指令和欢迎语，以及它出现的位置和回答的问题数量。在设置 > JIM > 高级 > 快捷文本中，你还可以选择读者在聊天开头和 = 按钮下看到的建议：显示或隐藏每一项、重命名、修改文本、添加你自己的（最多 12 个）、设为立即发送，或全部关闭。每个问题会连同文档段落发送给你选择的服务商。"
+
+msgid "Show the quick texts in the chat (the suggestions at the start and the = button)."
+msgstr "在聊天中显示快捷文本（开头的建议和 = 按钮）。"
+
+msgid "Choose which ones appear, rename them, change the text they put in the field or add your own (up to 12). \"Send at once\" sends the text without the reader typing anything, good for challenges. A row with an empty name or text is discarded when you save."
+msgstr "选择显示哪些，重命名，修改它们放入输入框的文本，或添加你自己的（最多 12 个）。“立即发送”会在读者无需输入任何内容的情况下发送文本，适合挑战类提问。名称或文本为空的行会在保存时丢弃。"
+
+msgid "Show"
+msgstr "显示"
+
+msgid "Button name"
+msgstr "按钮名称"
+
+msgid "Text put in the field"
+msgstr "放入输入框的文本"
+
+msgid "Send at once"
+msgstr "立即发送"
+
+msgid "quick text %d"
+msgstr "快捷文本 %d"
+
+msgid "Show %s"
+msgstr "显示%s"
+
+msgid "Button name of %s"
+msgstr "%s的按钮名称"
+
+msgid "Text of %s"
+msgstr "%s的文本"
+
+msgid "Send %s at once"
+msgstr "立即发送%s"
+
+msgid "Restore the standard quick texts when I save."
+msgstr "保存时恢复标准快捷文本。"
+
+msgid "Pick a PDF, DOCX, TXT or Markdown file. You can send up to 20 files in a batch at a time, within the configured limit."
+msgstr "选择 PDF、DOCX、TXT 或 Markdown 文件。你可以在已配置的限制内，一次批量发送最多 20 个文件。"
+
+msgid "Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes."
+msgstr "在已配置的限制内，一次最多可批量发送 20 个这些类型的文件（浏览器未启用 JavaScript 时，批量只接受 TXT 和 Markdown）。每个文件都会成为一个文档，并且你会得到一份可直接复制的短代码列表。"
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
+msgstr "选择服务商，保存你的密钥（加密存储），选择模型并开启 JIM。请使用仅为本站创建的密钥，并在服务商处设置支出上限；如怀疑泄露，请更换。JIM 开启之前，它对读者保持隐藏。"
 

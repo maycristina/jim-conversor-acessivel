@@ -50,8 +50,8 @@ class JIMCA_Word_Converter implements JIMCA_Converter_Interface {
 
 		try {
 			try {
-				$phpWord = IOFactory::load( null !== $fixed_path ? $fixed_path : $file_path, 'Word2007' );
-				$writer  = IOFactory::createWriter( $phpWord, 'HTML' );
+				$php_word = IOFactory::load( null !== $fixed_path ? $fixed_path : $file_path, 'Word2007' );
+				$writer  = IOFactory::createWriter( $php_word, 'HTML' );
 			} catch ( \Exception $e ) {
 				throw new JIMCA_Converter_Exception(
 					sprintf(

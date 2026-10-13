@@ -188,7 +188,7 @@ class JIMCA_AI {
 	/**
 	 * Stored settings, with one entry per provider.
 	 *
-	 * @return array{enabled: bool, provider: string, providers: array<string, array{key: string, hint: string, model: string}>}
+	 * @return array{enabled: bool, provider: string, providers: array<string, array{key: string, hint: string, model: string, endpoint?: string, name?: string}>}
 	 */
 	public static function get_settings() {
 		$stored = get_option( self::OPTION, array() );
@@ -466,7 +466,7 @@ class JIMCA_AI {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'jimca_ai_http', $spec['label'] . ': ' . $response->get_error_message() );
+			return new WP_Error( 'jimca_ai_http', $spec['label'] . ': ' . self::redact( $response->get_error_message(), $headers ) );
 		}
 
 		$status = (int) wp_remote_retrieve_response_code( $response );
@@ -480,7 +480,7 @@ class JIMCA_AI {
 					__( '%1$s answered with an error (HTTP %2$d): %3$s', 'jim-conversor-acessivel' ),
 					$spec['label'],
 					$status,
-					self::error_message( $data )
+					self::redact( self::error_message( $data ), $headers )
 				)
 			);
 		}
@@ -724,7 +724,7 @@ class JIMCA_AI {
 		}
 
 		if ( false === $ok && '' === $content ) {
-			return new WP_Error( 'jimca_ai_http', $spec['label'] . ': ' . $error );
+			return new WP_Error( 'jimca_ai_http', $spec['label'] . ': ' . self::redact( $error, $headers ) );
 		}
 
 		if ( 200 !== $status || ( '' === $content && '' !== $raw ) ) {
@@ -735,7 +735,7 @@ class JIMCA_AI {
 					__( '%1$s answered with an error (HTTP %2$d): %3$s', 'jim-conversor-acessivel' ),
 					$spec['label'],
 					$status,
-					self::error_message( json_decode( $raw, true ) )
+					self::redact( self::error_message( json_decode( $raw, true ) ), $headers )
 				)
 			);
 		}
@@ -798,6 +798,43 @@ class JIMCA_AI {
 	 * @param mixed $data Decoded JSON body.
 	 * @return string
 	 */
+	/**
+	 * A message from the provider or from cURL, safe to log and to show to the
+	 * administrator: the key (as sent, URL-encoded or JSON-escaped) is replaced by
+	 * bullets, in case a service or a proxy echoes the request back, and the
+	 * text is cut, so a long page of HTML does not fill the log.
+	 *
+	 * @param string                $text    Message.
+	 * @param array<string, string> $headers Headers of the request that failed.
+	 * @return string
+	 */
+	private static function redact( $text, array $headers ) {
+		$text    = (string) $text;
+		$secrets = array();
+
+		foreach ( $headers as $name => $value ) {
+			$name = strtolower( (string) $name );
+
+			if ( 'x-api-key' === $name ) {
+				$secrets[] = (string) $value;
+			} elseif ( 'authorization' === $name ) {
+				$secrets[] = trim( (string) preg_replace( '/^\s*Bearer\s+/i', '', (string) $value ) );
+			}
+		}
+
+		foreach ( $secrets as $secret ) {
+			// Anything shorter is not a key and would mangle ordinary words.
+			if ( strlen( $secret ) < 8 ) {
+				continue;
+			}
+
+			$variants = array( $secret, rawurlencode( $secret ), trim( (string) wp_json_encode( $secret ), '"' ) );
+			$text     = str_replace( array_unique( $variants ), '••••', $text );
+		}
+
+		return mb_strlen( $text ) > 300 ? mb_substr( $text, 0, 300 ) . '…' : $text;
+	}
+
 	private static function error_message( $data ) {
 		if ( is_array( $data ) && isset( $data[0] ) && is_array( $data[0] ) ) {
 			$data = $data[0];

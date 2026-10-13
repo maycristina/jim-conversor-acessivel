@@ -122,8 +122,8 @@ msgstr "KI-Anbieter (OpenRouter, Anthropic, OpenAI, Google Gemini, DeepSeek): We
 msgid "AI tutor for readers"
 msgstr "KI-Tutor für Lesende"
 
-msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
-msgstr "KI-generierte Antworten können Fehler enthalten. Deine Fragen und Teile des Dokuments werden an %s gesendet."
+msgid "Jim AI: may make mistakes. Don't type personal data. Your messages are processed by an external service."
+msgstr "Jim KI: kann Fehler machen. Gib keine persönlichen Daten ein. Deine Nachrichten werden von einem externen Dienst verarbeitet."
 
 msgid "API key"
 msgstr "API-Schlüssel"
@@ -1525,4 +1525,307 @@ msgstr "erforderlich"
 
 msgid "unexpected reply"
 msgstr "unerwartete Antwort"
+
+msgid "The server's firewall blocked this file (HTTP %s) before it reached WordPress, so Jim never received it. Ask your host to check the firewall log for the request to admin-ajax.php (the rule ID) and allow it."
+msgstr "Die Firewall des Servers hat diese Datei blockiert (HTTP %s), bevor sie WordPress erreichte; Jim hat sie nie erhalten. Bitten Sie Ihren Hoster, das Firewall-Protokoll für die Anfrage an admin-ajax.php (die Regel-ID) zu prüfen und sie freizugeben."
+
+msgid "File %1$s of %2$s: %3$s"
+msgstr "Datei %1$s von %2$s: %3$s"
+
+msgid "%1$s of %2$s files converted."
+msgstr "%1$s von %2$s Dateien konvertiert."
+
+msgid "View documents"
+msgstr "Dokumente ansehen"
+
+msgid "JIM - Assistant"
+msgstr "JIM - Assistent"
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your AI account, so every answer has a cost."
+msgstr "Leser chatten mit JIM über das Dokument, das sie gerade lesen. JIM antwortet über Ihr KI-Konto, deshalb kostet jede Antwort etwas."
+
+msgid "Provider"
+msgstr "Anbieter"
+
+msgid "1. Connect"
+msgstr "1. Verbinden"
+
+msgid "Sends one test sentence, with no document text."
+msgstr "Sendet einen Testsatz, ohne Dokumenttext."
+
+msgid "2. Choose the model"
+msgstr "2. Modell wählen"
+
+msgid "3. Turn on"
+msgstr "3. Einschalten"
+
+msgid "JIM"
+msgstr "JIM"
+
+msgid "Turn JIM on"
+msgstr "JIM einschalten"
+
+msgid "JIM is on: it appears on every document."
+msgstr "JIM ist an: Er erscheint in jedem Dokument."
+
+msgid "JIM stays hidden until a key is saved and this is turned on."
+msgstr "JIM bleibt unsichtbar, bis ein Schlüssel gespeichert und dies eingeschaltet ist."
+
+msgid "To hide JIM on one page: %s"
+msgstr "Um JIM auf einer Seite auszublenden: %s"
+
+msgid "Advanced: name, instructions and limits"
+msgstr "Erweitert: Name, Anweisungen und Limits"
+
+msgid "What JIM should do. It always answers from the document, ignores commands hidden in it and replies in the reader's language. Empty = default text."
+msgstr "Was JIM tun soll. Er antwortet immer aus dem Dokument, ignoriert darin versteckte Befehle und antwortet in der Sprache der Leser. Leer = Standardtext."
+
+msgid "They keep the cost of your key under control."
+msgstr "Sie halten die Kosten Ihres Schlüssels unter Kontrolle."
+
+msgid "Save JIM"
+msgstr "JIM speichern"
+
+msgid "Objective and direct. No introductions or greetings."
+msgstr "Sachlich und direkt. Keine Einleitungen oder Begrüßungen."
+
+msgid "You are an objective, direct reading assistant. Keep answers short (3 sentences at most) and go straight to the point, with no introductions or greetings. Golden rule: never give spoilers. Answer strictly what I ask, guiding me through the document without revealing outcomes, conclusions or big twists. If the answer requires revealing what happens later in the text, only tell me which section I can find that answer in, without spoiling the surprise."
+msgstr "Du bist ein sachlicher, direkter Leseassistent. Deine Antworten sind kurz (höchstens 3 Sätze) und kommen sofort zur Sache, ohne Einleitung oder Begrüßung. Goldene Regel: Gib niemals Spoiler. Beantworte genau meine Frage und führe mich durch das Dokument, ohne Ausgang, Schlussfolgerungen oder große Wendungen zu verraten. Wenn die Antwort verraten würde, was später im Text passiert, sage mir nur, in welchem Abschnitt ich die Antwort finde, ohne die Überraschung zu verderben."
+
+msgid "Share as image"
+msgstr "Als Bild teilen"
+
+msgid "Download as text"
+msgstr "Als Text herunterladen"
+
+msgid "Image ready."
+msgstr "Bild ist fertig."
+
+msgid "Text file downloaded."
+msgstr "Textdatei heruntergeladen."
+
+msgid "Could not create the image."
+msgstr "Das Bild konnte nicht erstellt werden."
+
+msgid "Download the conversation"
+msgstr "Gespräch herunterladen"
+
+msgid "Conversation downloaded."
+msgstr "Gespräch heruntergeladen."
+
+msgid "Challenge me"
+msgstr "Fordere mich heraus"
+
+msgid "Ask me one challenging question about this document. Wait for my answer before giving the correct one."
+msgstr "Stelle mir eine anspruchsvolle Frage zu diesem Dokument. Warte auf meine Antwort, bevor du die richtige nennst."
+
+msgid "Memory game"
+msgstr "Gedächtnisspiel"
+
+msgid "Play a memory game: pick a short passage of this document and show it with some key words replaced by ____. I will try to remember them; wait for my answer before revealing the words."
+msgstr "Spielen wir ein Gedächtnisspiel: Wähle eine kurze Textstelle aus diesem Dokument und zeige sie mit einigen durch ____ ersetzten Schlüsselwörtern. Ich versuche, sie mir zu merken; warte auf meine Antwort, bevor du die Wörter verrätst."
+
+msgid "Quick texts"
+msgstr "Schnelltexte"
+
+msgid "This PDF (%1$s) is too large for this server's memory, which converts PDFs up to about %2$s. Split it into parts, or ask your host to raise the PHP memory limit."
+msgstr "Dieses PDF (%1$s) ist zu groß für den Speicher dieses Servers, der PDFs bis etwa %2$s konvertiert. Teilen Sie es in Teile auf oder bitten Sie Ihren Hoster, das PHP-Speicherlimit zu erhöhen."
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "Erlaubte Typen: %1$s. Maximale Größe pro Datei: %2$s (PDF: etwa %4$s auf diesem Server). Bis zu %3$d Dateien auf einmal, nacheinander konvertiert: Lassen Sie diese Seite offen, bis die letzte fertig ist."
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. You can send several files at a time: each one becomes a document and you get the list of shortcodes."
+msgstr "Laden Sie eine PDF-, DOCX-, TXT- oder Markdown-Datei (.md) hoch, um eine barrierefreie Seite (mit Vorlesefunktion) und einen Shortcode zum Veröffentlichen zu erzeugen. Sie können mehrere Dateien auf einmal senden: Jede wird zu einem Dokument, und Sie erhalten die Liste der Shortcodes."
+
+msgid "Choose up to %s files at a time."
+msgstr "Wählen Sie höchstens %s Dateien auf einmal."
+
+msgid "This file is %1$s; the limit here is %2$s."
+msgstr "Diese Datei ist %1$s groß; das Limit hier ist %2$s."
+
+msgid "Created, but the text is unreadable: the PDF fonts do not say which letter each character is. Try another copy of the PDF, or run OCR on it first."
+msgstr "Erstellt, aber der Text ist unlesbar: Die PDF-Schriften geben nicht an, welcher Buchstabe jedes Zeichen ist. Versuchen Sie eine andere Kopie des PDFs oder wenden Sie vorher OCR an."
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (you can raise this limit in %5$s; PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "Erlaubte Typen: %1$s. Maximale Größe pro Datei: %2$s (dieses Limit können Sie unter %5$s erhöhen; PDF: etwa %4$s auf diesem Server). Bis zu %3$d Dateien auf einmal, nacheinander konvertiert: Lassen Sie diese Seite offen, bis die letzte fertig ist."
+
+msgid "Review"
+msgstr "Prüfen"
+
+msgid "Reviewing…"
+msgstr "Wird geprüft…"
+
+msgid "The review could not run. Try again."
+msgstr "Die Prüfung konnte nicht ausgeführt werden. Versuchen Sie es erneut."
+
+msgid "Open to fix"
+msgstr "Zum Korrigieren öffnen"
+
+msgid "Parts of the document"
+msgstr "Teile des Dokuments"
+
+msgid "Previous part"
+msgstr "Vorheriger Teil"
+
+msgid "Next part"
+msgstr "Nächster Teil"
+
+msgid "Part %1$s of %2$s"
+msgstr "Teil %1$s von %2$s"
+
+msgid "Go to part"
+msgstr "Zu Teil"
+
+msgid "Search in the document"
+msgstr "Im Dokument suchen"
+
+msgid "Search"
+msgstr "Suchen"
+
+msgid "Could not load this part. Try again."
+msgstr "Dieser Teil konnte nicht geladen werden. Versuchen Sie es erneut."
+
+msgid "Searching…"
+msgstr "Suche läuft…"
+
+msgid "Type at least 2 letters."
+msgstr "Geben Sie mindestens 2 Buchstaben ein."
+
+msgid "The search could not run. Try again."
+msgstr "Die Suche konnte nicht ausgeführt werden. Versuchen Sie es erneut."
+
+msgid "Too many searches in a short time. Wait a minute and try again."
+msgstr "Zu viele Suchen in kurzer Zeit. Warten Sie eine Minute und versuchen Sie es erneut."
+
+msgid "No results."
+msgstr "Keine Ergebnisse."
+
+msgid "%s result."
+msgstr "%s Ergebnis."
+
+msgid "%s results."
+msgstr "%s Ergebnisse."
+
+msgid "Show more results"
+msgstr "Weitere Ergebnisse anzeigen"
+
+msgid "Navigation"
+msgstr "Navigation"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Theme"
+msgstr "Design"
+
+msgid "Narrator"
+msgstr "Sprecher"
+
+msgid "Female"
+msgstr "Weiblich"
+
+msgid "Male"
+msgstr "Männlich"
+
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgid "Type of voice"
+msgstr "Stimmtyp"
+
+msgid "All voices"
+msgstr "Alle Stimmen"
+
+msgid "Reading speed: %s"
+msgstr "Lesegeschwindigkeit: %s"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "Deine Dokumente findest du unter Jim > Barrierefreie Dokumente, mit Spalten für den Shortcode, den Anzeigemodus und den Ort der Veröffentlichung. In den Einstellungen verbindest du den KI-Assistenten und wählst seine Schnelltexte (die Vorschläge, die Lesende im Chat sehen). Die Anleitung erklärt jede Option, und dort kannst du diese Tour erneut öffnen."
+
+msgid "Settings tour (assistant and quick texts)"
+msgstr "Tour durch die Einstellungen (Assistent und Schnelltexte)"
+
+msgid "Welcome to Settings"
+msgstr "Willkommen in den Einstellungen"
+
+msgid "This short tour shows the rules for uploaded files and the JIM assistant, the chat where readers ask about a document, including the quick texts you can choose. Leave it at any time with the Esc key."
+msgstr "Diese kurze Tour zeigt die Regeln für hochgeladene Dateien und den JIM-Assistenten, den Chat, in dem Lesende Fragen zu einem Dokument stellen, einschließlich der Schnelltexte, die du auswählen kannst. Mit der Esc-Taste kannst du sie jederzeit verlassen."
+
+msgid "File rules"
+msgstr "Dateiregeln"
+
+msgid "Choose which file types can be converted and the largest size accepted. Your host may have a smaller limit than the one set here."
+msgstr "Wähle, welche Dateitypen konvertiert werden dürfen und welche Größe maximal erlaubt ist. Dein Hoster kann ein kleineres Limit haben als das hier eingestellte."
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your own AI account, so every answer has a cost."
+msgstr "Lesende chatten mit JIM über das Dokument, das sie gerade lesen. JIM antwortet über dein eigenes KI-Konto, daher verursacht jede Antwort Kosten."
+
+msgid "Connect and turn on"
+msgstr "Verbinden und einschalten"
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Until then JIM stays hidden from readers."
+msgstr "Wähle den Anbieter, speichere deinen Schlüssel (er wird verschlüsselt gespeichert), wähle das Modell und schalte JIM ein. Bis dahin bleibt JIM für Lesende verborgen."
+
+msgid "Advanced options"
+msgstr "Erweiterte Optionen"
+
+msgid "Open \"Advanced\" to set who can use JIM, its name, personality, instructions, greeting, quick texts, limits and saved answers."
+msgstr "Öffne „Erweitert“, um festzulegen, wer JIM nutzen darf, sowie Name, Persönlichkeit, Anweisungen, Begrüßung, Schnelltexte, Limits und gespeicherte Antworten."
+
+msgid "These are the suggestions readers see at the start of the chat and under the = button. Tick which ones to show, rename them, change the text they put in the field, add your own (up to 12) or turn them all off. \"Send at once\" sends the text without the reader typing, good for challenges. Tick \"Restore the standard quick texts\" to go back to the original five."
+msgstr "Das sind die Vorschläge, die Lesende zu Beginn des Chats und unter der Taste = sehen. Hake an, welche angezeigt werden, benenne sie um, ändere den Text, den sie ins Feld einfügen, füge eigene hinzu (bis zu 12) oder schalte alle aus. „Sofort senden“ schickt den Text ab, ohne dass die lesende Person etwas tippt, gut für Herausforderungen. Hake „Standard-Schnelltexte wiederherstellen“ an, um zu den ursprünglichen fünf zurückzukehren."
+
+msgid "Click \"Save JIM\" for the changes to reach the readers. They appear the next time a document page is loaded."
+msgstr "Klicke auf „JIM speichern“, damit die Änderungen die Lesenden erreichen. Sie erscheinen beim nächsten Laden einer Dokumentseite."
+
+msgid "Tour of the Settings (assistant and quick texts)"
+msgstr "Tour durch die Einstellungen (Assistent und Schnelltexte)"
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Under Settings > JIM > Advanced > Quick texts you also choose the suggestions readers see at the start of the chat and under the = button: show or hide each one, rename it, change its text, add your own (up to 12), make it send at once or turn them all off. Each question, with passages of the document, is sent to the provider you chose."
+msgstr "Speichere in den Einstellungen einen API-Schlüssel (verschlüsselt gespeichert) für OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) oder DeepSeek, wähle das Modell und teste die Verbindung. Danach kannst du den KI-Tutor einschalten: eine Sprechblase auf der Dokumentseite, in der Lesende per Text oder Sprache Fragen zu diesem Dokument stellen. Du legst Namen, Persönlichkeit, Anweisungen und Begrüßung fest, wo er erscheint und wie viele Fragen er beantwortet. Unter Einstellungen > JIM > Erweitert > Schnelltexte wählst du außerdem die Vorschläge, die Lesende zu Beginn des Chats und unter der Taste = sehen: jeden ein- oder ausblenden, umbenennen, den Text ändern, eigene hinzufügen (bis zu 12), sofort senden lassen oder alle ausschalten. Jede Frage wird mit Abschnitten des Dokuments an den gewählten Anbieter gesendet."
+
+msgid "Show the quick texts in the chat (the suggestions at the start and the = button)."
+msgstr "Schnelltexte im Chat anzeigen (die Vorschläge zu Beginn und die Taste =)."
+
+msgid "Choose which ones appear, rename them, change the text they put in the field or add your own (up to 12). \"Send at once\" sends the text without the reader typing anything, good for challenges. A row with an empty name or text is discarded when you save."
+msgstr "Wähle, welche erscheinen, benenne sie um, ändere den Text, den sie ins Feld einfügen, oder füge eigene hinzu (bis zu 12). „Sofort senden“ schickt den Text ab, ohne dass die lesende Person etwas tippt, gut für Herausforderungen. Eine Zeile ohne Namen oder Text wird beim Speichern verworfen."
+
+msgid "Show"
+msgstr "Anzeigen"
+
+msgid "Button name"
+msgstr "Name der Schaltfläche"
+
+msgid "Text put in the field"
+msgstr "Ins Feld eingefügter Text"
+
+msgid "Send at once"
+msgstr "Sofort senden"
+
+msgid "quick text %d"
+msgstr "Schnelltext %d"
+
+msgid "Show %s"
+msgstr "%s anzeigen"
+
+msgid "Button name of %s"
+msgstr "Name der Schaltfläche von %s"
+
+msgid "Text of %s"
+msgstr "Text von %s"
+
+msgid "Send %s at once"
+msgstr "%s sofort senden"
+
+msgid "Restore the standard quick texts when I save."
+msgstr "Standard-Schnelltexte beim Speichern wiederherstellen."
+
+msgid "Pick a PDF, DOCX, TXT or Markdown file. You can send up to 20 files in a batch at a time, within the configured limit."
+msgstr "Wähle eine PDF-, DOCX-, TXT- oder Markdown-Datei. Du kannst bis zu 20 Dateien als Stapel auf einmal senden, innerhalb des eingestellten Limits."
+
+msgid "Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes."
+msgstr "Bis zu 20 Dateien dieser Typen können als Stapel auf einmal gesendet werden, innerhalb des eingestellten Limits (ohne JavaScript im Browser akzeptiert ein Stapel nur TXT und Markdown). Jede wird zu einem Dokument, und du erhältst eine fertig kopierbare Liste von Shortcodes."
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
+msgstr "Wähle den Anbieter, speichere deinen Schlüssel (er wird verschlüsselt gespeichert), wähle das Modell und schalte JIM ein. Verwende einen Schlüssel nur für diese Website und lege beim Anbieter ein Ausgabenlimit fest; bei Verdacht auf ein Leck ersetze ihn. Solange JIM nicht eingeschaltet ist, bleibt es für Lesende verborgen."
 

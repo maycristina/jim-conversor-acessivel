@@ -151,10 +151,14 @@ instância; o servidor de teste precisa ser reiniciado a cada rodada.
    com sublinhado).
 8. **SEO só no `<head>` da página com o shortcode**; o documento em si não tem URL.
    Desliga sozinho se Yoast, Rank Math, All in One SEO ou SEOPress estiverem ativos.
-9. **Bot de IA:** só a chave é guardada (criptografada, libsodium + salts do
-   `wp-config.php`). Quem tem acesso ao servidor inteiro (arquivos + banco) ainda consegue
-   usar a chave; se os salts mudarem, é preciso digitá-la de novo. O assistente em si não
-   existe ainda.
+9. **Chave de IA (JIM - Assistente):** guardada criptografada (libsodium `secretbox`, chave
+   derivada dos salts do `wp-config.php`; nunca é exibida de novo, só os 4 últimos caracteres).
+   Protege contra vazamento só do banco (dump, backup do banco, leitura de `wp_options`). Não
+   protege contra quem tem arquivos + banco juntos, execução de código no site (plugin
+   vulnerável, conta de administrador que edita código) ou salts guardados no próprio banco
+   (quando o `wp-config.php` não os define). Se os salts mudarem, é preciso digitar a chave de
+   novo. Use uma chave própria do site, com limite de gasto no provedor, e troque-a se houver
+   suspeita de vazamento. Detalhes em `documentacao/SEGURANCA.md`.
 10. **Hospedagem compartilhada** que encerra processos longos pode derrubar o site durante
     uma conversão grande, mesmo com os limites. Os limites de imagens, tempo e memória
     reduzem o risco, mas não o eliminam.

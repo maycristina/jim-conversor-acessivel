@@ -101,7 +101,7 @@ class JIMCA_Image_Store {
 	 * @param string|null $alt          Description from the original file: null = none
 	 *                                  given; '' = marked as decorative there.
 	 * @param string      $fallback_alt Text used when $alt is null.
-	 * @return string <img> markup, or '' when the image was left out.
+	 * @return string Markup of the image (an img tag), or '' when the image was left out.
 	 */
 	public function add( $binary, $alt, $fallback_alt ) {
 		$hash = md5( $binary );

@@ -34,7 +34,7 @@ mkdir -p "$BUILD/$SLUG"
 git archive HEAD | tar -x -C "$BUILD/$SLUG"
 
 # 2. O que serve ao repositório, não ao plugin instalado.
-( cd "$BUILD/$SLUG" && rm -rf .github .wordpress-org .gitignore .gitattributes bin dist docs documentacao _privado README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md )
+( cd "$BUILD/$SLUG" && rm -rf .github .wordpress-org .gitignore .gitattributes bin dist docs documentacao _privado tests phpcs.xml.dist phpstan.neon.dist phpstan-baseline.neon phpunit.xml.dist infection.json5 README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md )
 
 # 3. Dependências de produção, com autoload otimizado.
 ( cd "$BUILD/$SLUG" && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --quiet )

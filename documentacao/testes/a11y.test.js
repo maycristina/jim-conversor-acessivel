@@ -152,9 +152,14 @@ test( 'WCAG 4.1.2 Name, Role, Value: every button has a text or aria-label; tool
 	}
 } );
 
-test( 'WCAG 4.1.2: toggle buttons expose their state with aria-pressed / aria-expanded', () => {
-	assert.match( js, /setAttribute\( 'aria-pressed'/ );
+test( 'WCAG 4.1.2: the buttons that open popovers expose aria-expanded; play/pause changes its name, not aria-pressed', () => {
 	assert.match( js, /setAttribute\( 'aria-expanded'/ );
+	assert.match( tpl, /data-jimca-menu-trigger="[a-z]+"\s+aria-haspopup="true"\s+aria-expanded="false"/ );
+
+	// A button whose name changes (Listen / Pause / Resume) must not also be a toggle with aria-pressed.
+	const play = tpl.match( /<button[^>]*data-jimca-play(?![-\w])[^>]*>/ );
+	assert.ok( play && ! /aria-pressed/.test( play[ 0 ] ), 'the play button has no aria-pressed' );
+	assert.ok( ! /playBtn\.setAttribute\( 'aria-pressed'/.test( js ), 'the script does not set aria-pressed on it' );
 } );
 
 test( 'WCAG 4.1.3 Status Messages: reading and review status are polite live regions', () => {

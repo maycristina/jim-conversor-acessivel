@@ -97,8 +97,11 @@ class JIMCA_Plugin {
 		JIMCA_Install_Badge::get_instance()->init();
 		JIMCA_SEO::get_instance()->init();
 		JIMCA_Tutor::register_hooks();
+		JIMCA_Security::register_hooks();
+		JIMCA_Pagination::register_hooks();
 
 		if ( is_admin() ) {
+			JIMCA_Review::register_hooks();
 			JIMCA_Admin::get_instance()->init();
 		}
 	}

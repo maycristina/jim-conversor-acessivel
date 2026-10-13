@@ -153,6 +153,16 @@
 			for ( var i = 0; i < selectors.length; i++ ) {
 				var found = doc.querySelector( selectors[ i ] );
 
+				// A control inside a closed <details> (the advanced options) is shown by opening it.
+				if ( found && 'SUMMARY' !== found.tagName ) {
+					var details = found.closest ? found.closest( 'details' ) : null;
+
+					while ( details ) {
+						details.open = true;
+						details = details.parentElement ? details.parentElement.closest( 'details' ) : null;
+					}
+				}
+
 				if ( isVisible( found ) ) {
 					return found;
 				}

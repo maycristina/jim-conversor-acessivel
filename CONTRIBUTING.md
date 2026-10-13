@@ -34,6 +34,20 @@ Coloque (ou crie um link simbólico para) a pasta em `wp-content/plugins/` de um
 ative o plugin. Qualquer ambiente serve: [WordPress Playground](https://wordpress.org/playground/),
 Local, wp-env, Docker ou o PHP embutido com SQLite.
 
+## Verificações de qualidade (QA)
+
+O GitHub Actions (`.github/workflows/qa.yml`) roda em todo Pull Request e em todo commit nas branches principais:
+
+| Ferramenta | O que confere | Rodar localmente |
+|---|---|---|
+| PHPCS (`phpcs.xml.dist`) | WordPress Coding Standards (segurança, escape, i18n) e compatibilidade com PHP 7.4+ | `composer lint` |
+| PHPStan (`phpstan.neon.dist`) | Análise estática, nível 5 | `composer analyse` |
+| PHPUnit (`tests/unit/`) | Testes unitários (Brain Monkey, sem WordPress) | `composer test` |
+| Infection (`infection.json5`) | Testes de mutação; informativo por enquanto | só no CI |
+| jsdom (`documentacao/testes/`) | Leitor, tutor, tour e testes WCAG | `npm install --no-save jsdom` e `node --test "documentacao/testes/*.test.js"` |
+
+`composer install` (sem `--no-dev`) instala as ferramentas; `composer qa` roda as três de PHP. A matriz do CI testa PHP 7.4, 8.0, 8.1, 8.2 e 8.3. Avisos do PHPCS aparecem no Pull Request mas não reprovam; erros reprovam. Erros antigos do PHPStan ficam em `phpstan-baseline.neon`: código novo não deve entrar nele.
+
 Para gerar o pacote instalável (com `vendor/`) a partir do último commit: `bin/build-zip.sh`
 (requer `git`, `composer` e `zip`).
 

@@ -32,6 +32,7 @@ class JIMCA_Shortcode {
 			array(
 				'id'    => 0,
 				'tutor' => '',
+				'pages' => '',
 			),
 			$atts,
 			self::TAG
@@ -55,8 +56,26 @@ class JIMCA_Shortcode {
 		// text extracted from an uploaded file, so a document containing
 		// "[some-shortcode]" would run it. The HTML was already built and passed
 		// through wp_kses_post() at conversion time.
-		$content    = self::ensure_paragraphs( $post->post_content );
 		$word_count = (int) get_post_meta( $post->ID, '_jimca_word_count', true );
+		$pager      = null;
+
+		if ( JIMCA_Pagination::is_paginated( $post, $atts['pages'] ) ) {
+			// A long document goes in parts (see JIMCA_Pagination): the page carries one, the others come on demand.
+			$info = JIMCA_Pagination::info( $post );
+			$arg  = JIMCA_Pagination::query_arg( $post->ID );
+			$part = isset( $_GET[ $arg ] ) ? max( 1, min( $info['count'], absint( $_GET[ $arg ] ) ) ) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public navigation between parts of a document.
+
+			$pager   = array(
+				'count'  => $info['count'],
+				'part'   => $part,
+				'titles' => $info['titles'],
+				'arg'    => $arg,
+			);
+			$content = JIMCA_Pagination::part( $post, $part );
+			$toc     = $info['toc'];
+		} else {
+			$content = self::ensure_paragraphs( $post->post_content );
+		}
 		$uid        = 'jimca-' . $post->ID . '-' . wp_unique_id();
 
 		if ( ! $word_count ) {
@@ -64,9 +83,12 @@ class JIMCA_Shortcode {
 		}
 		$reading_minutes = max( 1, (int) ceil( $word_count / 200 ) );
 
-		list( $content, $toc ) = self::build_toc( $content, $uid );
+		if ( ! $pager ) {
+			list( $content, $toc ) = self::build_toc( $content, $uid );
+		}
 
-		$tutor = JIMCA_Tutor::is_shown( $atts['tutor'] ) ? JIMCA_Tutor::get_settings() : null;
+		// A document whose text came out unreadable (PDF fonts without a letter map) would only make the assistant answer from symbols.
+		$tutor = JIMCA_Tutor::is_shown( $atts['tutor'] ) && ! get_post_meta( $post->ID, '_jimca_unreadable', true ) ? JIMCA_Tutor::get_settings() : null;
 
 		if ( $tutor ) {
 			$this->enqueue_tutor_assets();
@@ -155,6 +177,78 @@ class JIMCA_Shortcode {
 	}
 
 	/**
+	 * Navigation between the parts of a long document: previous, "Part X of
+	 * N", next. The links work without JavaScript (the page reloads on the
+	 * part); pager.js turns them into in-page changes. The first one also
+	 * carries the list of parts, which the script shows.
+	 *
+	 * @param array  $pager       'count', 'part', 'titles', 'arg'.
+	 * @param string $uid         Id prefix of the viewer.
+	 * @param bool   $with_select Add the "go to part" list.
+	 * @return string Escaped HTML.
+	 */
+	public static function render_pager( array $pager, $uid, $with_select ) {
+		// A link, or (at the ends) the same element switched off: pager.js turns it back on when the part changes.
+		$link = static function ( $number, $rel, $label, $enabled ) use ( $pager ) {
+			$ends = 'prev' === $rel ? 'data-jimca-pager-prev' : 'data-jimca-pager-next';
+
+			if ( ! $enabled ) {
+				return '<a class="jimca-pager__link is-disabled" aria-disabled="true" rel="' . esc_attr( $rel ) . '" ' . $ends . '>' . esc_html( $label ) . '</a>';
+			}
+
+			return '<a class="jimca-pager__link" rel="' . esc_attr( $rel ) . '" href="' . esc_url( add_query_arg( $pager['arg'], $number, remove_query_arg( $pager['arg'] ) ) ) . '" data-jimca-part-link="' . (int) $number . '" ' . $ends . '>' . esc_html( $label ) . '</a>';
+		};
+
+		$html  = '<nav class="jimca-pager" aria-label="' . esc_attr__( 'Parts of the document', 'jim-conversor-acessivel' ) . '" data-jimca-pager>';
+		$html .= $link( $pager['part'] - 1, 'prev', __( 'Previous part', 'jim-conversor-acessivel' ), $pager['part'] > 1 );
+
+		$html .= '<span class="jimca-pager__status" role="status" aria-live="polite" data-jimca-pager-status>' . esc_html(
+			sprintf(
+				/* translators: 1: number of the part being read, 2: number of parts */
+				__( 'Part %1$s of %2$s', 'jim-conversor-acessivel' ),
+				number_format_i18n( $pager['part'] ),
+				number_format_i18n( $pager['count'] )
+			)
+		) . '</span>';
+
+		$html .= $link( $pager['part'] + 1, 'next', __( 'Next part', 'jim-conversor-acessivel' ), $pager['part'] < $pager['count'] );
+
+		if ( $with_select ) {
+			$html .= '<span class="jimca-pager__jump" data-jimca-pager-jump hidden><label for="' . esc_attr( $uid ) . '-jump">' . esc_html__( 'Go to part', 'jim-conversor-acessivel' ) . '</label> ' . self::render_part_select( $pager, $uid . '-jump', false ) . '</span>';
+		}
+
+		return $html . '</nav>';
+	}
+
+	/**
+	 * The "go to part" list: one option per part, named after its first heading.
+	 * Shared by the navigation of the page (no JavaScript) and the popover of the bar.
+	 *
+	 * @param array  $pager $pager from render_pager().
+	 * @param string $id    Id of the <select>; for the bar ($label false) the label is added here.
+	 * @param bool   $label Add the visible label before the list.
+	 * @return string Escaped HTML.
+	 */
+	public static function render_part_select( array $pager, $id, $label = true ) {
+		$select_id = $label ? $id . '-jump' : $id;
+		$html      = '';
+
+		if ( $label ) {
+			$html .= '<label for="' . esc_attr( $select_id ) . '">' . esc_html__( 'Go to part', 'jim-conversor-acessivel' ) . '</label> ';
+		}
+
+		$html .= '<select id="' . esc_attr( $select_id ) . '" data-jimca-pager-select>';
+
+		foreach ( $pager['titles'] as $index => $title ) {
+			$number = $index + 1;
+			$text   = number_format_i18n( $number ) . ( '' !== $title ? ' · ' . $title : '' );
+			$html  .= '<option value="' . (int) $number . '"' . selected( $pager['part'], $number, false ) . '>' . esc_html( mb_strimwidth( $text, 0, 70, '…' ) ) . '</option>';
+		}
+
+		return $html . '</select>';
+	}
+
+	/**
 	 * Nested list (<ol> inside <li>) from the heading levels. A jump of levels
 	 * (<h2> straight to <h4>) goes down one level only, so no item is left
 	 * without a parent.
@@ -162,7 +256,7 @@ class JIMCA_Shortcode {
 	 * @param array $toc See build_toc().
 	 * @return string Escaped HTML.
 	 */
-	public static function render_toc_list( array $toc ) {
+	public static function render_toc_list( array $toc, $part_arg = '' ) {
 		if ( ! $toc ) {
 			return '';
 		}
@@ -182,7 +276,13 @@ class JIMCA_Shortcode {
 				$html .= '</li>' . str_repeat( '</ol></li>', $prev - $level );
 			}
 
-			$html .= '<li><a class="jimca-toc__link" href="#' . esc_attr( $item['id'] ) . '" data-jimca-toc-link>' . esc_html( $item['text'] ) . '</a>';
+			// In a document in parts the entry names its part: the link works without JavaScript, and the script opens that part.
+			$href  = isset( $item['part'] ) && '' !== $part_arg
+				? esc_url( add_query_arg( $part_arg, (int) $item['part'], remove_query_arg( $part_arg ) ) ) . '#' . esc_attr( $item['id'] )
+				: '#' . esc_attr( $item['id'] );
+			$extra = isset( $item['part'] ) && '' !== $part_arg ? ' data-part="' . (int) $item['part'] . '"' : '';
+
+			$html .= '<li><a class="jimca-toc__link" href="' . $href . '" data-id="' . esc_attr( $item['id'] ) . '"' . $extra . ' data-jimca-toc-link>' . esc_html( $item['text'] ) . '</a>';
 			$prev  = $level;
 		}
 
@@ -205,18 +305,21 @@ class JIMCA_Shortcode {
 		$close = '</svg>';
 
 		$icons = array(
+			'menu'     => '<path d="M4 6.5h16"/><path d="M4 12h16"/><path d="M4 17.5h16"/>',
+			'search'   => '<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5"/>',
+			'settings' => '<circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.7 7.7 0 0 0 0-3l1.9-1.5-2-3.4-2.3.9a7.6 7.6 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5a7.6 7.6 0 0 0-2.6 1.5l-2.3-.9-2 3.4L4.6 10.5a7.7 7.7 0 0 0 0 3l-1.9 1.5 2 3.4 2.3-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.3.9 2-3.4Z"/>',
+			'previous' => '<path d="m14.5 6-6 6 6 6"/>',
+			'next'     => '<path d="m9.5 6 6 6-6 6"/>',
 			'toc'      => '<path d="M4 6h16"/><path d="M8 10.5h12"/><path d="M8 15h12"/><path d="M4 19.5h16"/>',
 			'close'    => '<path d="m6 6 12 12"/><path d="M18 6 6 18"/>',
-			'font'     => '<path d="M12 4 5.5 20"/><path d="m12 4 6.5 16"/><path d="M8 15h8"/>',
-			'contrast' => '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor" stroke="none"/>',
-			'theme'    => '<path d="M12 3a9 9 0 0 0 0 18c.8 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1-.3-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="9.8" cy="7.8" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.6" cy="7.8" r="1.1" fill="currentColor" stroke="none"/><circle cx="17.5" cy="11" r="1.1" fill="currentColor" stroke="none"/>',
-			'voice'    => '<circle cx="8.5" cy="7.5" r="3"/><path d="M2.5 20a6 6 0 0 1 12 0"/><path d="M17.5 9.2a4 4 0 0 1 0 5.6"/><path d="M20 6.5a8 8 0 0 1 0 11"/>',
 			'play'     => '<path d="M8 5.5v13l10-6.5Z" fill="currentColor"/>',
 			'chat'     => '<path d="M4 5.5h16v10H9l-5 4Z"/><path d="M8 9.5h8"/><path d="M8 12.5h5"/>',
 			'mic'      => '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/>',
 			'edit'     => '<path d="M4 20h4L19 9l-4-4L4 16Z"/><path d="m13.5 6.5 4 4"/>',
 			'minimize' => '<path d="M5 12h14"/>',
 			'send'     => '<path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4Z"/>',
+			'quick'    => '<path d="M5 9h14"/><path d="M5 15h14"/>',
+			'download' => '<path d="M12 4v11"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/>',
 			'share'    => '<path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M5 12v7h14v-7"/>',
 			'pause'    => '<path d="M8 5v14" stroke-width="3.2"/><path d="M16 5v14" stroke-width="3.2"/>',
 			'speed'    => '<path d="M3.5 6.5v11l7-5.5Z" fill="currentColor"/><path d="M13 6.5v11l7-5.5Z" fill="currentColor"/>',
@@ -256,11 +359,9 @@ class JIMCA_Shortcode {
 				'cleared'     => __( 'New conversation started.', 'jim-conversor-acessivel' ),
 				'empty'       => __( 'Type a question first.', 'jim-conversor-acessivel' ),
 				'suggestions' => __( 'Suggestions', 'jim-conversor-acessivel' ),
-				'chips'       => array(
-					array( __( 'Explain a word', 'jim-conversor-acessivel' ), __( 'Explain the word: ', 'jim-conversor-acessivel' ) ),
-					array( __( 'Summarize a part', 'jim-conversor-acessivel' ), __( 'Summarize the part about: ', 'jim-conversor-acessivel' ) ),
-					array( __( 'Give an example', 'jim-conversor-acessivel' ), __( 'Give an example of: ', 'jim-conversor-acessivel' ) ),
-				),
+				'exported'    => __( 'Conversation downloaded.', 'jim-conversor-acessivel' ),
+				// The quick texts the administrator chose (Settings > JIM > Advanced); [label, text, send at once].
+				'chips'       => JIMCA_Tutor::active_chips(),
 			)
 		);
 	}
@@ -275,6 +376,29 @@ class JIMCA_Shortcode {
 		wp_enqueue_script( 'jimca-frontend', JIMCA_PLUGIN_URL . 'assets/js/frontend.js', array(), jimca_asset_version( 'assets/js/frontend.js' ), true );
 		wp_enqueue_script( 'jimca-post', JIMCA_PLUGIN_URL . 'assets/js/post.js', array(), jimca_asset_version( 'assets/js/post.js' ), true );
 		wp_enqueue_script( 'jimca-lightbox', JIMCA_PLUGIN_URL . 'assets/js/lightbox.js', array(), jimca_asset_version( 'assets/js/lightbox.js' ), true );
+		wp_enqueue_script( 'jimca-pager', JIMCA_PLUGIN_URL . 'assets/js/pager.js', array(), jimca_asset_version( 'assets/js/pager.js' ), true );
+		wp_localize_script(
+			'jimca-pager',
+			'jimcaPagerI18n',
+			array(
+				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+				'actionPart'    => JIMCA_Pagination::AJAX_PART,
+				'actionSearch'  => JIMCA_Pagination::AJAX_SEARCH,
+				/* translators: 1: number of the part, 2: number of parts */
+				'partOf'        => __( 'Part %1$s of %2$s', 'jim-conversor-acessivel' ),
+				'loadFailed'    => __( 'Could not load this part. Try again.', 'jim-conversor-acessivel' ),
+				'searching'     => __( 'Searching…', 'jim-conversor-acessivel' ),
+				'tooShort'      => __( 'Type at least 2 letters.', 'jim-conversor-acessivel' ),
+				'searchFailed'  => __( 'The search could not run. Try again.', 'jim-conversor-acessivel' ),
+				'searchLimit'   => __( 'Too many searches in a short time. Wait a minute and try again.', 'jim-conversor-acessivel' ),
+				'noResults'     => __( 'No results.', 'jim-conversor-acessivel' ),
+				/* translators: %s: number of results */
+				'resultsOne'    => __( '%s result.', 'jim-conversor-acessivel' ),
+				/* translators: %s: number of results */
+				'resultsMany'   => __( '%s results.', 'jim-conversor-acessivel' ),
+				'showMore'      => __( 'Show more results', 'jim-conversor-acessivel' ),
+			)
+		);
 		wp_enqueue_script( 'jimca-marker', JIMCA_PLUGIN_URL . 'assets/js/marker.js', array(), jimca_asset_version( 'assets/js/marker.js' ), true );
 		wp_localize_script(
 			'jimca-marker',
@@ -283,6 +407,9 @@ class JIMCA_Shortcode {
 				'marked'  => __( 'Passage highlighted.', 'jim-conversor-acessivel' ),
 				'removed' => __( 'Highlight removed.', 'jim-conversor-acessivel' ),
 				'cleared' => __( 'All highlights were removed.', 'jim-conversor-acessivel' ),
+				'shared'  => __( 'Image ready.', 'jim-conversor-acessivel' ),
+				'saved'   => __( 'Text file downloaded.', 'jim-conversor-acessivel' ),
+				'failed'  => __( 'Could not create the image.', 'jim-conversor-acessivel' ),
 			)
 		);
 		wp_localize_script(
@@ -323,7 +450,11 @@ class JIMCA_Shortcode {
 				'rateLabel'     => __( 'Reading speed', 'jim-conversor-acessivel' ),
 				'controlsHide'  => __( 'Hide controls', 'jim-conversor-acessivel' ),
 				'controlsShow'  => __( 'Show controls', 'jim-conversor-acessivel' ),
-				'menuClose'     => __( 'Close menu', 'jim-conversor-acessivel' ),
+				'textSize'      => __( 'Text size', 'jim-conversor-acessivel' ),
+				'voiceAll'      => __( 'All voices', 'jim-conversor-acessivel' ),
+				'voiceFemale'   => __( 'Female', 'jim-conversor-acessivel' ),
+				'voiceMale'     => __( 'Male', 'jim-conversor-acessivel' ),
+				'voiceAuto'     => __( 'Automatic', 'jim-conversor-acessivel' ),
 			)
 		);
 	}

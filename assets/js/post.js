@@ -137,6 +137,22 @@
 		}
 
 		function speakNext() {
+			// End of a part of a long document: the next part is fetched and the reading goes on there.
+			if ( index >= items.length && viewer.jimcaPager && viewer.jimcaPager.hasNext() ) {
+				var waiting = run;
+
+				viewer.jimcaPager.next( { focus: false, auto: true } ).then( function () {
+					if ( waiting === run && 'playing' === state ) {
+						collect();
+						index = 0;
+						speakNext();
+					}
+				} ).catch( function () {
+					finish();
+				} );
+				return;
+			}
+
 			if ( index >= items.length ) {
 				finish( bar.getAttribute( 'data-done' ) );
 				return;

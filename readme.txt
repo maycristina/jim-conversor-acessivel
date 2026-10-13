@@ -4,7 +4,7 @@ Tags: accessibility, pdf, docx, shortcode, text-to-speech
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Converts PDF, Word (.docx), Markdown and TXT files into responsive, accessible p
 **Jim - Accessible Converter** lets administrators upload PDF, DOCX, Markdown (.md) or TXT files from the WordPress dashboard and turns each file into a responsive, accessible (WCAG 2.1 AA) HTML page, with:
 
 * Text size, high-contrast and reading theme controls (Light, Sepia, Dark).
-* A floating player docked to the bottom of the screen, following Material Design 3 (48dp touch targets): text size and theme, high contrast, voice, play/pause, speed, stop, and a button to hide the whole bar.
+* A floating player docked to the bottom of the screen, following Material Design 3 (48dp touch targets): a navigation menu (search and contents), settings (voice and theme, including high contrast), text size, play/pause, speed (one tap goes to the next value), stop, previous/next part for long documents, and a button to hide the whole bar.
 * Text-to-speech using the browser's native Web Speech API (no external API cost, no text sent to third parties).
 * Contrast, visible focus and keyboard navigation across all controls.
 * A table of contents side panel, built from Word heading styles or the PDF bookmarks (outline).
@@ -23,14 +23,14 @@ Converts PDF, Word (.docx), Markdown and TXT files into responsive, accessible p
 * Two display modes per document, chosen when you import the file or later in the documents list (Quick Edit): **Accessible reader** (default) or **Standard blog**, which adds a reading-time bar with listen and share buttons.
 * **Also publish in**: pick posts, pages or a custom post type and each imported file also becomes an item there, with the shortcode already inside, so you stop pasting shortcodes one by one. The address (slug) is the file name; choose the status (publish now, draft, pending, private or schedule) and the categories and tags.
 * **Scheduling with [Action Scheduler](https://actionscheduler.org/)**: a scheduled publication is an event you can see, run or cancel under Tools > Scheduled Actions.
-* A **guided tour** of the New Document screen that starts by itself after a fresh installation and can be opened again from the Tutorial tab. It is keyboard and screen reader friendly.
+* **Guided tours** of the New Document screen (it starts by itself after a fresh installation) and of the Settings screen (assistant and quick texts); both can be opened again from the Tutorial tab. It is keyboard and screen reader friendly.
 * Images from PDF and DOCX files are saved to the **Media Library**, linked to the document, with the alternative text written in Word; images without a description are flagged so the author can describe them. An accessible lightbox opens them full size.
 * Limits on the number and total size of images, plus time and memory guards, so large illustrated books don't bring the server down. Each image left out is listed with its cause.
 * Automatic SEO tags (meta description, Open Graph, Twitter Card, JSON-LD) on the page that contains the shortcode. They are skipped when Yoast SEO, Rank Math, All in One SEO or SEOPress is active.
 * A highlighter: readers select text and mark it in one of four colors. Highlights are saved only in the reader's own browser.
 * An **activity log** in the settings that follows each conversion live (time, memory, words, images and the cause of each image left out, errors), with CSV export. It never records document text.
 * **Translations**: English, Brazilian Portuguese, Spanish, French, Simplified Chinese, Hindi, Russian and German, chosen by the site or user language. Jim is open source: a "Review translation" button in the settings leads to where corrections and new languages can be sent.
-* An optional **AI tutor** for readers: a chat bubble on the document page that answers questions about that document, by text or voice. You give it a name, a personality, instructions and a greeting, choose the AI provider (OpenRouter, Claude by Anthropic, OpenAI, Gemini by Google or DeepSeek, with your own encrypted API key) and decide where it appears. Readers can hide it. Off by default.
+* An optional **AI tutor** for readers: a chat bubble on the document page that answers questions about that document, by text or voice. You give it a name, a personality, instructions and a greeting, choose the AI provider (OpenRouter, Claude by Anthropic, OpenAI, Gemini by Google or DeepSeek, with your own encrypted API key) and decide where it appears. You can also choose, rename, add or turn off the quick texts (the suggestions at the start of the chat). Readers can hide it. Off by default.
 * **Large files convert in the background**, with a progress bar (page N of M), so a long book no longer ends in a "504 Gateway Time-out" page. If the server stops the conversion (memory or time limit), the screen and the activity log say why.
 * A warning when a PDF's text comes out unreadable (fonts without a Unicode map), instead of publishing garbled text silently.
 * A "Server requirements" table in the settings, showing the site's PHP limits against the recommended values.
@@ -55,7 +55,7 @@ If this project was useful to you, please consider giving the [repository](https
 * Markdown (.md)
 * TXT
 
-TXT and Markdown files can be sent several at a time (up to 20); PDF and DOCX one at a time.
+Up to 20 files (any of these types) can be sent in a batch at a time, within the configured limit; each one is converted in turn.
 
 = Source code and libraries =
 
@@ -152,12 +152,27 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 
 == Screenshots ==
 
-1. A converted document with the floating reading bar: text size and theme, high contrast, voice, play/pause, speed, stop and hide.
+1. A converted document with the floating reading bar: menu, settings, text size, play/pause, speed, stop, parts and hide.
 2. The same document on a phone, with the bar fitting seven controls at a 48px touch target.
 3. The appearance menu open above the bar, following the Material Design 3 menu pattern.
 4. The in-plugin Tutorial screen: what the plugin is, how to use it, version and authorship.
 
 == Changelog ==
+
+= 2.2.0 =
+* New: redesigned floating reading bar: menu (search and contents), settings (voice and theme, with High contrast as a theme), text size, play/pause always in the center, speed that changes with each click, stop, parts and hide. Popovers open with a spring animation and respect reduced motion.
+* New: long documents are split into parts (like an e-book reader). Only one part is loaded at a time, the next one is fetched in advance, and listening continues into the next part. Short documents can use `pages="yes"`.
+* New: search in the document, by word or passage, ignoring case and accents. In documents with parts the search runs on the server over the whole book.
+* New: selection bar next to the selected text, with "Share as image" (a card with the passage, the title and the page address) and "Download as text".
+* New: the assistant is set up in one form with three steps (connect, choose the model, turn on) and is shown in every document once it is on (`tutor="no"` hides it on a page). Answers are short and avoid spoilers by default.
+* New: quick prompts in the chat (a "=" button), editable under Settings > JIM > Advanced > Quick prompts; "Challenge me" and "Memory game" buttons; download the conversation as text.
+* New: guided tour of the Settings screen (7 steps).
+* New: conversion review in the editor sidebar and a "Review" button in the documents list; each review is recorded in the activity log.
+* New: firewall-proof uploads: each file is sent with a neutral name, one per request, with progress per file. A 403 from the host becomes a readable notice.
+* New: import queue limits shown and enforced: up to 20 files at a time, size per file, and the largest PDF the server memory can handle.
+* Security: provider error messages in the log and in "Test connection" never contain the API key. Pages with the shortcode and the Jim screens send `frame-ancestors 'self'` and `X-Frame-Options: SAMEORIGIN` (filter `jimca_frame_ancestors`).
+* Fix: the start of a conversion was logged twice when the file was sent with JavaScript.
+* All new texts are translated into the seven bundled languages.
 
 = 2.1.0 =
 * New: "Also publish in" on the New Document screen. Choose a post type (posts, pages or a custom post type with a public page and the editor; field groups, templates and other internal types are not listed) and each imported file also becomes a post there, with the shortcode already inside, so you no longer copy and paste shortcodes one by one. The post address (slug) is the file name.
@@ -210,6 +225,9 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.
 
 == Upgrade Notice ==
+
+= 2.2.0 =
+New reading bar, long documents in parts with search, editable quick prompts for the assistant and safer uploads and error messages. If the AI is on with a saved key, the assistant now appears in every document; use `tutor="no"` to hide it on a page.
 
 = 2.1.0 =
 New "Also publish in" option: importing files can now create posts or pages (or custom post types) with the shortcode inside, schedule them with Action Scheduler, and choose the display mode at import. A guided tour explains it all. Nothing changes if you do not use it.

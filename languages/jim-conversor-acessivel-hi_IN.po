@@ -122,8 +122,8 @@ msgstr "AI प्रदाता (OpenRouter, Anthropic, OpenAI, Google Gemini, 
 msgid "AI tutor for readers"
 msgstr "पाठकों के लिए AI ट्यूटर"
 
-msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
-msgstr "AI से बने जवाबों में ग़लतियाँ हो सकती हैं। आपके सवाल और दस्तावेज़ के अंश %s को भेजे जाते हैं।"
+msgid "Jim AI: may make mistakes. Don't type personal data. Your messages are processed by an external service."
+msgstr "Jim AI: ग़लती कर सकता है। निजी जानकारी न लिखें। आपके संदेश एक बाहरी सेवा द्वारा प्रोसेस किए जाते हैं।"
 
 msgid "API key"
 msgstr "API कुंजी"
@@ -1525,4 +1525,307 @@ msgstr "अनिवार्य"
 
 msgid "unexpected reply"
 msgstr "अप्रत्याशित उत्तर"
+
+msgid "The server's firewall blocked this file (HTTP %s) before it reached WordPress, so Jim never received it. Ask your host to check the firewall log for the request to admin-ajax.php (the rule ID) and allow it."
+msgstr "सर्वर के फ़ायरवॉल ने इस फ़ाइल को WordPress तक पहुँचने से पहले ही रोक दिया (HTTP %s), इसलिए Jim को यह मिली ही नहीं। अपनी होस्टिंग से कहें कि admin-ajax.php के अनुरोध के लिए फ़ायरवॉल लॉग (नियम ID) देखे और उसे अनुमति दे।"
+
+msgid "File %1$s of %2$s: %3$s"
+msgstr "फ़ाइल %1$s / %2$s: %3$s"
+
+msgid "%1$s of %2$s files converted."
+msgstr "%2$s में से %1$s फ़ाइलें बदली गईं।"
+
+msgid "View documents"
+msgstr "दस्तावेज़ देखें"
+
+msgid "JIM - Assistant"
+msgstr "JIM - सहायक"
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your AI account, so every answer has a cost."
+msgstr "पाठक जो दस्तावेज़ पढ़ रहे हैं, उसके बारे में JIM से बात करते हैं। JIM आपके AI खाते से जवाब देता है, इसलिए हर जवाब का एक खर्च होता है।"
+
+msgid "Provider"
+msgstr "प्रदाता"
+
+msgid "1. Connect"
+msgstr "1. जोड़ें"
+
+msgid "Sends one test sentence, with no document text."
+msgstr "दस्तावेज़ के पाठ के बिना एक परीक्षण वाक्य भेजता है।"
+
+msgid "2. Choose the model"
+msgstr "2. मॉडल चुनें"
+
+msgid "3. Turn on"
+msgstr "3. चालू करें"
+
+msgid "JIM"
+msgstr "JIM"
+
+msgid "Turn JIM on"
+msgstr "JIM चालू करें"
+
+msgid "JIM is on: it appears on every document."
+msgstr "JIM चालू है: यह हर दस्तावेज़ में दिखता है।"
+
+msgid "JIM stays hidden until a key is saved and this is turned on."
+msgstr "जब तक कुंजी सहेजी नहीं जाती और यह चालू नहीं होता, JIM छिपा रहता है।"
+
+msgid "To hide JIM on one page: %s"
+msgstr "किसी एक पेज पर JIM छिपाने के लिए: %s"
+
+msgid "Advanced: name, instructions and limits"
+msgstr "उन्नत: नाम, निर्देश और सीमाएँ"
+
+msgid "What JIM should do. It always answers from the document, ignores commands hidden in it and replies in the reader's language. Empty = default text."
+msgstr "JIM को क्या करना है। वह हमेशा दस्तावेज़ के आधार पर जवाब देता है, उसमें छिपे आदेशों को अनदेखा करता है और पाठक की भाषा में जवाब देता है। खाली = डिफ़ॉल्ट पाठ।"
+
+msgid "They keep the cost of your key under control."
+msgstr "ये आपकी कुंजी का खर्च काबू में रखती हैं।"
+
+msgid "Save JIM"
+msgstr "JIM सहेजें"
+
+msgid "Objective and direct. No introductions or greetings."
+msgstr "सटीक और सीधा। कोई भूमिका या अभिवादन नहीं।"
+
+msgid "You are an objective, direct reading assistant. Keep answers short (3 sentences at most) and go straight to the point, with no introductions or greetings. Golden rule: never give spoilers. Answer strictly what I ask, guiding me through the document without revealing outcomes, conclusions or big twists. If the answer requires revealing what happens later in the text, only tell me which section I can find that answer in, without spoiling the surprise."
+msgstr "आप एक सटीक और सीधे पढ़ने वाले सहायक हैं। आपके जवाब छोटे (अधिकतम 3 वाक्य) और सीधे मुद्दे पर होने चाहिए, बिना भूमिका या अभिवादन के। सुनहरा नियम: कभी स्पॉइलर न दें। मेरे प्रश्न का ही सख़्ती से उत्तर दें और मुझे दस्तावेज़ में रास्ता दिखाएँ, बिना परिणाम, निष्कर्ष या बड़े मोड़ बताए। अगर उत्तर देने के लिए पाठ में आगे क्या होता है यह बताना पड़े, तो सिर्फ़ इतना बताएँ कि वह उत्तर किस भाग में मिलेगा, ताकि आश्चर्य खराब न हो।"
+
+msgid "Share as image"
+msgstr "चित्र के रूप में साझा करें"
+
+msgid "Download as text"
+msgstr "टेक्स्ट के रूप में डाउनलोड करें"
+
+msgid "Image ready."
+msgstr "चित्र तैयार है।"
+
+msgid "Text file downloaded."
+msgstr "टेक्स्ट फ़ाइल डाउनलोड हो गई।"
+
+msgid "Could not create the image."
+msgstr "चित्र नहीं बन सका।"
+
+msgid "Download the conversation"
+msgstr "बातचीत डाउनलोड करें"
+
+msgid "Conversation downloaded."
+msgstr "बातचीत डाउनलोड हो गई।"
+
+msgid "Challenge me"
+msgstr "मुझे चुनौती दें"
+
+msgid "Ask me one challenging question about this document. Wait for my answer before giving the correct one."
+msgstr "इस दस्तावेज़ के बारे में मुझसे एक चुनौतीपूर्ण प्रश्न पूछें। सही उत्तर देने से पहले मेरे उत्तर का इंतज़ार करें।"
+
+msgid "Memory game"
+msgstr "याददाश्त का खेल"
+
+msgid "Play a memory game: pick a short passage of this document and show it with some key words replaced by ____. I will try to remember them; wait for my answer before revealing the words."
+msgstr "आइए याददाश्त का खेल खेलें: इस दस्तावेज़ से एक छोटा अंश चुनें और उसके कुछ मुख्य शब्दों की जगह ____ रखकर दिखाएँ। मैं उन्हें याद करने की कोशिश करूँगा; शब्द बताने से पहले मेरे उत्तर का इंतज़ार करें।"
+
+msgid "Quick texts"
+msgstr "त्वरित पाठ"
+
+msgid "This PDF (%1$s) is too large for this server's memory, which converts PDFs up to about %2$s. Split it into parts, or ask your host to raise the PHP memory limit."
+msgstr "यह PDF (%1$s) इस सर्वर की मेमोरी के लिए बहुत बड़ा है, जो लगभग %2$s तक के PDF बदलता है। इसे हिस्सों में बाँटें या अपनी होस्टिंग से PHP की मेमोरी सीमा बढ़ाने को कहें।"
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "स्वीकार्य प्रकार: %1$s। प्रति फ़ाइल अधिकतम आकार: %2$s (PDF: इस सर्वर पर लगभग %4$s)। एक बार में अधिकतम %3$d फ़ाइलें, एक के बाद एक बदली जाती हैं: आख़िरी के पूरा होने तक यह पेज खुला रखें।"
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. You can send several files at a time: each one becomes a document and you get the list of shortcodes."
+msgstr "एक सुगम्य पेज (ज़ोर से पढ़ने की सुविधा सहित) और उसे प्रकाशित करने के लिए शॉर्टकोड बनाने हेतु PDF, DOCX, TXT या Markdown (.md) फ़ाइल अपलोड करें। आप एक बार में कई फ़ाइलें भेज सकते हैं: हर एक दस्तावेज़ बन जाती है और आपको शॉर्टकोड की सूची मिलती है।"
+
+msgid "Choose up to %s files at a time."
+msgstr "एक बार में अधिकतम %s फ़ाइलें चुनें।"
+
+msgid "This file is %1$s; the limit here is %2$s."
+msgstr "यह फ़ाइल %1$s की है; यहाँ सीमा %2$s है।"
+
+msgid "Created, but the text is unreadable: the PDF fonts do not say which letter each character is. Try another copy of the PDF, or run OCR on it first."
+msgstr "बन गया, लेकिन पाठ पढ़ने लायक नहीं है: PDF के फ़ॉन्ट नहीं बताते कि हर अक्षर कौन-सा है। PDF की कोई और प्रति आज़माएँ या पहले उस पर OCR चलाएँ।"
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (you can raise this limit in %5$s; PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr "स्वीकार्य प्रकार: %1$s। प्रति फ़ाइल अधिकतम आकार: %2$s (आप यह सीमा %5$s में बढ़ा सकते हैं; PDF: इस सर्वर पर लगभग %4$s)। एक बार में अधिकतम %3$d फ़ाइलें, एक के बाद एक बदली जाती हैं: आख़िरी के पूरा होने तक यह पेज खुला रखें।"
+
+msgid "Review"
+msgstr "समीक्षा करें"
+
+msgid "Reviewing…"
+msgstr "समीक्षा हो रही है…"
+
+msgid "The review could not run. Try again."
+msgstr "समीक्षा नहीं चल सकी। फिर कोशिश करें।"
+
+msgid "Open to fix"
+msgstr "सुधारने के लिए खोलें"
+
+msgid "Parts of the document"
+msgstr "दस्तावेज़ के भाग"
+
+msgid "Previous part"
+msgstr "पिछला भाग"
+
+msgid "Next part"
+msgstr "अगला भाग"
+
+msgid "Part %1$s of %2$s"
+msgstr "भाग %1$s / %2$s"
+
+msgid "Go to part"
+msgstr "भाग पर जाएँ"
+
+msgid "Search in the document"
+msgstr "दस्तावेज़ में खोजें"
+
+msgid "Search"
+msgstr "खोजें"
+
+msgid "Could not load this part. Try again."
+msgstr "यह भाग लोड नहीं हो सका। फिर कोशिश करें।"
+
+msgid "Searching…"
+msgstr "खोज रहे हैं…"
+
+msgid "Type at least 2 letters."
+msgstr "कम से कम 2 अक्षर लिखें।"
+
+msgid "The search could not run. Try again."
+msgstr "खोज नहीं चल सकी। फिर कोशिश करें।"
+
+msgid "Too many searches in a short time. Wait a minute and try again."
+msgstr "थोड़े समय में बहुत ज़्यादा खोजें। एक मिनट रुककर फिर कोशिश करें।"
+
+msgid "No results."
+msgstr "कोई परिणाम नहीं।"
+
+msgid "%s result."
+msgstr "%s परिणाम।"
+
+msgid "%s results."
+msgstr "%s परिणाम।"
+
+msgid "Show more results"
+msgstr "और परिणाम दिखाएँ"
+
+msgid "Navigation"
+msgstr "नेविगेशन"
+
+msgid "Language"
+msgstr "भाषा"
+
+msgid "Theme"
+msgstr "थीम"
+
+msgid "Narrator"
+msgstr "वाचक"
+
+msgid "Female"
+msgstr "महिला"
+
+msgid "Male"
+msgstr "पुरुष"
+
+msgid "Automatic"
+msgstr "स्वचालित"
+
+msgid "Type of voice"
+msgstr "आवाज़ का प्रकार"
+
+msgid "All voices"
+msgstr "सभी आवाज़ें"
+
+msgid "Reading speed: %s"
+msgstr "पढ़ने की गति: %s"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "आपके दस्तावेज़ Jim > सुलभ दस्तावेज़ में हैं, जहाँ शॉर्टकोड, प्रदर्शन मोड और हर एक कहाँ प्रकाशित हुआ, इसके कॉलम हैं। सेटिंग में आप AI सहायक जोड़ते हैं और उसके त्वरित पाठ चुनते हैं (वे सुझाव जो पाठक चैट में देखते हैं)। ट्यूटोरियल पेज हर विकल्प समझाता है, और वहाँ से आप यह टूर फिर खोल सकते हैं।"
+
+msgid "Settings tour (assistant and quick texts)"
+msgstr "सेटिंग का टूर (सहायक और त्वरित पाठ)"
+
+msgid "Welcome to Settings"
+msgstr "सेटिंग में स्वागत है"
+
+msgid "This short tour shows the rules for uploaded files and the JIM assistant, the chat where readers ask about a document, including the quick texts you can choose. Leave it at any time with the Esc key."
+msgstr "यह छोटा टूर अपलोड की गई फ़ाइलों के नियम और JIM सहायक दिखाता है, यानी वह चैट जहाँ पाठक किसी दस्तावेज़ के बारे में पूछते हैं, साथ ही वे त्वरित पाठ जिन्हें आप चुन सकते हैं। Esc कुंजी से कभी भी बाहर निकलें।"
+
+msgid "File rules"
+msgstr "फ़ाइल के नियम"
+
+msgid "Choose which file types can be converted and the largest size accepted. Your host may have a smaller limit than the one set here."
+msgstr "चुनें कि किन प्रकार की फ़ाइलें बदली जा सकती हैं और अधिकतम कितना आकार स्वीकार होगा। आपकी होस्टिंग की सीमा यहाँ तय सीमा से कम हो सकती है।"
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your own AI account, so every answer has a cost."
+msgstr "पाठक जो दस्तावेज़ पढ़ रहे हैं, उसके बारे में JIM से बात करते हैं। JIM आपके अपने AI खाते से जवाब देता है, इसलिए हर जवाब की लागत होती है।"
+
+msgid "Connect and turn on"
+msgstr "जोड़ें और चालू करें"
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Until then JIM stays hidden from readers."
+msgstr "प्रदाता चुनें, अपनी कुंजी सहेजें (वह एन्क्रिप्टेड रूप में रखी जाती है), मॉडल चुनें और JIM चालू करें। तब तक JIM पाठकों से छिपा रहता है।"
+
+msgid "Advanced options"
+msgstr "उन्नत विकल्प"
+
+msgid "Open \"Advanced\" to set who can use JIM, its name, personality, instructions, greeting, quick texts, limits and saved answers."
+msgstr "\"उन्नत\" खोलकर तय करें कि JIM कौन उपयोग कर सकता है, उसका नाम, व्यक्तित्व, निर्देश, स्वागत संदेश, त्वरित पाठ, सीमाएँ और सहेजे गए जवाब।"
+
+msgid "These are the suggestions readers see at the start of the chat and under the = button. Tick which ones to show, rename them, change the text they put in the field, add your own (up to 12) or turn them all off. \"Send at once\" sends the text without the reader typing, good for challenges. Tick \"Restore the standard quick texts\" to go back to the original five."
+msgstr "ये वे सुझाव हैं जो पाठक चैट की शुरुआत में और = बटन के नीचे देखते हैं। चुनें कि कौन से दिखें, उनका नाम बदलें, फ़ील्ड में डाला जाने वाला पाठ बदलें, अपने जोड़ें (12 तक) या सब बंद कर दें। \"तुरंत भेजें\" पाठक के कुछ टाइप किए बिना पाठ भेज देता है, चुनौतियों के लिए अच्छा। मूल पाँच पर लौटने के लिए \"मानक त्वरित पाठ बहाल करें\" चुनें।"
+
+msgid "Click \"Save JIM\" for the changes to reach the readers. They appear the next time a document page is loaded."
+msgstr "बदलाव पाठकों तक पहुँचाने के लिए \"JIM सहेजें\" पर क्लिक करें। वे दस्तावेज़ पेज के अगली बार लोड होने पर दिखते हैं।"
+
+msgid "Tour of the Settings (assistant and quick texts)"
+msgstr "सेटिंग का टूर (सहायक और त्वरित पाठ)"
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Under Settings > JIM > Advanced > Quick texts you also choose the suggestions readers see at the start of the chat and under the = button: show or hide each one, rename it, change its text, add your own (up to 12), make it send at once or turn them all off. Each question, with passages of the document, is sent to the provider you chose."
+msgstr "सेटिंग्स में OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) या DeepSeek की API कुंजी (एन्क्रिप्टेड रूप में) सहेजें, मॉडल चुनें और कनेक्शन जाँचें। फिर आप AI ट्यूटर चालू कर सकते हैं: दस्तावेज़ पेज पर एक चैट बबल, जहाँ पाठक टेक्स्ट या आवाज़ से उस दस्तावेज़ के बारे में सवाल पूछते हैं। आप उसका नाम, व्यक्तित्व, निर्देश और स्वागत संदेश तय करते हैं, वह कहाँ दिखे और कितने सवालों के जवाब दे। सेटिंग > JIM > उन्नत > त्वरित पाठ में आप वे सुझाव भी चुनते हैं जो पाठक चैट की शुरुआत में और = बटन के नीचे देखते हैं: हर एक को दिखाएँ या छिपाएँ, नाम बदलें, पाठ बदलें, अपने जोड़ें (12 तक), तुरंत भेजने वाला बनाएँ या सब बंद करें। हर सवाल, दस्तावेज़ के अंशों के साथ, चुने गए प्रदाता को भेजा जाता है।"
+
+msgid "Show the quick texts in the chat (the suggestions at the start and the = button)."
+msgstr "चैट में त्वरित पाठ दिखाएँ (शुरुआत के सुझाव और = बटन)।"
+
+msgid "Choose which ones appear, rename them, change the text they put in the field or add your own (up to 12). \"Send at once\" sends the text without the reader typing anything, good for challenges. A row with an empty name or text is discarded when you save."
+msgstr "चुनें कि कौन से दिखें, उनका नाम बदलें, फ़ील्ड में डाला जाने वाला पाठ बदलें या अपने जोड़ें (12 तक)। \"तुरंत भेजें\" पाठक के कुछ टाइप किए बिना पाठ भेज देता है, चुनौतियों के लिए अच्छा। जिस पंक्ति में नाम या पाठ खाली हो, वह सहेजते समय हटा दी जाती है।"
+
+msgid "Show"
+msgstr "दिखाएँ"
+
+msgid "Button name"
+msgstr "बटन का नाम"
+
+msgid "Text put in the field"
+msgstr "फ़ील्ड में डाला गया पाठ"
+
+msgid "Send at once"
+msgstr "तुरंत भेजें"
+
+msgid "quick text %d"
+msgstr "त्वरित पाठ %d"
+
+msgid "Show %s"
+msgstr "%s दिखाएँ"
+
+msgid "Button name of %s"
+msgstr "%s के बटन का नाम"
+
+msgid "Text of %s"
+msgstr "%s का पाठ"
+
+msgid "Send %s at once"
+msgstr "%s तुरंत भेजें"
+
+msgid "Restore the standard quick texts when I save."
+msgstr "सहेजते समय मानक त्वरित पाठ बहाल करें।"
+
+msgid "Pick a PDF, DOCX, TXT or Markdown file. You can send up to 20 files in a batch at a time, within the configured limit."
+msgstr "PDF, DOCX, TXT या Markdown फ़ाइल चुनें। आप तय सीमा के भीतर एक बार में 20 फ़ाइलें बैच में भेज सकते हैं।"
+
+msgid "Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes."
+msgstr "इन प्रकारों की 20 तक फ़ाइलें तय सीमा के भीतर एक बार में बैच में भेजी जा सकती हैं (ब्राउज़र में JavaScript के बिना बैच में केवल TXT और Markdown चलते हैं)। हर फ़ाइल एक दस्तावेज़ बन जाती है, और आपको कॉपी करने के लिए तैयार शॉर्टकोड की सूची मिलती है।"
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
+msgstr "प्रदाता चुनें, अपनी कुंजी सहेजें (वह एन्क्रिप्टेड रूप में रखी जाती है), मॉडल चुनें और JIM चालू करें। केवल इसी साइट के लिए बनी कुंजी इस्तेमाल करें और प्रदाता के पास खर्च की सीमा तय करें; लीक का संदेह हो तो उसे बदल दें। JIM चालू होने तक वह पाठकों से छिपा रहता है।"
 

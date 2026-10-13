@@ -161,4 +161,7 @@
 	} else {
 		init();
 	}
+
+	// A new part of a long document brings its own images.
+	document.addEventListener( 'jimca:content-changed', init );
 }() );

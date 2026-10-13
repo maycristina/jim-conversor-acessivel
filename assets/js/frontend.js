@@ -6,9 +6,10 @@
  * content stays fully readable as plain text; the player keeps its `hidden`
  * attribute from the HTML and is never revealed.
  *
- * Menus follow the Material 3 menu pattern: they open from their button, one
- * at a time, close on Esc, an outside click or Tab, and give focus back to
- * the button that opened them.
+ * Popovers (menus and small panels) open from their button on the bar, one at
+ * a time, close on Esc, an outside click or when Tab leaves them, and give
+ * focus back to the button that opened them. A blob slides behind the button
+ * whose popover is open (the "liquid" tab bar of the design reference).
  */
 ( function () {
 	'use strict';
@@ -69,7 +70,10 @@
 	function keepMenuOnScreen( menu ) {
 		menu.style.setProperty( '--jimca-menu-shift', '0px' );
 
+		// Measured without the opening animation, which starts smaller.
+		menu.style.animation = 'none';
 		var rect = menu.getBoundingClientRect();
+		menu.style.animation = '';
 		var margin = 8;
 		var shift = 0;
 
@@ -84,6 +88,41 @@
 		}
 	}
 
+	/** Controls of a popover that is a panel (selects, buttons) instead of a list of menu items. */
+	function focusables( menu ) {
+		return Array.prototype.slice.call(
+			menu.querySelectorAll( 'button:not([disabled]):not([aria-disabled="true"]), select:not([disabled]), input:not([disabled])' )
+		).filter( function ( el ) {
+			return ! el.closest( '[hidden]' );
+		} );
+	}
+
+	/**
+	 * Moves the blob behind the given button (or hides it): a pill that glides
+	 * with a little overshoot, like the active tab of the reference.
+	 */
+	function moveBlob( viewer, target ) {
+		var blob = viewer.querySelector( '[data-jimca-blob]' );
+		var bar = viewer.querySelector( '[data-jimca-player-bar]' );
+
+		if ( ! blob || ! bar ) {
+			return;
+		}
+
+		if ( ! target ) {
+			blob.classList.remove( 'is-on' );
+			return;
+		}
+
+		var b = bar.getBoundingClientRect();
+		var r = target.getBoundingClientRect();
+
+		blob.style.width = Math.round( r.width ) + 'px';
+		blob.style.height = Math.round( r.height ) + 'px';
+		blob.style.transform = 'translate(' + Math.round( r.left - b.left ) + 'px, ' + Math.round( r.top - b.top ) + 'px)';
+		blob.classList.add( 'is-on' );
+	}
+
 	function closeMenu( entry, returnFocus ) {
 		if ( ! entry ) {
 			return;
@@ -94,6 +133,11 @@
 
 		if ( openMenu === entry ) {
 			openMenu = null;
+
+			var owner = entry.trigger.closest( '[data-jimca-viewer]' );
+			if ( owner ) {
+				moveBlob( owner, null );
+			}
 		}
 
 		if ( returnFocus ) {
@@ -112,8 +156,20 @@
 
 		keepMenuOnScreen( entry.menu );
 
+		var owner = entry.trigger.closest( '[data-jimca-viewer]' );
+		if ( owner ) {
+			// The search and contents panels give way to a popover.
+			owner.dispatchEvent( new window.CustomEvent( 'jimca:panel-open', { detail: { name: 'menu' } } ) );
+			moveBlob( owner, entry.trigger );
+		}
+
 		var items = menuItems( entry.menu );
 		if ( ! items.length ) {
+			// A panel: focus goes to its first control.
+			var first = focusables( entry.menu )[ 0 ];
+			if ( first ) {
+				first.focus();
+			}
 			return;
 		}
 
@@ -174,6 +230,16 @@
 					if ( 'Escape' === event.key ) {
 						event.preventDefault();
 						closeMenu( entry, true );
+					} else if ( ! items.length ) {
+						// A panel: Tab walks through its controls and closes it on leaving the first or the last.
+						if ( 'Tab' === event.key ) {
+							var controls = focusables( menu );
+							var at = controls.indexOf( document.activeElement );
+
+							if ( ( event.shiftKey && 0 === at ) || ( ! event.shiftKey && at === controls.length - 1 ) ) {
+								closeMenu( entry, false );
+							}
+						}
 					} else if ( 'ArrowDown' === event.key ) {
 						event.preventDefault();
 						moveFocus( items, document.activeElement, 1 );
@@ -211,56 +277,71 @@
 	 * Text size, theme and contrast
 	 * ------------------------------------------------------------- */
 
-	function setupAppearance( viewer, prefs, entries ) {
+	function setupAppearance( viewer, prefs ) {
 		var content = viewer.querySelector( '[data-jimca-content]' );
-		var contrastBtn = viewer.querySelector( '[data-jimca-contrast-toggle]' );
+		var valueBtn = viewer.querySelector( '[data-jimca-font-value]' );
+		var minusBtn = viewer.querySelector( '[data-jimca-font="decrease"]' );
+		var plusBtn = viewer.querySelector( '[data-jimca-font="increase"]' );
+		var radios = Array.prototype.slice.call( viewer.querySelectorAll( 'input[data-jimca-theme]' ) );
 		var scale = parseFloat( prefs.get( 'scale', 1 ) ) || 1;
+		var contrast = true === prefs.get( 'contrast', false );
+		var currentTheme = ( viewer.className.match( /\bjimca-theme-(\S+)/ ) || [] )[ 1 ] || 'light';
+		var statusEl = viewer.querySelector( '[data-jimca-status]' );
 
-		function applyScale() {
+		function applyScale( announce ) {
+			var percent = Math.round( scale * 100 );
+
 			if ( content ) {
 				content.style.fontSize = scale + 'em';
 			}
-		}
 
-		function applyTheme( theme ) {
-			if ( ! theme ) {
-				return;
+			if ( valueBtn ) {
+				valueBtn.textContent = percent + '%';
+				valueBtn.setAttribute( 'aria-label', t( 'resetFont', 'Default text size' ) + ' (' + percent + '%)' );
 			}
 
+			// The ends are marked, not disabled: a disabled button would drop the focus.
+			if ( minusBtn ) {
+				minusBtn.setAttribute( 'aria-disabled', scale <= 0.75 ? 'true' : 'false' );
+			}
+			if ( plusBtn ) {
+				plusBtn.setAttribute( 'aria-disabled', scale >= 2 ? 'true' : 'false' );
+			}
+
+			if ( announce && statusEl ) {
+				statusEl.textContent = t( 'textSize', 'Text size' ) + ': ' + percent + '%';
+			}
+		}
+
+		function applyTheme() {
 			// Remove the current jimca-theme-* before adding the new one (the
 			// site default is already one of these classes, rendered by PHP).
 			viewer.className = viewer.className.replace( /\bjimca-theme-\S+/g, '' ).trim();
-			viewer.classList.add( 'jimca-theme-' + theme );
+			viewer.classList.add( 'jimca-theme-' + currentTheme );
+			viewer.classList.toggle( 'jimca-high-contrast', contrast );
 
-			Array.prototype.forEach.call(
-				viewer.querySelectorAll( '[data-jimca-theme]' ),
-				function ( item ) {
-					item.setAttribute(
-						'aria-checked',
-						item.getAttribute( 'data-jimca-theme' ) === theme ? 'true' : 'false'
-					);
-				}
-			);
+			// High contrast is one of the choices of the theme list; it sits on top of the theme chosen before.
+			radios.forEach( function ( radio ) {
+				radio.checked = radio.value === ( contrast ? 'high-contrast' : currentTheme );
+			} );
 		}
-
-		applyScale();
 
 		if ( prefs.get( 'theme', '' ) ) {
-			applyTheme( prefs.get( 'theme', '' ) );
+			currentTheme = prefs.get( 'theme', '' );
 		}
 
-		if ( prefs.get( 'contrast', false ) ) {
-			viewer.classList.add( 'jimca-high-contrast' );
-			if ( contrastBtn ) {
-				contrastBtn.setAttribute( 'aria-pressed', 'true' );
-			}
-		}
+		applyScale( false );
+		applyTheme();
 
 		Array.prototype.forEach.call(
 			viewer.querySelectorAll( '[data-jimca-font]' ),
 			function ( btn ) {
 				btn.addEventListener( 'click', function () {
 					var action = btn.getAttribute( 'data-jimca-font' );
+
+					if ( 'true' === btn.getAttribute( 'aria-disabled' ) ) {
+						return;
+					}
 
 					if ( 'increase' === action ) {
 						scale = Math.min( 2, Math.round( ( scale + 0.1 ) * 10 ) / 10 );
@@ -270,37 +351,36 @@
 						scale = 1;
 					}
 
-					applyScale();
+					applyScale( true );
 					prefs.set( 'scale', scale );
 
 					/*
-					 * The menu stays open on purpose: enlarging text is
+					 * The popover stays open on purpose: enlarging text is
 					 * incremental, and closing on every tap would mean reopening
-					 * the menu for each step.
+					 * it for each step.
 					 */
 				} );
 			}
 		);
 
-		Array.prototype.forEach.call(
-			viewer.querySelectorAll( '[data-jimca-theme]' ),
-			function ( btn ) {
-				btn.addEventListener( 'click', function () {
-					var theme = btn.getAttribute( 'data-jimca-theme' );
-					applyTheme( theme );
-					prefs.set( 'theme', theme );
-					closeMenu( entries.font, true );
-				} );
-			}
-		);
+		radios.forEach( function ( radio ) {
+			radio.addEventListener( 'change', function () {
+				if ( ! radio.checked ) {
+					return;
+				}
 
-		if ( contrastBtn ) {
-			contrastBtn.addEventListener( 'click', function () {
-				var isOn = viewer.classList.toggle( 'jimca-high-contrast' );
-				contrastBtn.setAttribute( 'aria-pressed', isOn ? 'true' : 'false' );
-				prefs.set( 'contrast', isOn );
+				if ( 'high-contrast' === radio.value ) {
+					contrast = true;
+				} else {
+					contrast = false;
+					currentTheme = radio.value;
+					prefs.set( 'theme', currentTheme );
+				}
+
+				prefs.set( 'contrast', contrast );
+				applyTheme();
 			} );
-		}
+		} );
 	}
 
 	/* ---------------------------------------------------------------
@@ -320,6 +400,8 @@
 		var nav = viewer.querySelector( '[data-jimca-toc]' );
 		var toggle = viewer.querySelector( '[data-jimca-toc-toggle]' );
 		var closeBtn = viewer.querySelector( '[data-jimca-toc-close]' );
+		// "Contents" is an item of the navigation popover, which is closed by then: focus goes back to the button of the menu.
+		var home = viewer.querySelector( '[data-jimca-menu-trigger="nav"]' ) || toggle;
 
 		if ( ! nav || ! toggle ) {
 			return;
@@ -327,11 +409,24 @@
 
 		var links = Array.prototype.slice.call( nav.querySelectorAll( '[data-jimca-toc-link]' ) );
 
+		// In a document in parts the href also carries the part (for no-JS), so the id is read from data-id.
+		function idOf( link ) {
+			return link.getAttribute( 'data-id' ) || link.getAttribute( 'href' ).slice( 1 );
+		}
+
 		// After a click in the panel, the clicked item stays current until scrolling ends.
 		var pinnedUntil = 0;
 
 		viewer.classList.add( 'jimca-toc-enhanced' );
 		nav.hidden = true;
+
+		// Another panel (search) or a popover takes the place of the contents.
+		viewer.addEventListener( 'jimca:panel-open', function ( event ) {
+			if ( event.detail && 'toc' !== event.detail.name ) {
+				close( false );
+			}
+		} );
+
 		if ( closeBtn ) {
 			closeBtn.hidden = false;
 		}
@@ -345,8 +440,12 @@
 				closeMenu( openMenu, false );
 			}
 
+			viewer.dispatchEvent( new window.CustomEvent( 'jimca:panel-open', { detail: { name: 'toc' } } ) );
 			nav.hidden = false;
-			toggle.setAttribute( 'aria-expanded', 'true' );
+			moveBlob( viewer, home );
+			if ( toggle.hasAttribute( 'aria-expanded' ) ) {
+				toggle.setAttribute( 'aria-expanded', 'true' );
+			}
 
 			// Opens on the item of the section being read (or the first one).
 			var current = nav.querySelector( '[aria-current="location"]' ) || links[ 0 ];
@@ -362,16 +461,21 @@
 			}
 
 			nav.hidden = true;
-			toggle.setAttribute( 'aria-expanded', 'false' );
+			if ( ! openMenu ) {
+				moveBlob( viewer, null );
+			}
+			if ( toggle.hasAttribute( 'aria-expanded' ) ) {
+				toggle.setAttribute( 'aria-expanded', 'false' );
+			}
 
 			if ( returnFocus ) {
-				toggle.focus();
+				home.focus();
 			}
 		}
 
 		function markCurrent( id ) {
 			links.forEach( function ( link ) {
-				if ( link.getAttribute( 'href' ) === '#' + id ) {
+				if ( idOf( link ) === id ) {
 					link.setAttribute( 'aria-current', 'location' );
 				} else {
 					link.removeAttribute( 'aria-current' );
@@ -402,8 +506,20 @@
 				return;
 			}
 
-			var id = link.getAttribute( 'href' ).slice( 1 );
+			var id = idOf( link );
 			var target = document.getElementById( id );
+			var part = parseInt( link.getAttribute( 'data-part' ) || '0', 10 );
+
+			// A heading in another part of the document: open that part, then go to the heading.
+			if ( ! target && part && viewer.jimcaPager ) {
+				event.preventDefault();
+				close( false );
+				markCurrent( id );
+				pinnedUntil = Date.now() + 1500;
+				viewer.jimcaPager.goTo( part, { id: id } ).catch( function () {} );
+				return;
+			}
+
 			if ( ! target ) {
 				return;
 			}
@@ -443,14 +559,25 @@
 		 * Marks the section being read: the last heading that has passed the
 		 * top third of the screen.
 		 */
-		if ( 'IntersectionObserver' in window ) {
+		var observer = null;
+
+		// Only the headings of the part on the page exist; the list is looked at again when the part changes.
+		function watch() {
+			if ( ! ( 'IntersectionObserver' in window ) ) {
+				return;
+			}
+
+			if ( observer ) {
+				observer.disconnect();
+			}
+
 			var headings = links
 				.map( function ( link ) {
-					return document.getElementById( link.getAttribute( 'href' ).slice( 1 ) );
+					return document.getElementById( idOf( link ) );
 				} )
 				.filter( Boolean );
 
-			var observer = new window.IntersectionObserver(
+			observer = new window.IntersectionObserver(
 				function () {
 					if ( Date.now() < pinnedUntil ) {
 						return;
@@ -476,6 +603,113 @@
 				observer.observe( heading );
 			} );
 		}
+
+		watch();
+		viewer.addEventListener( 'jimca:content-changed', watch );
+	}
+
+	/* ---------------------------------------------------------------
+	 * Search panel
+	 * ------------------------------------------------------------- */
+
+	/**
+	 * The search form (a block above the text without the bar) becomes a panel
+	 * that floats over the bar, opened from the navigation menu. pager.js runs
+	 * the search itself; here only the opening and closing live.
+	 */
+	function setupSearchPanel( viewer ) {
+		var form = viewer.querySelector( '[data-jimca-search]' );
+		var openBtn = viewer.querySelector( '[data-jimca-search-open]' );
+		var closeBtn = viewer.querySelector( '[data-jimca-search-close]' );
+		var input = form ? form.querySelector( '[data-jimca-search-input]' ) : null;
+		var home = viewer.querySelector( '[data-jimca-menu-trigger="nav"]' ) || openBtn;
+
+		if ( ! form || ! openBtn || ! input ) {
+			return;
+		}
+
+		viewer.classList.add( 'jimca-search-enhanced' );
+		form.hidden = true;
+
+		if ( closeBtn ) {
+			closeBtn.hidden = false;
+		}
+
+		function isOpen() {
+			return ! form.hidden;
+		}
+
+		function open() {
+			if ( openMenu ) {
+				closeMenu( openMenu, false );
+			}
+
+			viewer.dispatchEvent( new window.CustomEvent( 'jimca:panel-open', { detail: { name: 'search' } } ) );
+
+			// Just above the bar, whatever its height (it has two rows on a very narrow screen).
+			var bar = viewer.querySelector( '[data-jimca-player-bar]' );
+			if ( bar && ! bar.hidden ) {
+				form.style.bottom = Math.round( window.innerHeight - bar.getBoundingClientRect().top + 8 ) + 'px';
+			}
+
+			form.hidden = false;
+			moveBlob( viewer, home );
+			input.focus();
+		}
+
+		function close( returnFocus ) {
+			if ( ! isOpen() ) {
+				return;
+			}
+
+			form.hidden = true;
+			if ( ! openMenu ) {
+				moveBlob( viewer, null );
+			}
+
+			if ( returnFocus ) {
+				home.focus();
+			}
+		}
+
+		openBtn.addEventListener( 'click', function () {
+			open();
+		} );
+
+		if ( closeBtn ) {
+			closeBtn.addEventListener( 'click', function () {
+				close( true );
+			} );
+		}
+
+		// Clicks inside the panel are not "outside" clicks.
+		form.addEventListener( 'click', function ( event ) {
+			event.stopPropagation();
+		} );
+
+		// pager.js keeps Esc for clearing the field while it has text; an empty field closes the panel.
+		form.addEventListener( 'keydown', function ( event ) {
+			if ( 'Escape' === event.key ) {
+				event.preventDefault();
+				event.stopPropagation();
+				close( true );
+			}
+		} );
+
+		document.addEventListener( 'click', function () {
+			close( false );
+		} );
+
+		// Choosing a result moves the reader to the passage: the panel gets out of the way.
+		viewer.addEventListener( 'jimca:search-chosen', function () {
+			close( false );
+		} );
+
+		viewer.addEventListener( 'jimca:panel-open', function ( event ) {
+			if ( event.detail && 'search' !== event.detail.name ) {
+				close( false );
+			}
+		} );
 	}
 
 	/* ---------------------------------------------------------------
@@ -512,6 +746,8 @@
 			if ( openMenu ) {
 				closeMenu( openMenu, false );
 			}
+			// Panels that hang from the bar (search, contents) go with it.
+			viewer.dispatchEvent( new window.CustomEvent( 'jimca:panel-open', { detail: { name: 'hide' } } ) );
 			prefs.set( 'barHidden', true );
 			apply( true, showBtn );
 		} );
@@ -529,6 +765,7 @@
 	function setupAudio( viewer, player, prefs, entries ) {
 		var playBtn = player.querySelector( '[data-jimca-play]' );
 		var stopBtn = player.querySelector( '[data-jimca-stop]' );
+		var speedBtn = player.querySelector( '[data-jimca-speed]' );
 
 		if ( ! playBtn || ! stopBtn ) {
 			return;
@@ -544,7 +781,7 @@
 			 * contrast) keep working.
 			 */
 			Array.prototype.forEach.call(
-				player.querySelectorAll( '[data-jimca-play], [data-jimca-stop], [data-jimca-menu-trigger="voice"], [data-jimca-menu-trigger="speed"]' ),
+				player.querySelectorAll( '[data-jimca-play], [data-jimca-stop], [data-jimca-speed]' ),
 				function ( el ) {
 					var slot = el.closest( '.jimca-player__slot' );
 					if ( slot ) {
@@ -552,6 +789,10 @@
 					}
 				}
 			);
+			// The voice part of the settings is not there either (the theme stays).
+			Array.prototype.forEach.call( player.querySelectorAll( '[data-jimca-voice-group]' ), function ( group ) {
+				group.remove();
+			} );
 			return;
 		}
 
@@ -561,7 +802,7 @@
 		var playIcon = playBtn.querySelector( '[data-jimca-icon="play"]' );
 		var pauseIcon = playBtn.querySelector( '[data-jimca-icon="pause"]' );
 		var playLabel = playBtn.querySelector( '[data-jimca-play-label]' );
-		var voiceMenu = player.querySelector( '[data-jimca-menu="voice"]' );
+		var voiceGroup = player.querySelector( '[data-jimca-voice-group]' );
 
 		/*
 		 * Images are read through their description (alt). Left out: decorative
@@ -569,13 +810,19 @@
 		 * placeholder ("Image 2 on page 5 (no description)"): hearing that at
 		 * every figure would only interrupt the text.
 		 */
-		var elements = Array.prototype.slice.call(
-			content ? content.querySelectorAll( 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, img[alt]:not([alt=""]):not([data-jimca-alt-missing])' ) : []
-		);
+		function collectElements() {
+			var found = Array.prototype.slice.call(
+				content ? content.querySelectorAll( 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, img[alt]:not([alt=""]):not([data-jimca-alt-missing])' ) : []
+			);
 
-		if ( ! elements.length && content ) {
-			elements = [ content ];
+			if ( ! found.length && content ) {
+				found = [ content ];
+			}
+
+			return found;
 		}
+
+		var elements = collectElements();
 
 		var index = 0;
 		var state = 'idle'; // idle | playing | paused
@@ -649,8 +896,11 @@
 
 			return 0;
 		}
-		var rate = parseFloat( prefs.get( 'rate', 1 ) ) || 1;
+		var rate = parseFloat( prefs.get( 'rate', speedBtn ? parseFloat( speedBtn.getAttribute( 'data-rate' ) ) || 1 : 1 ) ) || 1;
 		var voiceName = prefs.get( 'voice', '' );
+		var voiceLang = prefs.get( 'voiceLang', '' );
+		var voiceKind = prefs.get( 'voiceKind', '' );
+		var langKnown = false; // The language is the reader's choice or the page's: only then it is passed to the voice.
 
 		function setStatus( text ) {
 			if ( statusEl ) {
@@ -667,7 +917,12 @@
 		function updateUI() {
 			var playing = 'playing' === state;
 
-			playBtn.setAttribute( 'aria-pressed', playing ? 'true' : 'false' );
+			/*
+			 * Play and pause are one button whose NAME changes ("Listen", "Pause",
+			 * "Resume"): with the name changing, aria-pressed would say the same
+			 * thing twice.
+			 */
+			playBtn.classList.toggle( 'is-playing', playing );
 
 			if ( playIcon && pauseIcon ) {
 				playIcon.hidden = playing;
@@ -703,92 +958,280 @@
 			return match[ 0 ] || null;
 		}
 
-		function buildVoiceMenu() {
+		/*
+		 * Voice settings: language, type of voice (when the browser's names tell
+		 * it) and narrator. The browser lists its own voices and does not say
+		 * whether a voice is female or male, so the type is only offered when the
+		 * names reveal it (a word such as "Female" or a well-known first name);
+		 * the voices that do not say stay under "All voices".
+		 */
+		var FEMALE = /\b(female|feminina?|femme|weiblich|mujer|mulher|maria|francisca|luciana|joana|helena|vitoria|camila|thalita|fernanda|zira|hedda|katja|hortense|denise|elvira|paulina|monica|samantha|victoria|karen|tessa|moira|susan|hazel|jenny|aria|sabina|lekha|kalpana|heera|swara|xiaoxiao|xiaoyi|huihui|yaoyao|milena|svetlana|tatyana|irina)\b/i;
+		var MALE = /\b(male|masculino|homme|mannlich|hombre|homem|daniel|antonio|heitor|felipe|guy|david|mark|stefan|conrad|pablo|raul|jorge|diego|thomas|george|ryan|brian|fred|ricardo|rishi|hemant|ravi|kangkang|yunyang|yunxi|dmitri|pavel|yuri|maxim|markus|killian|alain|henri|luca)\b/i;
+
+		function genderOf( voice ) {
+			var name = String( voice.name || '' );
+
+			// Without accents, so "M\u00f3nica" and "Vit\u00f3ria" match the lists.
+			if ( name.normalize ) {
+				name = name.normalize( 'NFD' ).replace( /[\u0300-\u036f]/g, '' );
+			}
+
+			// "Male" is inside "Female": the female test goes first.
+			if ( FEMALE.test( name ) ) {
+				return 'female';
+			}
+
+			return MALE.test( name ) ? 'male' : '';
+		}
+
+		function langLabel( code ) {
+			try {
+				return new window.Intl.DisplayNames( [ document.documentElement.lang || 'en' ], { type: 'language' } ).of( code ) || code;
+			} catch ( e ) {
+				return code;
+			}
+		}
+
+		function option( value, text, selected ) {
+			var item = document.createElement( 'option' );
+
+			item.value = value;
+			item.textContent = text;
+			item.selected = !! selected;
+
+			return item;
+		}
+
+		function voiceCode( voice ) {
+			return String( voice.lang || '' ).replace( '_', '-' );
+		}
+
+		/** The language to start with: the one saved, else the page's, else the browser's. */
+		function startLanguage( codes ) {
+			var named = synth.getVoices().filter( function ( voice ) {
+				return voice.name === voiceName;
+			} )[ 0 ];
+
+			if ( named && codes.indexOf( voiceCode( named ) ) > -1 ) {
+				return voiceCode( named );
+			}
+
+			var wanted = [ document.documentElement.lang, window.navigator.language ].filter( Boolean );
+
+			for ( var i = 0; i < wanted.length; i++ ) {
+				var exact = codes.filter( function ( code ) {
+					return code.toLowerCase() === wanted[ i ].toLowerCase();
+				} )[ 0 ];
+				var primary = exact || codes.filter( function ( code ) {
+					return code.split( '-' )[ 0 ].toLowerCase() === wanted[ i ].split( '-' )[ 0 ].toLowerCase();
+				} )[ 0 ];
+
+				if ( primary ) {
+					langKnown = true;
+					return primary;
+				}
+			}
+
+			return codes[ 0 ];
+		}
+
+		function fillVoices() {
+			var langSel = voiceGroup.querySelector( '[data-jimca-voice-lang]' );
+			var kindSel = voiceGroup.querySelector( '[data-jimca-voice-kind]' );
+			var kindWrap = voiceGroup.querySelector( '[data-jimca-voice-kind-wrap]' );
+			var nameSel = voiceGroup.querySelector( '[data-jimca-voice-name]' );
+			var inLang = synth.getVoices().filter( function ( voice ) {
+				return voiceCode( voice ) === voiceLang;
+			} );
+			var kinds = { female: false, male: false };
+
+			inLang.forEach( function ( voice ) {
+				var kind = genderOf( voice );
+				if ( kind ) {
+					kinds[ kind ] = true;
+				}
+			} );
+
+			kindSel.textContent = '';
+			kindSel.appendChild( option( '', t( 'voiceAll', 'All voices' ), '' === voiceKind ) );
+			if ( kinds.female ) {
+				kindSel.appendChild( option( 'female', t( 'voiceFemale', 'Female' ), 'female' === voiceKind ) );
+			}
+			if ( kinds.male ) {
+				kindSel.appendChild( option( 'male', t( 'voiceMale', 'Male' ), 'male' === voiceKind ) );
+			}
+
+			if ( voiceKind && ! kinds[ voiceKind ] ) {
+				voiceKind = '';
+				kindSel.value = '';
+			}
+
+			// The type of voice is offered only when the names tell it.
+			kindWrap.hidden = ! ( kinds.female || kinds.male );
+
+			var shown = voiceKind ? inLang.filter( function ( voice ) {
+				return genderOf( voice ) === voiceKind;
+			} ) : inLang;
+
+			if ( voiceName && ! shown.some( function ( voice ) {
+				return voice.name === voiceName;
+			} ) ) {
+				voiceName = '';
+				prefs.set( 'voice', '' );
+			}
+
+			nameSel.textContent = '';
+			nameSel.appendChild( option( '', t( 'voiceAuto', 'Automatic' ), '' === voiceName ) );
+			shown.forEach( function ( voice ) {
+				nameSel.appendChild( option( voice.name, voice.name, voice.name === voiceName ) );
+			} );
+
+			langSel.value = voiceLang;
+		}
+
+		function buildVoiceUI() {
 			var voices = synth.getVoices();
 
-			if ( ! voiceMenu || ! voices.length ) {
+			if ( ! voiceGroup || ! voices.length ) {
 				return;
 			}
 
-			voiceMenu.textContent = '';
+			var langSel = voiceGroup.querySelector( '[data-jimca-voice-lang]' );
+			var seen = {};
 
 			voices.forEach( function ( voice ) {
-				var item = document.createElement( 'button' );
-				item.type = 'button';
-				item.className = 'jimca-player__menuitem';
-				item.setAttribute( 'role', 'menuitemradio' );
-				item.setAttribute( 'data-jimca-voice', voice.name );
-				item.setAttribute( 'aria-checked', voice.name === voiceName ? 'true' : 'false' );
-				item.textContent = voice.name + ' (' + voice.lang + ')';
+				if ( voiceCode( voice ) ) {
+					seen[ voiceCode( voice ) ] = true;
+				}
+			} );
 
-				item.addEventListener( 'click', function () {
-					voiceName = voice.name;
+			var codes = Object.keys( seen ).sort( function ( a, b ) {
+				return langLabel( a ).localeCompare( langLabel( b ) );
+			} );
+
+			if ( ! codes.length ) {
+				return;
+			}
+
+			if ( codes.indexOf( voiceLang ) < 0 ) {
+				voiceLang = startLanguage( codes );
+			} else {
+				langKnown = true;
+			}
+
+			langSel.textContent = '';
+			codes.forEach( function ( code ) {
+				langSel.appendChild( option( code, langLabel( code ) + ' (' + code + ')', code === voiceLang ) );
+			} );
+
+			fillVoices();
+			voiceGroup.hidden = false;
+		}
+
+		if ( voiceGroup ) {
+			voiceGroup.addEventListener( 'change', function ( event ) {
+				var target = event.target;
+
+				if ( target.hasAttribute( 'data-jimca-voice-lang' ) ) {
+					voiceLang = target.value;
+					langKnown = true;
+					voiceName = '';
+					prefs.set( 'voiceLang', voiceLang );
+					prefs.set( 'voice', '' );
+				} else if ( target.hasAttribute( 'data-jimca-voice-kind' ) ) {
+					voiceKind = target.value;
+					prefs.set( 'voiceKind', voiceKind );
+				} else if ( target.hasAttribute( 'data-jimca-voice-name' ) ) {
+					voiceName = target.value;
 					prefs.set( 'voice', voiceName );
+				}
 
-					Array.prototype.forEach.call(
-						voiceMenu.querySelectorAll( '[data-jimca-voice]' ),
-						function ( other ) {
-							other.setAttribute(
-								'aria-checked',
-								other.getAttribute( 'data-jimca-voice' ) === voiceName ? 'true' : 'false'
-							);
-						}
-					);
-
-					closeMenu( entries.voice, true );
-				} );
-
-				voiceMenu.appendChild( item );
+				fillVoices();
 			} );
 		}
 
-		buildVoiceMenu();
+		buildVoiceUI();
 
 		// In several browsers the voice list is only ready later.
 		if ( typeof synth.onvoiceschanged !== 'undefined' ) {
-			synth.addEventListener( 'voiceschanged', buildVoiceMenu );
+			synth.addEventListener( 'voiceschanged', buildVoiceUI );
 		}
 
-		// Speed.
-		Array.prototype.forEach.call(
-			player.querySelectorAll( '[data-jimca-rate]' ),
-			function ( item ) {
-				if ( parseFloat( item.getAttribute( 'data-jimca-rate' ) ) === rate ) {
-					item.setAttribute( 'aria-checked', 'true' );
-				} else {
-					item.setAttribute( 'aria-checked', 'false' );
-				}
+		/*
+		 * Speed: one click goes to the next value and back to the first after the
+		 * last (1x, 1.25x, 1.5x, 2x, 1x): no menu to open. A saved speed outside
+		 * the list (0.75x from an older version) goes to the next one above it.
+		 */
+		var RATES = [ 1, 1.25, 1.5, 2 ];
 
-				item.addEventListener( 'click', function () {
-					rate = parseFloat( item.getAttribute( 'data-jimca-rate' ) ) || 1;
-					prefs.set( 'rate', rate );
+		function rateText( value ) {
+			var text;
 
-					Array.prototype.forEach.call(
-						player.querySelectorAll( '[data-jimca-rate]' ),
-						function ( other ) {
-							other.setAttribute(
-								'aria-checked',
-								parseFloat( other.getAttribute( 'data-jimca-rate' ) ) === rate ? 'true' : 'false'
-							);
-						}
-					);
-
-					/*
-					 * The Web Speech API does not change the `rate` of an utterance
-					 * already being spoken, so the current passage restarts for the
-					 * new speed to apply at once.
-					 */
-					if ( 'playing' === state ) {
-						cutSpeech();
-						speakNext();
-					}
-
-					closeMenu( entries.speed, true );
-				} );
+			try {
+				text = value.toLocaleString( document.documentElement.lang || undefined, { maximumFractionDigits: 2 } );
+			} catch ( e ) {
+				text = String( value );
 			}
-		);
+
+			return text + '\u00d7';
+		}
+
+		function updateSpeedUI() {
+			if ( ! speedBtn ) {
+				return;
+			}
+
+			var valueEl = speedBtn.querySelector( '[data-jimca-speed-value]' );
+
+			if ( valueEl ) {
+				valueEl.textContent = rateText( rate );
+			}
+
+			speedBtn.setAttribute( 'data-rate', String( rate ) );
+			speedBtn.setAttribute( 'aria-label', t( 'rateLabel', 'Reading speed' ) + ': ' + rateText( rate ) );
+		}
+
+		if ( speedBtn ) {
+			updateSpeedUI();
+
+			speedBtn.addEventListener( 'click', function () {
+				var above = RATES.filter( function ( value ) {
+					return value > rate + 0.001;
+				} );
+
+				rate = above.length ? above[ 0 ] : RATES[ 0 ];
+				prefs.set( 'rate', rate );
+				updateSpeedUI();
+				setStatus( t( 'rateLabel', 'Reading speed' ) + ': ' + rateText( rate ) );
+
+				/*
+				 * The Web Speech API does not change the `rate` of an utterance
+				 * already being spoken, so the current passage restarts for the
+				 * new speed to apply at once.
+				 */
+				if ( 'playing' === state ) {
+					cutSpeech();
+					speakNext();
+				}
+			} );
+		}
 
 		function speakNext() {
+			// End of a part of a long document: the next part is fetched and the reading goes on there.
+			if ( index >= elements.length && viewer.jimcaPager && viewer.jimcaPager.hasNext() ) {
+				var waiting = run;
+
+				viewer.jimcaPager.next( { focus: false, auto: true } ).then( function () {
+					if ( waiting === run && 'playing' === state ) {
+						index = 0;
+						speakNext();
+					}
+				} ).catch( function () {
+					stopUI( t( 'statusStopped', 'Reading stopped.' ) );
+				} );
+				return;
+			}
+
 			if ( index >= elements.length ) {
 				state = 'idle';
 				index = 0;
@@ -814,6 +1257,9 @@
 
 			if ( voice ) {
 				utterance.voice = voice;
+				utterance.lang = voice.lang;
+			} else if ( voiceLang && langKnown ) {
+				utterance.lang = voiceLang;
 			}
 
 			utterance.rate = rate;
@@ -866,6 +1312,15 @@
 
 		stopBtn.addEventListener( 'click', function () {
 			stopUI( t( 'statusStopped', 'Reading stopped.' ) );
+		} );
+
+		// New text (another part of a long document): the elements to read are those of the new part.
+		viewer.addEventListener( 'jimca:content-changed', function ( event ) {
+			if ( ! ( event.detail && event.detail.auto ) && 'idle' !== state ) {
+				stopUI( t( 'statusStopped', 'Reading stopped.' ) );
+			}
+			elements = collectElements();
+			index = 0;
 		} );
 
 		updateUI();
@@ -950,9 +1405,17 @@
 		var prefs = createPrefs( viewer );
 		var entries = setupMenus( viewer );
 
-		setupAppearance( viewer, prefs, entries );
+		setupAppearance( viewer, prefs );
 		setupToc( viewer );
+		setupSearchPanel( viewer );
 		setupAudio( viewer, player, prefs, entries );
+
+		// Choosing a part from the list closes its popover (pager.js moves to the part).
+		viewer.addEventListener( 'change', function ( event ) {
+			if ( event.target.hasAttribute && event.target.hasAttribute( 'data-jimca-pager-select' ) && entries.pager && ! entries.pager.menu.hidden ) {
+				closeMenu( entries.pager, false );
+			}
+		} );
 		setupVisibilityToggle( viewer, player, prefs );
 		setupPlayerVisibility( viewer, player );
 	}
@@ -973,6 +1436,8 @@
 		var width = touch ? Math.min( layoutW, screenW ) : layoutW;
 
 		root.style.setProperty( '--jimca-vw', width + 'px' );
+		// Visible height: `100vh` counts the area under the phone's address bar, which would hide the top of the tutor panel.
+		root.style.setProperty( '--jimca-vh', ( window.innerHeight || root.clientHeight ) + 'px' );
 		root.classList.toggle( 'jimca-vp-expanded', touch && layoutW > width + 1 );
 	}
 

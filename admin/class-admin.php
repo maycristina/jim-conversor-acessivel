@@ -129,13 +129,18 @@ class JIMCA_Admin {
 
 		wp_enqueue_style( 'jimca-admin', JIMCA_PLUGIN_URL . 'assets/css/admin.css', array(), jimca_asset_version( 'assets/css/admin.css' ) );
 
-		if ( $document_edit_screen ) {
+		if ( $document_edit_screen || $documents_list_screen === $screen->id ) {
 			wp_enqueue_script( 'jimca-auditor', JIMCA_PLUGIN_URL . 'assets/js/auditor.js', array(), jimca_asset_version( 'assets/js/auditor.js' ), true );
 			wp_localize_script( 'jimca-auditor', 'jimcaAuditI18n', self::auditor_strings() );
+			wp_localize_script( 'jimca-auditor', 'jimcaReview', JIMCA_Review::script_data() );
 		}
 
 		if ( $documents_list_screen === $screen->id ) {
 			wp_enqueue_script( 'jimca-quick-edit', JIMCA_PLUGIN_URL . 'assets/js/quick-edit.js', array( 'inline-edit-post' ), jimca_asset_version( 'assets/js/quick-edit.js' ), true );
+		}
+
+		if ( false !== strpos( $screen->id, self::MENU_SLUG . '-settings' ) ) {
+			JIMCA_Tour::enqueue( 'settings' );
 		}
 
 		if ( self::MENU_SLUG === $screen->id || 'toplevel_page_' . self::MENU_SLUG === $screen->id ) {
@@ -169,6 +174,22 @@ class JIMCA_Admin {
 					'network'        => __( 'Could not reach the server. Check your connection and try again.', 'jim-conversor-acessivel' ),
 					'tooLarge'       => __( 'The server refused the file because it is too large (HTTP 413). Ask your host to raise the upload limit (nginx "client_max_body_size" or PHP "upload_max_filesize").', 'jim-conversor-acessivel' ),
 					/* translators: %s: HTTP status code */
+					'blocked'        => __( "The server's firewall blocked this file (HTTP %s) before it reached WordPress, so Jim never received it. Ask your host to check the firewall log for the request to admin-ajax.php (the rule ID) and allow it.", 'jim-conversor-acessivel' ),
+					/* translators: 1: position of the file, 2: number of files, 3: file name */
+					'fileOf'         => __( 'File %1$s of %2$s: %3$s', 'jim-conversor-acessivel' ),
+					/* translators: 1: files converted, 2: files sent */
+					'queueSummary'   => __( '%1$s of %2$s files converted.', 'jim-conversor-acessivel' ),
+					'viewList'       => __( 'View documents', 'jim-conversor-acessivel' ),
+					'listUrl'        => admin_url( 'admin.php?page=' . self::MENU_SLUG ),
+					'maxFiles'       => self::MAX_BATCH,
+					'maxBytes'       => self::get_effective_max_bytes(),
+					'maxPdfBytes'    => JIMCA_Limits::max_pdf_bytes(),
+					/* translators: %s: number of files */
+					'tooMany'        => __( 'Choose up to %s files at a time.', 'jim-conversor-acessivel' ),
+					/* translators: 1: size of the file, 2: largest size accepted */
+					'tooBig'         => __( 'This file is %1$s; the limit here is %2$s.', 'jim-conversor-acessivel' ),
+					'unreadableNote' => __( 'Created, but the text is unreadable: the PDF fonts do not say which letter each character is. Try another copy of the PDF, or run OCR on it first.', 'jim-conversor-acessivel' ),
+					/* translators: %s: HTTP status code */
 					'httpError'      => __( 'The server answered with an error (HTTP %s) before the conversion started.', 'jim-conversor-acessivel' ),
 				)
 			);
@@ -183,6 +204,9 @@ class JIMCA_Admin {
 	 */
 	private static function auditor_strings() {
 		return array(
+			'reviewing'         => __( 'Reviewing…', 'jim-conversor-acessivel' ),
+			'reviewFailed'      => __( 'The review could not run. Try again.', 'jim-conversor-acessivel' ),
+			'openToFix'         => __( 'Open to fix', 'jim-conversor-acessivel' ),
 			'none'              => __( 'No semantic or structure problems were found.', 'jim-conversor-acessivel' ),
 			/* translators: %s: number of problems */
 			'foundOne'          => __( '%s problem found.', 'jim-conversor-acessivel' ),
@@ -387,7 +411,7 @@ class JIMCA_Admin {
 			?>
 
 			<div class="jimca-admin-card">
-				<p><?php esc_html_e( 'Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. Light files (TXT and MD) can be sent several at a time: each one becomes a document and you get the list of shortcodes.', 'jim-conversor-acessivel' ); ?></p>
+				<p><?php esc_html_e( 'Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. You can send several files at a time: each one becomes a document and you get the list of shortcodes.', 'jim-conversor-acessivel' ); ?></p>
 
 				<p class="jimca-tour-button">
 					<a class="button" href="<?php echo esc_url( JIMCA_Tour::open_url() ); ?>" data-jimca-tour-start><?php esc_html_e( 'Take the guided tour', 'jim-conversor-acessivel' ); ?></a>
@@ -415,10 +439,13 @@ class JIMCA_Admin {
 								<p class="description">
 									<?php
 									printf(
-										/* translators: 1: allowed file types, 2: formatted maximum size (e.g. "10 MB") */
-										esc_html__( 'Accepted types: %1$s. Maximum size per file: %2$s. Several files at once: only TXT and MD (up to 20); PDF and DOCX are sent one at a time.', 'jim-conversor-acessivel' ),
+										/* translators: 1: allowed file types, 2: formatted maximum size (e.g. "10 MB"), 3: number of files at a time, 4: largest PDF this server can convert, 5: link to the Settings screen (the word "Settings") */
+										esc_html__( 'Accepted types: %1$s. Maximum size per file: %2$s (you can raise this limit in %5$s; PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes.', 'jim-conversor-acessivel' ),
 										esc_html( strtoupper( implode( ', ', $settings['allowed_types'] ) ) ),
-										esc_html( size_format( self::get_effective_max_bytes() ) )
+										esc_html( size_format( self::get_effective_max_bytes() ) ),
+										absint( self::MAX_BATCH ),
+										esc_html( JIMCA_Limits::max_pdf_bytes() ? size_format( JIMCA_Limits::max_pdf_bytes() ) : __( 'no limit', 'jim-conversor-acessivel' ) ),
+										'<a href="' . esc_url( admin_url( 'admin.php?page=' . self::MENU_SLUG . '-settings' ) ) . '">' . esc_html__( 'Settings', 'jim-conversor-acessivel' ) . '</a>'
 									);
 									?>
 								</p>
@@ -918,6 +945,19 @@ class JIMCA_Admin {
 			);
 		}
 
+		$pdf_ceiling = 'pdf' === self::extension_of( $file['name'] ) ? JIMCA_Limits::max_pdf_bytes() : 0;
+
+		if ( $pdf_ceiling && $file['size'] > $pdf_ceiling ) {
+			throw new JIMCA_Converter_Exception(
+				sprintf(
+					/* translators: 1: size of the PDF, 2: largest PDF this server can convert */
+					esc_html__( 'This PDF (%1$s) is too large for this server\'s memory, which converts PDFs up to about %2$s. Split it into parts, or ask your host to raise the PHP memory limit.', 'jim-conversor-acessivel' ),
+					esc_html( size_format( $file['size'] ) ),
+					esc_html( size_format( $pdf_ceiling ) )
+				)
+			);
+		}
+
 		$upload_args = array( 'test_form' => false );
 
 		if ( 'md' === self::extension_of( $file['name'] ) ) {
@@ -1325,6 +1365,7 @@ class JIMCA_Admin {
 				<p><?php esc_html_e( 'A step-by-step tour of the New Document screen shows where each option is and what it does. It starts by itself the first time after installation, and you can open it again whenever you want.', 'jim-conversor-acessivel' ); ?></p>
 				<p><a class="button button-primary" href="<?php echo esc_url( JIMCA_Tour::open_url() ); ?>"><?php esc_html_e( 'Click here to open the tutorial', 'jim-conversor-acessivel' ); ?></a></p>
 				<p class="description"><?php esc_html_e( 'It opens the New Document screen with the tour running. Press Esc to leave it at any time.', 'jim-conversor-acessivel' ); ?></p>
+				<p><a class="button" href="<?php echo esc_url( JIMCA_Tour::settings_open_url() ); ?>"><?php esc_html_e( 'Tour of the Settings (assistant and quick texts)', 'jim-conversor-acessivel' ); ?></a></p>
 			</div>
 
 			<div class="jimca-admin-card">
@@ -1379,7 +1420,7 @@ class JIMCA_Admin {
 				<h2><?php esc_html_e( 'Formats and sending several files', 'jim-conversor-acessivel' ); ?></h2>
 				<ul class="jimca-admin-list">
 					<li><?php esc_html_e( 'PDF (with selectable text; scanned, image-only PDFs have no text and are refused: there is no OCR), DOCX, TXT and Markdown (.md).', 'jim-conversor-acessivel' ); ?></li>
-					<li><?php esc_html_e( 'TXT and Markdown files can be sent up to 20 at a time. Each one becomes a document, and you get a ready-to-copy list of shortcodes. PDF and DOCX are sent one at a time because they are heavy to convert.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes.', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'Old .doc, .odt, .rtf, spreadsheets, presentations and EPUB are not converted. The error message tells you what to do (for example, save as .docx).', 'jim-conversor-acessivel' ); ?></li>
 				</ul>
 			</div>
@@ -1460,7 +1501,7 @@ class JIMCA_Admin {
 
 			<div class="jimca-admin-card">
 				<h2><?php esc_html_e( 'AI assistant', 'jim-conversor-acessivel' ); ?></h2>
-				<p><?php esc_html_e( 'In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Each question, with passages of the document, is sent to the provider you chose.', 'jim-conversor-acessivel' ); ?></p>
+				<p><?php esc_html_e( 'In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Under Settings > JIM > Advanced > Quick texts you also choose the suggestions readers see at the start of the chat and under the = button: show or hide each one, rename it, change its text, add your own (up to 12), make it send at once or turn them all off. Each question, with passages of the document, is sent to the provider you chose.', 'jim-conversor-acessivel' ); ?></p>
 			</div>
 
 			<div class="jimca-admin-card">
@@ -1535,8 +1576,9 @@ class JIMCA_Admin {
 	public function register_settings() {
 
 		register_setting( 'jimca_settings_group', self::SETTINGS_OPTION, array( $this, 'sanitize_settings' ) );
+		// The assistant's behavior is saved by the same form as the AI connection (one card, one group).
 		register_setting(
-			'jimca_tutor_group',
+			'jimca_ai_group',
 			JIMCA_Tutor::OPTION,
 			array(
 				'type'              => 'array',
@@ -1598,6 +1640,9 @@ class JIMCA_Admin {
 			$this->render_admin_header();
 			$this->render_page_title( __( 'Settings', 'jim-conversor-acessivel' ) );
 			?>
+			<p class="jimca-tour-button">
+				<a class="button" href="<?php echo esc_url( JIMCA_Tour::settings_open_url() ); ?>" data-jimca-tour-start><?php esc_html_e( 'Take the guided tour', 'jim-conversor-acessivel' ); ?></a>
+			</p>
 
 			<div class="jimca-admin-card">
 			<form method="post" action="options.php">
@@ -1699,8 +1744,7 @@ class JIMCA_Admin {
 			</form>
 			</div>
 
-			<?php $this->render_ai_card(); ?>
-			<?php $this->render_tutor_card(); ?>
+			<?php $this->render_assistant_card(); ?>
 
 			<?php $this->render_log_card(); ?>
 
@@ -1712,47 +1756,48 @@ class JIMCA_Admin {
 	}
 
 	/**
-	 * "AI assistant" card: one key and model per provider (stored encrypted),
-	 * the active provider and a connection test for each.
+	 * "JIM - Assistant" card: everything about the AI in one form, in the order
+	 * a person does it: 1. connect (provider and key), 2. model, 3. turn on.
+	 * Name, instructions and limits are tucked into "Advanced".
 	 *
 	 * The test buttons belong to small forms printed after the settings form
-	 * (HTML "form" attribute), because forms cannot be nested.
+	 * (HTML "form" attribute), because forms cannot be nested. Both options
+	 * (the AI connection and the assistant's behavior) are saved by this one
+	 * form: they share the settings group "jimca_ai_group".
 	 */
-	private function render_ai_card() {
-		$ai = JIMCA_AI::get_settings();
+	private function render_assistant_card() {
+		$ai       = JIMCA_AI::get_settings();
+		$tutor    = JIMCA_Tutor::get_settings();
+		$ready    = JIMCA_AI::is_active();
+		$specs    = JIMCA_AI::provider_specs();
+		$tag      = JIMCA_Shortcode::TAG;
+		$shortcut = '<code>[' . esc_html( $tag ) . ' id="123" tutor="no"]</code>';
 		?>
-		<div class="jimca-admin-card" id="jimca-ai">
-			<h3><?php esc_html_e( 'AI assistant (API keys)', 'jim-conversor-acessivel' ); ?></h3>
+		<div class="jimca-admin-card jimca-assistant" id="jimca-ai" data-jimca-assistant>
+			<h3><?php esc_html_e( 'JIM - Assistant', 'jim-conversor-acessivel' ); ?></h3>
 			<?php settings_errors( JIMCA_AI::OPTION ); ?>
-			<p class="description">
-				<?php esc_html_e( 'One API key per provider, stored encrypted. A connection test sends one fixed sentence to that provider only, with no document text. The AI tutor (below) uses the provider chosen here.', 'jim-conversor-acessivel' ); ?>
-			</p>
+			<?php settings_errors( JIMCA_Tutor::OPTION ); ?>
+			<p class="description"><?php esc_html_e( 'Readers chat with JIM about the document they are reading. JIM answers through your AI account, so every answer has a cost.', 'jim-conversor-acessivel' ); ?></p>
+
 			<form method="post" action="options.php">
 				<?php settings_fields( 'jimca_ai_group' ); ?>
+
+				<h4 class="jimca-assistant__step"><?php esc_html_e( '1. Connect', 'jim-conversor-acessivel' ); ?></h4>
 				<table class="form-table" role="presentation">
 					<tr>
-						<th scope="row"><label for="jimca_ai_provider"><?php esc_html_e( 'Provider used by the assistant', 'jim-conversor-acessivel' ); ?></label></th>
+						<th scope="row"><label for="jimca_ai_provider"><?php esc_html_e( 'Provider', 'jim-conversor-acessivel' ); ?></label></th>
 						<td>
-							<select id="jimca_ai_provider" name="jimca_ai[provider]">
+							<select id="jimca_ai_provider" name="jimca_ai[provider]" data-jimca-provider>
 								<?php foreach ( JIMCA_AI::providers() as $code => $label ) : ?>
 									<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $ai['provider'], $code ); ?>><?php echo esc_html( $label ); ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Assistant', 'jim-conversor-acessivel' ); ?></th>
-						<td>
-							<label>
-								<input type="checkbox" name="jimca_ai[enabled]" value="1" <?php checked( $ai['enabled'] ); ?>>
-								<?php esc_html_e( 'Mark the assistant as on (only works with a saved key for the provider above).', 'jim-conversor-acessivel' ); ?>
-							</label>
-						</td>
-					</tr>
 				</table>
 
 				<?php
-				foreach ( JIMCA_AI::provider_specs() as $code => $spec ) :
+				foreach ( $specs as $code => $spec ) :
 					$entry    = $ai['providers'][ $code ];
 					$custom   = 'custom' === $code;
 					$has_key  = '' !== $entry['key'];
@@ -1760,8 +1805,7 @@ class JIMCA_Admin {
 					$id       = 'jimca_ai_' . $code;
 					$name     = 'jimca_ai[providers][' . $code . ']';
 					?>
-					<fieldset class="jimca-ai-provider">
-						<legend><?php echo esc_html( $spec['label'] ); ?></legend>
+					<div class="jimca-ai-provider" data-jimca-provider-block="<?php echo esc_attr( $code ); ?>">
 						<?php if ( $custom ) : ?>
 							<p class="description"><?php esc_html_e( 'Any service that uses the OpenAI Chat Completions format: open-source models on your own server (Ollama, vLLM, LM Studio, LocalAI, llama.cpp, Hugging Face TGI) or an AI gateway (LiteLLM, Portkey, Cloudflare AI Gateway and others). With a model on your own server, questions and passages do not leave it.', 'jim-conversor-acessivel' ); ?></p>
 						<?php endif; ?>
@@ -1779,26 +1823,6 @@ class JIMCA_Admin {
 									</td>
 								</tr>
 							<?php endif; ?>
-							<tr>
-								<th scope="row"><label for="<?php echo esc_attr( $id ); ?>_model"><?php esc_html_e( 'Model', 'jim-conversor-acessivel' ); ?></label></th>
-								<td>
-									<input type="text" id="<?php echo esc_attr( $id ); ?>_model" name="<?php echo esc_attr( $name ); ?>[model]" class="regular-text code" value="<?php echo esc_attr( $entry['model'] ); ?>" spellcheck="false" aria-describedby="<?php echo esc_attr( $id ); ?>_model_help">
-									<p class="description" id="<?php echo esc_attr( $id ); ?>_model_help">
-										<?php
-										if ( $custom ) {
-											esc_html_e( 'Required: the exact model name on that service, for example llama3.2 or qwen2.5:7b on Ollama.', 'jim-conversor-acessivel' );
-										} else {
-											/* translators: %s: default model name */
-											printf( esc_html__( 'Default: %s. Leave blank to go back to it.', 'jim-conversor-acessivel' ), '<code>' . esc_html( $spec['model'] ) . '</code>' );
-										}
-
-										if ( 'openrouter' === $code ) {
-											echo ' ' . esc_html__( 'Free models end in ":free". "openrouter/free" lets OpenRouter pick a free model that is available at the moment.', 'jim-conversor-acessivel' );
-										}
-										?>
-									</p>
-								</td>
-							</tr>
 							<tr>
 								<th scope="row"><label for="<?php echo esc_attr( $id ); ?>_key"><?php echo $custom ? esc_html__( 'API key (optional)', 'jim-conversor-acessivel' ) : esc_html__( 'API key', 'jim-conversor-acessivel' ); ?></label></th>
 								<td>
@@ -1834,24 +1858,210 @@ class JIMCA_Admin {
 									<?php if ( $testable ) : ?>
 										<p>
 											<button type="submit" class="button" form="jimca-ai-test-<?php echo esc_attr( $code ); ?>"><?php esc_html_e( 'Test connection', 'jim-conversor-acessivel' ); ?></button>
-											<span class="description">
-												<?php
-												/* translators: %s: provider address, e.g. api.anthropic.com */
-												printf( esc_html__( 'Sends one fixed sentence to %s using the saved key and model.', 'jim-conversor-acessivel' ), '<code>' . esc_html( $spec['host'] ) . '</code>' );
-												?>
-											</span>
+											<span class="description"><?php esc_html_e( 'Sends one test sentence, with no document text.', 'jim-conversor-acessivel' ); ?></span>
 										</p>
 									<?php endif; ?>
 								</td>
 							</tr>
 						</table>
-					</fieldset>
+					</div>
 				<?php endforeach; ?>
 
-				<?php submit_button( __( 'Save keys and models', 'jim-conversor-acessivel' ), 'primary', 'submit', true, array( 'id' => 'jimca-ai-submit' ) ); ?>
+				<h4 class="jimca-assistant__step"><?php esc_html_e( '2. Choose the model', 'jim-conversor-acessivel' ); ?></h4>
+				<?php
+				foreach ( $specs as $code => $spec ) :
+					$entry  = $ai['providers'][ $code ];
+					$custom = 'custom' === $code;
+					$id     = 'jimca_ai_' . $code;
+					$name   = 'jimca_ai[providers][' . $code . ']';
+					?>
+					<div class="jimca-ai-provider" data-jimca-provider-block="<?php echo esc_attr( $code ); ?>">
+						<table class="form-table" role="presentation">
+							<tr>
+								<th scope="row"><label for="<?php echo esc_attr( $id ); ?>_model"><?php esc_html_e( 'Model', 'jim-conversor-acessivel' ); ?></label></th>
+								<td>
+									<input type="text" id="<?php echo esc_attr( $id ); ?>_model" name="<?php echo esc_attr( $name ); ?>[model]" class="regular-text code" value="<?php echo esc_attr( $entry['model'] ); ?>" spellcheck="false" aria-describedby="<?php echo esc_attr( $id ); ?>_model_help">
+									<p class="description" id="<?php echo esc_attr( $id ); ?>_model_help">
+										<?php
+										if ( $custom ) {
+											esc_html_e( 'Required: the exact model name on that service, for example llama3.2 or qwen2.5:7b on Ollama.', 'jim-conversor-acessivel' );
+										} else {
+											/* translators: %s: default model name */
+											printf( esc_html__( 'Default: %s. Leave blank to go back to it.', 'jim-conversor-acessivel' ), '<code>' . esc_html( $spec['model'] ) . '</code>' );
+										}
+
+										if ( 'openrouter' === $code ) {
+											echo ' ' . esc_html__( 'Free models end in ":free". "openrouter/free" lets OpenRouter pick a free model that is available at the moment.', 'jim-conversor-acessivel' );
+										}
+										?>
+									</p>
+								</td>
+							</tr>
+						</table>
+					</div>
+				<?php endforeach; ?>
+
+				<h4 class="jimca-assistant__step"><?php esc_html_e( '3. Turn on', 'jim-conversor-acessivel' ); ?></h4>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'JIM', 'jim-conversor-acessivel' ); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="jimca_ai[enabled]" value="1" <?php checked( $ai['enabled'] ); ?>>
+								<?php esc_html_e( 'Turn JIM on', 'jim-conversor-acessivel' ); ?>
+							</label>
+							<p class="description">
+								<strong>
+									<?php
+									if ( $ready ) {
+										esc_html_e( 'JIM is on: it appears on every document.', 'jim-conversor-acessivel' );
+									} else {
+										esc_html_e( 'JIM stays hidden until a key is saved and this is turned on.', 'jim-conversor-acessivel' );
+									}
+									?>
+								</strong>
+							</p>
+							<p class="description">
+								<?php
+								printf(
+									/* translators: %s: example shortcode */
+									esc_html__( 'To hide JIM on one page: %s', 'jim-conversor-acessivel' ),
+									$shortcut // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above with esc_html().
+								);
+								?>
+							</p>
+						</td>
+					</tr>
+				</table>
+
+				<details class="jimca-assistant__advanced">
+					<summary><?php esc_html_e( 'Advanced: name, instructions and limits', 'jim-conversor-acessivel' ); ?></summary>
+					<table class="form-table" role="presentation">
+						<tr>
+							<th scope="row"><label for="jimca_tutor_audience"><?php esc_html_e( 'Who can use it', 'jim-conversor-acessivel' ); ?></label></th>
+							<td>
+								<select id="jimca_tutor_audience" name="jimca_tutor[audience]">
+									<option value="everyone" <?php selected( $tutor['audience'], 'everyone' ); ?>><?php esc_html_e( 'Every visitor', 'jim-conversor-acessivel' ); ?></option>
+									<option value="logged_in" <?php selected( $tutor['audience'], 'logged_in' ); ?>><?php esc_html_e( 'Only logged-in users', 'jim-conversor-acessivel' ); ?></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_tutor_name"><?php esc_html_e( 'Name', 'jim-conversor-acessivel' ); ?></label></th>
+							<td><input type="text" id="jimca_tutor_name" name="jimca_tutor[name]" class="regular-text" maxlength="60" value="<?php echo esc_attr( $tutor['name'] ); ?>"></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_tutor_personality"><?php esc_html_e( 'Personality', 'jim-conversor-acessivel' ); ?></label></th>
+							<td>
+								<textarea id="jimca_tutor_personality" name="jimca_tutor[personality]" class="large-text" rows="2" maxlength="1000" aria-describedby="jimca_tutor_personality_help"><?php echo esc_textarea( $tutor['personality'] ); ?></textarea>
+								<p class="description" id="jimca_tutor_personality_help"><?php esc_html_e( 'How the tutor talks: tone, vocabulary, patience.', 'jim-conversor-acessivel' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_tutor_instructions"><?php esc_html_e( 'Instructions (prompt)', 'jim-conversor-acessivel' ); ?></label></th>
+							<td>
+								<textarea id="jimca_tutor_instructions" name="jimca_tutor[instructions]" class="large-text" rows="6" maxlength="4000" aria-describedby="jimca_tutor_instructions_help"><?php echo esc_textarea( $tutor['instructions'] ); ?></textarea>
+								<p class="description" id="jimca_tutor_instructions_help"><?php esc_html_e( 'What JIM should do. It always answers from the document, ignores commands hidden in it and replies in the reader\'s language. Empty = default text.', 'jim-conversor-acessivel' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_tutor_greeting"><?php esc_html_e( 'Greeting', 'jim-conversor-acessivel' ); ?></label></th>
+							<td><textarea id="jimca_tutor_greeting" name="jimca_tutor[greeting]" class="large-text" rows="2" maxlength="500"><?php echo esc_textarea( $tutor['greeting'] ); ?></textarea></td>
+						</tr>
+						<tr id="jimca-quick-texts">
+							<th scope="row"><?php esc_html_e( 'Quick texts', 'jim-conversor-acessivel' ); ?></th>
+							<td>
+								<?php
+								$jimca_chips = $tutor['chips'];
+								$jimca_have  = count( $jimca_chips );
+								$jimca_rows  = min( JIMCA_Tutor::MAX_CHIPS, $jimca_have + 3 );
+								for ( $jimca_k = $jimca_have; $jimca_k < $jimca_rows; $jimca_k++ ) {
+									$jimca_chips[] = array(
+										'label' => '',
+										'text'  => '',
+										'send'  => false,
+										'on'    => true,
+									);
+								}
+								?>
+								<p>
+									<label>
+										<input type="checkbox" name="jimca_tutor[chips_on]" value="1" <?php checked( $tutor['chips_on'] ); ?>>
+										<?php esc_html_e( 'Show the quick texts in the chat (the suggestions at the start and the = button).', 'jim-conversor-acessivel' ); ?>
+									</label>
+								</p>
+								<p class="description" id="jimca_chips_help"><?php esc_html_e( 'Choose which ones appear, rename them, change the text they put in the field or add your own (up to 12). "Send at once" sends the text without the reader typing anything, good for challenges. A row with an empty name or text is discarded when you save.', 'jim-conversor-acessivel' ); ?></p>
+								<table class="widefat striped jimca-chips" aria-describedby="jimca_chips_help">
+									<thead>
+										<tr>
+											<th scope="col"><?php esc_html_e( 'Show', 'jim-conversor-acessivel' ); ?></th>
+											<th scope="col"><?php esc_html_e( 'Button name', 'jim-conversor-acessivel' ); ?></th>
+											<th scope="col"><?php esc_html_e( 'Text put in the field', 'jim-conversor-acessivel' ); ?></th>
+											<th scope="col"><?php esc_html_e( 'Send at once', 'jim-conversor-acessivel' ); ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ( array_values( $jimca_chips ) as $jimca_i => $jimca_chip ) : ?>
+											<?php
+											$jimca_n = $jimca_i + 1;
+											/* translators: %d: number of the row in the list of quick texts */
+											$jimca_row_label = sprintf( __( 'quick text %d', 'jim-conversor-acessivel' ), $jimca_n );
+											?>
+											<tr>
+												<td>
+													<input type="checkbox" name="jimca_tutor[chips][<?php echo (int) $jimca_i; ?>][on]" value="1" <?php checked( $jimca_chip['on'] ); ?> aria-label="<?php echo esc_attr( sprintf( /* translators: %s: quick text N */ __( 'Show %s', 'jim-conversor-acessivel' ), $jimca_row_label ) ); ?>">
+												</td>
+												<td>
+													<input type="text" class="regular-text" maxlength="40" name="jimca_tutor[chips][<?php echo (int) $jimca_i; ?>][label]" value="<?php echo esc_attr( $jimca_chip['label'] ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: quick text N */ __( 'Button name of %s', 'jim-conversor-acessivel' ), $jimca_row_label ) ); ?>">
+												</td>
+												<td>
+													<textarea class="large-text" rows="3" maxlength="500" name="jimca_tutor[chips][<?php echo (int) $jimca_i; ?>][text]" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: quick text N */ __( 'Text of %s', 'jim-conversor-acessivel' ), $jimca_row_label ) ); ?>"><?php echo esc_textarea( $jimca_chip['text'] ); ?></textarea>
+												</td>
+												<td>
+													<input type="checkbox" name="jimca_tutor[chips][<?php echo (int) $jimca_i; ?>][send]" value="1" <?php checked( $jimca_chip['send'] ); ?> aria-label="<?php echo esc_attr( sprintf( /* translators: %s: quick text N */ __( 'Send %s at once', 'jim-conversor-acessivel' ), $jimca_row_label ) ); ?>">
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+								<p>
+									<label>
+										<input type="checkbox" name="jimca_tutor[chips_reset]" value="1">
+										<?php esc_html_e( 'Restore the standard quick texts when I save.', 'jim-conversor-acessivel' ); ?>
+									</label>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Limits', 'jim-conversor-acessivel' ); ?></th>
+							<td>
+								<p>
+									<label for="jimca_tutor_per_hour"><?php esc_html_e( 'Questions per reader per hour:', 'jim-conversor-acessivel' ); ?></label>
+									<input type="number" id="jimca_tutor_per_hour" name="jimca_tutor[per_hour]" min="1" max="500" value="<?php echo esc_attr( $tutor['per_hour'] ); ?>">
+								</p>
+								<p>
+									<label for="jimca_tutor_per_day"><?php esc_html_e( 'Questions per day on the whole site:', 'jim-conversor-acessivel' ); ?></label>
+									<input type="number" id="jimca_tutor_per_day" name="jimca_tutor[per_day]" min="1" max="100000" value="<?php echo esc_attr( $tutor['per_day'] ); ?>">
+								</p>
+								<p class="description"><?php esc_html_e( 'They keep the cost of your key under control.', 'jim-conversor-acessivel' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Saved answers', 'jim-conversor-acessivel' ); ?></th>
+							<td>
+								<label>
+									<input type="checkbox" name="jimca_tutor[cache]" value="1" <?php checked( $tutor['cache'] ); ?>>
+									<?php esc_html_e( 'Reuse the answer when a reader asks almost the same first question about the same document.', 'jim-conversor-acessivel' ); ?>
+								</label>
+							</td>
+						</tr>
+					</table>
+				</details>
+
+				<?php submit_button( __( 'Save JIM', 'jim-conversor-acessivel' ), 'primary', 'submit', true, array( 'id' => 'jimca-ai-submit' ) ); ?>
 			</form>
 
-			<?php foreach ( array_keys( JIMCA_AI::provider_specs() ) as $code ) : ?>
+			<?php foreach ( array_keys( $specs ) as $code ) : ?>
 				<?php
 				$entry = $ai['providers'][ $code ];
 				if ( 'custom' === $code ? '' === $entry['endpoint'] || '' === $entry['model'] : '' === $entry['key'] ) {
@@ -1865,123 +2075,6 @@ class JIMCA_Admin {
 					<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( JIMCA_AI::TEST_NONCE ) ); ?>">
 				</form>
 			<?php endforeach; ?>
-		</div>
-		<?php
-	}
-
-	/**
-	 * "AI tutor" card: the assistant readers talk to on the document page.
-	 */
-	private function render_tutor_card() {
-		$tutor   = JIMCA_Tutor::get_settings();
-		$ai      = JIMCA_AI::get_settings();
-		$ready   = JIMCA_AI::is_active();
-		$label   = JIMCA_AI::spec( $ai['provider'] )['label'];
-		?>
-		<div class="jimca-admin-card" id="jimca-tutor">
-			<h3><?php esc_html_e( 'AI tutor for readers', 'jim-conversor-acessivel' ); ?></h3>
-			<?php settings_errors( JIMCA_Tutor::OPTION ); ?>
-			<p class="description">
-				<?php esc_html_e( 'A chat bubble on the document page where readers ask questions about that document. Each question is sent, with the passages of the document that best match it and the last turns of the conversation, to the provider chosen above, using your key: every answer has a cost. Readers can hide the bubble.', 'jim-conversor-acessivel' ); ?>
-			</p>
-			<?php if ( ! $ready ) : ?>
-				<p><strong><?php esc_html_e( 'The tutor needs the assistant turned on, with a working key, in the card above.', 'jim-conversor-acessivel' ); ?></strong></p>
-			<?php else : ?>
-				<p>
-					<?php
-					/* translators: %s: AI provider name */
-					printf( esc_html__( 'Provider in use: %s.', 'jim-conversor-acessivel' ), '<strong>' . esc_html( $label ) . '</strong>' );
-					?>
-				</p>
-			<?php endif; ?>
-			<form method="post" action="options.php">
-				<?php settings_fields( 'jimca_tutor_group' ); ?>
-				<table class="form-table" role="presentation">
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Tutor', 'jim-conversor-acessivel' ); ?></th>
-						<td>
-							<p>
-								<label>
-									<input type="checkbox" name="jimca_tutor[enabled]" value="1" <?php checked( $tutor['enabled'] ); ?>>
-									<?php esc_html_e( 'Turn on the tutor on this site.', 'jim-conversor-acessivel' ); ?>
-								</label>
-							</p>
-							<p>
-								<label>
-									<input type="checkbox" name="jimca_tutor[default_on]" value="1" <?php checked( $tutor['default_on'] ); ?>>
-									<?php esc_html_e( 'Show it on every document by default.', 'jim-conversor-acessivel' ); ?>
-								</label>
-							</p>
-							<p class="description">
-								<?php
-								printf(
-									/* translators: 1: shortcode with the tutor on, 2: shortcode with the tutor off */
-									esc_html__( 'Each shortcode can override this: %1$s shows the tutor, %2$s hides it.', 'jim-conversor-acessivel' ),
-									'<code>[' . esc_html( JIMCA_Shortcode::TAG ) . ' id="123" tutor="yes"]</code>',
-									'<code>[' . esc_html( JIMCA_Shortcode::TAG ) . ' id="123" tutor="no"]</code>'
-								);
-								?>
-							</p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="jimca_tutor_audience"><?php esc_html_e( 'Who can use it', 'jim-conversor-acessivel' ); ?></label></th>
-						<td>
-							<select id="jimca_tutor_audience" name="jimca_tutor[audience]">
-								<option value="everyone" <?php selected( $tutor['audience'], 'everyone' ); ?>><?php esc_html_e( 'Every visitor', 'jim-conversor-acessivel' ); ?></option>
-								<option value="logged_in" <?php selected( $tutor['audience'], 'logged_in' ); ?>><?php esc_html_e( 'Only logged-in users', 'jim-conversor-acessivel' ); ?></option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="jimca_tutor_name"><?php esc_html_e( 'Name', 'jim-conversor-acessivel' ); ?></label></th>
-						<td><input type="text" id="jimca_tutor_name" name="jimca_tutor[name]" class="regular-text" maxlength="60" value="<?php echo esc_attr( $tutor['name'] ); ?>"></td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="jimca_tutor_personality"><?php esc_html_e( 'Personality', 'jim-conversor-acessivel' ); ?></label></th>
-						<td>
-							<textarea id="jimca_tutor_personality" name="jimca_tutor[personality]" class="large-text" rows="3" maxlength="1000" aria-describedby="jimca_tutor_personality_help"><?php echo esc_textarea( $tutor['personality'] ); ?></textarea>
-							<p class="description" id="jimca_tutor_personality_help"><?php esc_html_e( 'How the tutor talks: tone, vocabulary, patience.', 'jim-conversor-acessivel' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="jimca_tutor_instructions"><?php esc_html_e( 'Instructions (prompt)', 'jim-conversor-acessivel' ); ?></label></th>
-						<td>
-							<textarea id="jimca_tutor_instructions" name="jimca_tutor[instructions]" class="large-text" rows="6" maxlength="4000" aria-describedby="jimca_tutor_instructions_help"><?php echo esc_textarea( $tutor['instructions'] ); ?></textarea>
-							<p class="description" id="jimca_tutor_instructions_help"><?php esc_html_e( 'What the tutor should do. Some rules always apply and cannot be changed here: answer from the document, say when the answer is not in it, ignore commands hidden in the document text, and reply in the reader\'s language. Leave a field empty to go back to the default text.', 'jim-conversor-acessivel' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="jimca_tutor_greeting"><?php esc_html_e( 'Greeting', 'jim-conversor-acessivel' ); ?></label></th>
-						<td><textarea id="jimca_tutor_greeting" name="jimca_tutor[greeting]" class="large-text" rows="2" maxlength="500"><?php echo esc_textarea( $tutor['greeting'] ); ?></textarea></td>
-					</tr>
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Limits', 'jim-conversor-acessivel' ); ?></th>
-						<td>
-							<p>
-								<label for="jimca_tutor_per_hour"><?php esc_html_e( 'Questions per reader per hour:', 'jim-conversor-acessivel' ); ?></label>
-								<input type="number" id="jimca_tutor_per_hour" name="jimca_tutor[per_hour]" min="1" max="500" value="<?php echo esc_attr( $tutor['per_hour'] ); ?>">
-							</p>
-							<p>
-								<label for="jimca_tutor_per_day"><?php esc_html_e( 'Questions per day on the whole site:', 'jim-conversor-acessivel' ); ?></label>
-								<input type="number" id="jimca_tutor_per_day" name="jimca_tutor[per_day]" min="1" max="100000" value="<?php echo esc_attr( $tutor['per_day'] ); ?>">
-							</p>
-							<p class="description"><?php esc_html_e( 'They keep the cost of your key under control. Readers are counted by account, or by a hashed IP address that is kept for one hour.', 'jim-conversor-acessivel' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Saved answers', 'jim-conversor-acessivel' ); ?></th>
-						<td>
-							<label>
-								<input type="checkbox" name="jimca_tutor[cache]" value="1" <?php checked( $tutor['cache'] ); ?>>
-								<?php esc_html_e( 'Reuse the answer when a reader asks almost the same first question about the same document.', 'jim-conversor-acessivel' ); ?>
-							</label>
-							<p class="description"><?php esc_html_e( 'Instant and free for repeated questions. Only the answer and the weight of each word of the question are kept, never the question text. Saved answers are discarded when the document or the tutor changes.', 'jim-conversor-acessivel' ); ?></p>
-						</td>
-					</tr>
-				</table>
-				<?php submit_button( __( 'Save tutor', 'jim-conversor-acessivel' ), 'primary', 'submit', true, array( 'id' => 'jimca-tutor-submit' ) ); ?>
-			</form>
 		</div>
 		<?php
 	}

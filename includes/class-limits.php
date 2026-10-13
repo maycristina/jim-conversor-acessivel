@@ -83,6 +83,45 @@ class JIMCA_Limits {
 	}
 
 	/**
+	 * Memory a PDF conversion needs, as a multiple of the file size, plus a
+	 * fixed part for WordPress and the libraries. Measured with the plugin's
+	 * converter: 9 MB file -> 34 MB, 25 MB -> 84 MB, 51 MB -> 248 MB. The factor
+	 * is rounded up so a file close to the ceiling still has room.
+	 */
+	const PDF_MEMORY_FACTOR = 5.5;
+
+	/** Fixed memory, in MB, that WordPress and the libraries use before the PDF is read. */
+	const PDF_MEMORY_BASE_MB = 20;
+
+	/**
+	 * Largest PDF a given PHP memory limit can convert.
+	 *
+	 * @param int $memory_limit_bytes PHP memory_limit in bytes; 0 or less = unlimited.
+	 * @return int Bytes; 0 = no ceiling.
+	 */
+	public static function pdf_ceiling_for( $memory_limit_bytes ) {
+		if ( $memory_limit_bytes <= 0 ) {
+			return 0;
+		}
+
+		$usable = $memory_limit_bytes - self::PDF_MEMORY_BASE_MB * MB_IN_BYTES;
+
+		return (int) max( 2 * MB_IN_BYTES, floor( $usable / self::PDF_MEMORY_FACTOR ) );
+	}
+
+	/**
+	 * Largest PDF this server can convert, from the memory PHP gives an
+	 * administrator task (WP_MAX_MEMORY_LIMIT, 256 MB by default).
+	 *
+	 * @return int Bytes; 0 = no ceiling.
+	 */
+	public static function max_pdf_bytes() {
+		wp_raise_memory_limit( 'admin' );
+
+		return self::pdf_ceiling_for( (int) wp_convert_hr_to_bytes( (string) ini_get( 'memory_limit' ) ) );
+	}
+
+	/**
 	 * Asks PHP for more time and memory for a conversion, when the server
 	 * allows it. Servers that block these functions keep their own limits, and
 	 * the guards above still apply.

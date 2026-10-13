@@ -13,21 +13,19 @@
  * @var string     $mode            'reader' (with the reading bar) or 'post' (plain HTML page).
  * @var array      $toc             Document headings (see JIMCA_Shortcode::build_toc()); empty = no table of contents.
  * @var array|null $tutor           AI tutor settings (see JIMCA_Tutor::get_settings()); null = no tutor.
+ * @var array|null $pager           Long document shown in parts: count, part, titles, arg (see JIMCA_Pagination); null = whole.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/*
- * Speeds in the speed menu. The Web Speech API accepts 0.1 to 10, but below
- * 0.5 and above 2 most voices become unintelligible.
- */
-$jimca_rates = array( '0.5', '0.75', '1', '1.25', '1.5', '2' );
-
 $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $settings['tts_default_rate'] : 1 );
+
+// "1×", "1.25×": the speed as the button shows it (no trailing zeros).
+$jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate, 2 ), '0' ), '.,' ) . '×';
 ?>
-<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
+<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" data-jimca-title="<?php echo esc_attr( get_the_title( $post ) ); ?>"<?php echo $pager ? ' data-jimca-parts="' . esc_attr( $pager['count'] ) . '" data-jimca-part="' . esc_attr( $pager['part'] ) . '" data-jimca-part-arg="' . esc_attr( $pager['arg'] ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributes built with esc_attr(). ?> aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
 
 	<?php
 	/*
@@ -124,93 +122,121 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 	?>
 	<div class="jimca-player" data-jimca-player hidden>
 
-		<div class="jimca-player__bar" id="<?php echo esc_attr( $uid ); ?>-controls" tabindex="-1" role="toolbar" aria-label="<?php esc_attr_e( 'Reading controls', 'jim-conversor-acessivel' ); ?>" data-jimca-player-bar>
+		<div id="<?php echo esc_attr( $uid ); ?>-controls" tabindex="-1" class="jimca-player__bar<?php echo $pager ? ' jimca-player__bar--paged' : ''; ?>" role="toolbar" aria-label="<?php esc_attr_e( 'Reading controls', 'jim-conversor-acessivel' ); ?>" data-jimca-player-bar>
 
-			<?php if ( $toc ) : ?>
-				<?php // Only when the document has headings. ?>
-				<div class="jimca-player__slot">
-					<button
-						type="button"
-						class="jimca-player__btn"
-						data-jimca-toc-toggle
-						aria-expanded="false"
-						aria-controls="<?php echo esc_attr( $uid ); ?>-toc"
-					>
-						<?php echo JIMCA_Shortcode::get_icon( 'toc' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-						<span class="jimca-visually-hidden"><?php esc_html_e( 'Contents', 'jim-conversor-acessivel' ); ?></span>
+			<?php // Slides behind the button whose popover is open (frontend.js). Decoration only. ?>
+			<span class="jimca-player__blob" data-jimca-blob aria-hidden="true"></span>
+
+			<?php
+			/*
+			 * Order of the bar: navigation menu (search, contents), settings (voice
+			 * and theme), text size, play/pause, speed, stop, parts (only in a
+			 * document in parts) and hide. Popovers open upwards from their button.
+			 */
+			?>
+			<div class="jimca-player__side jimca-player__side--start">
+			<div class="jimca-player__slot">
+				<button
+					type="button"
+					class="jimca-player__btn"
+					data-jimca-menu-trigger="nav"
+					aria-haspopup="true"
+					aria-expanded="false"
+					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-nav"
+				>
+					<?php echo JIMCA_Shortcode::get_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Navigation', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+
+				<div class="jimca-player__menu jimca-player__menu--start" id="<?php echo esc_attr( $uid ); ?>-menu-nav" role="menu" aria-label="<?php esc_attr_e( 'Navigation', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="nav" hidden>
+					<button type="button" role="menuitem" class="jimca-player__menuitem" data-jimca-search-open>
+						<?php echo JIMCA_Shortcode::get_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+						<?php esc_html_e( 'Search in the document', 'jim-conversor-acessivel' ); ?>
 					</button>
+					<?php if ( $toc ) : // Only when the document has headings. ?>
+					<button type="button" role="menuitem" class="jimca-player__menuitem" data-jimca-toc-toggle aria-controls="<?php echo esc_attr( $uid ); ?>-toc">
+						<?php echo JIMCA_Shortcode::get_icon( 'toc' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+						<?php esc_html_e( 'Contents', 'jim-conversor-acessivel' ); ?>
+					</button>
+					<?php endif; ?>
 				</div>
-			<?php endif; ?>
+			</div>
 
 			<div class="jimca-player__slot">
 				<button
 					type="button"
 					class="jimca-player__btn"
+					data-jimca-menu-trigger="settings"
+					aria-haspopup="true"
+					aria-expanded="false"
+					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-settings"
+				>
+					<?php echo JIMCA_Shortcode::get_icon( 'settings' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Settings', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+
+				<div class="jimca-player__menu jimca-player__menu--panel" id="<?php echo esc_attr( $uid ); ?>-menu-settings" role="group" aria-label="<?php esc_attr_e( 'Settings', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="settings" hidden>
+					<?php // The voice controls are filled by the JS: the voices are the browser's. ?>
+					<fieldset class="jimca-player__fieldset" data-jimca-voice-group hidden>
+						<legend><?php esc_html_e( 'Voice', 'jim-conversor-acessivel' ); ?></legend>
+						<label for="<?php echo esc_attr( $uid ); ?>-voice-lang"><?php esc_html_e( 'Language', 'jim-conversor-acessivel' ); ?></label>
+						<select id="<?php echo esc_attr( $uid ); ?>-voice-lang" data-jimca-voice-lang></select>
+						<span data-jimca-voice-kind-wrap hidden>
+							<label for="<?php echo esc_attr( $uid ); ?>-voice-kind"><?php esc_html_e( 'Type of voice', 'jim-conversor-acessivel' ); ?></label>
+							<select id="<?php echo esc_attr( $uid ); ?>-voice-kind" data-jimca-voice-kind></select>
+						</span>
+						<label for="<?php echo esc_attr( $uid ); ?>-voice-name"><?php esc_html_e( 'Narrator', 'jim-conversor-acessivel' ); ?></label>
+						<select id="<?php echo esc_attr( $uid ); ?>-voice-name" data-jimca-voice-name></select>
+					</fieldset>
+
+					<fieldset class="jimca-player__fieldset jimca-player__fieldset--themes">
+						<legend><?php esc_html_e( 'Theme', 'jim-conversor-acessivel' ); ?></legend>
+						<?php
+						$jimca_themes                  = JIMCA_Admin::get_available_themes();
+						$jimca_themes['high-contrast'] = __( 'High contrast', 'jim-conversor-acessivel' );
+						foreach ( $jimca_themes as $jimca_theme_key => $jimca_theme_label ) :
+							?>
+							<label class="jimca-player__choice">
+								<input type="radio" name="<?php echo esc_attr( $uid ); ?>-theme" value="<?php echo esc_attr( $jimca_theme_key ); ?>" data-jimca-theme<?php checked( $settings['theme'], $jimca_theme_key ); ?>>
+								<span><?php echo esc_html( $jimca_theme_label ); ?></span>
+							</label>
+						<?php endforeach; ?>
+					</fieldset>
+				</div>
+			</div>
+
+			<div class="jimca-player__slot">
+				<button
+					type="button"
+					class="jimca-player__btn jimca-player__btn--text"
 					data-jimca-menu-trigger="font"
 					aria-haspopup="true"
 					aria-expanded="false"
 					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-font"
 				>
-					<?php echo JIMCA_Shortcode::get_icon( 'font' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-					<span class="jimca-visually-hidden"><?php esc_html_e( 'Text size and theme', 'jim-conversor-acessivel' ); ?></span>
+					<span class="jimca-player__glyph" aria-hidden="true">Aa</span>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Text size', 'jim-conversor-acessivel' ); ?></span>
 				</button>
 
-				<div class="jimca-player__menu" id="<?php echo esc_attr( $uid ); ?>-menu-font" role="menu" aria-label="<?php esc_attr_e( 'Text appearance', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="font" hidden>
-					<div role="group" aria-label="<?php esc_attr_e( 'Text size', 'jim-conversor-acessivel' ); ?>">
-						<button type="button" role="menuitem" class="jimca-player__menuitem" data-jimca-font="increase" aria-label="<?php esc_attr_e( 'A+ — increase text size', 'jim-conversor-acessivel' ); ?>">A+</button>
-						<button type="button" role="menuitem" class="jimca-player__menuitem" data-jimca-font="decrease" aria-label="<?php esc_attr_e( 'A- — decrease text size', 'jim-conversor-acessivel' ); ?>">A-</button>
-						<button type="button" role="menuitem" class="jimca-player__menuitem" data-jimca-font="reset" aria-label="<?php esc_attr_e( 'A — default text size', 'jim-conversor-acessivel' ); ?>">A</button>
-					</div>
-
-					<hr class="jimca-player__divider">
-
-					<div role="group" aria-label="<?php esc_attr_e( 'Reading theme', 'jim-conversor-acessivel' ); ?>">
-						<?php foreach ( JIMCA_Admin::get_available_themes() as $jimca_theme_key => $jimca_theme_label ) : ?>
-							<button
-								type="button"
-								role="menuitemradio"
-								class="jimca-player__menuitem"
-								data-jimca-theme="<?php echo esc_attr( $jimca_theme_key ); ?>"
-								aria-checked="<?php echo esc_attr( $settings['theme'] === $jimca_theme_key ? 'true' : 'false' ); ?>"
-							><?php echo esc_html( $jimca_theme_label ); ?></button>
-						<?php endforeach; ?>
-					</div>
+				<div class="jimca-player__menu jimca-player__menu--row" id="<?php echo esc_attr( $uid ); ?>-menu-font" role="group" aria-label="<?php esc_attr_e( 'Text size', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="font" hidden>
+					<button type="button" class="jimca-player__step" data-jimca-font="decrease" aria-label="<?php esc_attr_e( 'Decrease text size', 'jim-conversor-acessivel' ); ?>"><span aria-hidden="true">A-</span></button>
+					<button type="button" class="jimca-player__value" data-jimca-font="reset" data-jimca-font-value aria-label="<?php esc_attr_e( 'Default text size', 'jim-conversor-acessivel' ); ?>">100%</button>
+					<button type="button" class="jimca-player__step jimca-player__step--big" data-jimca-font="increase" aria-label="<?php esc_attr_e( 'Increase text size', 'jim-conversor-acessivel' ); ?>"><span aria-hidden="true">A+</span></button>
 				</div>
 			</div>
-
-			<div class="jimca-player__slot">
-				<button type="button" class="jimca-player__btn" data-jimca-contrast-toggle aria-pressed="false">
-					<?php echo JIMCA_Shortcode::get_icon( 'contrast' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-					<span class="jimca-visually-hidden"><?php esc_html_e( 'High contrast', 'jim-conversor-acessivel' ); ?></span>
-				</button>
 			</div>
 
 			<div class="jimca-player__slot">
-				<button
-					type="button"
-					class="jimca-player__btn"
-					data-jimca-menu-trigger="voice"
-					aria-haspopup="true"
-					aria-expanded="false"
-					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-voice"
-				>
-					<?php echo JIMCA_Shortcode::get_icon( 'voice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-					<span class="jimca-visually-hidden"><?php esc_html_e( 'Voice', 'jim-conversor-acessivel' ); ?></span>
-				</button>
-
-				<?php // Filled by the JS: the voices are the browser's. ?>
-				<div class="jimca-player__menu" id="<?php echo esc_attr( $uid ); ?>-menu-voice" role="menu" aria-label="<?php esc_attr_e( 'Voice', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="voice" hidden></div>
-			</div>
-
-			<div class="jimca-player__slot">
-				<button type="button" class="jimca-player__btn jimca-player__btn--play" data-jimca-play aria-pressed="false">
-					<?php
-					/*
-					 * Both icons are in the HTML and the JS only toggles which one
-					 * shows, so no SVG is built in JavaScript and the right icon
-					 * appears without a jump.
-					 */
-					?>
+				<?php
+				/*
+				 * Play and pause are one button (WCAG media control): the icon and the
+				 * name swap together, so there is no aria-pressed on top of the name.
+				 * Both icons are in the HTML and the JS only toggles which one shows,
+				 * so no SVG is built in JavaScript and the right icon appears without
+				 * a jump.
+				 */
+				?>
+				<button type="button" class="jimca-player__btn jimca-player__btn--play" data-jimca-play>
 					<span class="jimca-player__icon-slot" data-jimca-icon="play">
 						<?php echo JIMCA_Shortcode::get_icon( 'play' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
 					</span>
@@ -221,30 +247,13 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 				</button>
 			</div>
 
+			<div class="jimca-player__side jimca-player__side--end">
 			<div class="jimca-player__slot">
-				<button
-					type="button"
-					class="jimca-player__btn"
-					data-jimca-menu-trigger="speed"
-					aria-haspopup="true"
-					aria-expanded="false"
-					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-speed"
-				>
+				<?php // One click moves to the next speed (1x, 1.25x, 1.5x, 2x, back to 1x): no menu. ?>
+				<button type="button" class="jimca-player__btn jimca-player__btn--speed" data-jimca-speed data-rate="<?php echo esc_attr( $jimca_current_rate ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: current reading speed, such as 1.5× */ __( 'Reading speed: %s', 'jim-conversor-acessivel' ), $jimca_rate_text ) ); ?>">
 					<?php echo JIMCA_Shortcode::get_icon( 'speed' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-					<span class="jimca-visually-hidden"><?php esc_html_e( 'Reading speed', 'jim-conversor-acessivel' ); ?></span>
+					<span class="jimca-player__rate" aria-hidden="true" data-jimca-speed-value><?php echo esc_html( $jimca_rate_text ); ?></span>
 				</button>
-
-				<div class="jimca-player__menu" id="<?php echo esc_attr( $uid ); ?>-menu-speed" role="menu" aria-label="<?php esc_attr_e( 'Reading speed', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="speed" hidden>
-					<?php foreach ( $jimca_rates as $jimca_rate ) : ?>
-						<button
-							type="button"
-							role="menuitemradio"
-							class="jimca-player__menuitem"
-							data-jimca-rate="<?php echo esc_attr( $jimca_rate ); ?>"
-							aria-checked="<?php echo esc_attr( $jimca_current_rate === $jimca_rate ? 'true' : 'false' ); ?>"
-						><?php echo esc_html( number_format_i18n( (float) $jimca_rate, ( (float) $jimca_rate === floor( (float) $jimca_rate ) ) ? 0 : 2 ) . '×' ); ?></button>
-					<?php endforeach; ?>
-				</div>
 			</div>
 
 			<div class="jimca-player__slot">
@@ -254,11 +263,46 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 				</button>
 			</div>
 
+			<?php if ( $pager ) : ?>
+			<?php // Only a document in parts has this: previous, "2/93" (opens the list of parts) and next. ?>
+			<div class="jimca-player__slot jimca-player__pager" role="group" aria-label="<?php esc_attr_e( 'Parts of the document', 'jim-conversor-acessivel' ); ?>" data-jimca-pager>
+				<button type="button" class="jimca-player__btn jimca-player__btn--small<?php echo $pager['part'] > 1 ? '' : ' is-disabled'; ?>" data-jimca-pager-prev<?php echo $pager['part'] > 1 ? ' data-jimca-part-link="' . (int) ( $pager['part'] - 1 ) . '"' : ' aria-disabled="true"'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- integers and fixed text. ?>>
+					<?php echo JIMCA_Shortcode::get_icon( 'previous' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Previous part', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+
+				<button
+					type="button"
+					class="jimca-player__btn jimca-player__btn--count"
+					data-jimca-menu-trigger="pager"
+					aria-haspopup="true"
+					aria-expanded="false"
+					aria-controls="<?php echo esc_attr( $uid ); ?>-menu-pager"
+				>
+					<span data-jimca-pager-count><?php echo esc_html( number_format_i18n( $pager['part'] ) . '/' . number_format_i18n( $pager['count'] ) ); ?></span>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Go to part', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+
+				<button type="button" class="jimca-player__btn jimca-player__btn--small<?php echo $pager['part'] < $pager['count'] ? '' : ' is-disabled'; ?>" data-jimca-pager-next<?php echo $pager['part'] < $pager['count'] ? ' data-jimca-part-link="' . (int) ( $pager['part'] + 1 ) . '"' : ' aria-disabled="true"'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- integers and fixed text. ?>>
+					<?php echo JIMCA_Shortcode::get_icon( 'next' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Next part', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+
+				<div class="jimca-player__menu jimca-player__menu--panel" id="<?php echo esc_attr( $uid ); ?>-menu-pager" role="group" aria-label="<?php esc_attr_e( 'Go to part', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="pager" hidden>
+					<?php echo JIMCA_Shortcode::render_part_select( $pager, $uid . '-bar' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_part_select(). ?>
+				</div>
+
+				<?php // Said aloud when the part changes (the visible "2/93" is not a live region). ?>
+				<span class="jimca-visually-hidden" role="status" aria-live="polite" data-jimca-pager-status><?php echo esc_html( sprintf( /* translators: 1: number of the part being read, 2: number of parts */ __( 'Part %1$s of %2$s', 'jim-conversor-acessivel' ), number_format_i18n( $pager['part'] ), number_format_i18n( $pager['count'] ) ) ); ?></span>
+			</div>
+			<?php endif; ?>
+
 			<div class="jimca-player__slot">
 				<button type="button" class="jimca-player__btn" data-jimca-hide>
 					<?php echo JIMCA_Shortcode::get_icon( 'hide' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
 					<span class="jimca-visually-hidden"><?php esc_html_e( 'Hide controls', 'jim-conversor-acessivel' ); ?></span>
 				</button>
+			</div>
 			</div>
 		</div>
 
@@ -288,13 +332,47 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 					<span class="jimca-visually-hidden"><?php esc_html_e( 'Close contents', 'jim-conversor-acessivel' ); ?></span>
 				</button>
 			</div>
-			<?php echo JIMCA_Shortcode::render_toc_list( $toc ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_toc_list(). ?>
+			<?php echo JIMCA_Shortcode::render_toc_list( $toc, $pager ? $pager['arg'] : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_toc_list(). ?>
 		</nav>
+	<?php endif; ?>
+
+	<?php if ( $pager || 'reader' === $mode ) : ?>
+		<?php
+		/*
+		 * Search in the document (pager.js shows it; it needs JavaScript). In a
+		 * document in parts it searches the whole document at the server and
+		 * opens the part of the result.
+		 */
+		?>
+		<form class="jimca-search" role="search" aria-label="<?php esc_attr_e( 'Search in the document', 'jim-conversor-acessivel' ); ?>" data-jimca-search hidden>
+			<div class="jimca-search__head">
+				<label class="jimca-search__label" for="<?php echo esc_attr( $uid ); ?>-search"><?php esc_html_e( 'Search in the document', 'jim-conversor-acessivel' ); ?></label>
+				<?php // With the reading bar the form is a panel over the text; this closes it (frontend.js). ?>
+				<button type="button" class="jimca-search__close" data-jimca-search-close hidden>
+					<?php echo JIMCA_Shortcode::get_icon( 'close' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+					<span class="jimca-visually-hidden"><?php esc_html_e( 'Close', 'jim-conversor-acessivel' ); ?></span>
+				</button>
+			</div>
+			<span class="jimca-search__row">
+				<input type="search" class="jimca-search__input" id="<?php echo esc_attr( $uid ); ?>-search" autocomplete="off" spellcheck="false" data-jimca-search-input>
+				<button type="submit" class="jimca-search__button"><?php esc_html_e( 'Search', 'jim-conversor-acessivel' ); ?></button>
+			</span>
+			<p class="jimca-search__status" role="status" aria-live="polite" data-jimca-search-status></p>
+			<div class="jimca-search__results" data-jimca-search-results></div>
+		</form>
+	<?php endif; ?>
+
+	<?php if ( $pager ) : ?>
+		<?php echo JIMCA_Shortcode::render_pager( $pager, $uid, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_pager(). ?>
 	<?php endif; ?>
 
 	<div id="<?php echo esc_attr( $uid ); ?>-content" class="jimca-content" tabindex="-1" data-jimca-content>
 		<?php echo wp_kses_post( $content ); ?>
 	</div>
+
+	<?php if ( $pager ) : ?>
+		<?php echo JIMCA_Shortcode::render_pager( $pager, $uid . '-b', false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_pager(). ?>
+	<?php endif; ?>
 
 	<?php if ( $tutor ) : ?>
 		<?php // Readers who hid the tutor bring it back here, at the end of the document (tutor.js). ?>
@@ -316,6 +394,14 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 	 */
 	?>
 	<div class="jimca-marker" data-jimca-marker role="toolbar" aria-label="<?php esc_attr_e( 'Text highlighter', 'jim-conversor-acessivel' ); ?>" hidden>
+		<button type="button" class="jimca-marker__text jimca-marker__action" data-jimca-share-image>
+			<?php echo JIMCA_Shortcode::get_icon( 'share' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+			<?php esc_html_e( 'Share as image', 'jim-conversor-acessivel' ); ?>
+		</button>
+		<button type="button" class="jimca-marker__text jimca-marker__action" data-jimca-download-text>
+			<?php echo JIMCA_Shortcode::get_icon( 'download' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+			<?php esc_html_e( 'Download as text', 'jim-conversor-acessivel' ); ?>
+		</button>
 		<span class="jimca-marker__label"><?php esc_html_e( 'Highlight passage:', 'jim-conversor-acessivel' ); ?></span>
 		<?php
 		$jimca_marker_colors = array(
@@ -349,10 +435,12 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 
 			<section class="jimca-tutor__panel" id="<?php echo esc_attr( $uid ); ?>-tutor" role="dialog" aria-modal="false" aria-labelledby="<?php echo esc_attr( $uid ); ?>-tutor-title" data-jimca-tutor-panel hidden>
 				<div class="jimca-tutor__header">
+					<span class="jimca-tutor__orb jimca-tutor__orb--mini" aria-hidden="true"></span>
 					<h2 class="jimca-tutor__title" id="<?php echo esc_attr( $uid ); ?>-tutor-title"><?php echo esc_html( $tutor['name'] ); ?></h2>
 					<?php
 					// The title attribute is the tooltip for mouse users; the hidden text names the button for everyone else.
 					$jimca_tutor_actions = array(
+						'export' => array( 'download', __( 'Download the conversation', 'jim-conversor-acessivel' ) ),
 						'clear' => array( 'edit', __( 'New conversation', 'jim-conversor-acessivel' ) ),
 						'hide'  => array( 'minimize', __( 'Hide the tutor on this page', 'jim-conversor-acessivel' ) ),
 						'close' => array( 'close', __( 'Close', 'jim-conversor-acessivel' ) ),
@@ -370,22 +458,26 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 
 				<form class="jimca-tutor__form" data-jimca-tutor-form>
 					<label class="jimca-visually-hidden" for="<?php echo esc_attr( $uid ); ?>-tutor-question"><?php esc_html_e( 'Your question', 'jim-conversor-acessivel' ); ?></label>
+					<div class="jimca-tutor__quick" id="<?php echo esc_attr( $uid ); ?>-tutor-quick" role="menu" aria-label="<?php esc_attr_e( 'Quick texts', 'jim-conversor-acessivel' ); ?>" data-jimca-tutor-quick-menu hidden></div>
 					<textarea class="jimca-tutor__input" id="<?php echo esc_attr( $uid ); ?>-tutor-question" rows="1" maxlength="<?php echo esc_attr( JIMCA_Tutor::MAX_QUESTION_CHARS ); ?>" placeholder="<?php esc_attr_e( 'Ask about the document', 'jim-conversor-acessivel' ); ?>" data-jimca-tutor-input></textarea>
-					<button type="button" class="jimca-tutor__icon-btn" data-jimca-tutor-mic aria-pressed="false" hidden>
-						<?php echo JIMCA_Shortcode::get_icon( 'mic' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-						<span class="jimca-visually-hidden"><?php esc_html_e( 'Ask by voice', 'jim-conversor-acessivel' ); ?></span>
-					</button>
-					<button type="submit" class="jimca-tutor__icon-btn jimca-tutor__send">
-						<?php echo JIMCA_Shortcode::get_icon( 'send' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
-						<span class="jimca-visually-hidden"><?php esc_html_e( 'Send question', 'jim-conversor-acessivel' ); ?></span>
-					</button>
+					<div class="jimca-tutor__actions">
+						<button type="button" class="jimca-tutor__icon-btn jimca-tutor__quick-btn" data-jimca-tutor-quick aria-haspopup="menu" aria-expanded="false" aria-controls="<?php echo esc_attr( $uid ); ?>-tutor-quick" hidden>
+							<?php echo JIMCA_Shortcode::get_icon( 'quick' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+							<span class="jimca-visually-hidden"><?php esc_html_e( 'Quick texts', 'jim-conversor-acessivel' ); ?></span>
+						</button>
+						<button type="button" class="jimca-tutor__icon-btn" data-jimca-tutor-mic aria-pressed="false" hidden>
+							<?php echo JIMCA_Shortcode::get_icon( 'mic' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+							<span class="jimca-visually-hidden"><?php esc_html_e( 'Ask by voice', 'jim-conversor-acessivel' ); ?></span>
+						</button>
+						<button type="submit" class="jimca-tutor__icon-btn jimca-tutor__send">
+							<?php echo JIMCA_Shortcode::get_icon( 'send' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG literal from JIMCA_Shortcode::get_icon(). ?>
+							<span class="jimca-visually-hidden"><?php esc_html_e( 'Send question', 'jim-conversor-acessivel' ); ?></span>
+						</button>
+					</div>
 				</form>
 
 				<p class="jimca-tutor__note">
-					<?php
-					/* translators: %s: AI provider or service name */
-					printf( esc_html__( 'AI-generated answers may contain errors. Your questions and parts of the document are sent to %s.', 'jim-conversor-acessivel' ), esc_html( JIMCA_AI::active_label() ) );
-					?>
+					<?php esc_html_e( "Jim AI: may make mistakes. Don't type personal data. Your messages are processed by an external service.", 'jim-conversor-acessivel' ); ?>
 				</p>
 				<p class="jimca-visually-hidden" role="status" aria-live="polite" data-jimca-tutor-status></p>
 			</section>

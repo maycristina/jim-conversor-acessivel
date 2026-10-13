@@ -226,7 +226,7 @@
 	 * never goes past the screen, even when the theme widens the layout
 	 * viewport.
 	 */
-	width: min(600px, calc(var(--jimca-vw, 100%) - 16px));
+	width: min(680px, calc(var(--jimca-vw, 100%) - 16px));
 	max-width: calc(100% - 16px);
 	display: flex;
 	justify-content: center;
@@ -254,11 +254,18 @@
 }
 
 .jimca-player__bar {
-	display: flex;
+	position: relative; /* The blob moves inside it. */
+
+	/*
+	 * Three columns: the controls before play, play, the controls after it. The
+	 * outer columns are equal, so play stays at the center of the bar, which is
+	 * centered on the screen.
+	 */
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
-	justify-content: space-between;
-	gap: 4px;
-	width: 100%;
+	column-gap: 6px;
+	max-width: 100%;
 	padding: 8px;
 
 	/* Material 3: extra-large shape (28dp) and level 3 elevation. */
@@ -269,6 +276,20 @@
 
 .jimca-player__bar[hidden] {
 	display: none;
+}
+
+.jimca-player__side {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+}
+
+.jimca-player__side--start {
+	justify-content: flex-end;
+}
+
+.jimca-player__side--end {
+	justify-content: flex-start;
 }
 
 .jimca-player__slot {
@@ -345,16 +366,123 @@
 	display: inline-flex;
 }
 
-/*
- * "Playing" state: the icon becomes pause (swapped by the JS) and the tone darkens.
- */
-.jimca-player__btn--play[aria-pressed="true"],
+/* The button whose popover is open darkens; the blob glides behind it. */
 .jimca-player__btn[aria-expanded="true"] {
 	color: var(--jimca-player-fg-strong);
 }
 
 .jimca-player__btn[aria-expanded="true"]::before {
-	opacity: 0.12;
+	opacity: 0;
+}
+
+/*
+ * The blob of the "liquid" bar (reference: bottom menus with elastic and
+ * liquid effects): a pill that glides, with a little overshoot, to the button
+ * whose popover is open. Position and size come from the JS.
+ */
+.jimca-player__blob {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 48px;
+	height: 48px;
+	border-radius: 999px;
+	background: var(--jimca-player-selected);
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+		width 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+		height 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+		opacity 160ms linear;
+}
+
+.jimca-player__blob.is-on {
+	opacity: 1;
+}
+
+/* Play / pause: the main button of the bar, a dark disc (reference). */
+.jimca-player__btn--play {
+	flex: 0 0 48px;
+	min-width: 48px;
+	background: var(--jimca-player-fg-strong);
+	color: var(--jimca-player-surface);
+	transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jimca-player__btn--play:active {
+	transform: scale(0.92);
+}
+
+.jimca-player__btn--play::before {
+	background: var(--jimca-player-surface);
+}
+
+/* Text size: the "Aa" of the reference. */
+.jimca-player__glyph {
+	font-size: 19px;
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.5px;
+}
+
+/* Speed: the double arrow and the current value, which one click advances. */
+.jimca-player__btn--speed {
+	flex: 0 0 auto;
+	gap: 2px;
+	padding: 0 2px 0 8px;
+}
+
+.jimca-player__btn--speed .jimca-player__icon {
+	width: 20px;
+	height: 20px;
+}
+
+.jimca-player__rate {
+	min-width: 0;
+	font-size: 13px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	text-align: start;
+}
+
+/* Parts: previous, "2/93", next. */
+.jimca-player__pager {
+	align-items: center;
+}
+
+.jimca-player__pager {
+	margin-inline: 2px;
+}
+
+.jimca-player__btn--small {
+	flex: 0 1 28px;
+	min-width: 24px;
+	height: 36px;
+}
+
+.jimca-player__btn--small .jimca-player__icon {
+	width: 18px;
+	height: 18px;
+}
+
+.jimca-player__btn--count {
+	flex: 0 0 auto;
+	min-width: 0;
+	height: 36px;
+	padding: 0 4px;
+	font-size: 12px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.jimca-player__btn.is-disabled {
+	cursor: default;
+	opacity: 0.38;
+}
+
+.jimca-player__btn.is-disabled::before {
+	display: none;
 }
 
 /* Button that brings the bar back after it was hidden. */
@@ -387,6 +515,9 @@
  * ------------------------------------------------------------------ */
 
 .jimca-player__menu {
+	/* Horizontal anchor: centered on its button; --start hangs from the left edge of the bar. */
+	--jimca-menu-base: -50%;
+
 	position: absolute;
 	bottom: calc(100% + 8px);
 	left: 50%;
@@ -403,9 +534,39 @@
 
 	/* `--jimca-menu-shift` is set by the JS so the menu stays on screen
 	   when its button is near an edge. */
-	transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px)));
+	transform: translateX(calc(var(--jimca-menu-base) + var(--jimca-menu-shift, 0px)));
 	transform-origin: bottom center;
-	animation: jimca-menu-in 200ms var(--jimca-ease-out);
+	animation: jimca-menu-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jimca-player__menu--start {
+	--jimca-menu-base: 0px;
+
+	left: 0;
+	min-width: 240px;
+	transform-origin: bottom left;
+}
+
+/* A popover with controls (selects, choices) instead of a list of items. */
+.jimca-player__menu--panel {
+	width: min(320px, calc(var(--jimca-vw, 100vw) - 32px));
+	max-width: none;
+	max-height: min(70vh, 520px);
+	padding: 12px 16px 4px;
+}
+
+/* Text size: a short pill, [ A- ] 100% [ A+ ]. */
+.jimca-player__menu--row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px;
+	border-radius: 999px;
+	overflow: visible;
+}
+
+.jimca-player__menu--row[hidden] {
+	display: none;
 }
 
 .jimca-player__menu[hidden] {
@@ -415,12 +576,12 @@
 @keyframes jimca-menu-in {
 	from {
 		opacity: 0;
-		transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px))) translateY(6px) scale(0.96);
+		transform: translateX(calc(var(--jimca-menu-base) + var(--jimca-menu-shift, 0px))) translateY(12px) scale(0.7);
 	}
 
 	to {
 		opacity: 1;
-		transform: translateX(calc(-50% + var(--jimca-menu-shift, 0px))) translateY(0) scale(1);
+		transform: translateX(calc(var(--jimca-menu-base) + var(--jimca-menu-shift, 0px))) translateY(0) scale(1);
 	}
 }
 
@@ -471,6 +632,155 @@
 	margin: 8px 0;
 	border: 0;
 	background: var(--jimca-player-outline);
+}
+
+.jimca-player__menuitem {
+	white-space: nowrap;
+}
+
+/* Inside the popover the focus ring is drawn inward: the menu clips whatever goes outside it. */
+.jimca-player__menuitem:focus-visible {
+	outline-offset: -3px;
+}
+
+.jimca-player__menuitem .jimca-player__icon {
+	flex: 0 0 auto;
+}
+
+/* Text size popover. */
+.jimca-player__step,
+.jimca-player__value {
+	min-width: 48px;
+	min-height: 48px;
+	padding: 0 8px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--jimca-player-fg-strong);
+	font-family: inherit;
+	font-size: 18px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.jimca-player__step--big {
+	font-size: 24px;
+}
+
+.jimca-player__value {
+	min-width: 64px;
+	font-size: 14px;
+	font-variant-numeric: tabular-nums;
+}
+
+.jimca-player__step:hover,
+.jimca-player__value:hover {
+	background: var(--jimca-player-state);
+}
+
+.jimca-player__step[aria-disabled="true"] {
+	cursor: default;
+	opacity: 0.38;
+}
+
+.jimca-player__step[aria-disabled="true"]:hover {
+	background: transparent;
+}
+
+/* Settings popover: voice and theme. */
+.jimca-player__fieldset {
+	min-width: 0;
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+}
+
+.jimca-player__fieldset[hidden],
+.jimca-player__fieldset span[hidden] {
+	display: none;
+}
+
+.jimca-player__fieldset legend {
+	margin: 0 0 4px;
+	padding: 0;
+	color: var(--jimca-player-fg);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+}
+
+.jimca-player__fieldset label:not(.jimca-player__choice) {
+	display: block;
+	margin: 8px 0 2px;
+	color: var(--jimca-player-fg-strong);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.jimca-player__menu--panel > label {
+	display: block;
+	margin: 0 0 6px;
+	color: var(--jimca-player-fg-strong);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.jimca-player__menu--panel > select {
+	margin-bottom: 8px;
+}
+
+.jimca-player__menu select {
+	width: 100%;
+	min-height: 44px;
+	padding: 0 12px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 12px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	font: inherit;
+	font-size: 14px;
+}
+
+/* Theme choices: pills, the checked one outlined with the accent color. */
+.jimca-player__choice {
+	position: relative;
+	display: inline-flex;
+	margin: 0 6px 6px 0;
+}
+
+.jimca-player__choice input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.jimca-player__choice span {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0 16px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 999px;
+	color: var(--jimca-player-fg-strong);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.jimca-player__choice input:checked + span {
+	border-color: var(--jimca-accent);
+	background: var(--jimca-player-selected);
+	box-shadow: inset 0 0 0 1px var(--jimca-accent);
+	font-weight: 700;
+}
+
+.jimca-player__choice input:focus-visible + span {
+	outline: 3px solid var(--jimca-accent);
+	outline-offset: 2px;
 }
 
 /* ------------------------------------------------------------------
@@ -777,9 +1087,38 @@
 	}
 
 	.jimca-player__bar {
-		gap: 2px;
+		column-gap: 4px;
 		padding: 6px;
 		border-radius: 26px;
+	}
+
+	/* Eight controls (nine in a document in parts) have to share a phone's width. */
+	.jimca-player__btn {
+		flex-basis: 36px;
+		min-width: 32px;
+	}
+
+	.jimca-player__btn--play {
+		flex-basis: 44px;
+		min-width: 44px;
+	}
+
+	.jimca-player__btn--speed {
+		padding: 0 4px;
+	}
+
+	.jimca-player__btn--speed .jimca-player__icon {
+		display: none;
+	}
+
+	.jimca-player__btn--small {
+		flex-basis: 24px;
+		min-width: 24px;
+	}
+
+	.jimca-player__btn--count {
+		padding: 0 2px;
+		font-size: 12px;
 	}
 
 	.jimca-viewer.jimca-player-active {
@@ -787,19 +1126,46 @@
 	}
 }
 
+/*
+ * A phone: with the parts the bar does not fit one row and keep play at the
+ * center, so the parts go to a second row, centered under play. The first row
+ * stays three controls, play, three controls.
+ */
+@media (max-width: 520px) {
+	.jimca-player__bar--paged {
+		grid-template-columns: repeat(3, minmax(0, 1fr)) auto repeat(3, minmax(0, 1fr));
+		row-gap: 2px;
+	}
+
+	.jimca-player__bar--paged .jimca-player__side {
+		display: contents;
+	}
+
+	.jimca-player__bar--paged .jimca-player__pager {
+		grid-row: 2;
+		grid-column: 1 / -1;
+		justify-self: center;
+		margin-inline: 0;
+	}
+
+	.jimca-player__bar--paged .jimca-player__btn,
+	.jimca-player__bar--paged .jimca-player__btn--play {
+		justify-self: center;
+	}
+}
+
 @media (max-width: 380px) {
 	.jimca-player__bar {
-		gap: 0;
 		padding: 4px;
 	}
 
 	/*
-	 * With the table of contents button there are eight buttons: at 40px they
-	 * do not fit a 320px phone. 34px is still well above WCAG 2.2's 24x24
-	 * minimum (2.5.8), and the height stays 48px.
+	 * Eight buttons (nine in a document in parts) do not fit a 320px phone at
+	 * 40px. 32px is still above WCAG 2.2's 24x24 minimum (2.5.8), and the
+	 * height stays 48px.
 	 */
 	.jimca-player__btn {
-		min-width: 34px;
+		min-width: 32px;
 	}
 }
 
@@ -1070,10 +1436,11 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	text-decoration-thickness: 2px;
 }
 
+/* marker.js puts the bar next to the selected text (top and left, in pixels). */
 .jimca-marker {
 	position: fixed;
-	top: 16px;
-	left: 50%;
+	top: 0;
+	left: 0;
 	z-index: 100001;
 	display: flex;
 	flex-wrap: wrap;
@@ -1081,7 +1448,6 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	gap: 8px;
 	max-width: calc(var(--jimca-vw, 100vw) - 32px);
 	padding: 8px 12px;
-	transform: translateX(-50%);
 	border: 1px solid var(--jimca-player-outline, #c4c7c9);
 	border-radius: 28px;
 	background: var(--jimca-player-surface, #ffffff);
@@ -1140,13 +1506,32 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	display: none;
 }
 
+.jimca-marker__action {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 600;
+}
+
+.jimca-marker__action .jimca-player__icon {
+	width: 20px;
+	height: 20px;
+}
+
 /* ---------------------------------------------------------------
- * AI tutor: bubble in the bottom right corner and conversation panel,
- * on Material 3 measures (64px top bar, 40px icon buttons, 48px field,
- * label-small/body-small type). Colors come from the reading theme
+ * AI tutor: bubble in the bottom right corner and conversation panel.
+ * A rounded card with an orb in the colors of Jim's mark (light,
+ * medium and dark blue), conversation bubbles and a pill
+ * shaped question field. Surfaces and text come from the reading theme
  * tokens, so it follows light, sepia, dark and high contrast; the font
  * is the site's own.
  * ------------------------------------------------------------- */
+.jimca-tutor {
+	--jimca-tutor-light: #7db9f5;
+	--jimca-tutor-mid: #1668c7;
+	--jimca-tutor-dark: #0b4a8f;
+}
+
 .jimca-tutor[hidden],
 .jimca-tutor__panel[hidden],
 .jimca-tutor__chips[hidden],
@@ -1172,6 +1557,16 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	color: var(--jimca-accent-fg);
 	box-shadow: var(--jimca-elev-3);
 	cursor: pointer;
+	transition: transform 0.12s var(--jimca-ease-out);
+}
+
+.jimca-tutor__fab:active {
+	transform: scale(0.94);
+}
+
+.jimca-tutor__fab:focus-visible {
+	outline: 3px solid var(--jimca-accent);
+	outline-offset: 3px;
 }
 
 .jimca-tutor__panel {
@@ -1181,25 +1576,40 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	bottom: 84px;
 	display: flex;
 	flex-direction: column;
-	width: min(360px, calc(var(--jimca-vw, 100vw) - 32px));
-	max-height: min(70vh, 600px);
+	width: min(420px, calc(var(--jimca-vw, 100vw) - 32px));
+	height: min(620px, calc(var(--jimca-vh, 100vh) - 132px));
 	border: 1px solid var(--jimca-player-outline);
-	border-radius: 16px;
+	border-radius: 28px;
 	background: var(--jimca-player-surface);
 	color: var(--jimca-player-fg-strong);
-	box-shadow: var(--jimca-elev-3);
+	box-shadow: 0 24px 64px rgba(11, 74, 143, 0.2);
 	overflow: hidden;
 	font-family: inherit;
+	transform-origin: bottom right;
+	animation: jimca-tutor-in 0.25s var(--jimca-ease-out) both;
 }
 
-/* Top bar: title on the left, icon actions on the right, one line. */
+@supports (height: 100dvh) {
+	.jimca-tutor__panel {
+		height: min(620px, calc(var(--jimca-vh, 100dvh) - 132px));
+	}
+}
+
+@keyframes jimca-tutor-in {
+	from {
+		opacity: 0;
+		transform: scale(0.94) translateY(8px);
+	}
+}
+
+/* Top bar: small orb and title on the left, icon actions on the right. */
 .jimca-tutor__header {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
 	gap: 4px;
 	min-height: 64px;
-	padding: 8px 8px 8px 20px;
+	padding: 8px 12px 8px 20px;
 	box-sizing: border-box;
 }
 
@@ -1211,7 +1621,7 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	font-weight: 600;
 	line-height: 24px;
 	letter-spacing: 0.15px;
-	color: var(--jimca-player-fg-strong);
+	color: var(--jimca-player-fg);
 }
 
 .jimca-tutor__icon-btn {
@@ -1227,14 +1637,20 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	background: transparent;
 	color: var(--jimca-player-fg);
 	cursor: pointer;
+	transition: transform 0.12s var(--jimca-ease-out), background-color 0.15s ease;
+}
+
+.jimca-tutor__icon-btn:active {
+	transform: scale(0.94);
 }
 
 .jimca-tutor__icon-btn:hover {
-	background: var(--jimca-player-state);
+	background: var(--jimca-player-selected);
 }
 
 .jimca-tutor__icon-btn:focus-visible,
 .jimca-tutor__chip:focus-visible,
+.jimca-tutor__log:focus-visible,
 .jimca-tutor-restore__btn:focus-visible {
 	outline: 2px solid var(--jimca-accent);
 	outline-offset: 2px;
@@ -1250,40 +1666,105 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	height: 24px;
 }
 
-/* Conversation */
+/* Orb: living gradient in the colors of Jim's mark. Decorative. */
+.jimca-tutor__orb {
+	position: relative;
+	display: block;
+	flex: none;
+	width: 116px;
+	height: 116px;
+	border-radius: 50%;
+	background:
+		radial-gradient(54% 54% at 66% 34%, var(--jimca-tutor-light) 0%, rgba(125, 185, 245, 0) 70%),
+		radial-gradient(64% 64% at 30% 64%, var(--jimca-tutor-dark) 0%, rgba(11, 74, 143, 0) 72%),
+		radial-gradient(70% 70% at 72% 72%, var(--jimca-tutor-mid) 0%, rgba(22, 104, 199, 0) 72%),
+		radial-gradient(circle at 50% 50%, #e4eefc 0%, #ffffff 100%);
+	box-shadow: 0 0 56px rgba(22, 104, 199, 0.28), inset 0 0 18px rgba(255, 255, 255, 0.8);
+	animation: jimca-tutor-spin 14s linear infinite;
+}
+
+.jimca-tutor__orb::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: radial-gradient(40% 40% at 38% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 70%);
+}
+
+.jimca-tutor__orb--mini {
+	width: 28px;
+	height: 28px;
+	margin-right: 8px;
+	box-shadow: 0 0 12px rgba(22, 104, 199, 0.3);
+}
+
+.jimca-tutor.is-busy .jimca-tutor__orb--mini {
+	animation-duration: 2.5s;
+}
+
+@keyframes jimca-tutor-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Header: the small orb only shows once there is a conversation. */
+.jimca-tutor__panel[data-state="empty"] .jimca-tutor__orb--mini {
+	display: none;
+}
+
+/* Conversation. Empty: orb, welcome and suggestions centered. */
 .jimca-tutor__log {
 	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
-	gap: 12px;
-	min-height: 120px;
-	padding: 16px 20px;
+	gap: 16px;
+	min-height: 0;
+	padding: 12px 20px;
 	overflow-y: auto;
 	overscroll-behavior: contain;
 }
 
+.jimca-tutor__panel[data-state="empty"] .jimca-tutor__log {
+	align-items: center;
+	justify-content: center;
+	padding: 16px 24px;
+	text-align: center;
+}
+
+.jimca-tutor__stage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.jimca-viewer .jimca-tutor__welcome {
+	max-width: 28ch;
+	margin: 0;
+	font-size: 17px;
+	line-height: 28px;
+	color: var(--jimca-player-fg-strong);
+	text-wrap: balance;
+}
+
+.jimca-tutor__panel:has(.jimca-tutor__chips) .jimca-tutor__stage .jimca-tutor__orb {
+	width: 72px;
+	height: 72px;
+}
+
 .jimca-tutor__msg {
-	padding: 12px 16px;
-	border-radius: 12px;
-	background: var(--jimca-player-state);
+	display: flex;
+	flex-direction: column;
+	max-width: 88%;
 }
 
 .jimca-tutor__msg--user {
-	margin-left: 15%;
-	background: var(--jimca-player-selected);
-}
-
-.jimca-tutor__msg--error {
-	border: 1px solid currentColor;
-	background: transparent;
-}
-
-.jimca-tutor__msg.is-pending .jimca-tutor__text {
-	font-style: italic;
+	align-self: flex-end;
 }
 
 .jimca-viewer .jimca-tutor__who {
-	margin: 0 0 4px;
+	margin: 0 0 4px 12px;
 	font-size: 12px;
 	font-weight: 600;
 	line-height: 16px;
@@ -1291,101 +1772,231 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	color: var(--jimca-player-fg);
 }
 
+.jimca-tutor__msg--user .jimca-tutor__who {
+	display: none;
+}
+
 /* Answers arrive as plain text: line breaks become paragraphs and lists. */
 .jimca-viewer .jimca-tutor__text {
 	margin: 0;
+	padding: 12px 16px;
+	border-radius: 20px;
 	font-size: 15px;
-	line-height: 22px;
-	color: var(--jimca-player-fg-strong);
+	line-height: 24px;
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;
 }
 
-/* Suggestion chips under the greeting. */
+.jimca-viewer .jimca-tutor__msg--user .jimca-tutor__text {
+	border-bottom-right-radius: 6px;
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+}
+
+.jimca-viewer .jimca-tutor__msg--assistant .jimca-tutor__text {
+	border-bottom-left-radius: 6px;
+	background: var(--jimca-player-selected);
+	color: var(--jimca-player-fg-strong);
+}
+
+.jimca-viewer .jimca-tutor__msg--error .jimca-tutor__text {
+	border: 1px solid currentColor;
+	border-bottom-left-radius: 6px;
+	background: transparent;
+	color: var(--jimca-player-fg-strong);
+}
+
+.jimca-tutor__msg.is-pending .jimca-tutor__text {
+	font-style: italic;
+}
+
+/* Suggestion chips under the welcome. */
 .jimca-tutor__chips {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 	gap: 8px;
 }
 
 .jimca-tutor__chip {
-	min-height: 32px;
-	padding: 0 16px;
+	min-height: 36px;
+	padding: 4px 16px;
 	border: 1px solid var(--jimca-player-outline);
-	border-radius: 8px;
-	background: transparent;
-	color: var(--jimca-player-fg);
+	border-radius: 999px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-accent);
 	font: inherit;
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 20px;
 	letter-spacing: 0.1px;
 	cursor: pointer;
+	transition: transform 0.12s var(--jimca-ease-out), background-color 0.15s ease;
+}
+
+.jimca-tutor__chip:active {
+	transform: scale(0.97);
 }
 
 .jimca-tutor__chip:hover {
 	background: var(--jimca-player-selected);
-	color: var(--jimca-player-fg-strong);
 }
 
-/* Question field (outlined) and actions. */
+/* Question field: a floating pill with the text on top and actions below. */
 .jimca-tutor__form {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	padding: 12px 12px 4px 20px;
-	border-top: 1px solid var(--jimca-player-outline);
+	position: relative;
+	margin: 8px 16px 8px;
+	padding: 12px 16px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 28px;
+	background: var(--jimca-player-surface);
+	box-shadow: 0 8px 28px rgba(22, 104, 199, 0.14);
+	transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.jimca-tutor__form:focus-within {
+	border-color: var(--jimca-accent);
+	box-shadow: 0 8px 28px rgba(22, 104, 199, 0.22);
+	outline: 2px solid var(--jimca-accent);
+	outline-offset: 2px;
 }
 
 .jimca-tutor__input {
-	flex: 1 1 auto;
-	height: 48px;
+	display: block;
+	width: 100%;
+	min-height: 28px;
 	max-height: 120px;
-	padding: 12px 16px;
+	padding: 0;
 	box-sizing: border-box;
 	overflow-y: auto;
-	border: 1px solid var(--jimca-player-outline);
-	border-radius: 8px;
-	background: var(--jimca-bg);
+	border: 0;
+	background: transparent;
 	color: var(--jimca-fg);
 	font: inherit;
 	font-size: 15px;
-	line-height: 22px;
+	line-height: 28px;
 	resize: none;
 }
 
-.jimca-tutor__input:focus {
-	padding: 11px 15px;
-	border: 2px solid var(--jimca-accent);
-	outline: none;
+/*
+ * The focus ring is the soft one around the whole pill (.jimca-tutor__form:focus-within).
+ * A transparent outline here, not "none": in forced-colors mode (Windows high contrast) it is drawn.
+ */
+.jimca-tutor__input:focus,
+.jimca-tutor__input:focus-visible {
+	outline: 2px solid transparent;
 }
 
-.jimca-tutor.is-listening .jimca-tutor__input {
-	border-color: var(--jimca-accent);
+.jimca-tutor__input::placeholder {
+	color: var(--jimca-player-fg);
+	opacity: 1;
 }
 
-.jimca-tutor__form .jimca-tutor__icon-btn {
-	width: 48px;
-	height: 48px;
+.jimca-tutor__actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 12px;
 }
 
-/* Send is the main action: a filled icon button. */
-.jimca-tutor__form .jimca-tutor__send {
+.jimca-tutor__actions .jimca-tutor__icon-btn {
+	background: var(--jimca-player-selected);
+	color: var(--jimca-accent);
+}
+
+/* Quick texts: the button sits at the left corner of the field, the menu opens above it. */
+.jimca-tutor__actions .jimca-tutor__quick-btn {
+	margin-right: auto;
+	background: transparent;
+}
+
+.jimca-tutor__actions .jimca-tutor__quick-btn:hover,
+.jimca-tutor__actions .jimca-tutor__quick-btn[aria-expanded="true"] {
+	background: var(--jimca-player-selected);
+}
+
+.jimca-tutor__quick {
+	position: absolute;
+	z-index: 3;
+	right: 0;
+	bottom: calc(100% + 10px);
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	max-height: min(320px, 45vh);
+	padding: 8px;
+	overflow-y: auto;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 20px;
+	background: var(--jimca-player-surface);
+	box-shadow: 0 12px 32px rgba(11, 74, 143, 0.18);
+}
+
+.jimca-tutor__quick[hidden] {
+	display: none;
+}
+
+.jimca-tutor__quick-item {
+	min-height: 44px;
+	padding: 0 16px;
+	border: 0;
+	border-radius: 14px;
+	background: transparent;
+	color: var(--jimca-player-fg-strong);
+	font: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: start;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+.jimca-tutor__quick-item:hover {
+	background: var(--jimca-player-selected);
+}
+
+.jimca-tutor__quick-item:focus-visible {
+	outline: 2px solid var(--jimca-accent);
+	outline-offset: -2px;
+}
+
+.jimca-tutor__actions .jimca-tutor__icon-btn[aria-pressed="true"] {
 	background: var(--jimca-accent);
 	color: var(--jimca-accent-fg);
 }
 
-.jimca-tutor__form .jimca-tutor__send:hover {
+.jimca-tutor.is-listening .jimca-tutor__actions [data-jimca-tutor-mic] {
+	animation: jimca-tutor-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes jimca-tutor-pulse {
+	50% {
+		box-shadow: 0 0 0 6px rgba(22, 104, 199, 0.2);
+	}
+}
+
+/* Send is the main action: a filled round button. */
+.jimca-tutor__actions .jimca-tutor__send {
+	width: 44px;
+	height: 44px;
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+}
+
+.jimca-tutor__actions .jimca-tutor__send:hover {
 	background: var(--jimca-accent);
 	filter: brightness(1.15);
 }
 
 .jimca-viewer .jimca-tutor__note {
 	margin: 0;
-	padding: 4px 20px 16px;
+	padding: 4px 24px 16px;
 	font-size: 12px;
 	line-height: 16px;
 	letter-spacing: 0.4px;
+	text-align: center;
 	color: var(--jimca-player-fg);
 }
 
@@ -1407,6 +2018,16 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 	cursor: pointer;
 }
 
+/* High contrast: flat, outlined, no soft glows. */
+.jimca-viewer.jimca-high-contrast .jimca-tutor__panel,
+.jimca-viewer.jimca-high-contrast .jimca-tutor__form {
+	box-shadow: none;
+}
+
+.jimca-viewer.jimca-high-contrast .jimca-tutor__orb {
+	box-shadow: none;
+}
+
 /* On narrow screens the reading bar takes the bottom: the bubble moves up so it does not cover it. */
 @media (max-width: 900px) {
 	.jimca-mode-reader .jimca-tutor__fab {
@@ -1415,6 +2036,324 @@ body.admin-bar .jimca-toc-enhanced .jimca-toc {
 
 	.jimca-mode-reader .jimca-tutor__panel {
 		bottom: 160px;
-		max-height: calc(100vh - 180px);
+		height: calc(var(--jimca-vh, 100vh) - 208px);
+	}
+}
+
+@supports (height: 100dvh) {
+	@media (max-width: 900px) {
+		.jimca-mode-reader .jimca-tutor__panel {
+			height: calc(var(--jimca-vh, 100dvh) - 208px);
+		}
+	}
+}
+
+@media (max-height: 760px) {
+	.jimca-tutor__stage {
+		gap: 16px;
+	}
+
+	.jimca-tutor__stage .jimca-tutor__orb {
+		width: 88px;
+		height: 88px;
+	}
+
+	.jimca-viewer .jimca-tutor__welcome {
+		font-size: 16px;
+		line-height: 24px;
+	}
+}
+
+@media print {
+	.jimca-tutor,
+	.jimca-tutor-restore {
+		display: none !important;
+	}
+}
+
+/* ---------------------------------------------------------------
+ * Long documents in parts (pager.js) and search in the document
+ * ------------------------------------------------------------- */
+.jimca-pager {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+	margin: 1rem 0;
+	padding: 8px 12px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 28px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	font-size: 0.9375rem;
+}
+
+.jimca-pager__link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0 16px;
+	border-radius: 22px;
+	color: var(--jimca-accent);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.jimca-pager__link:hover {
+	background: var(--jimca-player-selected);
+	text-decoration: underline;
+}
+
+.jimca-pager__link.is-disabled {
+	color: var(--jimca-player-fg);
+	opacity: 0.55;
+	pointer-events: none;
+	text-decoration: none;
+}
+
+.jimca-pager__status {
+	flex: 1 1 auto;
+	text-align: center;
+	font-weight: 600;
+}
+
+.jimca-pager__jump {
+	display: inline-flex;
+	flex: 1 1 100%;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.jimca-pager__jump[hidden] {
+	display: none;
+}
+
+.jimca-pager__jump select {
+	max-width: min(28rem, 70vw);
+	min-height: 40px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 8px;
+	background: var(--jimca-bg);
+	color: var(--jimca-fg);
+	font: inherit;
+}
+
+.jimca-pager__link:focus-visible,
+.jimca-pager__jump select:focus-visible,
+.jimca-search__input:focus-visible,
+.jimca-search__button:focus-visible,
+.jimca-search__result:focus-visible,
+.jimca-search__more:focus-visible {
+	outline: 3px solid var(--jimca-accent);
+	outline-offset: 2px;
+}
+
+.jimca-search {
+	margin: 1rem 0;
+}
+
+.jimca-search[hidden] {
+	display: none;
+}
+
+.jimca-search__label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.jimca-search__row {
+	display: flex;
+	gap: 8px;
+}
+
+.jimca-search__input {
+	flex: 1 1 auto;
+	min-width: 0;
+	min-height: 44px;
+	padding: 0 16px;
+	border: 1px solid var(--jimca-player-outline);
+	border-radius: 999px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	font: inherit;
+}
+
+.jimca-search__button,
+.jimca-search__more {
+	min-height: 44px;
+	padding: 0 20px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--jimca-accent);
+	color: var(--jimca-accent-fg);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jimca-search__input {
+	border-color: transparent;
+	background: var(--jimca-player-state);
+	transition: box-shadow 200ms ease, background-color 200ms ease;
+}
+
+/* One clear ring (accent border) instead of the browser outline on top of the border. */
+.jimca-search__input:focus-visible {
+	outline: 0;
+	border: 2px solid var(--jimca-accent);
+	padding: 0 15px;
+	background: var(--jimca-player-surface);
+}
+
+.jimca-search__button:active,
+.jimca-search__more:active {
+	transform: scale(0.94);
+}
+
+.jimca-search__status {
+	margin: 8px 0 0;
+	min-height: 1.5em;
+	color: var(--jimca-player-fg);
+	font-size: 0.875rem;
+}
+
+.jimca-search__list {
+	margin: 8px 0;
+	padding: 0;
+	list-style: none;
+}
+
+.jimca-search__result {
+	display: block;
+	width: 100%;
+	margin: 0 0 4px;
+	padding: 10px 16px;
+	border: 0;
+	border-radius: 16px;
+	background: transparent;
+	color: var(--jimca-player-fg-strong);
+	font: inherit;
+	text-align: start;
+	cursor: pointer;
+}
+
+.jimca-search__result:hover {
+	background: var(--jimca-player-state);
+}
+
+.jimca-search__result mark {
+	padding: 0 2px;
+	border-radius: 3px;
+	background: var(--jimca-highlight-bg);
+	color: inherit;
+}
+
+.jimca-search__where {
+	display: block;
+	margin-top: 2px;
+	color: var(--jimca-player-fg);
+	font-size: 0.8125rem;
+}
+
+/* The passage a search result took the reader to. */
+.jimca-content .jimca-found {
+	outline: 3px solid var(--jimca-accent);
+	outline-offset: 4px;
+	border-radius: 4px;
+}
+
+/*
+ * With the reading bar the navigation by parts lives in the bar and the search
+ * is a panel over the text (opened from the bar's menu): the blocks on the page
+ * are only for readers without JavaScript and for the blog-post mode.
+ */
+.jimca-player-active .jimca-pager {
+	display: none;
+}
+
+.jimca-search__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.jimca-search__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.jimca-search__close:hover {
+	background: var(--jimca-player-state);
+}
+
+.jimca-search__close[hidden] {
+	display: none;
+}
+
+.jimca-search-enhanced .jimca-search {
+	position: fixed;
+	z-index: 44;
+	right: 0;
+	bottom: 92px; /* The JS sets it from the real height of the bar. */
+	left: 0;
+	width: min(560px, calc(var(--jimca-vw, 100vw) - 16px));
+	max-height: calc(var(--jimca-vh, 100vh) - 140px);
+	margin: 0 auto;
+	padding: 8px 12px 12px;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	border-radius: 28px;
+	background: var(--jimca-player-surface);
+	color: var(--jimca-player-fg-strong);
+	box-shadow: var(--jimca-elev-3);
+	transform-origin: bottom center;
+	animation: jimca-search-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jimca-search-enhanced .jimca-search[hidden] {
+	display: none;
+}
+
+.jimca-vp-expanded .jimca-search-enhanced .jimca-search {
+	right: auto;
+	left: 8px;
+	margin-inline: 0;
+}
+
+@keyframes jimca-search-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.7);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.jimca-viewer.jimca-high-contrast.jimca-search-enhanced .jimca-search {
+	outline: 2px solid var(--jimca-player-outline);
+}
+
+@media print {
+	.jimca-pager,
+	.jimca-search {
+		display: none !important;
 	}
 }

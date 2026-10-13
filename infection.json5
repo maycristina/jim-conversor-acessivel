@@ -1,0 +1,16 @@
+{
+    "source": {
+        "directories": [
+            "includes"
+        ],
+        "excludes": [
+            "converters"
+        ]
+    },
+    "logs": {
+        "text": "build/infection/infection.log"
+    },
+    "mutators": {
+        "@default": true
+    }
+}

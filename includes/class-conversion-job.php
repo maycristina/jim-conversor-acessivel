@@ -79,8 +79,10 @@ class JIMCA_Conversion_Job {
 				throw new JIMCA_Converter_Exception( esc_html__( 'Send one file at a time.', 'jim-conversor-acessivel' ) );
 			}
 
-			$received    = $admin->receive_file( $files[0] );
-			$destination = JIMCA_Destination::from_request();
+			// The browser sends the file under a neutral name; the real one travels encoded (see original_name()).
+			$files[0]['name'] = self::original_name( $files[0]['name'] );
+			$received         = $admin->receive_file( $files[0] );
+			$destination      = JIMCA_Destination::from_request();
 		} catch ( \Throwable $e ) {
 			wp_send_json_error( array( 'message' => $admin->record_failure( $e ) ) );
 		}
@@ -90,7 +92,8 @@ class JIMCA_Conversion_Job {
 			'user'         => get_current_user_id(),
 			'status'       => 'queued',
 			'received'     => $received,
-			'title'        => isset( $_POST['jimca_title'] ) ? sanitize_text_field( wp_unslash( $_POST['jimca_title'] ) ) : '',
+			'title'        => self::title_for( $received ),
+			'index'        => isset( $_POST['jimca_index'] ) ? min( 200, absint( $_POST['jimca_index'] ) ) : 0,
 			'remove_pages' => ! empty( $_POST['jimca_remove_pages'] ),
 			'destination'  => $destination,
 			'stage'        => 'queued',
@@ -114,6 +117,69 @@ class JIMCA_Conversion_Job {
 		self::index_add( $job['id'] );
 
 		wp_send_json_success( array( 'job' => $job['id'] ) );
+	}
+
+	/**
+	 * The file's real name, sent by the browser as base64url of its UTF-8 bytes
+	 * in "jimca_name" while the upload itself carries a neutral name. Firewalls
+	 * (ModSecurity and similar) match words of the Latin alphabet in the names
+	 * of uploaded files and refuse the request with a 403 that never reaches
+	 * WordPress; a neutral name and an encoded real one give them nothing to match.
+	 *
+	 * @param string $neutral Name the file arrived with.
+	 * @return string The decoded name, unsanitized; '' when it is missing, invalid or has another extension than the file.
+	 */
+	private static function decoded_name( $neutral ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- the nonce is checked in ajax_start() before this runs.
+		$raw = isset( $_POST['jimca_name'] ) ? sanitize_text_field( wp_unslash( $_POST['jimca_name'] ) ) : '';
+
+		if ( ! preg_match( '/^[A-Za-z0-9_-]{1,700}$/', $raw ) ) {
+			return '';
+		}
+
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- decodes a file name, not code; the result is validated here and sanitized by the callers.
+		$decoded = base64_decode( strtr( $raw, '-_', '+/' ), true );
+
+		if ( false === $decoded || ! mb_check_encoding( $decoded, 'UTF-8' ) ) {
+			return '';
+		}
+
+		// Never let the encoded name change what kind of file this is.
+		if ( strtolower( pathinfo( $decoded, PATHINFO_EXTENSION ) ) !== strtolower( pathinfo( $neutral, PATHINFO_EXTENSION ) ) ) {
+			return '';
+		}
+
+		return $decoded;
+	}
+
+	/**
+	 * @param string $neutral Sanitized name the file arrived with.
+	 * @return string The real name, sanitized; the neutral one when there is none.
+	 */
+	private static function original_name( $neutral ) {
+		$name = sanitize_file_name( self::decoded_name( $neutral ) );
+
+		return '' !== $name ? $name : $neutral;
+	}
+
+	/**
+	 * Title typed by the user, or the real file name without extension (with
+	 * its accents and spaces).
+	 *
+	 * @param array $received receive_file() result.
+	 * @return string
+	 */
+	private static function title_for( array $received ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- the nonce is checked in ajax_start().
+		$typed = isset( $_POST['jimca_title'] ) ? sanitize_text_field( wp_unslash( $_POST['jimca_title'] ) ) : '';
+
+		if ( '' !== $typed ) {
+			return $typed;
+		}
+
+		$real = self::decoded_name( $received['name'] );
+
+		return '' !== $real ? sanitize_text_field( pathinfo( $real, PATHINFO_FILENAME ) ) : '';
 	}
 
 	/**
@@ -156,7 +222,10 @@ class JIMCA_Conversion_Job {
 			$job['status']  = 'running';
 			$job['stage']   = 'reading';
 			$job['started'] = microtime( true );
-			JIMCA_Admin::log_start( $job['received'] );
+			// Other formats log their start in convert_received(); only the PDF steps do not pass through it.
+			if ( 'pdf' === $job['received']['ext'] ) {
+				JIMCA_Admin::log_start( $job['received'] );
+			}
 		}
 
 		// Each retry halves the step, in case this host ends requests sooner than expected.
@@ -252,7 +321,7 @@ class JIMCA_Conversion_Job {
 		wp_delete_file( $file );
 		JIMCA_Admin::cleanup_original( $job['received'] );
 
-		$post_id = $admin->create_document( $job['received'], wp_kses_post( JIMCA_Pdf_Converter::finish( $html ) ), $store, $job['title'], (float) $job['started'], self::destination_of( $job ) );
+		$post_id = $admin->create_document( $job['received'], wp_kses_post( JIMCA_Pdf_Converter::finish( $html ) ), $store, $job['title'], (float) $job['started'], self::destination_of( $job ), (int) ( isset( $job['index'] ) ? $job['index'] : 0 ) );
 
 		$job['status']    = 'done';
 		$job['post_id']   = $post_id;
@@ -270,7 +339,7 @@ class JIMCA_Conversion_Job {
 	 */
 	private static function run_single_step( array $job ) {
 		$admin   = JIMCA_Admin::get_instance();
-		$post_id = $admin->convert_received( $job['received'], $job['title'], $job['remove_pages'], array( __CLASS__, 'on_progress' ), self::destination_of( $job ) );
+		$post_id = $admin->convert_received( $job['received'], $job['title'], $job['remove_pages'], array( __CLASS__, 'on_progress' ), self::destination_of( $job ), (int) ( isset( $job['index'] ) ? $job['index'] : 0 ) );
 
 		$job            = self::$running;
 		$job['status']  = 'done';
@@ -490,7 +559,19 @@ class JIMCA_Conversion_Job {
 	 * @return array
 	 */
 	private static function public_view( array $job ) {
+		$post = null;
+
+		if ( 'done' === $job['status'] && ! empty( $job['post_id'] ) ) {
+			$post = array(
+				'title'     => get_the_title( (int) $job['post_id'] ),
+				'edit'      => (string) get_edit_post_link( (int) $job['post_id'], 'raw' ),
+				'shortcode' => '[' . JIMCA_Shortcode::TAG . ' id="' . (int) $job['post_id'] . '"]',
+				'unreadable' => (bool) get_post_meta( (int) $job['post_id'], '_jimca_unreadable', true ),
+			);
+		}
+
 		return array(
+			'post'     => $post,
 			'status'   => $job['status'],
 			'stage'    => $job['stage'],
 			'done'     => (int) $job['done'],

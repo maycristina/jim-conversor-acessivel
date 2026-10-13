@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<ruleset name="Jim - Conversor Acessivel"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+	<description>Padrão de código do Jim: WordPress Coding Standards (inclui segurança e i18n) e compatibilidade com PHP 7.4+.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/dist/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/docs/*</exclude-pattern>
+	<exclude-pattern>*/documentacao/*</exclude-pattern>
+	<exclude-pattern>*/_privado/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg value="ps"/>
+	<arg name="colors"/>
+
+	<!-- Avisos aparecem no Pull Request, mas só erros reprovam a verificação. -->
+	<config name="ignore_warnings_on_exit" value="1"/>
+
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_wp_version" value="6.0"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!--
+		WordPress-Extra: segurança (escape, nonce, SQL), correção, i18n e nomes.
+		Fora de propósito ficam o estilo de comentários e o alinhamento (WordPress-Docs):
+		o projeto comenta o porquê, não cada parâmetro.
+	-->
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="Universal.Files.SeparateFunctionsFromOO"/>
+		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
+
+		<!-- Só formatação (o repositório tem arquivos com fim de linha Windows e modelos HTML/PHP com indentação própria). -->
+		<exclude name="Generic.Files.LineEndings"/>
+		<exclude name="Generic.WhiteSpace.ScopeIndent"/>
+		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound"/>
+		<exclude name="WordPress.PHP.YodaConditions"/>
+		<exclude name="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
+		<exclude name="Generic.Formatting.DisallowMultipleStatements"/>
+		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace"/>
+
+		<!-- Nomes que vêm das bibliotecas (PHPWord, DOM, PDFParser): não dá para renomear. -->
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="jim-conversor-acessivel"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="jimca"/>
+				<element value="JIMCA"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

@@ -21,10 +21,11 @@ Versão 2.0.0 · GPL v2 ou posterior
 ## Como fica para quem lê
 
 Uma barra flutuante acompanha o leitor enquanto ele rola o documento: sumário, tamanho do
-texto, tema de leitura (Claro, Sépia e Escuro), alto contraste, escolha da voz, ouvir/pausar,
-velocidade, parar — e um botão para ocultar a barra inteira.
+texto, ajustes (voz e tema: Claro, Sépia, Escuro e Alto contraste), menu com busca e sumário,
+ouvir/pausar, velocidade (um toque passa para a próxima), parar, partes de documentos longos
+(`‹ 2/93 ›`) — e um botão para ocultar a barra inteira.
 
-- **Sumário lateral:** quando o documento tem títulos, o primeiro botão da barra abre um
+- **Sumário lateral:** quando o documento tem títulos, o menu (≡) da barra tem o item Sumário, que abre um
   painel à esquerda com a lista de partes, capítulos e seções, marcando a seção que está
   sendo lida. Os títulos vêm dos estilos de título do Word (Título 1, Título 2…) ou do
   sumário (marcadores) do PDF. Sem JavaScript, o sumário aparece como uma lista antes do texto.
@@ -111,8 +112,8 @@ por inteiro; o aviso depois da conversão lista cada causa de imagem que ficou d
 ## Markdown e envio de vários arquivos
 
 Arquivos `.md` são convertidos em HTML (títulos, listas, tabelas, código, links; HTML dentro do
-arquivo vira texto). TXT e MD podem ser enviados **vários de uma vez** (até 20): cada um vira
-um documento e o aviso traz a lista de shortcodes, um por linha. PDF e DOCX são enviados um por vez.
+arquivo vira texto). Podem ser enviados **vários arquivos de uma vez** (até 20, de qualquer tipo, dentro do limite configurado): cada um vira
+um documento, convertido em fila, e o aviso traz a lista de shortcodes, um por linha. Sem JavaScript no navegador, o lote aceita só TXT e MD.
 
 ## SEO, marcador e tutor de IA
 

@@ -91,7 +91,7 @@ e as media queries valerem 390 px), com `ontouchstart` definido e voz simulada.
 | Verificação | Resultado |
 |---|---|
 | `--jimca-vw` e rolagem horizontal | `390px`; sem rolagem horizontal, também no fim da página |
-| Barra de leitura | 8 a 367 px: inteira dentro da tela; 7 botões, 48 px de altura e 40 px de largura (mínimo WCAG 2.2: 24 px); nenhum fora da tela |
+| Barra de leitura | 8 a 367 px: inteira dentro da tela; 8 botões (9 em documento em partes), 48 px de altura e 32 a 48 px de largura (mínimo WCAG 2.2: 24 px); o play fica sempre no centro; até 520 px, com paginação, a paginação desce para uma segunda linha; nenhum fora da tela |
 | Menus de tamanho, voz e velocidade | Todos dentro da tela (8–116, 76–197, 185–293 px) |
 | Ouvir com o parágrafo 14 no topo | Começou no 14, não no início |
 | Parar | 0 trechos falados depois; aviso "Reading stopped."; sem destaque |

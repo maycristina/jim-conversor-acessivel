@@ -121,7 +121,7 @@ msgstr ""
 msgid "AI tutor for readers"
 msgstr ""
 
-msgid "AI-generated answers may contain errors. Your questions and parts of the document are sent to %s."
+msgid "Jim AI: may make mistakes. Don't type personal data. Your messages are processed by an external service."
 msgstr ""
 
 msgid "API key"
@@ -1637,5 +1637,308 @@ msgid "Skip to the reading controls"
 msgstr ""
 
 msgid "Skip to the contents list"
+msgstr ""
+
+msgid "The server's firewall blocked this file (HTTP %s) before it reached WordPress, so Jim never received it. Ask your host to check the firewall log for the request to admin-ajax.php (the rule ID) and allow it."
+msgstr ""
+
+msgid "File %1$s of %2$s: %3$s"
+msgstr ""
+
+msgid "%1$s of %2$s files converted."
+msgstr ""
+
+msgid "View documents"
+msgstr ""
+
+msgid "JIM - Assistant"
+msgstr ""
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your AI account, so every answer has a cost."
+msgstr ""
+
+msgid "Provider"
+msgstr ""
+
+msgid "1. Connect"
+msgstr ""
+
+msgid "Sends one test sentence, with no document text."
+msgstr ""
+
+msgid "2. Choose the model"
+msgstr ""
+
+msgid "3. Turn on"
+msgstr ""
+
+msgid "JIM"
+msgstr ""
+
+msgid "Turn JIM on"
+msgstr ""
+
+msgid "JIM is on: it appears on every document."
+msgstr ""
+
+msgid "JIM stays hidden until a key is saved and this is turned on."
+msgstr ""
+
+msgid "To hide JIM on one page: %s"
+msgstr ""
+
+msgid "Advanced: name, instructions and limits"
+msgstr ""
+
+msgid "What JIM should do. It always answers from the document, ignores commands hidden in it and replies in the reader's language. Empty = default text."
+msgstr ""
+
+msgid "They keep the cost of your key under control."
+msgstr ""
+
+msgid "Save JIM"
+msgstr ""
+
+msgid "Objective and direct. No introductions or greetings."
+msgstr ""
+
+msgid "You are an objective, direct reading assistant. Keep answers short (3 sentences at most) and go straight to the point, with no introductions or greetings. Golden rule: never give spoilers. Answer strictly what I ask, guiding me through the document without revealing outcomes, conclusions or big twists. If the answer requires revealing what happens later in the text, only tell me which section I can find that answer in, without spoiling the surprise."
+msgstr ""
+
+msgid "Share as image"
+msgstr ""
+
+msgid "Download as text"
+msgstr ""
+
+msgid "Image ready."
+msgstr ""
+
+msgid "Text file downloaded."
+msgstr ""
+
+msgid "Could not create the image."
+msgstr ""
+
+msgid "Download the conversation"
+msgstr ""
+
+msgid "Conversation downloaded."
+msgstr ""
+
+msgid "Challenge me"
+msgstr ""
+
+msgid "Ask me one challenging question about this document. Wait for my answer before giving the correct one."
+msgstr ""
+
+msgid "Memory game"
+msgstr ""
+
+msgid "Play a memory game: pick a short passage of this document and show it with some key words replaced by ____. I will try to remember them; wait for my answer before revealing the words."
+msgstr ""
+
+msgid "Quick texts"
+msgstr ""
+
+msgid "This PDF (%1$s) is too large for this server's memory, which converts PDFs up to about %2$s. Split it into parts, or ask your host to raise the PHP memory limit."
+msgstr ""
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr ""
+
+msgid "Upload a PDF, DOCX, TXT or Markdown (.md) file to generate an accessible page (with reading aloud) and a shortcode to publish it. You can send several files at a time: each one becomes a document and you get the list of shortcodes."
+msgstr ""
+
+msgid "Choose up to %s files at a time."
+msgstr ""
+
+msgid "This file is %1$s; the limit here is %2$s."
+msgstr ""
+
+msgid "Created, but the text is unreadable: the PDF fonts do not say which letter each character is. Try another copy of the PDF, or run OCR on it first."
+msgstr ""
+
+msgid "Accepted types: %1$s. Maximum size per file: %2$s (you can raise this limit in %5$s; PDF: about %4$s on this server). Up to %3$d files at a time, converted one after another: keep this page open until the last one finishes."
+msgstr ""
+
+msgid "Review"
+msgstr ""
+
+msgid "Reviewing…"
+msgstr ""
+
+msgid "The review could not run. Try again."
+msgstr ""
+
+msgid "Open to fix"
+msgstr ""
+
+msgid "Parts of the document"
+msgstr ""
+
+msgid "Previous part"
+msgstr ""
+
+msgid "Next part"
+msgstr ""
+
+msgid "Part %1$s of %2$s"
+msgstr ""
+
+msgid "Go to part"
+msgstr ""
+
+msgid "Search in the document"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Could not load this part. Try again."
+msgstr ""
+
+msgid "Searching…"
+msgstr ""
+
+msgid "Type at least 2 letters."
+msgstr ""
+
+msgid "The search could not run. Try again."
+msgstr ""
+
+msgid "Too many searches in a short time. Wait a minute and try again."
+msgstr ""
+
+msgid "No results."
+msgstr ""
+
+msgid "%s result."
+msgstr ""
+
+msgid "%s results."
+msgstr ""
+
+msgid "Show more results"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Narrator"
+msgstr ""
+
+msgid "Female"
+msgstr ""
+
+msgid "Male"
+msgstr ""
+
+msgid "Automatic"
+msgstr ""
+
+msgid "Type of voice"
+msgstr ""
+
+msgid "All voices"
+msgstr ""
+
+msgid "Reading speed: %s"
+msgstr ""
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr ""
+
+msgid "Settings tour (assistant and quick texts)"
+msgstr ""
+
+msgid "Welcome to Settings"
+msgstr ""
+
+msgid "This short tour shows the rules for uploaded files and the JIM assistant, the chat where readers ask about a document, including the quick texts you can choose. Leave it at any time with the Esc key."
+msgstr ""
+
+msgid "File rules"
+msgstr ""
+
+msgid "Choose which file types can be converted and the largest size accepted. Your host may have a smaller limit than the one set here."
+msgstr ""
+
+msgid "Readers chat with JIM about the document they are reading. JIM answers through your own AI account, so every answer has a cost."
+msgstr ""
+
+msgid "Connect and turn on"
+msgstr ""
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Until then JIM stays hidden from readers."
+msgstr ""
+
+msgid "Advanced options"
+msgstr ""
+
+msgid "Open \"Advanced\" to set who can use JIM, its name, personality, instructions, greeting, quick texts, limits and saved answers."
+msgstr ""
+
+msgid "These are the suggestions readers see at the start of the chat and under the = button. Tick which ones to show, rename them, change the text they put in the field, add your own (up to 12) or turn them all off. \"Send at once\" sends the text without the reader typing, good for challenges. Tick \"Restore the standard quick texts\" to go back to the original five."
+msgstr ""
+
+msgid "Click \"Save JIM\" for the changes to reach the readers. They appear the next time a document page is loaded."
+msgstr ""
+
+msgid "Tour of the Settings (assistant and quick texts)"
+msgstr ""
+
+msgid "In Settings, save an API key (stored encrypted) for OpenRouter, Claude (Anthropic), OpenAI, Gemini (Google) or DeepSeek, choose the model and test the connection. Then you can turn on the AI tutor: a chat bubble on the document page where readers ask questions about that document, by text or voice. You set its name, personality, instructions and greeting, where it appears and how many questions it answers. Under Settings > JIM > Advanced > Quick texts you also choose the suggestions readers see at the start of the chat and under the = button: show or hide each one, rename it, change its text, add your own (up to 12), make it send at once or turn them all off. Each question, with passages of the document, is sent to the provider you chose."
+msgstr ""
+
+msgid "Show the quick texts in the chat (the suggestions at the start and the = button)."
+msgstr ""
+
+msgid "Choose which ones appear, rename them, change the text they put in the field or add your own (up to 12). \"Send at once\" sends the text without the reader typing anything, good for challenges. A row with an empty name or text is discarded when you save."
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Button name"
+msgstr ""
+
+msgid "Text put in the field"
+msgstr ""
+
+msgid "Send at once"
+msgstr ""
+
+msgid "quick text %d"
+msgstr ""
+
+msgid "Show %s"
+msgstr ""
+
+msgid "Button name of %s"
+msgstr ""
+
+msgid "Text of %s"
+msgstr ""
+
+msgid "Send %s at once"
+msgstr ""
+
+msgid "Restore the standard quick texts when I save."
+msgstr ""
+
+msgid "Pick a PDF, DOCX, TXT or Markdown file. You can send up to 20 files in a batch at a time, within the configured limit."
+msgstr ""
+
+msgid "Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes."
+msgstr ""
+
+msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
 msgstr ""
 

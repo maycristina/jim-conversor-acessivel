@@ -5,3 +5,9 @@ composer.lock
 
 # Claude Code personal settings
 .claude/settings.local.json
+
+# QA
+/build/
+.phpunit.result.cache
+/node_modules/
+/package-lock.json

@@ -1,0 +1,29 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+    phpVersion: 70400
+    paths:
+        - jim-conversor-acessivel.php
+        - uninstall.php
+        - admin
+        - includes
+        - templates
+    excludePaths:
+        analyse:
+            - vendor
+    bootstrapFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+        - tests/phpstan-bootstrap.php
+    scanDirectories:
+        - vendor/woocommerce/action-scheduler
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # Os arquivos do WordPress (wp-admin/includes/...) não existem no CI.
+        - identifier: requireOnce.fileNotFound
+        - identifier: include.fileNotFound
+        # O WordPress aceita número em esc_attr(); os stubs só declaram string.
+        -
+            message: '#Parameter \#1 \$text of function esc_attr expects string, int#'
+            identifier: argument.type

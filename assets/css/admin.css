@@ -332,17 +332,41 @@
 	color: #000;
 }
 
-/* AI card: one group per provider. */
-.jimca-ai-provider {
-	margin: 1rem 0;
-	padding: 0 1rem;
-	border: 1px solid #dcdcde;
-	border-radius: 6px;
+/* Assistant card: three steps in one form; the blocks of the providers not chosen are hidden by admin.js. */
+.jimca-assistant__step {
+	margin: 1.5rem 0 0.25rem;
+	font-size: 1rem;
 }
 
-.jimca-ai-provider legend {
-	padding: 0 0.4rem;
+.jimca-ai-provider[hidden] {
+	display: none;
+}
+
+.jimca-assistant__advanced {
+	margin: 1.5rem 0 0;
+}
+
+.jimca-assistant__advanced summary {
+	cursor: pointer;
 	font-weight: 600;
+}
+
+/* Documents list: result of the quick conversion review, under its button. */
+.jimca-review-status {
+	display: block;
+	margin-top: 6px;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+/* The review box now lives in the narrow sidebar. */
+#jimca_documento_audit .jimca-audit__list {
+	margin-left: 1.2em;
+	padding: 0;
+}
+
+#jimca_documento_audit .jimca-audit__item .button {
+	margin-top: 6px;
 }
 
 .jimca-admin-progress__bar {
@@ -532,4 +556,30 @@
 
 .jimca-tour-button {
 	margin-top: 0.5rem;
+}
+
+/* Quick texts of the assistant (Settings > JIM > Advanced). */
+.jimca-chips {
+	max-width: 900px;
+	margin: 8px 0;
+}
+
+.jimca-chips th,
+.jimca-chips td {
+	vertical-align: top;
+	text-align: start;
+}
+
+.jimca-chips td:first-child,
+.jimca-chips td:last-child,
+.jimca-chips th:first-child,
+.jimca-chips th:last-child {
+	width: 1%;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.jimca-chips .regular-text {
+	width: 100%;
+	max-width: 16em;
 }

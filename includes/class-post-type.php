@@ -70,6 +70,11 @@ class JIMCA_Post_Type {
 		$new_columns = array();
 
 		foreach ( $columns as $key => $label ) {
+			// Quick access to the conversion review, just before the date.
+			if ( 'date' === $key ) {
+				$new_columns['jimca_review'] = __( 'Conversion review', 'jim-conversor-acessivel' );
+			}
+
 			$new_columns[ $key ] = $label;
 			if ( 'title' === $key ) {
 				$new_columns['jimca_shortcode'] = __( 'Shortcode', 'jim-conversor-acessivel' );
@@ -86,6 +91,18 @@ class JIMCA_Post_Type {
 			$mode  = self::get_mode( $post_id );
 			$modes = JIMCA_Admin::get_display_modes();
 			echo '<span data-jimca-mode="' . esc_attr( $mode ) . '">' . esc_html( $modes[ $mode ] ) . '</span>';
+			return;
+		}
+
+		if ( 'jimca_review' === $column ) {
+			// Run by assets/js/auditor.js without opening the document; the result appears under the button.
+			printf(
+				'<button type="button" class="button button-small" data-jimca-review="%1$d" data-jimca-edit="%2$s" aria-describedby="jimca-review-status-%1$d">%3$s<span class="screen-reader-text"> %4$s</span></button><span class="jimca-review-status" id="jimca-review-status-%1$d" role="status" aria-live="polite"></span>',
+				(int) $post_id,
+				esc_url( get_edit_post_link( $post_id, 'raw' ) . '#jimca_documento_audit' ),
+				esc_html__( 'Review', 'jim-conversor-acessivel' ),
+				esc_html( get_the_title( $post_id ) )
+			);
 			return;
 		}
 
@@ -213,8 +230,8 @@ class JIMCA_Post_Type {
 			__( 'Conversion review', 'jim-conversor-acessivel' ),
 			array( $this, 'render_audit_meta_box' ),
 			self::POST_TYPE,
-			'normal',
-			'high'
+			'side',
+			'low'
 		);
 	}
 

@@ -253,3 +253,35 @@ test( 'format() fills %s and %1$s placeholders in order', () => {
 	assert.equal( format( 'Step %1$s of %2$s', [ 2, 9 ] ), 'Step 2 of 9' );
 	assert.equal( format( '%s / %s', [ 'a', 'b' ] ), 'a / b' );
 } );
+
+test( 'a control inside a closed <details> (advanced options) opens it when the step points to it; a <summary> does not', () => {
+	const dom = new JSDOM(
+		'<!doctype html><body><details id="adv"><summary id="sum">Advanced</summary><p><input id="quick"></p></details></body>',
+		{ pretendToBeVisual: true }
+	);
+	const { window } = dom;
+
+	// jsdom has no layout: what is inside a closed <details> (except its summary) is not rendered.
+	window.HTMLElement.prototype.getClientRects = function () {
+		const details = this.closest( 'details' );
+		const hidden = details && ! details.open && ! this.closest( 'summary' ) && details !== this;
+
+		return hidden ? [] : [ {} ];
+	};
+
+	const tour = create( window.document, {
+		steps: [
+			{ target: [ '#sum' ], title: 'Summary', text: 'Advanced.' },
+			{ target: [ '#quick' ], title: 'Quick', text: 'Quick texts.' }
+		],
+		strings: STRINGS
+	} );
+	const next = () => window.document.querySelector( '.jimca-tour__actions .button-primary' );
+
+	tour.start();
+	assert.equal( window.document.getElementById( 'adv' ).open, false, 'pointing at the summary leaves it closed' );
+
+	next().dispatchEvent( new window.MouseEvent( 'click', { bubbles: true } ) );
+	assert.equal( window.document.getElementById( 'adv' ).open, true );
+	assert.ok( window.document.getElementById( 'quick' ).classList.contains( 'jimca-tour-target' ), 'the control is highlighted' );
+} );

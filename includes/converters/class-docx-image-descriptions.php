@@ -98,7 +98,7 @@ class JIMCA_Docx_Image_Descriptions {
 		// Older format (VML), from Word 2003/2007 documents.
 		foreach ( $xpath->query( '//v:shape[v:imagedata]' ) as $shape ) {
 			$imagedata   = $xpath->query( 'v:imagedata', $shape )->item( 0 );
-			$description = trim( $shape->getAttribute( 'alt' ) );
+			$description = $shape instanceof \DOMElement ? trim( $shape->getAttribute( 'alt' ) ) : '';
 
 			if ( '' === $description && $imagedata instanceof \DOMElement ) {
 				$description = trim( $imagedata->getAttributeNS( self::NS_O, 'title' ) );
