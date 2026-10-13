@@ -1,5 +1,14 @@
 # Changelog
 
+## Não lançado
+
+### Site e documentação
+- A seção "Painéis, barra de leitura e limites" da documentação foi traduzida para espanhol, francês, alemão, russo, chinês e hindi
+  (traduções sem revisão nativa), e a seção do assistente dessas línguas foi atualizada como a do português.
+- Gravações novas na documentação e na página inicial: conversão em lote, PDFs grandes em lote (2.055 páginas com cronômetro),
+  leitura em voz alta no tema claro, textos rápidos no tema sépia e busca no documento com o assistente aberto (nova). Viraram
+  WebP animado (5,7 MB no total; os originais somavam 34 MB), cada uma com um quadro parado para "Reduzir movimento".
+
 ## 2.2.0 (2026-10-13)
 
 ### Novo
