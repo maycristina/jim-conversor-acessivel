@@ -152,10 +152,13 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 
 == Screenshots ==
 
-1. A converted document with the floating reading bar: menu, settings, text size, play/pause, speed, stop, parts and hide.
-2. The same document on a phone, with the bar fitting seven controls at a 48px touch target.
-3. The appearance menu open above the bar, following the Material Design 3 menu pattern.
-4. The in-plugin Tutorial screen: what the plugin is, how to use it, version and authorship.
+1. A converted document with the floating reading bar (menu, settings, text size, play/pause, speed, stop and hide) and the assistant button.
+2. Listening: the passage being read aloud is highlighted.
+3. The JIM assistant in the Sepia theme, with quick prompts, next to a document split into parts.
+4. Search in the document, with the assistant open.
+5. Batch import: 20 files converted, each with its shortcode, also published as pages.
+6. Large PDFs are converted in steps with progress on screen (here, a 2,055-page book).
+7. Settings > JIM: turn the assistant on and set who can use it, its name, personality and instructions.
 
 == Changelog ==
 
