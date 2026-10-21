@@ -18,7 +18,8 @@
 .a11y__sz{display:flex;gap:6px}
 .a11y__reset{width:100%;min-height:48px;margin-top:6px;border-radius:12px;border:2px solid #0b4a8f;background:#fff;color:#0b4a8f;font:700 .92rem/1 "Onest",system-ui,sans-serif;cursor:pointer}
 .a11y__note{margin:10px 0 0;font:.8rem/1.45 "Onest",system-ui,sans-serif;color:#3b4856}
-@media (max-width:560px){.a11y{left:10px;bottom:84px}.a11y__btn span{display:none}.a11y__btn{padding:0 11px}}
+@media (max-width:820px){.a11y{bottom:calc(22px + var(--jh-consent-h,0px))}}
+@media (max-width:560px){.a11y{left:10px}.a11y__btn span{display:none}.a11y__btn{padding:0 11px}}
 
 /* ---- efeitos no site ---- */
 html.a11y-links a{text-decoration:underline!important;text-underline-offset:3px!important;text-decoration-thickness:2px!important}

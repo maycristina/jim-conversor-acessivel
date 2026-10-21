@@ -89,6 +89,7 @@
 	function close() {
 		if (!box) { return; }
 		box.hidden = true;
+		document.documentElement.style.removeProperty('--jh-consent-h');
 		document.removeEventListener('keydown', onKey);
 		// Devolve o foco só se o aviso foi aberto pelo botão do rodapé, sem rolar a página.
 		if (returnFocus) { returnFocus.focus({ preventScroll: true }); returnFocus = null; }
@@ -117,6 +118,8 @@
 			document.body.appendChild(box);
 		}
 		box.hidden = false;
+		// o botão de acessibilidade sobe acima do aviso enquanto ele está aberto
+		document.documentElement.style.setProperty('--jh-consent-h', box.offsetHeight + 'px');
 		document.addEventListener('keydown', onKey);
 		// Aberto pelo rodapé: leva o foco ao aviso, sem rolar. Aberto no carregamento: não rouba o foco.
 		if (e && e.currentTarget) {

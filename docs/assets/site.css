@@ -345,3 +345,6 @@ html[data-motion=reduced] .jh-ba__lane li{transition:none}
 .split>*,.ia-block>*{min-width:0}
 @media (max-width:860px){.split,.ia-block{grid-template-columns:minmax(0,1fr)}}
 .chat__head{flex-wrap:wrap}
+
+/* cabeçalho: fr, de e ru têm rótulos mais longos; a barra tem largura máxima fixa, então o menu fica um pouco mais justo */
+@media (min-width:1280px){html[lang^="fr"] .top__bar,html[lang^="de"] .top__bar,html[lang^="ru"] .top__bar{gap:8px}html[lang^="fr"] .nav,html[lang^="de"] .nav,html[lang^="ru"] .nav{margin-left:0}html[lang^="fr"] .nav a,html[lang^="de"] .nav a,html[lang^="ru"] .nav a{padding:0 6px;font-size:.88rem}html[lang^="fr"] .top__end,html[lang^="de"] .top__end,html[lang^="ru"] .top__end{gap:6px}}
