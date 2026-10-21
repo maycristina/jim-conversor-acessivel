@@ -4,51 +4,51 @@
 	'use strict';
 	var TEXTS = {
  "pt": {
-  "text": "Este site usa o Cloudflare Web Analytics, sem cookies, para contar visitas. Com a sua permissão, usa também o Microsoft Clarity, que grava como a página é usada (cliques e rolagem) e pode usar cookies, para melhorar o site.",
-  "accept": "Aceitar o Clarity",
-  "decline": "Recusar",
+  "text": "Contamos visitas sem cookies. Podemos também usar o Microsoft Clarity para ver como a página é usada e melhorar o site?",
+  "accept": "Sim, pode",
+  "decline": "Não",
   "policy": "Política de privacidade",
   "prefs": "Preferências de privacidade"
  },
  "es": {
-  "text": "Este sitio utiliza Cloudflare Web Analytics sin cookies para contar las visitas. Con su permiso, también use Microsoft Clarity, que registra cómo se utiliza la página (clics y desplazamiento) y puede utilizar cookies para mejorar el sitio web.",
-  "accept": "Aceptar Clarity",
-  "decline": "Rechazar",
+  "text": "Contamos visitas sin cookies. ¿También podemos utilizar Microsoft Clarity para ver cómo se utiliza la página y mejorar el sitio?",
+  "accept": "Sí",
+  "decline": "No, gracias",
   "policy": "Política de privacidad",
   "prefs": "Preferencias de privacidad"
  },
  "fr": {
-  "text": "Ce site utilise Cloudflare Web Analytics sans cookies pour compter les visites. Avec votre permission, utilisez également Microsoft Clarity, qui enregistre comment la page est utilisée (clics et défilement) et peut utiliser des cookies pour améliorer le site Web.",
-  "accept": "Accepter Clarity",
-  "decline": "Refuser",
+  "text": "Nous comptons les visites sans cookies. Pouvons-nous également utiliser Microsoft Clarity pour voir comment la page est utilisée et améliorer le site?",
+  "accept": "Oui",
+  "decline": "Non, merci",
   "policy": "Politique de confidentialité",
   "prefs": "Préférences de confidentialité"
  },
  "de": {
-  "text": "Diese Website verwendet Cloudflare Web Analytics ohne Cookies, um Besuche zu zählen. Verwenden Sie mit Ihrer Erlaubnis auch Microsoft Clarity, das aufzeichnet, wie die Seite verwendet wird (Klicks und Scrollen) und Cookies zur Verbesserung der Website verwenden kann.",
-  "accept": "Clarity akzeptieren",
-  "decline": "Abfall",
+  "text": "Wir zählen Besuche ohne Cookies. Können wir auch Microsoft Clarity verwenden, um zu sehen, wie die Seite verwendet wird und die Website zu verbessern?",
+  "accept": "Ja",
+  "decline": "Nein, danke",
   "policy": "Datenschutzpolitik",
   "prefs": "Datenschutzpräferenzen"
  },
  "ru": {
-  "text": "Этот сайт использует Cloudflare Web Analytics без файлов cookie для подсчета посещений. С вашего разрешения также используйте Microsoft Clarity, которая записывает, как используется страница (клики и прокрутка), и может использовать файлы cookie для улучшения веб-сайта.",
-  "accept": "Примите Clarity",
-  "decline": "отказываться",
+  "text": "Мы считаем посещения без cookies. Можем ли мы также использовать Microsoft Clarity, чтобы увидеть, как используется страница и улучшить сайт?",
+  "accept": "Да",
+  "decline": "Нет, спасибо",
   "policy": "Политика конфиденциальности",
   "prefs": "Предпочтения конфиденциальности"
  },
  "zh": {
-  "text": "这个网站使用Cloudflare Web Analytics不用饼干就可以计算访问次数. 在您的许可下,也可以使用Microsoft Clarity来记录页面的使用方式(点击和滚动),并可以使用cookie来改进网站.",
-  "accept": "接受Clarity",
-  "decline": "拒绝",
+  "text": "我们数一下不使用cookies的访问。 我们能否也使用微软Clarity来查看该页面如何使用和改进该网站?",
+  "accept": "对",
+  "decline": "不,谢谢",
   "policy": "隐私政策",
   "prefs": "隐私首选项"
  },
  "hi": {
-  "text": "यह साइट बिना कुकीज़ के Cloudflare वेब एनालिटिक्स का उपयोग करती है। आपकी अनुमति के साथ, Microsoft Clarity का भी उपयोग करें, जो यह रिकॉर्ड करता है कि पृष्ठ का उपयोग कैसे किया जाता है (क्लिक और स्क्रॉलिंग) और वेबसाइट को बेहतर बनाने के लिए कुकीज़ का उपयोग कर सकता है।",
-  "accept": "Clarity को स्वीकार करना",
-  "decline": "मना करना",
+  "text": "हम कुकीज़ के बिना यात्रा करते हैं। क्या हम Microsoft Clarity का उपयोग यह देखने के लिए कर सकते हैं कि कैसे पृष्ठ का उपयोग किया जाता है और साइट में सुधार किया जाता है?",
+  "accept": "हाँ",
+  "decline": "नहीं, धन्यवाद",
   "policy": "गोपनीयता नीति",
   "prefs": "गोपनीयता प्राथमिकता"
  }
@@ -84,16 +84,24 @@
 	var gpc = navigator.globalPrivacyControl === true;
 	if (gpc && stored() === null) { store('denied'); }
 
-	var box = null;
-	function close() { if (box) { box.hidden = true; } }
+	var box = null, returnFocus = null;
+
+	function close() {
+		if (!box) { return; }
+		box.hidden = true;
+		document.removeEventListener('keydown', onKey);
+		// Devolve o foco só se o aviso foi aberto pelo botão do rodapé, sem rolar a página.
+		if (returnFocus) { returnFocus.focus({ preventScroll: true }); returnFocus = null; }
+	}
+	function onKey(e) { if (e.key === 'Escape') { close(); } }
+
 	function decide(v) {
 		store(v);
 		if (v === 'granted') { loadClarity(); }
 		close();
-		var prefs = document.getElementById('jhPrefs');
-		if (prefs) { prefs.focus(); }
 	}
-	function open() {
+
+	function open(e) {
 		if (!box) {
 			box = document.createElement('div');
 			box.className = 'jh-consent';
@@ -109,7 +117,12 @@
 			document.body.appendChild(box);
 		}
 		box.hidden = false;
-		box.querySelector('[data-yes]').focus();
+		document.addEventListener('keydown', onKey);
+		// Aberto pelo rodapé: leva o foco ao aviso, sem rolar. Aberto no carregamento: não rouba o foco.
+		if (e && e.currentTarget) {
+			returnFocus = e.currentTarget;
+			box.querySelector('[data-yes]').focus({ preventScroll: true });
+		}
 	}
 
 	function addPrefsLink() {
