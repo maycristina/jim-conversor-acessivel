@@ -13,6 +13,8 @@
  * @var string     $mode            'reader' (with the reading bar) or 'post' (plain HTML page).
  * @var array      $toc             Document headings (see JIMCA_Shortcode::build_toc()); empty = no table of contents.
  * @var array|null $tutor           AI tutor settings (see JIMCA_Tutor::get_settings()); null = no tutor.
+ * @var string     $title_tag       'h2', or 'p' when the title repeats the page's own (see JIMCA_Shortcode::same_title()).
+ * @var string     $doc_lang        Language tag of the document when it differs from the page; '' = same as the page.
  * @var array|null $pager           Long document shown in parts: count, part, titles, arg (see JIMCA_Pagination); null = whole.
  */
 
@@ -25,7 +27,7 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 // "1×", "1.25×": the speed as the button shows it (no trailing zeros).
 $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate, 2 ), '0' ), '.,' ) . '×';
 ?>
-<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" data-jimca-title="<?php echo esc_attr( get_the_title( $post ) ); ?>"<?php echo $pager ? ' data-jimca-parts="' . esc_attr( $pager['count'] ) . '" data-jimca-part="' . esc_attr( $pager['part'] ) . '" data-jimca-part-arg="' . esc_attr( $pager['arg'] ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributes built with esc_attr(). ?> aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
+<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer<?php echo '' !== $doc_lang ? ' data-jimca-lang="' . esc_attr( $doc_lang ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute built with esc_attr(). ?> data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" data-jimca-title="<?php echo esc_attr( get_the_title( $post ) ); ?>"<?php echo $pager ? ' data-jimca-parts="' . esc_attr( $pager['count'] ) . '" data-jimca-part="' . esc_attr( $pager['part'] ) . '" data-jimca-part-arg="' . esc_attr( $pager['arg'] ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributes built with esc_attr(). ?> aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
 
 	<?php
 	/*
@@ -52,7 +54,7 @@ $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate
 		<?php endif; ?>
 	</nav>
 
-	<h2 id="<?php echo esc_attr( $uid ); ?>-title" class="jimca-title"><?php echo esc_html( get_the_title( $post ) ); ?></h2>
+	<<?php echo esc_html( $title_tag ); ?> id="<?php echo esc_attr( $uid ); ?>-title" class="jimca-title"><?php echo esc_html( get_the_title( $post ) ); ?></<?php echo esc_html( $title_tag ); ?>>
 
 	<?php if ( 'reader' === $mode ) : ?>
 	<p class="jimca-meta">
@@ -220,7 +222,7 @@ $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate
 
 				<div class="jimca-player__menu jimca-player__menu--row" id="<?php echo esc_attr( $uid ); ?>-menu-font" role="group" aria-label="<?php esc_attr_e( 'Text size', 'jim-conversor-acessivel' ); ?>" data-jimca-menu="font" hidden>
 					<button type="button" class="jimca-player__step" data-jimca-font="decrease" aria-label="<?php esc_attr_e( 'Decrease text size', 'jim-conversor-acessivel' ); ?>"><span aria-hidden="true">A-</span></button>
-					<button type="button" class="jimca-player__value" data-jimca-font="reset" data-jimca-font-value aria-label="<?php esc_attr_e( 'Default text size', 'jim-conversor-acessivel' ); ?>">100%</button>
+					<button type="button" class="jimca-player__value" data-jimca-font="reset" data-jimca-font-value aria-label="<?php echo esc_attr( __( 'Default text size', 'jim-conversor-acessivel' ) . ' (100%)' ); ?>">100%</button>
 					<button type="button" class="jimca-player__step jimca-player__step--big" data-jimca-font="increase" aria-label="<?php esc_attr_e( 'Increase text size', 'jim-conversor-acessivel' ); ?>"><span aria-hidden="true">A+</span></button>
 				</div>
 			</div>
@@ -366,7 +368,7 @@ $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate
 		<?php echo JIMCA_Shortcode::render_pager( $pager, $uid, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_pager(). ?>
 	<?php endif; ?>
 
-	<div id="<?php echo esc_attr( $uid ); ?>-content" class="jimca-content" tabindex="-1" data-jimca-content>
+	<div id="<?php echo esc_attr( $uid ); ?>-content" class="jimca-content" tabindex="-1" data-jimca-content<?php echo '' !== $doc_lang ? ' lang="' . esc_attr( $doc_lang ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute built with esc_attr(). ?>>
 		<?php echo wp_kses_post( $content ); ?>
 	</div>
 

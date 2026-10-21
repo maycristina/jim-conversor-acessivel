@@ -162,7 +162,7 @@
 			var mine = run;
 			var utterance = new SpeechSynthesisUtterance( textOf( el ) );
 			utterance.rate = rate;
-			utterance.lang = document.documentElement.lang || 'pt-BR';
+			utterance.lang = viewer.getAttribute( 'data-jimca-lang' ) || document.documentElement.lang || 'pt-BR';
 
 			utterance.onstart = function () {
 				clearHighlight();

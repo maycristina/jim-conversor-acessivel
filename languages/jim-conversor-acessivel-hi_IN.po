@@ -1829,3 +1829,341 @@ msgstr "इन प्रकारों की 20 तक फ़ाइलें �
 msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
 msgstr "प्रदाता चुनें, अपनी कुंजी सहेजें (वह एन्क्रिप्टेड रूप में रखी जाती है), मॉडल चुनें और JIM चालू करें। केवल इसी साइट के लिए बनी कुंजी इस्तेमाल करें और प्रदाता के पास खर्च की सीमा तय करें; लीक का संदेह हो तो उसे बदल दें। JIM चालू होने तक वह पाठकों से छिपा रहता है।"
 
+msgid "\"Auto-detect from text\" suggests the author, title and summary found at the start of the document; nothing is saved until you confirm."
+msgstr "\"टेक्स्ट से पहचानें\" दस्तावेज़ की शुरुआत में मिले लेखक, शीर्षक और सारांश सुझाता है; आपके पुष्टि करने तक कुछ भी सहेजा नहीं जाता।"
+
+msgid "\"Auto-fix headings\" turns section lines (numbered ones, \"Chapter 2\", lines in capitals) into real headings, so the document gets a table of contents. The previous text stays in the revisions."
+msgstr "\"शीर्षक अपने-आप ठीक करें\" अनुभाग की पंक्तियों (क्रमांकित, \"अध्याय 2\", बड़े अक्षरों में) को असली शीर्षकों में बदल देता है, और दस्तावेज़ को विषय-सूची मिल जाती है। पिछला टेक्स्ट संशोधनों में रहता है।"
+
+msgid "%1$s characters (use %2$s to %3$s)"
+msgstr "%1$s अक्षर (%2$s से %3$s तक रखें)"
+
+msgid "%1$s of %2$s files cannot be converted. Remove them to continue."
+msgstr "%2$s में से %1$s फ़ाइलें बदली नहीं जा सकतीं। आगे बढ़ने के लिए उन्हें हटाएँ।"
+
+msgid "%s files ready to convert."
+msgstr "%s फ़ाइलें बदलने के लिए तैयार हैं।"
+
+msgid "%s heading created. The previous text is in the revisions."
+msgid_plural "%s headings created. The previous text is in the revisions."
+msgstr[0] "%s शीर्षक बनाया गया। पिछला टेक्स्ट संशोधनों में है।"
+msgstr[1] "%s शीर्षक बनाए गए। पिछला टेक्स्ट संशोधनों में है।"
+
+msgid "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr "%s छवियों का विवरण नहीं है: दस्तावेज़ संपादित करके उनका विवरण लिखें, ताकि स्क्रीन रीडर इस्तेमाल करने वाले जान सकें कि वे क्या दिखाती हैं।"
+
+msgid "%s images included."
+msgstr "%s छवियाँ शामिल की गईं।"
+
+msgid "(no title)"
+msgstr "(बिना शीर्षक)"
+
+msgid "1 file ready to convert."
+msgstr "1 फ़ाइल बदलने के लिए तैयार है।"
+
+msgid "A document that is not on any published page is flagged as an orphan: search engines cannot find it."
+msgstr "जो दस्तावेज़ किसी प्रकाशित पृष्ठ में नहीं है, उसे अनाथ चिह्नित किया जाता है: सर्च इंजन उसे ढूँढ नहीं सकते।"
+
+msgid "A long title loses the site name in the browser tab and in search results (about 75 characters are shown); the full title stays on the page. Without an image in the document, the site icon is used as the share image."
+msgstr "लंबा शीर्षक ब्राउज़र टैब और खोज परिणामों में साइट का नाम खो देता है (लगभग 75 अक्षर दिखते हैं); पूरा शीर्षक पृष्ठ पर बना रहता है। दस्तावेज़ में छवि न हो तो साझा करने की छवि के रूप में साइट आइकन इस्तेमाल होता है।"
+
+msgid "A summary for search results is available"
+msgstr "खोज परिणामों के लिए सारांश उपलब्ध है"
+
+msgid "Author and language"
+msgstr "लेखक और भाषा"
+
+msgid "Author is known"
+msgstr "लेखक ज्ञात है"
+
+msgid "Author of the batch"
+msgstr "बैच का लेखक"
+
+msgid "Author of the document"
+msgstr "दस्तावेज़ का लेखक"
+
+msgid "Author removed."
+msgstr "लेखक हटा दिया गया।"
+
+msgid "Author saved."
+msgstr "लेखक सहेजा गया।"
+
+msgid "Auto-detect from text"
+msgstr "टेक्स्ट से पहचानें"
+
+msgid "Auto-fix headings"
+msgstr "शीर्षक अपने-आप ठीक करें"
+
+msgid "Automatic (from the file, or the site language)"
+msgstr "स्वचालित (फ़ाइल से, या साइट की भाषा)"
+
+msgid "Check the files before sending"
+msgstr "भेजने से पहले फ़ाइलें जाँचें"
+
+msgid "Check the list of chosen files: each one shows its size and a \"Valid\" or \"Error\" badge. Remove the ones with an error; the Convert button stays off until none is left."
+msgstr "चुनी गई फ़ाइलों की सूची जाँचें: हर फ़ाइल अपना आकार और \"मान्य\" या \"त्रुटि\" का बैज दिखाती है। त्रुटि वाली फ़ाइलें हटाएँ; जब तक कोई ऐसी फ़ाइल बची है, बदलने का बटन बंद रहता है।"
+
+msgid "Choose it when the document is not in the language of the site. Screen readers and the reading voice pronounce the text in this language, and search engines learn which language the document is in."
+msgstr "जब दस्तावेज़ साइट की भाषा में न हो, तब इसे चुनें। स्क्रीन रीडर और पढ़कर सुनाने वाली आवाज़ टेक्स्ट को इसी भाषा में बोलेंगे, और सर्च इंजन को पता चलेगा कि दस्तावेज़ किस भाषा में है।"
+
+msgid "Choose it when the document is not in the language of your site. Screen readers and the reading voice then use the right language, and search engines learn which language the document is in."
+msgstr "जब दस्तावेज़ आपकी साइट की भाषा में न हो, तब इसे चुनें। तब स्क्रीन रीडर और पढ़कर सुनाने वाली आवाज़ सही भाषा इस्तेमाल करेंगे, और सर्च इंजन को पता चलेगा कि दस्तावेज़ किस भाषा में है।"
+
+msgid "Chosen files"
+msgstr "चुनी गई फ़ाइलें"
+
+msgid "Content"
+msgstr "सामग्री"
+
+msgid "Could not save. Reload the page and try again."
+msgstr "सहेजा नहीं जा सका। पृष्ठ फिर से लोड करें और दोबारा कोशिश करें।"
+
+msgid "Default author of the batch"
+msgstr "बैच का डिफ़ॉल्ट लेखक"
+
+msgid "Describe the images that have no alternative text in the document editor."
+msgstr "दस्तावेज़ संपादक में उन छवियों का विवरण लिखें जिनका वैकल्पिक टेक्स्ट नहीं है।"
+
+msgid "Document has a clear title"
+msgstr "दस्तावेज़ का शीर्षक स्पष्ट है"
+
+msgid "Document language"
+msgstr "दस्तावेज़ की भाषा"
+
+msgid "Each document has a score from 0 to 100, in a column of the documents list and in a box when you open it. It checks metadata (title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on)."
+msgstr "हर दस्तावेज़ को 0 से 100 तक का स्कोर मिलता है, जो दस्तावेज़ सूची के एक कॉलम में और दस्तावेज़ खोलने पर एक बॉक्स में दिखता है। यह मेटाडेटा (शीर्षक, सारांश, लेखक), संरचना (शीर्षक, स्तर छोड़े बिना), सामग्री (पर्याप्त टेक्स्ट, पठनीय, छवियों का विवरण) और प्रकाशन (प्रकाशित पृष्ठ पर दिखता है, अनुक्रमित हो सकता है, SEO टैग चालू) जाँचता है।"
+
+msgid "Edit"
+msgstr "संपादित करें"
+
+msgid "Edit the content"
+msgstr "सामग्री संपादित करें"
+
+msgid "Enough text"
+msgstr "पर्याप्त टेक्स्ट"
+
+msgid "Error"
+msgstr "त्रुटि"
+
+msgid "Fill in the Author in the file properties before converting. Search engines use it to judge expertise."
+msgstr "बदलने से पहले फ़ाइल के गुणों में लेखक भरें। सर्च इंजन इसका उपयोग विशेषज्ञता परखने के लिए करते हैं।"
+
+msgid "Fill in the author above"
+msgstr "ऊपर लेखक भरें"
+
+msgid "Give the document a title (optional), the author of the batch and its language if it differs from your site (all optional), and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr "दस्तावेज़ को एक शीर्षक दें (वैकल्पिक), बैच का लेखक और, अगर वह आपकी साइट से अलग है तो, उसकी भाषा (सब वैकल्पिक), फिर \"दस्तावेज़ बदलें\" पर क्लिक करें। बड़ी फ़ाइलों में लगभग एक मिनट लग सकता है; पृष्ठ बंद या रीफ़्रेश न करें।"
+
+msgid "Go from a heading to the next level down (for example H2 then H3, not H2 then H4). Use \"Conversion review\" to fix it."
+msgstr "एक शीर्षक से अगले स्तर पर जाएँ (जैसे H2 के बाद H3, H2 के बाद H4 नहीं)। इसे ठीक करने के लिए \"बदलाव की समीक्षा\" इस्तेमाल करें।"
+
+msgid "Good"
+msgstr "अच्छा"
+
+msgid "Has headings for navigation"
+msgstr "नेविगेशन के लिए शीर्षक हैं"
+
+msgid "Heading levels do not skip"
+msgstr "शीर्षक स्तर छूटते नहीं हैं"
+
+msgid "Images have a description"
+msgstr "छवियों का विवरण है"
+
+msgid "In the box you fix things without leaving the screen: type the author or use \"Use my name\", fix the title and the summary (with a character counter) and save each one. The score is recalculated right away."
+msgstr "बॉक्स में आप स्क्रीन छोड़े बिना सुधार करते हैं: लेखक लिखें या \"मेरा नाम इस्तेमाल करें\" दबाएँ, शीर्षक और सारांश (अक्षर-गिनती के साथ) ठीक करें और हर एक को सहेजें। स्कोर तुरंत फिर से निकलता है।"
+
+msgid "Metadata"
+msgstr "मेटाडेटा"
+
+msgid "Needs attention"
+msgstr "ध्यान चाहिए"
+
+msgid "No lines that look like section titles were found. Use the conversion review or edit the content."
+msgstr "ऐसी कोई पंक्ति नहीं मिली जो अनुभाग शीर्षक जैसी लगे। बदलाव की समीक्षा इस्तेमाल करें या सामग्री संपादित करें।"
+
+msgid "Not used on any page"
+msgstr "किसी पृष्ठ पर इस्तेमाल नहीं हुआ"
+
+msgid "Nothing was found in the text to suggest."
+msgstr "टेक्स्ट में सुझाने लायक कुछ नहीं मिला।"
+
+msgid "Open the conversion review"
+msgstr "बदलाव की समीक्षा खोलें"
+
+msgid "Optional. The author goes to every file of this upload and to the data that search engines read, which use it to judge who is behind the text. Use \"Use my name\" to fill it in. If you leave it empty, Jim uses the author written in each file, or the one the text states (\"Author: ...\")."
+msgstr "वैकल्पिक। लेखक इस अपलोड की हर फ़ाइल पर और उस डेटा पर लागू होता है जिसे सर्च इंजन पढ़ते हैं और जिससे वे समझते हैं कि टेक्स्ट के पीछे कौन है। भरने के लिए \"मेरा नाम इस्तेमाल करें\" दबाएँ। खाली छोड़ने पर Jim हर फ़ाइल में लिखा लेखक, या टेक्स्ट में बताया गया लेखक (\"लेखक: ...\") इस्तेमाल करता है।"
+
+msgid "Optional: the author of every file of this upload. It replaces the author written in the file properties, and appears in the search engine data of the page. Leave it empty to keep the one in each file."
+msgstr "वैकल्पिक: इस अपलोड की सभी फ़ाइलों का लेखक। यह फ़ाइल के गुणों में लिखे लेखक की जगह लेता है और पृष्ठ के खोज डेटा में दिखता है। हर फ़ाइल का अपना लेखक रखने के लिए खाली छोड़ें।"
+
+msgid "Orphan document:"
+msgstr "अनाथ दस्तावेज़:"
+
+msgid "Over the limit of %s files per upload."
+msgstr "प्रति अपलोड %s फ़ाइलों की सीमा से ऊपर।"
+
+msgid "Page can be indexed"
+msgstr "पृष्ठ अनुक्रमित हो सकता है"
+
+msgid "Pages with fewer than 300 words are seen as thin content."
+msgstr "300 से कम शब्दों वाले पृष्ठ पतली सामग्री माने जाते हैं।"
+
+msgid "Passed:"
+msgstr "पास:"
+
+msgid "Poor"
+msgstr "खराब"
+
+msgid "Publication"
+msgstr "प्रकाशन"
+
+msgid "Remove"
+msgstr "हटाएँ"
+
+msgid "Remove %s"
+msgstr "%s हटाएँ"
+
+msgid "Right after you choose them, each file appears in a list with its size and a \"Valid\" or \"Error\" badge (type not accepted, empty, or over the size limit). The Convert button stays off while a file has an error: use \"Remove\" on it. Nothing is sent before that."
+msgstr "चुनते ही हर फ़ाइल एक सूची में आकार और \"मान्य\" या \"त्रुटि\" बैज के साथ दिखती है (प्रकार स्वीकार्य नहीं, खाली, या आकार सीमा से ऊपर)। जब तक किसी फ़ाइल में त्रुटि है, बदलने का बटन बंद रहता है: उस पर \"हटाएँ\" इस्तेमाल करें। इससे पहले कुछ नहीं भेजा जाता।"
+
+msgid "SEO and accessibility score"
+msgstr "SEO और सुलभता का स्कोर"
+
+msgid "SEO score"
+msgstr "SEO स्कोर"
+
+msgid "Save"
+msgstr "सहेजें"
+
+msgid "Save author"
+msgstr "लेखक सहेजें"
+
+msgid "Saving…"
+msgstr "सहेजा जा रहा है…"
+
+msgid "Search and sharing tags are on"
+msgstr "खोज और साझा करने वाले टैग चालू हैं"
+
+msgid "Search engines use the author to judge who is behind the text. \"Save author\" saves it now; the score is recalculated."
+msgstr "सर्च इंजन लेखक का उपयोग यह समझने के लिए करते हैं कि टेक्स्ट के पीछे कौन है। \"लेखक सहेजें\" उसे अभी सहेजता है; स्कोर फिर से निकलता है।"
+
+msgid "Shown on a published page"
+msgstr "प्रकाशित पृष्ठ पर दिखाया गया"
+
+msgid "Structure"
+msgstr "संरचना"
+
+msgid "Suggestions filled in. Review them and save."
+msgstr "सुझाव भर दिए गए। उन्हें देखें और सहेजें।"
+
+msgid "Summary for search results"
+msgstr "खोज परिणामों के लिए सारांश"
+
+msgid "Summary saved."
+msgstr "सारांश सहेजा गया।"
+
+msgid "Text is readable"
+msgstr "टेक्स्ट पठनीय है"
+
+msgid "The author comes from the form (\"Default author of the batch\"), then from the file properties, then from the text when it says so (\"Author: ...\"). The document language comes from the form, or from the file properties; without either, the language of the site is used. Search engines and screen readers use both."
+msgstr "लेखक पहले फ़ॉर्म (\"बैच का डिफ़ॉल्ट लेखक\") से आता है, फिर फ़ाइल के गुणों से, और अंत में टेक्स्ट से, अगर वह बताता है (\"लेखक: ...\")। दस्तावेज़ की भाषा फ़ॉर्म या फ़ाइल के गुणों से आती है; दोनों न हों तो साइट की भाषा लागू होती है। सर्च इंजन और स्क्रीन रीडर दोनों का उपयोग करते हैं।"
+
+msgid "The description is chosen by the shape of the text: it skips covers, data sheets, notices with addresses and lines that are not sentences. A summary you write for the document replaces it."
+msgstr "विवरण टेक्स्ट के रूप से चुना जाता है: वह आवरण, डेटा-शीट, पते वाली सूचनाएँ और वे पंक्तियाँ छोड़ देता है जो वाक्य नहीं हैं। आप दस्तावेज़ के लिए जो सारांश लिखें, वह उसकी जगह ले लेता है।"
+
+msgid "The document has no URL of its own. Put its shortcode on a published page, or use \"Also publish in\"."
+msgstr "दस्तावेज़ का अपना कोई पता नहीं है। उसका शॉर्टकोड किसी प्रकाशित पृष्ठ में रखें या \"इसमें भी प्रकाशित करें\" इस्तेमाल करें।"
+
+msgid "The document needs at least a few full sentences, or a Subject in the file properties."
+msgstr "दस्तावेज़ में कम से कम कुछ पूरे वाक्य या फ़ाइल के गुणों में एक विषय चाहिए।"
+
+msgid "The documents list has a \"Published in\" column that shows every page, post or custom post type where the shortcode is, wherever you pasted it (including drafts, private items and page builders such as Elementor), with links to view and to edit. It is kept up to date when you save a page. The document stays in the Jim panel either way."
+msgstr "दस्तावेज़ सूची में \"इसमें प्रकाशित\" कॉलम है, जो वे सभी पृष्ठ, पोस्ट या सामग्री प्रकार दिखाता है जहाँ शॉर्टकोड है, चाहे आपने उसे कहीं भी चिपकाया हो (ड्राफ़्ट, निजी आइटम और Elementor जैसे पेज बिल्डर सहित), देखने और संपादित करने के लिंक के साथ। पृष्ठ सहेजने पर यह अद्यतन रहता है। दस्तावेज़ किसी भी हाल में Jim पैनल में रहता है।"
+
+msgid "The file is empty (0 bytes)."
+msgstr "फ़ाइल खाली है (0 बाइट)।"
+
+msgid "The files you choose are listed before anything is sent, with their size in MB and a \"Valid\" or \"Error\" badge; the Convert button waits while one has an error (type not accepted, empty or over the limit)."
+msgstr "आप जो फ़ाइलें चुनते हैं, वे भेजने से पहले सूचीबद्ध होती हैं, MB में आकार और \"मान्य\" या \"त्रुटि\" बैज के साथ; जब तक त्रुटि है (प्रकार स्वीकार्य नहीं, खाली या सीमा से ऊपर), बदलने का बटन इंतज़ार करता है।"
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes no tags of its own, to avoid duplicates, and gives that plugin the description and the accessibility data. You can turn this off in Settings."
+msgstr "शॉर्टकोड वाले पृष्ठ को meta description, Open Graph, Twitter Card और JSON-LD मिलते हैं, जो शीर्षक और दस्तावेज़ की शुरुआत से बनते हैं। अगर Yoast SEO, Rank Math, All in One SEO या SEOPress सक्रिय है, तो Jim दोहराव से बचने के लिए अपने टैग नहीं लिखता, और उस प्लगइन को विवरण और सुलभता का डेटा देता है। आप इसे सेटिंग में बंद कर सकते हैं।"
+
+msgid "The site or the page asks search engines not to index it (noindex)."
+msgstr "साइट या पृष्ठ सर्च इंजनों से उसे अनुक्रमित न करने को कहता है (noindex)।"
+
+msgid "The structured data (schema.org) names the author, the reading time, the language and the accessibility features the page really offers, such as the table of contents, text alternatives for images and the reading controls."
+msgstr "संरचित डेटा (schema.org) लेखक, पढ़ने का समय, भाषा और वे सुलभता सुविधाएँ बताता है जो पृष्ठ सचमुच देता है, जैसे विषय-सूची, छवियों के वैकल्पिक टेक्स्ट और पढ़ने के नियंत्रण।"
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim stops writing tags and gives that plugin the description and the accessibility data."
+msgstr "टैग उस पृष्ठ के हेड में जाते हैं जहाँ शॉर्टकोड है, और शीर्षक तथा दस्तावेज़ की शुरुआत से बनते हैं। अगर आप कोई SEO प्लगइन इंस्टॉल करते हैं, तो Jim टैग लिखना बंद कर देता है और उस प्लगइन को विवरण और सुलभता का डेटा देता है।"
+
+msgid "The text came out as symbols (a PDF font problem). Convert another version of the file."
+msgstr "टेक्स्ट प्रतीकों के रूप में निकला (PDF के फ़ॉन्ट की समस्या)। फ़ाइल का कोई दूसरा संस्करण बदलें।"
+
+msgid "The title cannot be empty."
+msgstr "शीर्षक खाली नहीं हो सकता।"
+
+msgid "This type is not accepted. Use: %s."
+msgstr "यह प्रकार स्वीकार्य नहीं है। इस्तेमाल करें: %s।"
+
+msgid "Title"
+msgstr "शीर्षक"
+
+msgid "Title saved."
+msgstr "शीर्षक सहेजा गया।"
+
+msgid "To fix:"
+msgstr "ठीक करना है:"
+
+msgid "Turn on \"SEO tags\" in Settings, or use an SEO plugin."
+msgstr "सेटिंग में \"SEO टैग\" चालू करें या कोई SEO प्लगइन इस्तेमाल करें।"
+
+msgid "Two or more headings give the document a table of contents."
+msgstr "दो या अधिक शीर्षक दस्तावेज़ को विषय-सूची देते हैं।"
+
+msgid "Unknown field."
+msgstr "अज्ञात फ़ील्ड।"
+
+msgid "Use a title between 10 and 70 characters."
+msgstr "10 से 70 अक्षरों का शीर्षक इस्तेमाल करें।"
+
+msgid "Use my name"
+msgstr "मेरा नाम इस्तेमाल करें"
+
+msgid "Valid"
+msgstr "मान्य"
+
+msgid "You cannot edit this document."
+msgstr "आप इस दस्तावेज़ को संपादित नहीं कर सकते।"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode, every page where each one is used and its SEO score (open a document to fix what is missing: author, title, summary and headings). In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "आपके दस्तावेज़ Jim > सुलभ दस्तावेज़ में हैं, जहाँ शॉर्टकोड, प्रदर्शन मोड, हर दस्तावेज़ जिन सभी पृष्ठों पर इस्तेमाल होता है और उसके SEO स्कोर के कॉलम हैं (जो कमी है उसे ठीक करने के लिए दस्तावेज़ खोलें: लेखक, शीर्षक, सारांश और अनुभाग शीर्षक)। सेटिंग में आप AI सहायक जोड़ते हैं और उसके त्वरित टेक्स्ट चुनते हैं (वे सुझाव जो पाठक चैट में देखते हैं)। ट्यूटोरियल पृष्ठ हर विकल्प समझाता है, और वहाँ से आप यह टूर फिर खोल सकते हैं।"
+
+msgid "and %s more"
+msgstr "और %s अन्य"
+
+msgid "characters"
+msgstr "अक्षर"
+
+msgid "it is not on any published page, so search engines cannot find it. Paste the shortcode on a page, or use \"Also publish in\" when converting."
+msgstr "वह किसी प्रकाशित पृष्ठ में नहीं है, इसलिए सर्च इंजन उसे ढूँढ नहीं सकते। शॉर्टकोड किसी पृष्ठ में चिपकाएँ या बदलते समय \"इसमें भी प्रकाशित करें\" इस्तेमाल करें।"
+
+msgid "too long"
+msgstr "बहुत लंबा"
+
+msgid "too short"
+msgstr "बहुत छोटा"
+
+msgid "Conversion review"
+msgstr "बदलाव की समीक्षा"
+
+msgid "Originals and search engines"
+msgstr "मूल फ़ाइलें और सर्च इंजन"
+
+msgid "Ask search engines not to index the original files that are kept (noindex)."
+msgstr "सर्च इंजनों से कहें कि रखी गई मूल फ़ाइलों को इंडेक्स न करें (noindex)।"
+
+msgid "Only matters when the option above is off. It avoids the original PDF and the converted page competing in search results with the same text. It works on Apache and LiteSpeed; on nginx, add the header in the server configuration (see the documentation)."
+msgstr "यह तभी मायने रखता है जब ऊपर वाला विकल्प बंद हो। यह मूल PDF और बदले हुए पेज को एक ही टेक्स्ट के साथ खोज परिणामों में आपस में होड़ करने से रोकता है। Apache और LiteSpeed पर काम करता है; nginx पर हेडर सर्वर कॉन्फ़िगरेशन में जोड़ें (दस्तावेज़ देखें)।"
+

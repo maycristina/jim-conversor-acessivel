@@ -211,7 +211,9 @@ test( 'WCAG 1.4.2 Audio Control / 2.2.2 Pause, Stop, Hide: Stop and Pause exist,
 
 test( 'WCAG 1.3.1 Info and Relationships: the viewer has a labelled region and a heading', () => {
 	assert.match( tpl, /<section class="jimca-viewer[\s\S]*?aria-labelledby=/ );
-	assert.match( tpl, /<h2 id="[^"]*-title" class="jimca-title">/ );
+	// The title is an <h2>, or a paragraph when it repeats the page's own <h1> (a duplicate heading otherwise).
+	assert.match( tpl, /id="<\?php echo esc_attr\( \$uid \); \?>-title" class="jimca-title"/ );
+	assert.match( tpl, /\$title_tag/ );
 } );
 
 test( 'WCAG 1.1.1 Non-text Content: icons are hidden from assistive technology, their button has the name', () => {

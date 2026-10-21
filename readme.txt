@@ -1,14 +1,14 @@
 === Jim - Accessible Converter ===
 Contributors: maycristina
-Tags: accessibility, pdf, docx, shortcode, text-to-speech
+Tags: accessibility, pdf, docx, text-to-speech, seo
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Converts PDF, Word (.docx), Markdown and TXT files into responsive, accessible pages with text-to-speech, publishable via shortcode.
+Turns PDF, Word, Markdown and TXT files into accessible, search-friendly WordPress pages with text-to-speech, an SEO score and optional AI.
 
 == Description ==
 
@@ -26,7 +26,10 @@ Converts PDF, Word (.docx), Markdown and TXT files into responsive, accessible p
 * **Guided tours** of the New Document screen (it starts by itself after a fresh installation) and of the Settings screen (assistant and quick texts); both can be opened again from the Tutorial tab. It is keyboard and screen reader friendly.
 * Images from PDF and DOCX files are saved to the **Media Library**, linked to the document, with the alternative text written in Word; images without a description are flagged so the author can describe them. An accessible lightbox opens them full size.
 * Limits on the number and total size of images, plus time and memory guards, so large illustrated books don't bring the server down. Each image left out is listed with its cause.
-* Automatic SEO tags (meta description, Open Graph, Twitter Card, JSON-LD) on the page that contains the shortcode. They are skipped when Yoast SEO, Rank Math, All in One SEO or SEOPress is active.
+* **Search engine data built for documents**: meta description chosen by the shape of the text (it skips covers, data sheets and notices), Open Graph and Twitter Card, and schema.org JSON-LD with the author, reading time, language and the accessibility features the page really offers. A long title is shortened for search results. With Yoast SEO, Rank Math, All in One SEO or SEOPress active, Jim writes no tags of its own and hands them the description and the accessibility data.
+* **SEO and accessibility score (0 to 100)** for every document, in the documents list and in a box on the document screen, with fixes on the spot: author (with "Use my name"), title and summary with a character counter, "Auto-detect from text" and "Auto-fix headings". Each save recalculates the score without reloading the page.
+* **Check before you send**: the chosen files are listed with their size and a "Valid" or "Error" badge (type, empty, size limit) and the Convert button waits until every file is valid. Set an author and the document language for the whole batch.
+* **See where each document is used**: the documents list shows every page, post or custom post type that holds the shortcode (drafts, private items and page builders such as Elementor included), with links to view and edit.
 * A highlighter: readers select text and mark it in one of four colors. Highlights are saved only in the reader's own browser.
 * An **activity log** in the settings that follows each conversion live (time, memory, words, images and the cause of each image left out, errors), with CSV export. It never records document text.
 * **Translations**: English, Brazilian Portuguese, Spanish, French, Simplified Chinese, Hindi, Russian and German, chosen by the site or user language. Jim is open source: a "Review translation" button in the settings leads to where corrections and new languages can be sent.
@@ -102,6 +105,18 @@ Choose **Schedule** and set the date and time by the **site clock** (the form sh
 
 It starts by itself the first time someone opens **New Document** after a fresh installation. To open it again, click **Take the guided tour** on that screen, or **Click here to open the tutorial** on the **Tutorial** tab. Press Esc to leave it at any time.
 
+= Will Jim help my documents rank in search engines? =
+
+It gives search engines what they need to understand each document: real text on the page (instead of a file to download), a single clear heading structure, a description and a title that fit search results, the author, the language and schema.org data. The score shows what is still missing. Ranking also depends on your site, the quality of the content and how it is linked, which no plugin controls.
+
+= How does the SEO and accessibility score work? =
+
+It is calculated on your server from the document itself, with 11 fixed checks in four groups: metadata (clear title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on). Open a document to fix what is missing: the author, the title and the summary are saved by AJAX, "Auto-fix headings" turns section lines ("1. Introduction", "Chapter 2") into real headings, and the previous text stays in the revisions. Nothing is sent to any service.
+
+= Can I check my pages from the command line? =
+
+Yes. With WP-CLI, `wp jimca convert file.docx --mode=post --language=fr --author="Name"` runs a file through the converter and publishes it on a page. The repository also has `bin/seo-audit.js`, which audits a page (title, description, headings, Open Graph, JSON-LD, scripts) with no account and no usage limit. See CONTRIBUTING.md.
+
 = Can I choose how the converted document looks? =
 
 Yes. Under **Jim - Accessible Converter > Settings** you can set a default reading theme (Light, Sepia or Dark) applied to every converted document. Readers can also switch the theme themselves from the reading toolbar on each document — their choice is saved only in their own browser and doesn't change the site-wide default.
@@ -161,6 +176,19 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 7. Settings > JIM: turn the assistant on and set who can use it, its name, personality and instructions.
 
 == Changelog ==
+
+= 2.3.0 =
+* New: SEO and accessibility score (0 to 100) with 11 local checks, in "All documents" and in the document editor, with a notice for orphan documents (not in any published page).
+* New: SEO box with an editable author ("Use my name"), per-item fields with character counters, "Auto-detect from text" (author, title and summary suggestions) and "Auto-fix headings", all saved by AJAX.
+* New: structured data (JSON-LD) now includes author, reading time, keywords and schema.org accessibility properties, declaring only what the page really has. With Yoast, Rank Math, All in One SEO or SEOPress active, Jim hands them the description and accessibility properties instead of printing tags.
+* New: file metadata (author, subject, keywords of the PDF/DOCX) is read locally during conversion and feeds the description, author and keywords.
+* New: "Document language" field in the import form (automatic or 18 languages), used for the `lang` attribute, the read-aloud voice and `inLanguage`.
+* New: the import form lists the chosen files with name, size and a Valid/Error badge, disables the button while a file is invalid, lets you remove files and sets a default author for the batch.
+* New: "Published in" column in the documents list, listing every page and post that uses the shortcode (drafts, private posts and page builders included).
+* New: "Originals and search engines" option, on by default, also after updating: stored originals are served with `X-Robots-Tag: noindex, nofollow` (Apache and LiteSpeed; nginx needs a server rule, see the docs). Turn it off under Jim > Settings. It only matters when the original file is kept.
+* Improved: front-end scripts load only when needed (with `defer`); CSS and JS are minified in the package; page titles are kept near 75 characters; descriptions skip licence headers and symbol lines.
+* Fix: the "View documents" link after a conversion opens the documents list; "Click here to review the conversion" no longer reads as one word; the Post model no longer splits the document into parts.
+* All new texts are translated into the seven bundled languages.
 
 = 2.2.0 =
 * New: redesigned floating reading bar: menu (search and contents), settings (voice and theme, with High contrast as a theme), text size, play/pause always in the center, speed that changes with each click, stop, parts and hide. Popovers open with a spring animation and respect reduced motion.
@@ -228,6 +256,9 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.
 
 == Upgrade Notice ==
+
+= 2.3.0 =
+SEO and accessibility score, an SEO box with author, title and summary helpers, a document language field, a file list with validation on import and a "Published in" column. Important: on sites that keep the original uploaded files, those files are now sent with a noindex header (X-Robots-Tag), also on existing sites, so search engines stop listing the PDF next to the converted page. To keep them indexable, go to Jim > Settings, find "Originals and search engines" and untick it. Sites that delete the original after conversion (the default) are not affected.
 
 = 2.2.0 =
 New reading bar, long documents in parts with search, editable quick prompts for the assistant and safer uploads and error messages. If the AI is on with a saved key, the assistant now appears in every document; use `tutor="no"` to hide it on a page.

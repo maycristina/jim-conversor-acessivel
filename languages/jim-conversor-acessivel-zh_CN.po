@@ -1827,3 +1827,340 @@ msgstr "在已配置的限制内，一次最多可批量发送 20 个这些类�
 msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
 msgstr "选择服务商，保存你的密钥（加密存储），选择模型并开启 JIM。请使用仅为本站创建的密钥，并在服务商处设置支出上限；如怀疑泄露，请更换。JIM 开启之前，它对读者保持隐藏。"
 
+msgid "\"Auto-detect from text\" suggests the author, title and summary found at the start of the document; nothing is saved until you confirm."
+msgstr "“从文本中识别”会根据文档开头建议作者、标题和摘要；在您确认之前不会保存任何内容。"
+
+msgid "\"Auto-fix headings\" turns section lines (numbered ones, \"Chapter 2\", lines in capitals) into real headings, so the document gets a table of contents. The previous text stays in the revisions."
+msgstr "“自动修复标题”会把章节行（带编号的、“第 2 章”、全大写的）变成真正的标题，文档因此有了目录。原来的文本保留在修订记录中。"
+
+msgid "%1$s characters (use %2$s to %3$s)"
+msgstr "%1$s 个字符（建议 %2$s 到 %3$s 个）"
+
+msgid "%1$s of %2$s files cannot be converted. Remove them to continue."
+msgstr "%2$s 个文件中有 %1$s 个无法转换。请移除它们后继续。"
+
+msgid "%s files ready to convert."
+msgstr "%s 个文件可以转换。"
+
+msgid "%s heading created. The previous text is in the revisions."
+msgid_plural "%s headings created. The previous text is in the revisions."
+msgstr[0] "已创建 %s 个标题。原来的文本在修订记录中。"
+
+msgid "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr "%s 张图片没有描述：请编辑文档并为它们添加描述，让使用屏幕阅读器的人知道图片内容。"
+
+msgid "%s images included."
+msgstr "已包含 %s 张图片。"
+
+msgid "(no title)"
+msgstr "（无标题）"
+
+msgid "1 file ready to convert."
+msgstr "1 个文件可以转换。"
+
+msgid "A document that is not on any published page is flagged as an orphan: search engines cannot find it."
+msgstr "不在任何已发布页面中的文档会被标记为孤立文档：搜索引擎找不到它。"
+
+msgid "A long title loses the site name in the browser tab and in search results (about 75 characters are shown); the full title stays on the page. Without an image in the document, the site icon is used as the share image."
+msgstr "过长的标题会在浏览器标签页和搜索结果中被去掉网站名称（大约显示 75 个字符）；完整标题仍保留在页面上。文档中没有图片时，会使用网站图标作为分享图片。"
+
+msgid "A summary for search results is available"
+msgstr "有可用于搜索结果的摘要"
+
+msgid "Author and language"
+msgstr "作者和语言"
+
+msgid "Author is known"
+msgstr "已知作者"
+
+msgid "Author of the batch"
+msgstr "批次作者"
+
+msgid "Author of the document"
+msgstr "文档作者"
+
+msgid "Author removed."
+msgstr "已删除作者。"
+
+msgid "Author saved."
+msgstr "已保存作者。"
+
+msgid "Auto-detect from text"
+msgstr "从文本中识别"
+
+msgid "Auto-fix headings"
+msgstr "自动修复标题"
+
+msgid "Automatic (from the file, or the site language)"
+msgstr "自动（来自文件，或使用网站语言）"
+
+msgid "Check the files before sending"
+msgstr "发送前检查文件"
+
+msgid "Check the list of chosen files: each one shows its size and a \"Valid\" or \"Error\" badge. Remove the ones with an error; the Convert button stays off until none is left."
+msgstr "请检查所选文件的列表：每个文件都会显示大小和“有效”或“错误”标记。请移除有错误的文件；在没有错误文件之前，转换按钮保持关闭。"
+
+msgid "Choose it when the document is not in the language of the site. Screen readers and the reading voice pronounce the text in this language, and search engines learn which language the document is in."
+msgstr "当文档不是网站所用的语言时请选择。屏幕阅读器和朗读语音会用该语言读出文本，搜索引擎也会知道文档使用的语言。"
+
+msgid "Choose it when the document is not in the language of your site. Screen readers and the reading voice then use the right language, and search engines learn which language the document is in."
+msgstr "当文档不是您网站所用的语言时请选择。屏幕阅读器和朗读语音将使用正确的语言，搜索引擎也会知道文档使用的语言。"
+
+msgid "Chosen files"
+msgstr "已选文件"
+
+msgid "Content"
+msgstr "内容"
+
+msgid "Could not save. Reload the page and try again."
+msgstr "无法保存。请刷新页面后重试。"
+
+msgid "Default author of the batch"
+msgstr "批次默认作者"
+
+msgid "Describe the images that have no alternative text in the document editor."
+msgstr "请在文档编辑器中为没有替代文本的图片添加描述。"
+
+msgid "Document has a clear title"
+msgstr "文档有清晰的标题"
+
+msgid "Document language"
+msgstr "文档语言"
+
+msgid "Each document has a score from 0 to 100, in a column of the documents list and in a box when you open it. It checks metadata (title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on)."
+msgstr "每个文档都有 0 到 100 的分数，显示在文档列表的一列中，打开文档时也会显示在一个框里。它检查元数据（标题、摘要、作者）、结构（标题、不跳级）、内容（文字足够、可读、图片有描述）和发布情况（显示在已发布页面、可被索引、已开启 SEO 标签）。"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Edit the content"
+msgstr "编辑内容"
+
+msgid "Enough text"
+msgstr "文字足够"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Fill in the Author in the file properties before converting. Search engines use it to judge expertise."
+msgstr "请在转换前于文件属性中填写作者。搜索引擎会用它来判断专业性。"
+
+msgid "Fill in the author above"
+msgstr "请在上方填写作者"
+
+msgid "Give the document a title (optional), the author of the batch and its language if it differs from your site (all optional), and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr "为文档设置标题（可选）、批次作者，以及与您网站不同时的语言（均为可选），然后点击“转换文档”。大文件可能需要约一分钟；请不要关闭或刷新页面。"
+
+msgid "Go from a heading to the next level down (for example H2 then H3, not H2 then H4). Use \"Conversion review\" to fix it."
+msgstr "从一个标题依次进入下一级（例如 H2 之后是 H3，而不是 H2 之后直接是 H4）。请使用“转换检查”来修复。"
+
+msgid "Good"
+msgstr "良好"
+
+msgid "Has headings for navigation"
+msgstr "有用于导航的标题"
+
+msgid "Heading levels do not skip"
+msgstr "标题级别没有跳级"
+
+msgid "Images have a description"
+msgstr "图片有描述"
+
+msgid "In the box you fix things without leaving the screen: type the author or use \"Use my name\", fix the title and the summary (with a character counter) and save each one. The score is recalculated right away."
+msgstr "在这个框里无需离开页面即可修复：输入作者或使用“使用我的名字”，修正标题和摘要（带字符计数）并分别保存。分数会立即重新计算。"
+
+msgid "Metadata"
+msgstr "元数据"
+
+msgid "Needs attention"
+msgstr "需要注意"
+
+msgid "No lines that look like section titles were found. Use the conversion review or edit the content."
+msgstr "没有找到看起来像章节标题的行。请使用转换检查或直接编辑内容。"
+
+msgid "Not used on any page"
+msgstr "未用于任何页面"
+
+msgid "Nothing was found in the text to suggest."
+msgstr "在文本中没有找到可建议的内容。"
+
+msgid "Open the conversion review"
+msgstr "打开转换检查"
+
+msgid "Optional. The author goes to every file of this upload and to the data that search engines read, which use it to judge who is behind the text. Use \"Use my name\" to fill it in. If you leave it empty, Jim uses the author written in each file, or the one the text states (\"Author: ...\")."
+msgstr "可选。作者适用于本次上传的所有文件，也会写入搜索引擎读取的数据，搜索引擎用它来判断文本背后是谁。使用“使用我的名字”即可填写。若留空，Jim 会使用每个文件中写明的作者，或文本中声明的作者（“作者：……”）。"
+
+msgid "Optional: the author of every file of this upload. It replaces the author written in the file properties, and appears in the search engine data of the page. Leave it empty to keep the one in each file."
+msgstr "可选：本次上传所有文件的作者。它会取代文件属性中写的作者，并出现在页面的搜索数据中。留空则保留每个文件自带的作者。"
+
+msgid "Orphan document:"
+msgstr "孤立文档："
+
+msgid "Over the limit of %s files per upload."
+msgstr "超过每次上传 %s 个文件的上限。"
+
+msgid "Page can be indexed"
+msgstr "页面可以被索引"
+
+msgid "Pages with fewer than 300 words are seen as thin content."
+msgstr "字数少于 300 的页面会被视为内容单薄。"
+
+msgid "Passed:"
+msgstr "通过："
+
+msgid "Poor"
+msgstr "差"
+
+msgid "Publication"
+msgstr "发布"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Remove %s"
+msgstr "移除 %s"
+
+msgid "Right after you choose them, each file appears in a list with its size and a \"Valid\" or \"Error\" badge (type not accepted, empty, or over the size limit). The Convert button stays off while a file has an error: use \"Remove\" on it. Nothing is sent before that."
+msgstr "选择文件后，每个文件会立即出现在列表中，并显示大小和“有效”或“错误”标记（类型不被接受、为空或超过大小限制）。只要有文件出错，转换按钮就保持关闭：请对它使用“移除”。在此之前不会发送任何内容。"
+
+msgid "SEO and accessibility score"
+msgstr "SEO 与无障碍分数"
+
+msgid "SEO score"
+msgstr "SEO 分数"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save author"
+msgstr "保存作者"
+
+msgid "Saving…"
+msgstr "正在保存…"
+
+msgid "Search and sharing tags are on"
+msgstr "搜索和分享标签已开启"
+
+msgid "Search engines use the author to judge who is behind the text. \"Save author\" saves it now; the score is recalculated."
+msgstr "搜索引擎用作者来判断文本背后是谁。“保存作者”会立即保存；分数会重新计算。"
+
+msgid "Shown on a published page"
+msgstr "显示在已发布的页面上"
+
+msgid "Structure"
+msgstr "结构"
+
+msgid "Suggestions filled in. Review them and save."
+msgstr "已填入建议。请检查后保存。"
+
+msgid "Summary for search results"
+msgstr "搜索结果摘要"
+
+msgid "Summary saved."
+msgstr "已保存摘要。"
+
+msgid "Text is readable"
+msgstr "文本可读"
+
+msgid "The author comes from the form (\"Default author of the batch\"), then from the file properties, then from the text when it says so (\"Author: ...\"). The document language comes from the form, or from the file properties; without either, the language of the site is used. Search engines and screen readers use both."
+msgstr "作者先取自表单（“批次默认作者”），其次取自文件属性，最后在文本明确写出时取自文本（“作者：……”）。文档语言取自表单或文件属性；两者都没有时使用网站语言。搜索引擎和屏幕阅读器都会用到这两项。"
+
+msgid "The description is chosen by the shape of the text: it skips covers, data sheets, notices with addresses and lines that are not sentences. A summary you write for the document replaces it."
+msgstr "描述按文本的形态选取：会跳过封面、数据表、带网址的说明以及不是完整句子的行。您为文档写的摘要会取代它。"
+
+msgid "The document has no URL of its own. Put its shortcode on a published page, or use \"Also publish in\"."
+msgstr "文档没有自己的地址。请把它的简码放到已发布的页面中，或使用“同时发布到”。"
+
+msgid "The document needs at least a few full sentences, or a Subject in the file properties."
+msgstr "文档至少需要几句完整的句子，或在文件属性中提供“主题”。"
+
+msgid "The documents list has a \"Published in\" column that shows every page, post or custom post type where the shortcode is, wherever you pasted it (including drafts, private items and page builders such as Elementor), with links to view and to edit. It is kept up to date when you save a page. The document stays in the Jim panel either way."
+msgstr "文档列表有一列“发布于”，显示简码所在的所有页面、文章或内容类型，无论您把它粘贴在哪里（包括草稿、私密内容以及 Elementor 等页面构建器），并带有查看和编辑链接。保存页面时会自动更新。无论如何，文档都会保留在 Jim 面板中。"
+
+msgid "The file is empty (0 bytes)."
+msgstr "文件为空（0 字节）。"
+
+msgid "The files you choose are listed before anything is sent, with their size in MB and a \"Valid\" or \"Error\" badge; the Convert button waits while one has an error (type not accepted, empty or over the limit)."
+msgstr "您选择的文件会在发送前列出，显示以 MB 为单位的大小和“有效”或“错误”标记；只要有错误（类型不被接受、为空或超过限制），转换按钮就会等待。"
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes no tags of its own, to avoid duplicates, and gives that plugin the description and the accessibility data. You can turn this off in Settings."
+msgstr "包含简码的页面会获得 meta description、Open Graph、Twitter Card 和 JSON-LD，它们由标题和文档开头生成。如果 Yoast SEO、Rank Math、All in One SEO 或 SEOPress 处于启用状态，Jim 不会写入自己的标签以避免重复，而是把描述和无障碍数据交给该插件。您可以在设置中关闭。"
+
+msgid "The site or the page asks search engines not to index it (noindex)."
+msgstr "网站或该页面要求搜索引擎不要索引它（noindex）。"
+
+msgid "The structured data (schema.org) names the author, the reading time, the language and the accessibility features the page really offers, such as the table of contents, text alternatives for images and the reading controls."
+msgstr "结构化数据（schema.org）会写明作者、阅读时间、语言以及页面确实提供的无障碍功能，例如目录、图片替代文本和阅读控制。"
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim stops writing tags and gives that plugin the description and the accessibility data."
+msgstr "这些标签放在简码所在页面的头部，由标题和文档开头生成。如果您安装了 SEO 插件，Jim 会停止写入标签，并把描述和无障碍数据交给该插件。"
+
+msgid "The text came out as symbols (a PDF font problem). Convert another version of the file."
+msgstr "文本变成了符号（PDF 字体问题）。请转换该文件的另一个版本。"
+
+msgid "The title cannot be empty."
+msgstr "标题不能为空。"
+
+msgid "This type is not accepted. Use: %s."
+msgstr "不接受此类型。请使用：%s。"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Title saved."
+msgstr "已保存标题。"
+
+msgid "To fix:"
+msgstr "待修复："
+
+msgid "Turn on \"SEO tags\" in Settings, or use an SEO plugin."
+msgstr "请在设置中开启“SEO 标签”，或使用 SEO 插件。"
+
+msgid "Two or more headings give the document a table of contents."
+msgstr "两个或更多标题可让文档拥有目录。"
+
+msgid "Unknown field."
+msgstr "未知字段。"
+
+msgid "Use a title between 10 and 70 characters."
+msgstr "请使用 10 到 70 个字符的标题。"
+
+msgid "Use my name"
+msgstr "使用我的名字"
+
+msgid "Valid"
+msgstr "有效"
+
+msgid "You cannot edit this document."
+msgstr "您无法编辑此文档。"
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode, every page where each one is used and its SEO score (open a document to fix what is missing: author, title, summary and headings). In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "您的文档在 Jim > 无障碍文档 中，列有简码、显示模式、每个文档所用的全部页面及其 SEO 分数（打开文档即可修复缺少的内容：作者、标题、摘要和章节标题）。在设置中可连接 AI 助手并选择其快捷文本（读者在聊天中看到的建议）。教程页面会解释每个选项，您也可以从那里再次打开此导览。"
+
+msgid "and %s more"
+msgstr "以及另外 %s 个"
+
+msgid "characters"
+msgstr "个字符"
+
+msgid "it is not on any published page, so search engines cannot find it. Paste the shortcode on a page, or use \"Also publish in\" when converting."
+msgstr "它不在任何已发布的页面中，所以搜索引擎找不到它。请把简码粘贴到某个页面，或在转换时使用“同时发布到”。"
+
+msgid "too long"
+msgstr "太长"
+
+msgid "too short"
+msgstr "太短"
+
+msgid "Conversion review"
+msgstr "转换检查"
+
+msgid "Originals and search engines"
+msgstr "原始文件与搜索引擎"
+
+msgid "Ask search engines not to index the original files that are kept (noindex)."
+msgstr "要求搜索引擎不要索引保留下来的原始文件（noindex）。"
+
+msgid "Only matters when the option above is off. It avoids the original PDF and the converted page competing in search results with the same text. It works on Apache and LiteSpeed; on nginx, add the header in the server configuration (see the documentation)."
+msgstr "仅在上面的选项关闭时才有意义。它可避免原始 PDF 和转换后的页面以相同文字在搜索结果中相互竞争。适用于 Apache 和 LiteSpeed；在 nginx 上，请在服务器配置中添加该响应头（见文档）。"
+

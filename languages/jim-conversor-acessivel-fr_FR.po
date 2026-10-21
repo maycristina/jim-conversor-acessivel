@@ -1829,3 +1829,341 @@ msgstr "Jusqu'à 20 fichiers de ces types peuvent être envoyés par lot à la f
 msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
 msgstr "Choisissez le fournisseur, enregistrez votre clé (elle est stockée chiffrée), choisissez le modèle et activez JIM. Utilisez une clé créée uniquement pour ce site et fixez une limite de dépense chez le fournisseur ; en cas de soupçon de fuite, remplacez-la. Tant que JIM n'est pas activé, il reste caché aux lecteurs."
 
+msgid "\"Auto-detect from text\" suggests the author, title and summary found at the start of the document; nothing is saved until you confirm."
+msgstr "« Détecter à partir du texte » propose l'auteur, le titre et le résumé trouvés au début du document ; rien n'est enregistré tant que vous ne confirmez pas."
+
+msgid "\"Auto-fix headings\" turns section lines (numbered ones, \"Chapter 2\", lines in capitals) into real headings, so the document gets a table of contents. The previous text stays in the revisions."
+msgstr "« Corriger les titres automatiquement » transforme les lignes de section (numérotées, « Chapitre 2 », en capitales) en vrais titres, et le document obtient une table des matières. Le texte précédent reste dans les révisions."
+
+msgid "%1$s characters (use %2$s to %3$s)"
+msgstr "%1$s caractères (de %2$s à %3$s recommandés)"
+
+msgid "%1$s of %2$s files cannot be converted. Remove them to continue."
+msgstr "%1$s fichiers sur %2$s ne peuvent pas être convertis. Retirez-les pour continuer."
+
+msgid "%s files ready to convert."
+msgstr "%s fichiers prêts à être convertis."
+
+msgid "%s heading created. The previous text is in the revisions."
+msgid_plural "%s headings created. The previous text is in the revisions."
+msgstr[0] "%s titre créé. Le texte précédent est dans les révisions."
+msgstr[1] "%s titres créés. Le texte précédent est dans les révisions."
+
+msgid "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr "%s images n'ont pas de description : modifiez le document et décrivez-les, pour que les personnes qui utilisent un lecteur d'écran sachent ce qu'elles montrent."
+
+msgid "%s images included."
+msgstr "%s images incluses."
+
+msgid "(no title)"
+msgstr "(sans titre)"
+
+msgid "1 file ready to convert."
+msgstr "1 fichier prêt à être converti."
+
+msgid "A document that is not on any published page is flagged as an orphan: search engines cannot find it."
+msgstr "Un document qui n'est dans aucune page publiée est signalé comme orphelin : les moteurs de recherche ne peuvent pas le trouver."
+
+msgid "A long title loses the site name in the browser tab and in search results (about 75 characters are shown); the full title stays on the page. Without an image in the document, the site icon is used as the share image."
+msgstr "Un titre long perd le nom du site dans l'onglet du navigateur et dans les résultats de recherche (environ 75 caractères sont affichés) ; le titre complet reste sur la page. Sans image dans le document, l'icône du site sert d'image de partage."
+
+msgid "A summary for search results is available"
+msgstr "Un résumé pour les résultats de recherche est disponible"
+
+msgid "Author and language"
+msgstr "Auteur et langue"
+
+msgid "Author is known"
+msgstr "L'auteur est connu"
+
+msgid "Author of the batch"
+msgstr "Auteur du lot"
+
+msgid "Author of the document"
+msgstr "Auteur du document"
+
+msgid "Author removed."
+msgstr "Auteur supprimé."
+
+msgid "Author saved."
+msgstr "Auteur enregistré."
+
+msgid "Auto-detect from text"
+msgstr "Détecter à partir du texte"
+
+msgid "Auto-fix headings"
+msgstr "Corriger les titres automatiquement"
+
+msgid "Automatic (from the file, or the site language)"
+msgstr "Automatique (celle du fichier, ou la langue du site)"
+
+msgid "Check the files before sending"
+msgstr "Vérifiez les fichiers avant l'envoi"
+
+msgid "Check the list of chosen files: each one shows its size and a \"Valid\" or \"Error\" badge. Remove the ones with an error; the Convert button stays off until none is left."
+msgstr "Vérifiez la liste des fichiers choisis : chacun affiche sa taille et un badge « Valide » ou « Erreur ». Retirez ceux qui ont une erreur ; le bouton de conversion reste éteint tant qu'il en reste."
+
+msgid "Choose it when the document is not in the language of the site. Screen readers and the reading voice pronounce the text in this language, and search engines learn which language the document is in."
+msgstr "À choisir quand le document n'est pas dans la langue du site. Les lecteurs d'écran et la voix de lecture prononcent le texte dans cette langue, et les moteurs de recherche savent dans quelle langue le document est écrit."
+
+msgid "Choose it when the document is not in the language of your site. Screen readers and the reading voice then use the right language, and search engines learn which language the document is in."
+msgstr "À choisir quand le document n'est pas dans la langue de votre site. Les lecteurs d'écran et la voix de lecture utilisent alors la bonne langue, et les moteurs de recherche savent dans quelle langue le document est écrit."
+
+msgid "Chosen files"
+msgstr "Fichiers choisis"
+
+msgid "Content"
+msgstr "Contenu"
+
+msgid "Could not save. Reload the page and try again."
+msgstr "Impossible d'enregistrer. Rechargez la page et réessayez."
+
+msgid "Default author of the batch"
+msgstr "Auteur par défaut du lot"
+
+msgid "Describe the images that have no alternative text in the document editor."
+msgstr "Décrivez, dans l'éditeur du document, les images qui n'ont pas de texte alternatif."
+
+msgid "Document has a clear title"
+msgstr "Le document a un titre clair"
+
+msgid "Document language"
+msgstr "Langue du document"
+
+msgid "Each document has a score from 0 to 100, in a column of the documents list and in a box when you open it. It checks metadata (title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on)."
+msgstr "Chaque document a une note de 0 à 100, dans une colonne de la liste des documents et dans un encadré quand vous l'ouvrez. Elle vérifie les métadonnées (titre, résumé, auteur), la structure (titres, sans niveau sauté), le contenu (assez de texte, lisible, images décrites) et la publication (affiché sur une page publiée, indexable, balises SEO activées)."
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Edit the content"
+msgstr "Modifier le contenu"
+
+msgid "Enough text"
+msgstr "Assez de texte"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Fill in the Author in the file properties before converting. Search engines use it to judge expertise."
+msgstr "Renseignez l'auteur dans les propriétés du fichier avant la conversion. Les moteurs de recherche s'en servent pour juger l'expertise."
+
+msgid "Fill in the author above"
+msgstr "Renseignez l'auteur ci-dessus"
+
+msgid "Give the document a title (optional), the author of the batch and its language if it differs from your site (all optional), and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr "Donnez un titre au document (facultatif), l'auteur du lot et sa langue si elle diffère de celle de votre site (tout est facultatif), puis cliquez sur « Convertir le document ». Les gros fichiers peuvent prendre environ une minute ; ne fermez pas et n'actualisez pas la page."
+
+msgid "Go from a heading to the next level down (for example H2 then H3, not H2 then H4). Use \"Conversion review\" to fix it."
+msgstr "Passez d'un titre au niveau suivant (par exemple H2 puis H3, pas H2 puis H4). Utilisez la « Vérification de la conversion » pour corriger."
+
+msgid "Good"
+msgstr "Bon"
+
+msgid "Has headings for navigation"
+msgstr "A des titres pour naviguer"
+
+msgid "Heading levels do not skip"
+msgstr "Les niveaux de titre ne sautent pas"
+
+msgid "Images have a description"
+msgstr "Les images ont une description"
+
+msgid "In the box you fix things without leaving the screen: type the author or use \"Use my name\", fix the title and the summary (with a character counter) and save each one. The score is recalculated right away."
+msgstr "Dans l'encadré, vous corrigez sans quitter l'écran : saisissez l'auteur ou utilisez « Utiliser mon nom », corrigez le titre et le résumé (avec compteur de caractères) et enregistrez chacun. La note est recalculée aussitôt."
+
+msgid "Metadata"
+msgstr "Métadonnées"
+
+msgid "Needs attention"
+msgstr "À surveiller"
+
+msgid "No lines that look like section titles were found. Use the conversion review or edit the content."
+msgstr "Aucune ligne ressemblant à un titre de section n'a été trouvée. Utilisez la vérification de la conversion ou modifiez le contenu."
+
+msgid "Not used on any page"
+msgstr "Utilisé dans aucune page"
+
+msgid "Nothing was found in the text to suggest."
+msgstr "Rien à suggérer n'a été trouvé dans le texte."
+
+msgid "Open the conversion review"
+msgstr "Ouvrir la vérification de la conversion"
+
+msgid "Optional. The author goes to every file of this upload and to the data that search engines read, which use it to judge who is behind the text. Use \"Use my name\" to fill it in. If you leave it empty, Jim uses the author written in each file, or the one the text states (\"Author: ...\")."
+msgstr "Facultatif. L'auteur s'applique à tous les fichiers de cet envoi et aux données lues par les moteurs de recherche, qui s'en servent pour juger qui est derrière le texte. Utilisez « Utiliser mon nom » pour le remplir. S'il reste vide, Jim utilise l'auteur écrit dans chaque fichier, ou celui que le texte indique (« Auteur : ... »)."
+
+msgid "Optional: the author of every file of this upload. It replaces the author written in the file properties, and appears in the search engine data of the page. Leave it empty to keep the one in each file."
+msgstr "Facultatif : l'auteur de tous les fichiers de cet envoi. Il remplace l'auteur écrit dans les propriétés du fichier et apparaît dans les données de recherche de la page. Laissez vide pour conserver celui de chaque fichier."
+
+msgid "Orphan document:"
+msgstr "Document orphelin :"
+
+msgid "Over the limit of %s files per upload."
+msgstr "Au-delà de la limite de %s fichiers par envoi."
+
+msgid "Page can be indexed"
+msgstr "La page peut être indexée"
+
+msgid "Pages with fewer than 300 words are seen as thin content."
+msgstr "Les pages de moins de 300 mots sont vues comme du contenu pauvre."
+
+msgid "Passed:"
+msgstr "Réussi :"
+
+msgid "Poor"
+msgstr "Mauvais"
+
+msgid "Publication"
+msgstr "Publication"
+
+msgid "Remove"
+msgstr "Retirer"
+
+msgid "Remove %s"
+msgstr "Retirer %s"
+
+msgid "Right after you choose them, each file appears in a list with its size and a \"Valid\" or \"Error\" badge (type not accepted, empty, or over the size limit). The Convert button stays off while a file has an error: use \"Remove\" on it. Nothing is sent before that."
+msgstr "Dès que vous les choisissez, chaque fichier apparaît dans une liste avec sa taille et un badge « Valide » ou « Erreur » (type non accepté, vide ou au-dessus de la limite de taille). Le bouton de conversion reste éteint tant qu'un fichier a une erreur : utilisez « Retirer » sur lui. Rien n'est envoyé avant."
+
+msgid "SEO and accessibility score"
+msgstr "Note de SEO et d'accessibilité"
+
+msgid "SEO score"
+msgstr "Note SEO"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Save author"
+msgstr "Enregistrer l'auteur"
+
+msgid "Saving…"
+msgstr "Enregistrement…"
+
+msgid "Search and sharing tags are on"
+msgstr "Les balises de recherche et de partage sont activées"
+
+msgid "Search engines use the author to judge who is behind the text. \"Save author\" saves it now; the score is recalculated."
+msgstr "Les moteurs de recherche utilisent l'auteur pour juger qui est derrière le texte. « Enregistrer l'auteur » l'enregistre maintenant ; la note est recalculée."
+
+msgid "Shown on a published page"
+msgstr "Affiché sur une page publiée"
+
+msgid "Structure"
+msgstr "Structure"
+
+msgid "Suggestions filled in. Review them and save."
+msgstr "Suggestions remplies. Vérifiez-les et enregistrez."
+
+msgid "Summary for search results"
+msgstr "Résumé pour les résultats de recherche"
+
+msgid "Summary saved."
+msgstr "Résumé enregistré."
+
+msgid "Text is readable"
+msgstr "Le texte est lisible"
+
+msgid "The author comes from the form (\"Default author of the batch\"), then from the file properties, then from the text when it says so (\"Author: ...\"). The document language comes from the form, or from the file properties; without either, the language of the site is used. Search engines and screen readers use both."
+msgstr "L'auteur vient du formulaire (« Auteur par défaut du lot »), puis des propriétés du fichier et enfin du texte quand il l'indique (« Auteur : ... »). La langue du document vient du formulaire ou des propriétés du fichier ; sans l'un ni l'autre, la langue du site s'applique. Les moteurs de recherche et les lecteurs d'écran utilisent les deux."
+
+msgid "The description is chosen by the shape of the text: it skips covers, data sheets, notices with addresses and lines that are not sentences. A summary you write for the document replaces it."
+msgstr "La description est choisie d'après la forme du texte : elle saute les couvertures, les fiches techniques, les avis avec adresses et les lignes qui ne sont pas des phrases. Un résumé que vous écrivez pour le document la remplace."
+
+msgid "The document has no URL of its own. Put its shortcode on a published page, or use \"Also publish in\"."
+msgstr "Le document n'a pas d'adresse propre. Mettez son shortcode dans une page publiée ou utilisez « Publier aussi dans »."
+
+msgid "The document needs at least a few full sentences, or a Subject in the file properties."
+msgstr "Le document a besoin d'au moins quelques phrases complètes ou d'un Sujet dans les propriétés du fichier."
+
+msgid "The documents list has a \"Published in\" column that shows every page, post or custom post type where the shortcode is, wherever you pasted it (including drafts, private items and page builders such as Elementor), with links to view and to edit. It is kept up to date when you save a page. The document stays in the Jim panel either way."
+msgstr "La liste des documents a une colonne « Publié dans » qui montre toutes les pages, articles ou types de contenu où le shortcode se trouve, où que vous l'ayez collé (brouillons, éléments privés et constructeurs de pages comme Elementor compris), avec des liens pour voir et pour modifier. Elle est tenue à jour quand vous enregistrez une page. Le document reste de toute façon dans le panneau de Jim."
+
+msgid "The file is empty (0 bytes)."
+msgstr "Le fichier est vide (0 octet)."
+
+msgid "The files you choose are listed before anything is sent, with their size in MB and a \"Valid\" or \"Error\" badge; the Convert button waits while one has an error (type not accepted, empty or over the limit)."
+msgstr "Les fichiers que vous choisissez sont listés avant tout envoi, avec leur taille en Mo et un badge « Valide » ou « Erreur » ; le bouton de conversion attend tant qu'il y a une erreur (type non accepté, vide ou au-dessus de la limite)."
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes no tags of its own, to avoid duplicates, and gives that plugin the description and the accessibility data. You can turn this off in Settings."
+msgstr "La page qui contient le shortcode reçoit une meta description, Open Graph, Twitter Card et JSON-LD, construits à partir du titre et du début du document. Si Yoast SEO, Rank Math, All in One SEO ou SEOPress est actif, Jim n'écrit pas de balises à lui, pour éviter les doublons, et fournit à cette extension la description et les données d'accessibilité. Vous pouvez le désactiver dans Réglages."
+
+msgid "The site or the page asks search engines not to index it (noindex)."
+msgstr "Le site ou la page demande aux moteurs de recherche de ne pas l'indexer (noindex)."
+
+msgid "The structured data (schema.org) names the author, the reading time, the language and the accessibility features the page really offers, such as the table of contents, text alternatives for images and the reading controls."
+msgstr "Les données structurées (schema.org) indiquent l'auteur, le temps de lecture, la langue et les fonctions d'accessibilité que la page offre réellement, comme la table des matières, les textes alternatifs des images et les commandes de lecture."
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim stops writing tags and gives that plugin the description and the accessibility data."
+msgstr "Les balises vont dans l'en-tête de la page où se trouve le shortcode, construites à partir du titre et du début du document. Si vous installez une extension de SEO, Jim cesse d'écrire des balises et lui fournit la description et les données d'accessibilité."
+
+msgid "The text came out as symbols (a PDF font problem). Convert another version of the file."
+msgstr "Le texte est sorti sous forme de symboles (problème de police du PDF). Convertissez une autre version du fichier."
+
+msgid "The title cannot be empty."
+msgstr "Le titre ne peut pas être vide."
+
+msgid "This type is not accepted. Use: %s."
+msgstr "Ce type n'est pas accepté. Utilisez : %s."
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Title saved."
+msgstr "Titre enregistré."
+
+msgid "To fix:"
+msgstr "À corriger :"
+
+msgid "Turn on \"SEO tags\" in Settings, or use an SEO plugin."
+msgstr "Activez les « Balises SEO » dans Réglages ou utilisez une extension de SEO."
+
+msgid "Two or more headings give the document a table of contents."
+msgstr "Deux titres ou plus donnent une table des matières au document."
+
+msgid "Unknown field."
+msgstr "Champ inconnu."
+
+msgid "Use a title between 10 and 70 characters."
+msgstr "Utilisez un titre de 10 à 70 caractères."
+
+msgid "Use my name"
+msgstr "Utiliser mon nom"
+
+msgid "Valid"
+msgstr "Valide"
+
+msgid "You cannot edit this document."
+msgstr "Vous ne pouvez pas modifier ce document."
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode, every page where each one is used and its SEO score (open a document to fix what is missing: author, title, summary and headings). In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "Vos documents sont dans Jim > Documents accessibles, avec des colonnes pour le shortcode, le mode d'affichage, toutes les pages où chacun est utilisé et sa note de SEO (ouvrez un document pour corriger ce qui manque : auteur, titre, résumé et titres de section). Dans Réglages, vous connectez l'assistant IA et choisissez ses textes rapides (les suggestions que voient les lecteurs dans le chat). La page Tutoriel explique chaque option, et vous pouvez y rouvrir cette visite."
+
+msgid "and %s more"
+msgstr "et %s de plus"
+
+msgid "characters"
+msgstr "caractères"
+
+msgid "it is not on any published page, so search engines cannot find it. Paste the shortcode on a page, or use \"Also publish in\" when converting."
+msgstr "il n'est dans aucune page publiée, donc les moteurs de recherche ne peuvent pas le trouver. Collez le shortcode dans une page ou utilisez « Publier aussi dans » à la conversion."
+
+msgid "too long"
+msgstr "trop long"
+
+msgid "too short"
+msgstr "trop court"
+
+msgid "Conversion review"
+msgstr "Vérification de la conversion"
+
+msgid "Originals and search engines"
+msgstr "Originaux et moteurs de recherche"
+
+msgid "Ask search engines not to index the original files that are kept (noindex)."
+msgstr "Demander aux moteurs de recherche de ne pas indexer les fichiers originaux conservés (noindex)."
+
+msgid "Only matters when the option above is off. It avoids the original PDF and the converted page competing in search results with the same text. It works on Apache and LiteSpeed; on nginx, add the header in the server configuration (see the documentation)."
+msgstr "N’a d’effet que lorsque l’option ci-dessus est désactivée. Évite que le PDF d’origine et la page convertie se concurrencent dans les résultats de recherche avec le même texte. Fonctionne sur Apache et LiteSpeed ; sur nginx, ajoutez l’en-tête dans la configuration du serveur (voir la documentation)."
+

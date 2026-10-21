@@ -1831,3 +1831,342 @@ msgstr "До 20 файлов этих типов можно отправить �
 msgid "Pick the provider, save your key (it is stored encrypted), choose the model and turn JIM on. Use a key made only for this site and set a spending limit at the provider; if you suspect a leak, replace it. Until JIM is on, it stays hidden from readers."
 msgstr "Выберите поставщика, сохраните ключ (он хранится в зашифрованном виде), выберите модель и включите JIM. Используйте ключ, созданный только для этого сайта, и задайте у поставщика лимит расходов; при подозрении на утечку замените его. Пока JIM не включён, он скрыт от читателей."
 
+msgid "\"Auto-detect from text\" suggests the author, title and summary found at the start of the document; nothing is saved until you confirm."
+msgstr "«Определить по тексту» предлагает автора, заголовок и краткое описание, найденные в начале документа; ничего не сохраняется, пока вы не подтвердите."
+
+msgid "\"Auto-fix headings\" turns section lines (numbered ones, \"Chapter 2\", lines in capitals) into real headings, so the document gets a table of contents. The previous text stays in the revisions."
+msgstr "«Исправить заголовки автоматически» превращает строки разделов (нумерованные, «Глава 2», заглавными буквами) в настоящие заголовки, и у документа появляется оглавление. Прежний текст остаётся в ревизиях."
+
+msgid "%1$s characters (use %2$s to %3$s)"
+msgstr "%1$s симв. (рекомендуется от %2$s до %3$s)"
+
+msgid "%1$s of %2$s files cannot be converted. Remove them to continue."
+msgstr "%1$s из %2$s файлов нельзя преобразовать. Удалите их, чтобы продолжить."
+
+msgid "%s files ready to convert."
+msgstr "Файлов, готовых к преобразованию: %s."
+
+msgid "%s heading created. The previous text is in the revisions."
+msgid_plural "%s headings created. The previous text is in the revisions."
+msgstr[0] "Создан %s заголовок. Прежний текст — в ревизиях."
+msgstr[1] "Создано %s заголовка. Прежний текст — в ревизиях."
+msgstr[2] "Создано %s заголовков. Прежний текст — в ревизиях."
+
+msgid "%s images have no description: edit the document and describe them, so that screen reader users know what they show."
+msgstr "У изображений (%s) нет описания: отредактируйте документ и опишите их, чтобы пользователи программ чтения с экрана знали, что на них показано."
+
+msgid "%s images included."
+msgstr "Изображений добавлено: %s."
+
+msgid "(no title)"
+msgstr "(без названия)"
+
+msgid "1 file ready to convert."
+msgstr "1 файл готов к преобразованию."
+
+msgid "A document that is not on any published page is flagged as an orphan: search engines cannot find it."
+msgstr "Документ, которого нет ни на одной опубликованной странице, помечается как «сирота»: поисковые системы не могут его найти."
+
+msgid "A long title loses the site name in the browser tab and in search results (about 75 characters are shown); the full title stays on the page. Without an image in the document, the site icon is used as the share image."
+msgstr "Длинный заголовок теряет название сайта во вкладке браузера и в результатах поиска (показывается около 75 символов); полный заголовок остаётся на странице. Если в документе нет изображения, в качестве картинки для публикации используется значок сайта."
+
+msgid "A summary for search results is available"
+msgstr "Есть краткое описание для результатов поиска"
+
+msgid "Author and language"
+msgstr "Автор и язык"
+
+msgid "Author is known"
+msgstr "Автор известен"
+
+msgid "Author of the batch"
+msgstr "Автор пакета"
+
+msgid "Author of the document"
+msgstr "Автор документа"
+
+msgid "Author removed."
+msgstr "Автор удалён."
+
+msgid "Author saved."
+msgstr "Автор сохранён."
+
+msgid "Auto-detect from text"
+msgstr "Определить по тексту"
+
+msgid "Auto-fix headings"
+msgstr "Исправить заголовки автоматически"
+
+msgid "Automatic (from the file, or the site language)"
+msgstr "Автоматически (из файла или язык сайта)"
+
+msgid "Check the files before sending"
+msgstr "Проверьте файлы перед отправкой"
+
+msgid "Check the list of chosen files: each one shows its size and a \"Valid\" or \"Error\" badge. Remove the ones with an error; the Convert button stays off until none is left."
+msgstr "Проверьте список выбранных файлов: у каждого указан размер и отметка «Допустим» или «Ошибка». Удалите файлы с ошибкой; кнопка преобразования остаётся выключенной, пока такие файлы есть."
+
+msgid "Choose it when the document is not in the language of the site. Screen readers and the reading voice pronounce the text in this language, and search engines learn which language the document is in."
+msgstr "Выберите, если документ написан не на языке сайта. Программы чтения с экрана и голос озвучивания будут произносить текст на этом языке, а поисковые системы узнают, на каком языке документ."
+
+msgid "Choose it when the document is not in the language of your site. Screen readers and the reading voice then use the right language, and search engines learn which language the document is in."
+msgstr "Выберите, если документ написан не на языке вашего сайта. Программы чтения с экрана и голос озвучивания будут использовать нужный язык, а поисковые системы узнают, на каком языке документ."
+
+msgid "Chosen files"
+msgstr "Выбранные файлы"
+
+msgid "Content"
+msgstr "Содержимое"
+
+msgid "Could not save. Reload the page and try again."
+msgstr "Не удалось сохранить. Перезагрузите страницу и повторите попытку."
+
+msgid "Default author of the batch"
+msgstr "Автор по умолчанию для пакета"
+
+msgid "Describe the images that have no alternative text in the document editor."
+msgstr "Опишите в редакторе документа изображения, у которых нет альтернативного текста."
+
+msgid "Document has a clear title"
+msgstr "У документа понятный заголовок"
+
+msgid "Document language"
+msgstr "Язык документа"
+
+msgid "Each document has a score from 0 to 100, in a column of the documents list and in a box when you open it. It checks metadata (title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on)."
+msgstr "У каждого документа есть оценка от 0 до 100: в столбце списка документов и в блоке при его открытии. Она проверяет метаданные (заголовок, краткое описание, автор), структуру (заголовки, без пропуска уровней), содержимое (достаточно текста, читаемость, описанные изображения) и публикацию (показан на опубликованной странице, доступен для индексации, SEO-теги включены)."
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Edit the content"
+msgstr "Изменить содержимое"
+
+msgid "Enough text"
+msgstr "Достаточно текста"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Fill in the Author in the file properties before converting. Search engines use it to judge expertise."
+msgstr "Укажите автора в свойствах файла до преобразования. Поисковые системы используют его для оценки компетентности."
+
+msgid "Fill in the author above"
+msgstr "Укажите автора выше"
+
+msgid "Give the document a title (optional), the author of the batch and its language if it differs from your site (all optional), and click \"Convert document\". Large files can take up to about a minute; do not close or refresh the page."
+msgstr "Задайте документу заголовок (необязательно), автора пакета и язык, если он отличается от языка сайта (всё необязательно), и нажмите «Преобразовать документ». Большие файлы могут обрабатываться около минуты; не закрывайте и не обновляйте страницу."
+
+msgid "Go from a heading to the next level down (for example H2 then H3, not H2 then H4). Use \"Conversion review\" to fix it."
+msgstr "Переходите от заголовка к следующему уровню (например, H2, затем H3, а не H2, затем H4). Для исправления используйте «Проверку преобразования»."
+
+msgid "Good"
+msgstr "Хорошо"
+
+msgid "Has headings for navigation"
+msgstr "Есть заголовки для навигации"
+
+msgid "Heading levels do not skip"
+msgstr "Уровни заголовков не пропускаются"
+
+msgid "Images have a description"
+msgstr "У изображений есть описание"
+
+msgid "In the box you fix things without leaving the screen: type the author or use \"Use my name\", fix the title and the summary (with a character counter) and save each one. The score is recalculated right away."
+msgstr "В этом блоке можно исправлять, не покидая экран: введите автора или нажмите «Использовать моё имя», исправьте заголовок и краткое описание (со счётчиком символов) и сохраните каждое. Оценка пересчитывается сразу."
+
+msgid "Metadata"
+msgstr "Метаданные"
+
+msgid "Needs attention"
+msgstr "Требует внимания"
+
+msgid "No lines that look like section titles were found. Use the conversion review or edit the content."
+msgstr "Не найдено строк, похожих на заголовки разделов. Используйте проверку преобразования или отредактируйте содержимое."
+
+msgid "Not used on any page"
+msgstr "Не используется ни на одной странице"
+
+msgid "Nothing was found in the text to suggest."
+msgstr "В тексте не найдено ничего, что можно предложить."
+
+msgid "Open the conversion review"
+msgstr "Открыть проверку преобразования"
+
+msgid "Optional. The author goes to every file of this upload and to the data that search engines read, which use it to judge who is behind the text. Use \"Use my name\" to fill it in. If you leave it empty, Jim uses the author written in each file, or the one the text states (\"Author: ...\")."
+msgstr "Необязательно. Автор применяется ко всем файлам этой загрузки и к данным, которые читают поисковые системы; они используют его, чтобы понять, кто стоит за текстом. Нажмите «Использовать моё имя», чтобы заполнить поле. Если оставить пустым, Jim возьмёт автора, указанного в каждом файле, или того, кого называет сам текст («Автор: ...»)."
+
+msgid "Optional: the author of every file of this upload. It replaces the author written in the file properties, and appears in the search engine data of the page. Leave it empty to keep the one in each file."
+msgstr "Необязательно: автор всех файлов этой загрузки. Он заменяет автора из свойств файла и появляется в поисковых данных страницы. Оставьте поле пустым, чтобы сохранить автора каждого файла."
+
+msgid "Orphan document:"
+msgstr "Документ-сирота:"
+
+msgid "Over the limit of %s files per upload."
+msgstr "Превышен лимит в %s файлов за одну загрузку."
+
+msgid "Page can be indexed"
+msgstr "Страница доступна для индексации"
+
+msgid "Pages with fewer than 300 words are seen as thin content."
+msgstr "Страницы менее чем из 300 слов считаются малосодержательными."
+
+msgid "Passed:"
+msgstr "Пройдено:"
+
+msgid "Poor"
+msgstr "Плохо"
+
+msgid "Publication"
+msgstr "Публикация"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Remove %s"
+msgstr "Удалить %s"
+
+msgid "Right after you choose them, each file appears in a list with its size and a \"Valid\" or \"Error\" badge (type not accepted, empty, or over the size limit). The Convert button stays off while a file has an error: use \"Remove\" on it. Nothing is sent before that."
+msgstr "Сразу после выбора каждый файл появляется в списке с размером и отметкой «Допустим» или «Ошибка» (тип не поддерживается, пустой файл или превышен размер). Кнопка преобразования остаётся выключенной, пока у файла есть ошибка: нажмите «Удалить» рядом с ним. До этого ничего не отправляется."
+
+msgid "SEO and accessibility score"
+msgstr "Оценка SEO и доступности"
+
+msgid "SEO score"
+msgstr "Оценка SEO"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Save author"
+msgstr "Сохранить автора"
+
+msgid "Saving…"
+msgstr "Сохранение…"
+
+msgid "Search and sharing tags are on"
+msgstr "Теги для поиска и публикации включены"
+
+msgid "Search engines use the author to judge who is behind the text. \"Save author\" saves it now; the score is recalculated."
+msgstr "Поисковые системы используют автора, чтобы понять, кто стоит за текстом. «Сохранить автора» сохраняет его сейчас; оценка пересчитывается."
+
+msgid "Shown on a published page"
+msgstr "Показан на опубликованной странице"
+
+msgid "Structure"
+msgstr "Структура"
+
+msgid "Suggestions filled in. Review them and save."
+msgstr "Предложения подставлены. Проверьте их и сохраните."
+
+msgid "Summary for search results"
+msgstr "Краткое описание для результатов поиска"
+
+msgid "Summary saved."
+msgstr "Краткое описание сохранено."
+
+msgid "Text is readable"
+msgstr "Текст читаемый"
+
+msgid "The author comes from the form (\"Default author of the batch\"), then from the file properties, then from the text when it says so (\"Author: ...\"). The document language comes from the form, or from the file properties; without either, the language of the site is used. Search engines and screen readers use both."
+msgstr "Автор берётся из формы («Автор по умолчанию для пакета»), затем из свойств файла и, наконец, из текста, если он это указывает («Автор: ...»). Язык документа берётся из формы или из свойств файла; если нет ни того, ни другого, действует язык сайта. Поисковые системы и программы чтения с экрана используют оба."
+
+msgid "The description is chosen by the shape of the text: it skips covers, data sheets, notices with addresses and lines that are not sentences. A summary you write for the document replaces it."
+msgstr "Описание выбирается по форме текста: пропускаются обложки, технические карточки, примечания с адресами и строки, не являющиеся предложениями. Краткое описание, которое вы напишете для документа, заменяет его."
+
+msgid "The document has no URL of its own. Put its shortcode on a published page, or use \"Also publish in\"."
+msgstr "У документа нет собственного адреса. Вставьте его шорткод на опубликованную страницу или используйте «Также опубликовать в»."
+
+msgid "The document needs at least a few full sentences, or a Subject in the file properties."
+msgstr "Документу нужны хотя бы несколько полных предложений или тема в свойствах файла."
+
+msgid "The documents list has a \"Published in\" column that shows every page, post or custom post type where the shortcode is, wherever you pasted it (including drafts, private items and page builders such as Elementor), with links to view and to edit. It is kept up to date when you save a page. The document stays in the Jim panel either way."
+msgstr "В списке документов есть столбец «Опубликовано в», который показывает все страницы, записи и типы содержимого, где находится шорткод, куда бы вы его ни вставили (включая черновики, приватные записи и конструкторы страниц, например Elementor), со ссылками для просмотра и редактирования. Он обновляется при сохранении страницы. Документ в любом случае остаётся в панели Jim."
+
+msgid "The file is empty (0 bytes)."
+msgstr "Файл пуст (0 байт)."
+
+msgid "The files you choose are listed before anything is sent, with their size in MB and a \"Valid\" or \"Error\" badge; the Convert button waits while one has an error (type not accepted, empty or over the limit)."
+msgstr "Выбранные файлы показываются списком до отправки, с размером в МБ и отметкой «Допустим» или «Ошибка»; кнопка преобразования ждёт, пока есть ошибка (тип не поддерживается, пустой файл или превышен лимит)."
+
+msgid "The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes no tags of its own, to avoid duplicates, and gives that plugin the description and the accessibility data. You can turn this off in Settings."
+msgstr "Страница с шорткодом получает meta description, Open Graph, Twitter Card и JSON-LD, составленные из заголовка и начала документа. Если активен Yoast SEO, Rank Math, All in One SEO или SEOPress, Jim не пишет собственных тегов, чтобы не дублировать их, и передаёт этому плагину описание и данные о доступности. Это можно отключить в настройках."
+
+msgid "The site or the page asks search engines not to index it (noindex)."
+msgstr "Сайт или страница просит поисковые системы не индексировать её (noindex)."
+
+msgid "The structured data (schema.org) names the author, the reading time, the language and the accessibility features the page really offers, such as the table of contents, text alternatives for images and the reading controls."
+msgstr "Структурированные данные (schema.org) указывают автора, время чтения, язык и функции доступности, которые страница действительно предлагает, например оглавление, альтернативные тексты изображений и элементы управления чтением."
+
+msgid "The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim stops writing tags and gives that plugin the description and the accessibility data."
+msgstr "Теги помещаются в заголовок страницы, где находится шорткод, и составляются из заголовка и начала документа. Если вы установите SEO-плагин, Jim перестанет писать теги и передаст этому плагину описание и данные о доступности."
+
+msgid "The text came out as symbols (a PDF font problem). Convert another version of the file."
+msgstr "Текст получился в виде символов (проблема шрифта в PDF). Преобразуйте другую версию файла."
+
+msgid "The title cannot be empty."
+msgstr "Заголовок не может быть пустым."
+
+msgid "This type is not accepted. Use: %s."
+msgstr "Этот тип не поддерживается. Используйте: %s."
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Title saved."
+msgstr "Заголовок сохранён."
+
+msgid "To fix:"
+msgstr "Нужно исправить:"
+
+msgid "Turn on \"SEO tags\" in Settings, or use an SEO plugin."
+msgstr "Включите «SEO-теги» в настройках или используйте SEO-плагин."
+
+msgid "Two or more headings give the document a table of contents."
+msgstr "Два заголовка или больше дают документу оглавление."
+
+msgid "Unknown field."
+msgstr "Неизвестное поле."
+
+msgid "Use a title between 10 and 70 characters."
+msgstr "Используйте заголовок длиной от 10 до 70 символов."
+
+msgid "Use my name"
+msgstr "Использовать моё имя"
+
+msgid "Valid"
+msgstr "Допустим"
+
+msgid "You cannot edit this document."
+msgstr "Вы не можете редактировать этот документ."
+
+msgid "Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode, every page where each one is used and its SEO score (open a document to fix what is missing: author, title, summary and headings). In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there."
+msgstr "Ваши документы находятся в разделе Jim > Доступные документы: столбцы с шорткодом, режимом отображения, всеми страницами, где используется каждый документ, и его оценкой SEO (откройте документ, чтобы исправить недостающее: автора, заголовок, краткое описание и заголовки разделов). В настройках вы подключаете ИИ-ассистента и выбираете его быстрые тексты (подсказки, которые читатели видят в чате). Страница «Руководство» объясняет каждый параметр, и оттуда можно снова открыть этот тур."
+
+msgid "and %s more"
+msgstr "и ещё %s"
+
+msgid "characters"
+msgstr "симв."
+
+msgid "it is not on any published page, so search engines cannot find it. Paste the shortcode on a page, or use \"Also publish in\" when converting."
+msgstr "его нет ни на одной опубликованной странице, поэтому поисковые системы не могут его найти. Вставьте шорткод на страницу или используйте «Также опубликовать в» при преобразовании."
+
+msgid "too long"
+msgstr "слишком длинно"
+
+msgid "too short"
+msgstr "слишком коротко"
+
+msgid "Conversion review"
+msgstr "Проверка преобразования"
+
+msgid "Originals and search engines"
+msgstr "Оригиналы и поисковые системы"
+
+msgid "Ask search engines not to index the original files that are kept (noindex)."
+msgstr "Просить поисковые системы не индексировать сохранённые исходные файлы (noindex)."
+
+msgid "Only matters when the option above is off. It avoids the original PDF and the converted page competing in search results with the same text. It works on Apache and LiteSpeed; on nginx, add the header in the server configuration (see the documentation)."
+msgstr "Имеет значение, только когда выключен параметр выше. Не даёт исходному PDF и преобразованной странице конкурировать в результатах поиска с одним и тем же текстом. Работает на Apache и LiteSpeed; на nginx добавьте заголовок в конфигурацию сервера (см. документацию)."
+

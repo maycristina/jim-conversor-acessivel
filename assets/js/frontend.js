@@ -1016,7 +1016,7 @@
 				return voiceCode( named );
 			}
 
-			var wanted = [ document.documentElement.lang, window.navigator.language ].filter( Boolean );
+			var wanted = [ viewer.getAttribute( 'data-jimca-lang' ), document.documentElement.lang, window.navigator.language ].filter( Boolean );
 
 			for ( var i = 0; i < wanted.length; i++ ) {
 				var exact = codes.filter( function ( code ) {

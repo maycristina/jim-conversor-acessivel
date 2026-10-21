@@ -1,6 +1,80 @@
 # Changelog
 
-## Não lançado
+## 2.3.0 (2026-10-20)
+
+### SEO
+- Dados estruturados: o JSON-LD da página agora traz autor, tempo de leitura, palavras-chave e propriedades de acessibilidade
+  do schema.org (`accessMode`, `accessibilityFeature`, `accessibilityControl`). Só declara o que a página tem de fato
+  (sumário, textos alternativos, controles da barra de leitura).
+- Metadados do arquivo (autor, assunto e palavras-chave do PDF/DOCX) são lidos na conversão, sem serviço externo, e alimentam
+  descrição, autor e palavras-chave. Autores genéricos ("Microsoft Word", "admin") são ignorados.
+- Com Yoast, Rank Math, All in One SEO ou SEOPress ativo, o Jim continua sem imprimir tags, mas entrega a descrição (quando o plugin
+  não tem uma) e as propriedades de acessibilidade ao schema WebPage desses plugins.
+- Nota de SEO e acessibilidade (0 a 100) em "Todos os documentos" e no editor do documento, com 11 verificações locais e aviso
+  de documento órfão (fora de qualquer página publicada).
+
+- Auditoria de SEO na CI (`.github/workflows/jim-seo-audit.yml`): sobe um WordPress de teste (wp-env), cria um documento no modo
+  leitor e outro no modo post e confere JSON-LD, descrição, hierarquia de títulos e a ausência de busca e paginação no modo post
+  (`bin/seo-audit.js`, reprova o PR). O SEOmator roda em seguida, só como relatório informativo.
+
+- Idioma do documento: o formulário de importação ganhou o campo "Idioma do documento" (automático, ou 18 idiomas). O idioma vale
+  para o texto do documento (`lang`, para leitores de tela), para a voz da leitura em voz alta e para o `inLanguage` do JSON-LD.
+- Descrição e compartilhamento: licenças e cabeçalhos (como o do Project Gutenberg) deixam de ser usados como descrição;
+  `og:updated_time` foi adicionado; sem imagem no documento, o ícone do site é usado como `og:image`.
+- O autor do JSON-LD não cai mais em nomes genéricos da conta do WordPress ("user", "admin"): sem autor real, o campo é omitido.
+- CSS e JS minificados no pacote (`bin/minify-assets.sh`, chamado por `bin/build-zip.sh`); o código legível continua incluído
+  e é usado com `SCRIPT_DEBUG`.
+
+- Descrição escolhida pela forma do texto, não por palavras: ignora faixas de símbolos (`===`, `***`), fichas "Chave: valor",
+  parágrafos com endereço ou e-mail e linhas que não são frases; remove divisores repetidos e, se a descrição não tiver nenhuma
+  palavra do título, começa por ele. Substitui o filtro por palavras que valia só para alguns textos.
+- `<title>` com até ~75 caracteres nas páginas com documento: título longo perde o nome do site e, se ainda passar, é cortado em
+  palavra inteira (o título completo continua na página). `og:locale` segue o idioma do documento.
+- Título do documento igual ao título da página deixa de gerar um segundo título de nível 2 (aparece como parágrafo, com o mesmo visual).
+- Scripts do front-end só quando necessários: barra e busca (`frontend.js`, `pager.js`) no modo leitor, `post.js` no modo post,
+  visualizador de imagens só se houver imagens; todos com `defer`.
+- Ferramenta de teste local: `node bin/seo-audit.js <url|arquivo.html>` confere ~45 regras de SEO e acessibilidade da página
+  (as dos verificadores web, sem conta nem limite de uso) e `wp jimca convert <arquivo> --mode=post --language=fr` passa um
+  PDF/DOCX/TXT/MD pelo conversor e publica numa página. A CI usa os dois com arquivos de exemplo (`tests/fixtures/`).
+- Os testes de JavaScript também rodam sobre os arquivos minificados (`documentacao/testes/min-loader.js`).
+
+- Importação: lista dos arquivos escolhidos logo abaixo do campo, com nome, tamanho em MB e selo "Válido" ou "Erro" (tipo não aceito,
+  vazio, acima do limite, além de 20 arquivos); o botão "Converter documento" fica desligado enquanto houver arquivo inválido, e cada
+  arquivo tem "Remover". Campo "Autor padrão do lote" (com botão "Usar meu nome") que vale para todos os arquivos do envio.
+- Nome guardado do arquivo enviado leva um sufixo aleatório (nunca sobrescreve outro envio do mesmo arquivo).
+- Lista de documentos: a coluna "Publicado em" mostra todas as páginas e posts onde o shortcode está (com links para ver e editar),
+  inclusive em rascunho, privado e construtores como o Elementor, ou "Não utilizado em nenhuma página". As referências ficam em
+  `_jimca_usado_em`, atualizadas ao salvar a página e quando o shortcode é exibido; o primeiro acesso a um documento antigo faz uma busca.
+- Caixa "Nota de SEO" do documento: campo de autor editável (com "Usar meu nome"), atalhos para a revisão da conversão e para o editor quando faltam
+  títulos; a nota é recalculada ao salvar.
+
+- Caixa de nota de SEO com salvamento por AJAX: "Save author", e, abaixo de cada item de metadados que falhou, campo com contador de caracteres e
+  botão próprio (título de 10 a 70 caracteres, resumo para resultados de busca). Cada salvamento recalcula e redesenha a nota e a lista sem
+  recarregar a página. O título novo vai também para o campo do editor, para o "Atualizar" não trazer o antigo de volta.
+- "Auto-detect from text": sugere autor ("Author:", "Autor:", "Escrito por"...), título e resumo a partir do início do texto, sem salvar até a pessoa
+  confirmar. Na conversão, o autor também é preenchido quando o texto o declara de forma explícita e o arquivo não traz autor.
+- "Auto-fix headings": transforma linhas de seção (numeradas, "Capítulo N", em maiúsculas, linhas curtas sem ponto que abrem um parágrafo longo)
+  em `<h2>`/`<h3>`, usando o conteúdo que está no editor (inclusive alterações não salvas); desiste quando as linhas parecem verso ou lista.
+  O texto anterior fica nas revisões.
+
+### Segurança e SEO
+- Opção "Originais e buscadores" (ligada por padrão): com o original guardado, a pasta de envios do Jim passa a enviar `X-Robots-Tag: noindex, nofollow`
+  (Apache e LiteSpeed; para nginx há a regra na documentação de segurança), evitando o PDF e a página convertida competindo no Google.
+
+### Site e documentação
+- Landing (`docs/` em 7 línguas) reescrita com a copy nova para a comunidade WordPress: título e descrição de SEO, hero com pontos, seções
+  "Por que transformar anexos em páginas nativas", "Fluxo editorial no wp-admin" e "Para quem lê", assistente com BYOK, idiomas, limites
+  (com a validação), comunidade, JSON-LD `SoftwareApplication` e Twitter Card. Documentação: seções "Importação e uso" e "SEO e nota de
+  qualidade", título/descrição e JSON-LD `TechArticle`. Geradores em `_privado/landing/` (build_landing.py e build_docs.py).
+- Documentação (português): seção de perguntas frequentes reorganizada em 7 grupos (começando, conversão, busca e SEO, acessibilidade, segurança,
+  privacidade e LGPD, para quem desenvolve), com 31 perguntas respondidas a partir do código, e JSON-LD `FAQPage` (gerador `_privado/landing/build_faq.py`).
+- Tour guiado e Tutorial atualizados (lista de arquivos, autor e idioma do lote, SEO, nota, "Publicado em"); 109 textos novos traduzidos nas
+  7 línguas (`languages/`); `readme.txt`, `README.md` e `documentacao/SEO-E-NOTA.md` com as novidades.
+
+### Corrigido
+- O link "Ver documentos" do resultado da conversão abre a lista de documentos (`edit.php?post_type=jimca_documento`).
+- "Clique aqui para revisar a conversão" saía sem espaço ("aquipara") para leitores de tela e na cópia do texto.
+- No modelo "padrão Post" o documento não é mais dividido em partes: a busca e a paginação deixaram de aparecer.
 
 ### Site e documentação
 - A seção "Painéis, barra de leitura e limites" da documentação foi traduzida para espanhol, francês, alemão, russo, chinês e hindi

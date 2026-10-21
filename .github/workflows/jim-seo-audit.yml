@@ -1,0 +1,109 @@
+name: Auditoria de SEO e acessibilidade das páginas convertidas
+
+# Sobe um WordPress de teste com o plugin, cria dois documentos (modo leitor e
+# modo post) e confere o HTML que o plugin entrega. Roda só quando o que muda
+# pode afetar essas páginas.
+on:
+  pull_request:
+    paths:
+      - 'includes/**'
+      - 'templates/**'
+      - 'assets/**'
+      - 'admin/**'
+      - 'bin/seo-fixture.php'
+      - 'bin/seo-audit.js'
+      - 'tests/fixtures/**'
+      - '.github/workflows/jim-seo-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  seo:
+    name: SEO (regras do plugin e SEOmator)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer:v2
+
+      - name: Instalar dependências de produção (smalot/pdfparser, phpword)
+        run: composer install --no-dev --prefer-dist --no-progress
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Como no pacote: CSS e JS minificados ao lado dos originais.
+      - name: Minificar CSS e JS
+        run: bash bin/minify-assets.sh
+
+      - name: Subir o WordPress de teste (wp-env, porta 8888)
+        run: |
+          npx --yes @wordpress/env start
+          npx --yes @wordpress/env run cli wp plugin activate jim-conversor-acessivel
+
+      # Documentos de teste, de dois jeitos:
+      #  1. Arquivos reais (TXT, MD, DOCX, PDF) passam pelo conversor do Jim, como no painel
+      #     (`wp jimca convert`), cada um num modo de exibição.
+      #  2. Dois documentos longos (modo leitor e modo post), para a divisão em partes.
+      - name: Converter os arquivos de teste
+        run: |
+          WP="npx --yes @wordpress/env run cli wp"
+          FIX=wp-content/plugins/jim-conversor-acessivel/tests/fixtures
+          $WP rewrite structure '/%postname%/' --hard
+          # Ícone do site: é a imagem de compartilhamento de reserva (og:image) quando o documento não tem imagem.
+          ICON=$($WP media import $FIX/icone.png --porcelain | tail -n 1)
+          $WP option update site_icon "$ICON"
+          $WP jimca convert $FIX/moulin.txt --mode=post --language=fr --author=Anonyme --slug=moulin
+          $WP jimca convert $FIX/manual.md --mode=post --slug=manual
+          $WP jimca convert $FIX/relatorio.docx --mode=reader --slug=relatorio
+          $WP jimca convert $FIX/guia.pdf --mode=reader --slug=guia
+          $WP eval-file wp-content/plugins/jim-conversor-acessivel/bin/seo-fixture.php
+          # Cada documento aparece como usado pela página que o mostra, e o autor informado chega à nota.
+          $WP eval-file wp-content/plugins/jim-conversor-acessivel/bin/check-usage.php
+
+      # Regras que o próprio plugin garante (bin/seo-audit.js). Reprovam o job.
+      - name: Auditar o HTML entregue (SEO, acessibilidade, scripts, modos)
+        run: |
+          node bin/seo-audit.js --strict --require=og:image,minified \
+            http://localhost:8888/moulin/ \
+            http://localhost:8888/manual/ \
+            http://localhost:8888/relatorio/ \
+            http://localhost:8888/guia/ \
+            http://localhost:8888/documento-leitor/ \
+            http://localhost:8888/documento-post/
+
+      # Auditoria externa, só informativa: as regras mudam entre versões do
+      # SEOmator e algumas (ex.: sitemap, robots.txt) não dizem respeito ao plugin.
+      - name: SEOmator (informativo)
+        continue-on-error: true
+        run: |
+          mkdir -p seo-reports
+          npx --yes @seomator/seo-audit audit http://localhost:8888/documento-leitor/ \
+            --categories core,a11y,content,links,images,schema,eeat,social,geo \
+            --staging --format json -o seo-reports/leitor.json
+          npx --yes @seomator/seo-audit audit http://localhost:8888/documento-post/ \
+            --categories core,a11y,content,links,images,schema,eeat,social,geo \
+            --staging --format json -o seo-reports/post.json
+
+      - name: Guardar os relatórios
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-reports
+          path: seo-reports
+          if-no-files-found: ignore

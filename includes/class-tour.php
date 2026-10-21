@@ -72,7 +72,7 @@ class JIMCA_Tour {
 	 * @param string $screen 'new-document' or 'settings'.
 	 */
 	public static function enqueue( $screen = 'new-document' ) {
-		wp_enqueue_script( 'jimca-tour', JIMCA_PLUGIN_URL . 'assets/js/tour.js', array(), jimca_asset_version( 'assets/js/tour.js' ), true );
+		wp_enqueue_script( 'jimca-tour', jimca_asset_url( 'assets/js/tour.js' ), array(), jimca_asset_version( 'assets/js/tour.js' ), true );
 		wp_localize_script(
 			'jimca-tour',
 			'jimcaTourConfig',
@@ -113,9 +113,24 @@ class JIMCA_Tour {
 				'text'   => __( 'Pick a PDF, DOCX, TXT or Markdown file. You can send up to 20 files in a batch at a time, within the configured limit.', 'jim-conversor-acessivel' ),
 			),
 			array(
+				'target' => array( '[data-jimca-file-list]', '#jimca_file' ),
+				'title'  => __( 'Check the files before sending', 'jim-conversor-acessivel' ),
+				'text'   => __( 'Right after you choose them, each file appears in a list with its size and a "Valid" or "Error" badge (type not accepted, empty, or over the size limit). The Convert button stays off while a file has an error: use "Remove" on it. Nothing is sent before that.', 'jim-conversor-acessivel' ),
+			),
+			array(
 				'target' => array( '#jimca_title' ),
 				'title'  => __( 'Title (optional)', 'jim-conversor-acessivel' ),
 				'text'   => __( 'Without a title, Jim uses the file name. The file name is also the address (slug) of the post if you publish it below.', 'jim-conversor-acessivel' ),
+			),
+			array(
+				'target' => array( '#jimca_author' ),
+				'title'  => __( 'Author of the batch', 'jim-conversor-acessivel' ),
+				'text'   => __( 'Optional. The author goes to every file of this upload and to the data that search engines read, which use it to judge who is behind the text. Use "Use my name" to fill it in. If you leave it empty, Jim uses the author written in each file, or the one the text states ("Author: ...").', 'jim-conversor-acessivel' ),
+			),
+			array(
+				'target' => array( '#jimca_language' ),
+				'title'  => __( 'Document language', 'jim-conversor-acessivel' ),
+				'text'   => __( 'Choose it when the document is not in the language of your site. Screen readers and the reading voice then use the right language, and search engines learn which language the document is in.', 'jim-conversor-acessivel' ),
 			),
 			array(
 				'target' => array( '#jimca_display_mode_label', '.jimca-admin-card form fieldset' ),
@@ -145,7 +160,7 @@ class JIMCA_Tour {
 			array(
 				'target' => array(),
 				'title'  => __( 'That is it', 'jim-conversor-acessivel' ),
-				'text'   => __( 'Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode and where each one was published. In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there.', 'jim-conversor-acessivel' ),
+				'text'   => __( 'Your documents are in Jim > Accessible Documents, with columns for the shortcode, the display mode, every page where each one is used and its SEO score (open a document to fix what is missing: author, title, summary and headings). In Settings you connect the AI assistant and choose its quick texts (the suggestions readers see in the chat). The Tutorial page explains every option, and you can open this tour again from there.', 'jim-conversor-acessivel' ),
 				'links'  => array(
 					array(
 						'label' => __( 'Settings tour (assistant and quick texts)', 'jim-conversor-acessivel' ),

@@ -104,3 +104,12 @@ jobs:
       - name: Rodar os testes
         # Sem aspas: o Node 20 não expande "*" sozinho (isso só existe a partir do Node 21); quem expande é o shell.
         run: node --test documentacao/testes/*.test.js
+
+      # Os mesmos testes sobre os arquivos .min.js, como o pacote os entrega.
+      # O a11y.test.js lê o texto do código-fonte (nomes de funções, comentários), por isso fica de fora.
+      - name: Minificar CSS e JS
+        run: bash bin/minify-assets.sh
+
+      - name: Rodar os testes sobre os arquivos minificados
+        run: |
+          node --require ./documentacao/testes/min-loader.js --test $(ls documentacao/testes/*.test.js | grep -v a11y.test.js)

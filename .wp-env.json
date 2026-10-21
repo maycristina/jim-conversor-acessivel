@@ -1,0 +1,14 @@
+{
+	"core": null,
+	"phpVersion": "8.2",
+	"plugins": [],
+	"mappings": {
+		"wp-content/plugins/jim-conversor-acessivel": "."
+	},
+	"port": 8888,
+	"testsEnvironment": false,
+	"config": {
+		"WP_DEBUG": false,
+		"SCRIPT_DEBUG": false
+	}
+}

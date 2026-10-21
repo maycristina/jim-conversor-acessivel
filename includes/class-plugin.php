@@ -99,9 +99,15 @@ class JIMCA_Plugin {
 		JIMCA_Tutor::register_hooks();
 		JIMCA_Security::register_hooks();
 		JIMCA_Pagination::register_hooks();
+		JIMCA_Usage::register_hooks();
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::add_command( 'jimca', 'JIMCA_CLI' );
+		}
 
 		if ( is_admin() ) {
 			JIMCA_Review::register_hooks();
+			JIMCA_Seo_Box::register_hooks();
 			JIMCA_Admin::get_instance()->init();
 		}
 	}

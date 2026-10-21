@@ -25,6 +25,7 @@ class JIMCA_Activator {
 			'allowed_types'          => array( 'pdf', 'docx', 'txt', 'md' ),
 			'max_file_size_mb'       => 10,
 			'delete_original_after'  => true,
+			'noindex_originals'      => true,
 			'include_images'         => true,
 			'seo_enabled'            => true,
 			'max_images'             => JIMCA_Limits::DEFAULT_MAX_IMAGES,

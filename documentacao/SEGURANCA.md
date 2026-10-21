@@ -66,3 +66,32 @@ O WordPress.org **não aceita `.htaccess` dentro do pacote do plugin**, então o
 
 Quem administra o servidor pode reforçar (opcional): em Apache/LiteSpeed, `Options -Indexes` e negar `*.php` em
 `/wp-content/plugins/jim-conversor-acessivel/`; em nginx, `autoindex off;` e `location ~* ^/wp-content/plugins/jim-conversor-acessivel/.*\.php$ { deny all; }`.
+
+## Originais guardados e buscadores (`noindex`)
+
+Por padrão o original é apagado depois da conversão. Quando ele é guardado (opção desligada em Configurações), o Jim, por padrão, pede aos
+buscadores que **não indexem** esses arquivos, para que o PDF original e a página convertida não concorram nos resultados com o mesmo
+texto. A opção é **Originais e buscadores** (`noindex_originals`, ligada por padrão).
+
+- **Apache e LiteSpeed:** o `.htaccess` da pasta `uploads/jimca-documentos` ganha `Header set X-Robots-Tag "noindex, nofollow"` (dentro de
+  `<IfModule mod_headers.c>`). O arquivo é reescrito quando a opção muda e na próxima conversão, também para os envios antigos.
+- **nginx** (não lê `.htaccess`): acrescente ao servidor
+  ```nginx
+  location ^~ /wp-content/uploads/jimca-documentos/ {
+      add_header X-Robots-Tag "noindex, nofollow" always;
+  }
+  ```
+- Não é um bloqueio: quem tem o endereço continua abrindo o arquivo. Só orienta os buscadores. Se o servidor não permitir `Header` em `.htaccess`
+  (`AllowOverride FileInfo`), a pasta responde com erro 500 e o jeito é desligar a opção e usar a regra do servidor.
+
+## Envio de arquivos
+
+- **No navegador:** a lista dos arquivos escolhidos mostra tipo, tamanho e um selo "Válido"/"Erro", e o botão de converter fica desligado
+  com arquivo inválido. É conforto, não segurança: tudo é conferido de novo no servidor.
+- **No servidor (`JIMCA_Admin::receive_file()`):** nome limpo com `sanitize_file_name()`, extensão permitida (pdf, docx, txt, md),
+  conteúdo conferido com `wp_check_filetype_and_ext()` (que usa `finfo`) para garantir que a extensão corresponde ao arquivo,
+  tamanho dentro do limite configurado e, em PDF, dentro do que a memória do servidor converte; no máximo 20 arquivos por envio. Cada
+  arquivo falha ou passa sozinho, com mensagem própria. O nome guardado leva um sufixo aleatório, então dois envios do mesmo arquivo
+  nunca se sobrescrevem.
+- **Chamadas AJAX da caixa de SEO** (`jimca_seo_save`, `jimca_seo_detect`, `jimca_seo_headings`): todas exigem nonce e a capacidade
+  `edit_post` do documento; o conteúdo que volta do editor passa por `wp_kses_post()` antes de ser salvo.

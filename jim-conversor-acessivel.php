@@ -3,7 +3,7 @@
  * Plugin Name:       Jim - Accessible Converter
  * Plugin URI:         https://jim.mabo.cc/
  * Description:       Converts PDF, Word, Markdown and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
- * Version:            2.2.0
+ * Version:            2.3.0
  * Requires at least:  6.0
  * Requires PHP:       7.4
  * Author:             Mayara Nascimento
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JIMCA_VERSION', '2.2.0' );
+define( 'JIMCA_VERSION', '2.3.0' );
 define( 'JIMCA_PLUGIN_FILE', __FILE__ );
 define( 'JIMCA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'JIMCA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -36,6 +36,24 @@ function jimca_asset_version( $relative ) {
 	$mtime = @filemtime( JIMCA_PLUGIN_DIR . $relative ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- a missing file just falls back to the plugin version.
 
 	return $mtime ? JIMCA_VERSION . '.' . $mtime : JIMCA_VERSION;
+}
+
+/**
+ * URL of a CSS or JS file of the plugin: the minified copy (name.min.js) when
+ * the package has one, unless WordPress is in SCRIPT_DEBUG mode. The
+ * readable source is always in the package too.
+ *
+ * @param string $relative Path from the plugin folder, e.g. 'assets/js/frontend.js'.
+ * @return string
+ */
+function jimca_asset_url( $relative ) {
+	$min = preg_replace( '/\.(css|js)$/', '.min.$1', $relative );
+
+	if ( $min !== $relative && ! ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) && file_exists( JIMCA_PLUGIN_DIR . $min ) ) {
+		$relative = $min;
+	}
+
+	return JIMCA_PLUGIN_URL . $relative;
 }
 
 /**

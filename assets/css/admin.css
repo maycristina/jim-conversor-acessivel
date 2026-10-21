@@ -583,3 +583,127 @@
 	width: 100%;
 	max-width: 16em;
 }
+
+/* ------------------------------------------------------------------
+ * Chosen files: name, size and whether each one can be converted.
+ * ------------------------------------------------------------------ */
+
+.jimca-file-list-wrap[hidden] {
+	display: none;
+}
+
+.jimca-file-list-wrap {
+	max-width: 640px;
+	margin-top: 0.75rem;
+}
+
+.jimca-file-list__summary {
+	margin: 0 0 0.4rem;
+	font-weight: 600;
+}
+
+.jimca-file-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.jimca-file-list__item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.75rem;
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	border-top: 1px solid #dcdcde;
+}
+
+.jimca-file-list__item:first-child {
+	border-top: 0;
+}
+
+.jimca-file-list__name {
+	flex: 1 1 12rem;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.jimca-file-list__size {
+	color: #50575e;
+	white-space: nowrap;
+}
+
+.jimca-file-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.1rem 0.55rem;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.jimca-file-badge--ok {
+	background: #edfaef;
+	color: #1e4620;
+	border: 1px solid #7ad08a;
+}
+
+.jimca-file-badge--error {
+	background: #fcf0f1;
+	color: #8a2424;
+	border: 1px solid #d63638;
+}
+
+.jimca-file-list__reason {
+	flex-basis: 100%;
+	margin: 0;
+	color: #8a2424;
+	font-size: 0.85rem;
+}
+
+.jimca-file-list__remove {
+	margin-left: auto;
+}
+
+.jimca-hosts {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.jimca-hosts li {
+	margin: 0 0 0.5rem;
+}
+
+/* SEO box: fields to fix a check on the spot. */
+.jimca-seo-fix {
+	display: block;
+	margin: 0.5rem 0 0.75rem;
+}
+
+.jimca-seo-fix .widefat {
+	margin: 0.25rem 0;
+}
+
+.jimca-seo-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin: 0.25rem 0 0.5rem;
+}
+
+.jimca-seo-status:empty {
+	display: none;
+}
+
+.jimca-seo-status {
+	margin: 0 0 0.5rem;
+	padding: 0.4rem 0.6rem;
+	border-left: 4px solid #2271b1;
+	background: #f0f6fc;
+}

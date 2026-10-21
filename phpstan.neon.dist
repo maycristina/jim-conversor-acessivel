@@ -19,6 +19,8 @@ parameters:
     scanDirectories:
         - vendor/woocommerce/action-scheduler
     treatPhpDocTypesAsCertain: false
+    # Os ignores abaixo cobrem arquivos do WordPress que não existem no CI; não reclamar se um deles não for usado.
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # Os arquivos do WordPress (wp-admin/includes/...) não existem no CI.
         - identifier: requireOnce.fileNotFound

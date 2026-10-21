@@ -17,7 +17,7 @@ da tela se calculam a partir da memória do servidor onde o plugin está.
 
 | Limite | Valor | Onde aparece |
 |---|---|---|
-| Arquivos por vez | **20** | Texto da tela de importação; a tela recusa o 21º antes de enviar |
+| Arquivos por vez | **20** | Texto da tela de importação; a lista de arquivos marca do 21º em diante com "Erro" e o botão de converter fica desligado até removê-los |
 | Tamanho por arquivo | Configuração "Tamanho máximo (MB)" (1 a 100), limitada pelo `upload_max_filesize` / `post_max_size` do servidor | Texto da tela; arquivo maior é recusado pelo nome, sem ser enviado |
 | Tamanho de **PDF** | Calculado pela memória do PHP: (memória − 20 MB) ÷ 5,5. Com 256 MB: ~42 MB. Com 128 MB: ~19 MB. Com 512 MB: ~89 MB | Texto da tela ("PDF: cerca de X neste servidor"); PDF maior é recusado pelo nome |
 | Imagens por documento | Configurações "máx. de imagens" (até 300) e "máx. MB de imagens" | Aviso depois da conversão |

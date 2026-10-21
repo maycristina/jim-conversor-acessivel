@@ -1,0 +1,34 @@
+/* Botão de acessibilidade. Critérios WCAG 2.1 que ele ajuda a cumprir: 1.4.3/1.4.6 contraste, 1.4.4 redimensionar texto, 1.4.8/1.4.12 espaçamento,
+   2.3.3 movimento, 2.5.5/2.5.8 alvos de toque (48 px). Os ajustes valem para o site; não prometem conformidade do site inteiro. */
+.a11y{position:fixed;z-index:70;left:14px;bottom:14px;font-family:"Onest",system-ui,sans-serif}
+.a11y__btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:0 16px 0 12px;border-radius:999px;border:2px solid #fff;background:#0b4a8f;color:#fff;font:600 .92rem/1 "Onest",system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 20px -6px rgba(0,0,0,.5);transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.a11y__btn:active{transform:scale(.97)}
+.a11y__btn svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.a11y__btn:focus-visible,.a11y__panel button:focus-visible{outline:3px solid #ffd84a;outline-offset:2px}
+.a11y__panel{position:absolute;left:0;bottom:60px;width:min(340px,calc(100vw - 28px));max-height:min(calc(100vh - 170px),560px);overflow:auto;padding:16px;border-radius:18px;background:#fff;color:#0e1a26;border:2px solid #0e1a26;box-shadow:0 24px 60px -20px rgba(0,0,0,.55)}
+.a11y__panel[hidden]{display:none}
+.a11y__head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px}
+.a11y__head h2{margin:0;font:700 1.05rem/1.3 "Onest",system-ui,sans-serif}
+.a11y__x{min-height:44px;min-width:44px;border:0;border-radius:10px;background:#eef1f4;color:#0e1a26;font:700 1.1rem/1 "Onest",sans-serif;cursor:pointer}
+.a11y__row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 8px;padding:8px 0;border-top:1px solid #e4e4e0}
+.a11y__row:first-of-type{border-top:0}
+.a11y__row span{font:500 .95rem/1.3 "Onest",system-ui,sans-serif}
+.a11y__panel button.a11y__t,.a11y__sz button{min-height:48px;min-width:48px;padding:0 14px;border-radius:12px;border:2px solid #0e1a26;background:#fff;color:#0e1a26;font:700 .9rem/1 "Onest",system-ui,sans-serif;cursor:pointer}
+.a11y__panel button.a11y__t[aria-pressed=true]{background:#0e1a26;color:#fff}
+.a11y__sz{display:flex;gap:6px}
+.a11y__reset{width:100%;min-height:48px;margin-top:6px;border-radius:12px;border:2px solid #0b4a8f;background:#fff;color:#0b4a8f;font:700 .92rem/1 "Onest",system-ui,sans-serif;cursor:pointer}
+.a11y__note{margin:10px 0 0;font:.8rem/1.45 "Onest",system-ui,sans-serif;color:#3b4856}
+@media (max-width:560px){.a11y{left:10px;bottom:84px}.a11y__btn span{display:none}.a11y__btn{padding:0 11px}}
+
+/* ---- efeitos no site ---- */
+html.a11y-links a{text-decoration:underline!important;text-underline-offset:3px!important;text-decoration-thickness:2px!important}
+html.a11y-space body :where(p,li,dd,dt,td,th,summary,figcaption,blockquote,h1,h2,h3,h4,h5,h6,a,span,label,button){line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}
+html.a11y-space body :where(p){margin-bottom:2em!important}
+html.a11y-font body,html.a11y-font body :where(*:not(code):not(pre):not(kbd):not(svg *)){font-family:Arial,Helvetica,"Segoe UI",sans-serif!important}
+html.a11y-hc body{background:#000!important;color:#fff!important}
+html.a11y-hc body *:not(img):not(video):not(svg):not(svg *):not(.a11y):not(.a11y *){background-color:#000!important;background-image:none!important;color:#fff!important;border-color:#fff!important;text-shadow:none!important;box-shadow:none!important}
+html.a11y-hc body a:not(.a11y *){color:#ffe600!important;text-decoration:underline!important}
+html.a11y-hc body :where(button,input,select,summary):not(.a11y *){border:2px solid #fff!important}
+html.a11y-hc body mark{background:#ffe600!important;color:#000!important}
+html.a11y-hc body ::before,html.a11y-hc body ::after{background-image:none!important}
+@media print{.a11y{display:none}}

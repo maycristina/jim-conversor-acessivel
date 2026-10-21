@@ -12,7 +12,14 @@ class JIMCA_Shortcode {
 	const TAG = 'documento_acessivel';
 
 	private static $instance = null;
-	private $rendered_on_page = false;
+	/** Script and style groups already queued on this page. */
+	private $loaded = array();
+
+	/** Footer, deferred: the page is parsed and shown before the scripts run. */
+	const SCRIPT_ARGS = array(
+		'in_footer' => true,
+		'strategy'  => 'defer',
+	);
 
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -48,10 +55,20 @@ class JIMCA_Shortcode {
 			return '';
 		}
 
-		$this->enqueue_assets();
+		JIMCA_Usage::register( $post->ID );
 
 		$settings = JIMCA_Admin::get_settings();
 		$mode     = JIMCA_Post_Type::get_mode( $post->ID );
+		// Language of the document when it differs from the page's: marks the text for screen readers and picks the reading voice.
+		$doc_lang  = JIMCA_Metadata::get( $post->ID )['language'];
+		$site_lang = str_replace( '_', '-', determine_locale() );
+
+		if ( '' !== $doc_lang && 0 === strcasecmp( $doc_lang, $site_lang ) ) {
+			$doc_lang = '';
+		}
+		// The theme already shows the page title as the <h1>: the same title again as an <h2> would be a duplicate heading.
+		$title_tag = self::same_title( get_the_title( $post ), is_singular() ? get_the_title( get_queried_object_id() ) : '' ) ? 'p' : 'h2';
+
 		// Not apply_filters( 'the_content' ): that would run do_shortcode() over
 		// text extracted from an uploaded file, so a document containing
 		// "[some-shortcode]" would run it. The HTML was already built and passed
@@ -59,7 +76,8 @@ class JIMCA_Shortcode {
 		$word_count = (int) get_post_meta( $post->ID, '_jimca_word_count', true );
 		$pager      = null;
 
-		if ( JIMCA_Pagination::is_paginated( $post, $atts['pages'] ) ) {
+		// The post mode is a plain page with no search and no parts: the whole document is printed.
+		if ( 'reader' === $mode && JIMCA_Pagination::is_paginated( $post, $atts['pages'] ) ) {
 			// A long document goes in parts (see JIMCA_Pagination): the page carries one, the others come on demand.
 			$info = JIMCA_Pagination::info( $post );
 			$arg  = JIMCA_Pagination::query_arg( $post->ID );
@@ -74,7 +92,7 @@ class JIMCA_Shortcode {
 			$content = JIMCA_Pagination::part( $post, $part );
 			$toc     = $info['toc'];
 		} else {
-			$content = self::ensure_paragraphs( $post->post_content );
+			$content = self::demote_headings( self::ensure_paragraphs( $post->post_content ), $post->post_content );
 		}
 		$uid        = 'jimca-' . $post->ID . '-' . wp_unique_id();
 
@@ -90,6 +108,8 @@ class JIMCA_Shortcode {
 		// A document whose text came out unreadable (PDF fonts without a letter map) would only make the assistant answer from symbols.
 		$tutor = JIMCA_Tutor::is_shown( $atts['tutor'] ) && ! get_post_meta( $post->ID, '_jimca_unreadable', true ) ? JIMCA_Tutor::get_settings() : null;
 
+		$this->enqueue_assets( $mode, false !== stripos( (string) $post->post_content, '<img' ), (bool) $tutor );
+
 		if ( $tutor ) {
 			$this->enqueue_tutor_assets();
 		}
@@ -97,6 +117,48 @@ class JIMCA_Shortcode {
 		ob_start();
 		include JIMCA_PLUGIN_DIR . 'templates/document-viewer.php';
 		return ob_get_clean();
+	}
+
+	/**
+	 * The page already has its <h1> (the theme's title). When the document has
+	 * <h1> headings of its own (a Word "Heading 1", a Markdown "# Title"),
+	 * every heading goes one level down, so the page keeps a single <h1> and
+	 * the order of the levels is kept. Done at display time: the stored
+	 * document is not changed.
+	 *
+	 * @param string $html          Document HTML (all of it, or a part).
+	 * @param string $full_document Whole stored document, to know whether it has an <h1>.
+	 * @return string
+	 */
+	public static function demote_headings( $html, $full_document ) {
+		if ( false === stripos( (string) $full_document, '<h1' ) ) {
+			return $html;
+		}
+
+		return preg_replace_callback(
+			'#<(/?)h([1-6])(?=[\s>])#i',
+			static function ( $match ) {
+				return '<' . $match[1] . 'h' . min( 6, (int) $match[2] + 1 );
+			},
+			(string) $html
+		);
+	}
+
+	/**
+	 * Do two titles read the same? Compared without tags, entities, case and extra spaces.
+	 *
+	 * @param string $a
+	 * @param string $b
+	 * @return bool
+	 */
+	public static function same_title( $a, $b ) {
+		$normalize = static function ( $title ) {
+			return trim( preg_replace( '/\s+/u', ' ', mb_strtolower( html_entity_decode( wp_strip_all_tags( (string) $title ), ENT_QUOTES, 'UTF-8' ) ) ) );
+		};
+
+		$a = $normalize( $a );
+
+		return '' !== $a && $a === $normalize( $b );
 	}
 
 	/**
@@ -343,7 +405,7 @@ class JIMCA_Shortcode {
 		}
 		$done = true;
 
-		wp_enqueue_script( 'jimca-tutor', JIMCA_PLUGIN_URL . 'assets/js/tutor.js', array(), jimca_asset_version( 'assets/js/tutor.js' ), true );
+		wp_enqueue_script( 'jimca-tutor', jimca_asset_url( 'assets/js/tutor.js' ), array(), jimca_asset_version( 'assets/js/tutor.js' ), true );
 		wp_localize_script(
 			'jimca-tutor',
 			'jimcaTutorI18n',
@@ -366,96 +428,124 @@ class JIMCA_Shortcode {
 		);
 	}
 
-	private function enqueue_assets() {
-		if ( $this->rendered_on_page ) {
-			return;
+	/**
+	 * Loads only what the page needs: the reader's bar and search in reader
+	 * mode, the post bar in post mode, the image viewer when the document
+	 * has images. Scripts are deferred (they sit in the footer already).
+	 *
+	 * @param string $mode       'reader' or 'post'.
+	 * @param bool   $has_images The document has images.
+	 * @param bool   $tutor      The AI tutor is shown (its panel uses the sizes frontend.js sets).
+	 */
+	private function enqueue_assets( $mode, $has_images, $tutor ) {
+		$load = array(
+			'frontend' => 'reader' === $mode || $tutor,
+			'pager'    => 'reader' === $mode,
+			'post'     => 'post' === $mode,
+			'lightbox' => $has_images,
+		);
+
+		if ( ! isset( $this->loaded['style'] ) ) {
+			$this->loaded['style'] = true;
+			wp_enqueue_style( 'jimca-frontend', jimca_asset_url( 'assets/css/frontend.css' ), array(), jimca_asset_version( 'assets/css/frontend.css' ) );
 		}
-		$this->rendered_on_page = true;
 
-		wp_enqueue_style( 'jimca-frontend', JIMCA_PLUGIN_URL . 'assets/css/frontend.css', array(), jimca_asset_version( 'assets/css/frontend.css' ) );
-		wp_enqueue_script( 'jimca-frontend', JIMCA_PLUGIN_URL . 'assets/js/frontend.js', array(), jimca_asset_version( 'assets/js/frontend.js' ), true );
-		wp_enqueue_script( 'jimca-post', JIMCA_PLUGIN_URL . 'assets/js/post.js', array(), jimca_asset_version( 'assets/js/post.js' ), true );
-		wp_enqueue_script( 'jimca-lightbox', JIMCA_PLUGIN_URL . 'assets/js/lightbox.js', array(), jimca_asset_version( 'assets/js/lightbox.js' ), true );
-		wp_enqueue_script( 'jimca-pager', JIMCA_PLUGIN_URL . 'assets/js/pager.js', array(), jimca_asset_version( 'assets/js/pager.js' ), true );
-		wp_localize_script(
-			'jimca-pager',
-			'jimcaPagerI18n',
-			array(
-				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-				'actionPart'    => JIMCA_Pagination::AJAX_PART,
-				'actionSearch'  => JIMCA_Pagination::AJAX_SEARCH,
-				/* translators: 1: number of the part, 2: number of parts */
-				'partOf'        => __( 'Part %1$s of %2$s', 'jim-conversor-acessivel' ),
-				'loadFailed'    => __( 'Could not load this part. Try again.', 'jim-conversor-acessivel' ),
-				'searching'     => __( 'Searching…', 'jim-conversor-acessivel' ),
-				'tooShort'      => __( 'Type at least 2 letters.', 'jim-conversor-acessivel' ),
-				'searchFailed'  => __( 'The search could not run. Try again.', 'jim-conversor-acessivel' ),
-				'searchLimit'   => __( 'Too many searches in a short time. Wait a minute and try again.', 'jim-conversor-acessivel' ),
-				'noResults'     => __( 'No results.', 'jim-conversor-acessivel' ),
-				/* translators: %s: number of results */
-				'resultsOne'    => __( '%s result.', 'jim-conversor-acessivel' ),
-				/* translators: %s: number of results */
-				'resultsMany'   => __( '%s results.', 'jim-conversor-acessivel' ),
-				'showMore'      => __( 'Show more results', 'jim-conversor-acessivel' ),
-			)
-		);
-		wp_enqueue_script( 'jimca-marker', JIMCA_PLUGIN_URL . 'assets/js/marker.js', array(), jimca_asset_version( 'assets/js/marker.js' ), true );
-		wp_localize_script(
-			'jimca-marker',
-			'jimcaMarkerI18n',
-			array(
-				'marked'  => __( 'Passage highlighted.', 'jim-conversor-acessivel' ),
-				'removed' => __( 'Highlight removed.', 'jim-conversor-acessivel' ),
-				'cleared' => __( 'All highlights were removed.', 'jim-conversor-acessivel' ),
-				'shared'  => __( 'Image ready.', 'jim-conversor-acessivel' ),
-				'saved'   => __( 'Text file downloaded.', 'jim-conversor-acessivel' ),
-				'failed'  => __( 'Could not create the image.', 'jim-conversor-acessivel' ),
-			)
-		);
-		wp_localize_script(
-			'jimca-lightbox',
-			'jimcaLightboxI18n',
-			array(
-				'open'     => __( 'Enlarge image', 'jim-conversor-acessivel' ),
-				'dialog'   => __( 'Enlarged image', 'jim-conversor-acessivel' ),
-				'close'    => __( 'Close', 'jim-conversor-acessivel' ),
-				'previous' => __( 'Previous image', 'jim-conversor-acessivel' ),
-				'next'     => __( 'Next image', 'jim-conversor-acessivel' ),
-				/* translators: 1: position of the image, 2: number of images */
-				'counter'  => __( 'Image %1$s of %2$s', 'jim-conversor-acessivel' ),
-			)
-		);
+		foreach ( $load as $key => $needed ) {
+			if ( ! $needed || isset( $this->loaded[ $key ] ) ) {
+				continue;
+			}
 
-		wp_localize_script(
-			'jimca-frontend',
-			'jimcaFrontendI18n',
-			array(
-				'play'          => __( 'Listen', 'jim-conversor-acessivel' ),
-				'pause'         => __( 'Pause', 'jim-conversor-acessivel' ),
-				'resume'        => __( 'Resume', 'jim-conversor-acessivel' ),
-				'stop'          => __( 'Stop', 'jim-conversor-acessivel' ),
-				'statusReading' => __( 'Reading aloud.', 'jim-conversor-acessivel' ),
-				'statusPaused'  => __( 'Reading paused.', 'jim-conversor-acessivel' ),
-				'statusStopped' => __( 'Reading stopped.', 'jim-conversor-acessivel' ),
-				'statusDone'    => __( 'Reading finished.', 'jim-conversor-acessivel' ),
-				'unsupported'   => __( 'This browser does not support reading aloud.', 'jim-conversor-acessivel' ),
-				/* translators: said before an image description when reading aloud */
-				'imageLabel'    => __( 'Image:', 'jim-conversor-acessivel' ),
-				'increaseFont'  => __( 'Increase text size', 'jim-conversor-acessivel' ),
-				'decreaseFont'  => __( 'Decrease text size', 'jim-conversor-acessivel' ),
-				'resetFont'     => __( 'Default text size', 'jim-conversor-acessivel' ),
-				'contrastOn'    => __( 'Turn on high contrast', 'jim-conversor-acessivel' ),
-				'contrastOff'   => __( 'Turn off high contrast', 'jim-conversor-acessivel' ),
-				'voiceLabel'    => __( 'Voice', 'jim-conversor-acessivel' ),
-				'rateLabel'     => __( 'Reading speed', 'jim-conversor-acessivel' ),
-				'controlsHide'  => __( 'Hide controls', 'jim-conversor-acessivel' ),
-				'controlsShow'  => __( 'Show controls', 'jim-conversor-acessivel' ),
-				'textSize'      => __( 'Text size', 'jim-conversor-acessivel' ),
-				'voiceAll'      => __( 'All voices', 'jim-conversor-acessivel' ),
-				'voiceFemale'   => __( 'Female', 'jim-conversor-acessivel' ),
-				'voiceMale'     => __( 'Male', 'jim-conversor-acessivel' ),
-				'voiceAuto'     => __( 'Automatic', 'jim-conversor-acessivel' ),
-			)
-		);
+			$this->loaded[ $key ] = true;
+			$file                 = 'assets/js/' . $key . '.js';
+			wp_enqueue_script( 'jimca-' . $key, jimca_asset_url( $file ), array(), jimca_asset_version( $file ), self::SCRIPT_ARGS );
+
+			if ( 'pager' === $key ) {
+				wp_localize_script(
+					'jimca-pager',
+					'jimcaPagerI18n',
+					array(
+						'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+						'actionPart'    => JIMCA_Pagination::AJAX_PART,
+						'actionSearch'  => JIMCA_Pagination::AJAX_SEARCH,
+						/* translators: 1: number of the part, 2: number of parts */
+						'partOf'        => __( 'Part %1$s of %2$s', 'jim-conversor-acessivel' ),
+						'loadFailed'    => __( 'Could not load this part. Try again.', 'jim-conversor-acessivel' ),
+						'searching'     => __( 'Searching…', 'jim-conversor-acessivel' ),
+						'tooShort'      => __( 'Type at least 2 letters.', 'jim-conversor-acessivel' ),
+						'searchFailed'  => __( 'The search could not run. Try again.', 'jim-conversor-acessivel' ),
+						'searchLimit'   => __( 'Too many searches in a short time. Wait a minute and try again.', 'jim-conversor-acessivel' ),
+						'noResults'     => __( 'No results.', 'jim-conversor-acessivel' ),
+						/* translators: %s: number of results */
+						'resultsOne'    => __( '%s result.', 'jim-conversor-acessivel' ),
+						/* translators: %s: number of results */
+						'resultsMany'   => __( '%s results.', 'jim-conversor-acessivel' ),
+						'showMore'      => __( 'Show more results', 'jim-conversor-acessivel' ),
+					)
+				);
+			} elseif ( 'lightbox' === $key ) {
+				wp_localize_script(
+					'jimca-lightbox',
+					'jimcaLightboxI18n',
+					array(
+						'open'     => __( 'Enlarge image', 'jim-conversor-acessivel' ),
+						'dialog'   => __( 'Enlarged image', 'jim-conversor-acessivel' ),
+						'close'    => __( 'Close', 'jim-conversor-acessivel' ),
+						'previous' => __( 'Previous image', 'jim-conversor-acessivel' ),
+						'next'     => __( 'Next image', 'jim-conversor-acessivel' ),
+						/* translators: 1: position of the image, 2: number of images */
+						'counter'  => __( 'Image %1$s of %2$s', 'jim-conversor-acessivel' ),
+					)
+				);
+			} elseif ( 'frontend' === $key ) {
+				wp_localize_script(
+					'jimca-frontend',
+					'jimcaFrontendI18n',
+					array(
+						'play'          => __( 'Listen', 'jim-conversor-acessivel' ),
+						'pause'         => __( 'Pause', 'jim-conversor-acessivel' ),
+						'resume'        => __( 'Resume', 'jim-conversor-acessivel' ),
+						'stop'          => __( 'Stop', 'jim-conversor-acessivel' ),
+						'statusReading' => __( 'Reading aloud.', 'jim-conversor-acessivel' ),
+						'statusPaused'  => __( 'Reading paused.', 'jim-conversor-acessivel' ),
+						'statusStopped' => __( 'Reading stopped.', 'jim-conversor-acessivel' ),
+						'statusDone'    => __( 'Reading finished.', 'jim-conversor-acessivel' ),
+						'unsupported'   => __( 'This browser does not support reading aloud.', 'jim-conversor-acessivel' ),
+						/* translators: said before an image description when reading aloud */
+						'imageLabel'    => __( 'Image:', 'jim-conversor-acessivel' ),
+						'increaseFont'  => __( 'Increase text size', 'jim-conversor-acessivel' ),
+						'decreaseFont'  => __( 'Decrease text size', 'jim-conversor-acessivel' ),
+						'resetFont'     => __( 'Default text size', 'jim-conversor-acessivel' ),
+						'contrastOn'    => __( 'Turn on high contrast', 'jim-conversor-acessivel' ),
+						'contrastOff'   => __( 'Turn off high contrast', 'jim-conversor-acessivel' ),
+						'voiceLabel'    => __( 'Voice', 'jim-conversor-acessivel' ),
+						'rateLabel'     => __( 'Reading speed', 'jim-conversor-acessivel' ),
+						'controlsHide'  => __( 'Hide controls', 'jim-conversor-acessivel' ),
+						'controlsShow'  => __( 'Show controls', 'jim-conversor-acessivel' ),
+						'textSize'      => __( 'Text size', 'jim-conversor-acessivel' ),
+						'voiceAll'      => __( 'All voices', 'jim-conversor-acessivel' ),
+						'voiceFemale'   => __( 'Female', 'jim-conversor-acessivel' ),
+						'voiceMale'     => __( 'Male', 'jim-conversor-acessivel' ),
+						'voiceAuto'     => __( 'Automatic', 'jim-conversor-acessivel' ),
+					)
+				);
+			}
+		}
+
+		if ( ! isset( $this->loaded['marker'] ) ) {
+			$this->loaded['marker'] = true;
+			wp_enqueue_script( 'jimca-marker', jimca_asset_url( 'assets/js/marker.js' ), array(), jimca_asset_version( 'assets/js/marker.js' ), self::SCRIPT_ARGS );
+				wp_localize_script(
+					'jimca-marker',
+					'jimcaMarkerI18n',
+					array(
+						'marked'  => __( 'Passage highlighted.', 'jim-conversor-acessivel' ),
+						'removed' => __( 'Highlight removed.', 'jim-conversor-acessivel' ),
+						'cleared' => __( 'All highlights were removed.', 'jim-conversor-acessivel' ),
+						'shared'  => __( 'Image ready.', 'jim-conversor-acessivel' ),
+						'saved'   => __( 'Text file downloaded.', 'jim-conversor-acessivel' ),
+						'failed'  => __( 'Could not create the image.', 'jim-conversor-acessivel' ),
+					)
+				);
+		}
 	}
 }

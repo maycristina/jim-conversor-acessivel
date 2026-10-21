@@ -2,3 +2,7 @@
 # (bin/build-zip.sh e _privado/exportar-publico.sh).
 /_privado export-ignore
 /.claude export-ignore
+
+# Arquivos de exemplo da auditoria de SEO: ficam byte a byte como foram gerados.
+/tests/fixtures/* -text
+*.sh text eol=lf

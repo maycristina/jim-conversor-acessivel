@@ -314,7 +314,7 @@ class JIMCA_Pagination {
 			$html = get_transient( self::key( $post, (string) $number ) );
 		}
 
-		return is_string( $html ) ? $html : '';
+		return is_string( $html ) ? JIMCA_Shortcode::demote_headings( $html, (string) $post->post_content ) : '';
 	}
 
 	/**

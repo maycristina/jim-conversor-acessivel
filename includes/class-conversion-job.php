@@ -319,6 +319,9 @@ class JIMCA_Conversion_Job {
 
 		$html = (string) file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- temporary file in the plugin's own upload folder.
 		wp_delete_file( $file );
+
+		// Author, subject and keywords of the file, read while the original still exists (see JIMCA_Metadata).
+		$job['received']['meta'] = JIMCA_Metadata::read( $job['received']['file'], 'pdf' );
 		JIMCA_Admin::cleanup_original( $job['received'] );
 
 		$post_id = $admin->create_document( $job['received'], wp_kses_post( JIMCA_Pdf_Converter::finish( $html ) ), $store, $job['title'], (float) $job['started'], self::destination_of( $job ), (int) ( isset( $job['index'] ) ? $job['index'] : 0 ) );

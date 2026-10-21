@@ -18,3 +18,24 @@ define( 'JIMCA_PLUGIN_SLUG', 'jim-conversor-acessivel' );
 define( 'JIMCA_REPO_URL', 'https://example.org/' );
 define( 'JIMCA_SITE_URL', 'https://example.org/' );
 define( 'JIMCA_AUTHOR_URL', 'https://example.org/' );
+
+/**
+ * WP-CLI only exists when the plugin runs under `wp`; this stub lets PHPStan
+ * know the few methods includes/class-cli.php calls.
+ */
+class WP_CLI {
+
+	public static function add_command( $name, $callable ) {}
+
+	/**
+	 * @param string $message
+	 * @return never
+	 */
+	public static function error( $message ) {
+		exit( 1 );
+	}
+
+	public static function success( $message ) {}
+
+	public static function line( $message = '' ) {}
+}

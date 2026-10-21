@@ -7,7 +7,7 @@
 # sem clonar o repositório nem rodar o Composer.
 #
 # Uso (na raiz do repositório):  bin/build-zip.sh
-# Requer: git, composer, zip.
+# Requer: git, composer, zip, node (para minificar CSS e JS).
 #
 # O pacote é montado a partir do último commit (git archive), não da pasta
 # de trabalho: alterações não commitadas ficam de fora, e o zip sempre
@@ -34,10 +34,13 @@ mkdir -p "$BUILD/$SLUG"
 git archive HEAD | tar -x -C "$BUILD/$SLUG"
 
 # 2. O que serve ao repositório, não ao plugin instalado.
-( cd "$BUILD/$SLUG" && rm -rf .github .wordpress-org .gitignore .gitattributes bin dist docs documentacao _privado tests phpcs.xml.dist phpstan.neon.dist phpstan-baseline.neon phpunit.xml.dist infection.json5 README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md )
+( cd "$BUILD/$SLUG" && rm -rf .github .wordpress-org .gitignore .gitattributes bin dist docs documentacao _privado tests phpcs.xml.dist phpstan.neon.dist phpstan-baseline.neon phpunit.xml.dist infection.json5 .wp-env.json README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md )
 
 # 3. Dependências de produção, com autoload otimizado.
 ( cd "$BUILD/$SLUG" && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --quiet )
+
+# 3.5. CSS e JS minificados ao lado dos originais (o plugin usa a .min quando existe).
+bash "$ROOT/bin/minify-assets.sh" "$BUILD/$SLUG"
 
 # 4. Das dependências, só o código que roda: sem histórico git, testes,
 #    exemplos e documentação (juntos passam de 200 MB quando o Composer

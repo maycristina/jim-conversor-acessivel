@@ -27,6 +27,7 @@ class JIMCA_Admin {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'update_option_jimca_settings', array( __CLASS__, 'refresh_upload_protection' ) );
 		add_action( 'admin_post_jimca_upload_document', array( $this, 'handle_upload' ) );
 		add_action( 'admin_notices', array( $this, 'render_admin_notices' ) );
 		add_action( 'admin_notices', array( $this, 'render_documents_list_banner' ) );
@@ -95,7 +96,7 @@ class JIMCA_Admin {
 	public function enqueue_admin_assets( $hook ) {
 		// Settings screen: live log.
 		if ( false !== strpos( (string) $hook, self::MENU_SLUG . '-settings' ) ) {
-			wp_enqueue_script( 'jimca-log', JIMCA_PLUGIN_URL . 'assets/js/log.js', array(), jimca_asset_version( 'assets/js/log.js' ), true );
+			wp_enqueue_script( 'jimca-log', jimca_asset_url( 'assets/js/log.js' ), array(), jimca_asset_version( 'assets/js/log.js' ), true );
 			wp_localize_script(
 				'jimca-log',
 				'jimcaLogI18n',
@@ -127,16 +128,22 @@ class JIMCA_Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'jimca-admin', JIMCA_PLUGIN_URL . 'assets/css/admin.css', array(), jimca_asset_version( 'assets/css/admin.css' ) );
+		wp_enqueue_script( 'jimca-fill', jimca_asset_url( 'assets/js/fill.js' ), array(), jimca_asset_version( 'assets/js/fill.js' ), true );
+		wp_enqueue_style( 'jimca-admin', jimca_asset_url( 'assets/css/admin.css' ), array(), jimca_asset_version( 'assets/css/admin.css' ) );
 
 		if ( $document_edit_screen || $documents_list_screen === $screen->id ) {
-			wp_enqueue_script( 'jimca-auditor', JIMCA_PLUGIN_URL . 'assets/js/auditor.js', array(), jimca_asset_version( 'assets/js/auditor.js' ), true );
+			wp_enqueue_script( 'jimca-auditor', jimca_asset_url( 'assets/js/auditor.js' ), array(), jimca_asset_version( 'assets/js/auditor.js' ), true );
 			wp_localize_script( 'jimca-auditor', 'jimcaAuditI18n', self::auditor_strings() );
 			wp_localize_script( 'jimca-auditor', 'jimcaReview', JIMCA_Review::script_data() );
+
+			$current_document = $document_edit_screen ? get_post() : null;
+			if ( $current_document ) {
+				JIMCA_Seo_Box::enqueue( $current_document->ID );
+			}
 		}
 
 		if ( $documents_list_screen === $screen->id ) {
-			wp_enqueue_script( 'jimca-quick-edit', JIMCA_PLUGIN_URL . 'assets/js/quick-edit.js', array( 'inline-edit-post' ), jimca_asset_version( 'assets/js/quick-edit.js' ), true );
+			wp_enqueue_script( 'jimca-quick-edit', jimca_asset_url( 'assets/js/quick-edit.js' ), array( 'inline-edit-post' ), jimca_asset_version( 'assets/js/quick-edit.js' ), true );
 		}
 
 		if ( false !== strpos( $screen->id, self::MENU_SLUG . '-settings' ) ) {
@@ -145,7 +152,7 @@ class JIMCA_Admin {
 
 		if ( self::MENU_SLUG === $screen->id || 'toplevel_page_' . self::MENU_SLUG === $screen->id ) {
 			JIMCA_Tour::enqueue();
-			wp_enqueue_script( 'jimca-admin', JIMCA_PLUGIN_URL . 'assets/js/admin.js', array(), jimca_asset_version( 'assets/js/admin.js' ), true );
+			wp_enqueue_script( 'jimca-admin', jimca_asset_url( 'assets/js/admin.js' ), array(), jimca_asset_version( 'assets/js/admin.js' ), true );
 			wp_localize_script(
 				'jimca-admin',
 				'jimcaAdminI18n',
@@ -180,8 +187,24 @@ class JIMCA_Admin {
 					/* translators: 1: files converted, 2: files sent */
 					'queueSummary'   => __( '%1$s of %2$s files converted.', 'jim-conversor-acessivel' ),
 					'viewList'       => __( 'View documents', 'jim-conversor-acessivel' ),
-					'listUrl'        => admin_url( 'admin.php?page=' . self::MENU_SLUG ),
+					'listUrl'        => admin_url( 'edit.php?post_type=' . JIMCA_Post_Type::POST_TYPE ),
 					'maxFiles'       => self::MAX_BATCH,
+					'allowedTypes'   => array_values( self::get_settings()['allowed_types'] ),
+					'fileValid'      => __( 'Valid', 'jim-conversor-acessivel' ),
+					'fileInvalid'    => __( 'Error', 'jim-conversor-acessivel' ),
+					/* translators: %s: accepted file types, e.g. "PDF, DOCX, TXT, MD" */
+					'badType'        => __( 'This type is not accepted. Use: %s.', 'jim-conversor-acessivel' ),
+					'emptyFile'      => __( 'The file is empty (0 bytes).', 'jim-conversor-acessivel' ),
+					/* translators: %s: number of files */
+					'beyondLimit'    => __( 'Over the limit of %s files per upload.', 'jim-conversor-acessivel' ),
+					/* translators: %s: file name */
+					'removeFile'     => __( 'Remove %s', 'jim-conversor-acessivel' ),
+					'removeLabel'    => __( 'Remove', 'jim-conversor-acessivel' ),
+					/* translators: %s: number of files */
+					'listReady'      => __( '%s files ready to convert.', 'jim-conversor-acessivel' ),
+					'listReadyOne'   => __( '1 file ready to convert.', 'jim-conversor-acessivel' ),
+					/* translators: 1: files with a problem, 2: files chosen */
+					'listProblems'   => __( '%1$s of %2$s files cannot be converted. Remove them to continue.', 'jim-conversor-acessivel' ),
 					'maxBytes'       => self::get_effective_max_bytes(),
 					'maxPdfBytes'    => JIMCA_Limits::max_pdf_bytes(),
 					/* translators: %s: number of files */
@@ -436,6 +459,11 @@ class JIMCA_Admin {
 							<td>
 								<input type="file" id="jimca_file" name="jimca_file[]" accept=".pdf,.docx,.txt,.md,.markdown" multiple required>
 								<input type="hidden" name="jimca_expected_files" id="jimca_expected_files" value="0">
+								<?php // Filled by admin.js: each chosen file with its size and whether it can be converted. ?>
+								<div class="jimca-file-list-wrap" data-jimca-file-list hidden>
+									<p class="jimca-file-list__summary" role="status" aria-live="polite" data-jimca-file-summary></p>
+									<ul class="jimca-file-list" aria-label="<?php esc_attr_e( 'Chosen files', 'jim-conversor-acessivel' ); ?>" data-jimca-file-items></ul>
+								</div>
 								<p class="description">
 									<?php
 									printf(
@@ -449,6 +477,26 @@ class JIMCA_Admin {
 									);
 									?>
 								</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_author"><?php esc_html_e( 'Default author of the batch', 'jim-conversor-acessivel' ); ?></label></th>
+							<td>
+								<input type="text" id="jimca_author" name="jimca_author" class="regular-text" maxlength="120" autocomplete="name" aria-describedby="jimca_author_help">
+								<button type="button" class="button" data-jimca-fill="#jimca_author" data-jimca-fill-value="<?php echo esc_attr( wp_get_current_user()->display_name ); ?>"><?php esc_html_e( 'Use my name', 'jim-conversor-acessivel' ); ?></button>
+								<p class="description" id="jimca_author_help"><?php esc_html_e( 'Optional: the author of every file of this upload. It replaces the author written in the file properties, and appears in the search engine data of the page. Leave it empty to keep the one in each file.', 'jim-conversor-acessivel' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="jimca_language"><?php esc_html_e( 'Document language', 'jim-conversor-acessivel' ); ?></label></th>
+							<td>
+								<select id="jimca_language" name="jimca_language" aria-describedby="jimca_language_help">
+									<option value=""><?php esc_html_e( 'Automatic (from the file, or the site language)', 'jim-conversor-acessivel' ); ?></option>
+									<?php foreach ( JIMCA_Metadata::languages() as $jimca_tag => $jimca_name ) : ?>
+										<option value="<?php echo esc_attr( $jimca_tag ); ?>" lang="<?php echo esc_attr( $jimca_tag ); ?>"><?php echo esc_html( $jimca_name ); ?></option>
+									<?php endforeach; ?>
+								</select>
+								<p class="description" id="jimca_language_help"><?php esc_html_e( 'Choose it when the document is not in the language of the site. Screen readers and the reading voice pronounce the text in this language, and search engines learn which language the document is in.', 'jim-conversor-acessivel' ); ?></p>
 							</td>
 						</tr>
 						<tr>
@@ -958,7 +1006,11 @@ class JIMCA_Admin {
 			);
 		}
 
-		$upload_args = array( 'test_form' => false );
+		// A random suffix on every stored name: two uploads of the same file never overwrite each other.
+		$upload_args = array(
+			'test_form'                => false,
+			'unique_filename_callback' => array( __CLASS__, 'unique_upload_name' ),
+		);
 
 		if ( 'md' === self::extension_of( $file['name'] ) ) {
 			/*
@@ -1019,6 +1071,10 @@ class JIMCA_Admin {
 			'ext'  => $filetype['ext'],
 			'name' => $file['name'],
 			'size' => (int) $file['size'],
+			// Language chosen in the form; it travels with the file to the end of the conversion.
+			'language' => JIMCA_Metadata::requested_language(),
+			// Author typed in the form for the whole batch; wins over the file properties.
+			'author'   => JIMCA_Metadata::requested_author(),
 		);
 	}
 
@@ -1070,6 +1126,8 @@ class JIMCA_Admin {
 					'progress'     => $progress,
 				)
 			);
+			// Author, subject and keywords of the file, read while the original still exists (see JIMCA_Metadata).
+			$received['meta'] = JIMCA_Metadata::read( $received['file'], $extension );
 		} catch ( \Throwable $e ) {
 			// Aborted conversion: do not leave behind images of a document that will not exist.
 			if ( $image_store ) {
@@ -1190,6 +1248,30 @@ class JIMCA_Admin {
 		update_post_meta( $post_id, '_jimca_original_type', $extension );
 		update_post_meta( $post_id, '_jimca_word_count', $word_count );
 
+		$file_meta = ! empty( $received['meta'] ) && is_array( $received['meta'] ) ? $received['meta'] : array();
+
+		// The language the administrator chose wins over the one in the file properties.
+		if ( ! empty( $received['language'] ) ) {
+			$file_meta['language'] = $received['language'];
+		}
+
+		if ( ! empty( $received['author'] ) ) {
+			$file_meta['author'] = $received['author'];
+		}
+
+		// No author in the file or in the form: the text may state it plainly ("Author: ...").
+		if ( empty( $file_meta['author'] ) ) {
+			$from_text = JIMCA_Autofill::detect_author( $html );
+
+			if ( '' !== $from_text ) {
+				$file_meta['author'] = $from_text;
+			}
+		}
+
+		if ( $file_meta ) {
+			update_post_meta( $post_id, JIMCA_Metadata::META_KEY, $file_meta );
+		}
+
 		if ( JIMCA_Converter::looks_unreadable( $html ) ) {
 			update_post_meta( $post_id, '_jimca_unreadable', 1 );
 			JIMCA_Log::add( 'warning', 'upload.unreadable', sprintf( 'The text of document #%d looks unreadable (font without Unicode mapping).', $post_id ) );
@@ -1252,29 +1334,94 @@ class JIMCA_Admin {
 	 * nginx). index.php prevents directory listing.
 	 */
 	private function protect_upload_dir( $dir ) {
-		$htaccess = $dir . '/.htaccess';
-		if ( ! file_exists( $htaccess ) ) {
-			file_put_contents(
-				$htaccess,
-				"<IfModule mod_authz_core.c>\n" .
-				"    <FilesMatch \"\\.(php\\d?|phtml|pl|py|cgi|sh|asp|aspx)$\">\n" .
-				"        Require all denied\n" .
-				"    </FilesMatch>\n" .
-				"</IfModule>\n" .
-				"<IfModule !mod_authz_core.c>\n" .
-				"    <FilesMatch \"\\.(php\\d?|phtml|pl|py|cgi|sh|asp|aspx)$\">\n" .
-				"        Order allow,deny\n" .
-				"        Deny from all\n" .
-				"    </FilesMatch>\n" .
-				"</IfModule>\n" .
-				"Options -Indexes -ExecCGI\n"
-			);
-		}
+		self::write_htaccess( $dir );
 
 		$index = $dir . '/index.php';
 		if ( ! file_exists( $index ) ) {
 			file_put_contents( $index, "<?php\n// Silence is golden.\n" );
 		}
+	}
+
+	/**
+	 * Content of the .htaccess of the uploads folder of Jim.
+	 *
+	 * Denies running scripts and listing the folder. With `$noindex` it also
+	 * sends `X-Robots-Tag: noindex, nofollow` for every file there, so the kept
+	 * original (PDF, DOCX...) never competes in search results with the page
+	 * that has the same text. Only where the server reads .htaccess (Apache,
+	 * LiteSpeed); on nginx the same header goes in the server configuration.
+	 *
+	 * @param bool $noindex Add the noindex header.
+	 * @return string
+	 */
+	public static function htaccess_content( $noindex ) {
+		$rules  = "# Jim - Accessible Converter\n";
+		$rules .= "<IfModule mod_authz_core.c>\n" .
+			"    <FilesMatch \"\\.(php\\d?|phtml|pl|py|cgi|sh|asp|aspx)$\">\n" .
+			"        Require all denied\n" .
+			"    </FilesMatch>\n" .
+			"</IfModule>\n" .
+			"<IfModule !mod_authz_core.c>\n" .
+			"    <FilesMatch \"\\.(php\\d?|phtml|pl|py|cgi|sh|asp|aspx)$\">\n" .
+			"        Order allow,deny\n" .
+			"        Deny from all\n" .
+			"    </FilesMatch>\n" .
+			"</IfModule>\n";
+
+		if ( $noindex ) {
+			$rules .= "<IfModule mod_headers.c>\n" .
+				"    Header set X-Robots-Tag \"noindex, nofollow\"\n" .
+				"</IfModule>\n";
+		}
+
+		return $rules . "Options -Indexes -ExecCGI\n";
+	}
+
+	/**
+	 * Writes the .htaccess of a folder, and rewrites it when the rules changed
+	 * (the noindex setting, or a file made by an earlier version).
+	 *
+	 * @param string $dir Folder.
+	 */
+	private static function write_htaccess( $dir ) {
+		$settings = self::get_settings();
+		$wanted   = self::htaccess_content( ! empty( $settings['noindex_originals'] ) );
+		$file     = $dir . '/.htaccess';
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- tiny file of the plugin's own uploads folder.
+		if ( ! file_exists( $file ) || file_get_contents( $file ) !== $wanted ) {
+			file_put_contents( $file, $wanted ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- .htaccess of the plugin's own uploads folder.
+		}
+	}
+
+	/**
+	 * Brings the rules of the base folder up to date (it covers every month
+	 * folder below it). Run when the settings are saved.
+	 */
+	public static function refresh_upload_protection() {
+		$uploads = wp_upload_dir( null, false );
+		$base    = $uploads['basedir'] . '/jimca-documentos';
+
+		if ( is_dir( $base ) ) {
+			self::write_htaccess( $base );
+		}
+	}
+
+	/**
+	 * Name under which an upload is stored: the sanitized name and a random
+	 * hash before the extension.
+	 *
+	 * @param string $dir  Folder.
+	 * @param string $name Name WordPress would use.
+	 * @param string $ext  Extension with the dot.
+	 * @return string
+	 */
+	public static function unique_upload_name( $dir, $name, $ext ) {
+		unset( $dir );
+
+		$base = sanitize_file_name( wp_basename( $name, $ext ) );
+
+		return mb_substr( $base, 0, 80 ) . '-' . strtolower( wp_generate_password( 8, false ) ) . $ext;
 	}
 
 	public function filter_upload_dir( $dirs ) {
@@ -1380,7 +1527,8 @@ class JIMCA_Admin {
 						);
 						?>
 					</li>
-					<li><?php esc_html_e( 'Give the document a title (optional) and click "Convert document". Large files can take up to about a minute; do not close or refresh the page.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Check the list of chosen files: each one shows its size and a "Valid" or "Error" badge. Remove the ones with an error; the Convert button stays off until none is left.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'Give the document a title (optional), the author of the batch and its language if it differs from your site (all optional), and click "Convert document". Large files can take up to about a minute; do not close or refresh the page.', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'Optional: choose the display mode and use "Also publish in" to have Jim create the post, page or custom post type item that shows the document. See the next sections.', 'jim-conversor-acessivel' ); ?></li>
 					<li>
 						<?php
@@ -1420,6 +1568,7 @@ class JIMCA_Admin {
 				<h2><?php esc_html_e( 'Formats and sending several files', 'jim-conversor-acessivel' ); ?></h2>
 				<ul class="jimca-admin-list">
 					<li><?php esc_html_e( 'PDF (with selectable text; scanned, image-only PDFs have no text and are refused: there is no OCR), DOCX, TXT and Markdown (.md).', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The files you choose are listed before anything is sent, with their size in MB and a "Valid" or "Error" badge; the Convert button waits while one has an error (type not accepted, empty or over the limit).', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'Up to 20 files of these types can be sent in a batch at a time, within the configured limit (without JavaScript in the browser, a batch accepts only TXT and Markdown). Each one becomes a document, and you get a ready-to-copy list of shortcodes.', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'Old .doc, .odt, .rtf, spreadsheets, presentations and EPUB are not converted. The error message tells you what to do (for example, save as .docx).', 'jim-conversor-acessivel' ); ?></li>
 				</ul>
@@ -1450,7 +1599,7 @@ class JIMCA_Admin {
 					<li><?php esc_html_e( 'The address (slug) of each item is the file name: "annual-report.pdf" becomes "annual-report". If that address is taken, WordPress adds -2.', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'Status: publish now, draft, pending review, private or schedule. Someone who cannot publish in that type sends the items for review instead.', 'jim-conversor-acessivel' ); ?></li>
 					<li><?php esc_html_e( 'The categories and tags of WordPress also classify the Jim documents, and appear as columns in the documents list. The fields of the chosen type, such as its own taxonomies, show up as you pick it.', 'jim-conversor-acessivel' ); ?></li>
-					<li><?php esc_html_e( 'The documents list has a "Published in" column that links to the item. The document stays in the Jim panel either way.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The documents list has a "Published in" column that shows every page, post or custom post type where the shortcode is, wherever you pasted it (including drafts, private items and page builders such as Elementor), with links to view and to edit. It is kept up to date when you save a page. The document stays in the Jim panel either way.', 'jim-conversor-acessivel' ); ?></li>
 				</ul>
 			</div>
 
@@ -1496,7 +1645,28 @@ class JIMCA_Admin {
 
 			<div class="jimca-admin-card">
 				<h2><?php esc_html_e( 'SEO', 'jim-conversor-acessivel' ); ?></h2>
-				<p><?php esc_html_e( 'The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes nothing, to avoid duplicates. You can turn this off in Settings.', 'jim-conversor-acessivel' ); ?></p>
+				<p><?php esc_html_e( 'The page that contains the shortcode gets a meta description, Open Graph, Twitter Card and JSON-LD tags, built from the title and the beginning of the document. If Yoast SEO, Rank Math, All in One SEO or SEOPress is active, Jim writes no tags of its own, to avoid duplicates, and gives that plugin the description and the accessibility data. You can turn this off in Settings.', 'jim-conversor-acessivel' ); ?></p>
+				<ul class="jimca-admin-list">
+					<li><?php esc_html_e( 'The description is chosen by the shape of the text: it skips covers, data sheets, notices with addresses and lines that are not sentences. A summary you write for the document replaces it.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'The structured data (schema.org) names the author, the reading time, the language and the accessibility features the page really offers, such as the table of contents, text alternatives for images and the reading controls.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'A long title loses the site name in the browser tab and in search results (about 75 characters are shown); the full title stays on the page. Without an image in the document, the site icon is used as the share image.', 'jim-conversor-acessivel' ); ?></li>
+				</ul>
+			</div>
+
+			<div class="jimca-admin-card">
+				<h2><?php esc_html_e( 'SEO and accessibility score', 'jim-conversor-acessivel' ); ?></h2>
+				<p><?php esc_html_e( 'Each document has a score from 0 to 100, in a column of the documents list and in a box when you open it. It checks metadata (title, summary, author), structure (headings, no skipped levels), content (enough text, readable, images described) and publication (shown on a published page, can be indexed, SEO tags on).', 'jim-conversor-acessivel' ); ?></p>
+				<ul class="jimca-admin-list">
+					<li><?php esc_html_e( 'In the box you fix things without leaving the screen: type the author or use "Use my name", fix the title and the summary (with a character counter) and save each one. The score is recalculated right away.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( '"Auto-detect from text" suggests the author, title and summary found at the start of the document; nothing is saved until you confirm.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( '"Auto-fix headings" turns section lines (numbered ones, "Chapter 2", lines in capitals) into real headings, so the document gets a table of contents. The previous text stays in the revisions.', 'jim-conversor-acessivel' ); ?></li>
+					<li><?php esc_html_e( 'A document that is not on any published page is flagged as an orphan: search engines cannot find it.', 'jim-conversor-acessivel' ); ?></li>
+				</ul>
+			</div>
+
+			<div class="jimca-admin-card">
+				<h2><?php esc_html_e( 'Author and language', 'jim-conversor-acessivel' ); ?></h2>
+				<p><?php esc_html_e( 'The author comes from the form ("Default author of the batch"), then from the file properties, then from the text when it says so ("Author: ..."). The document language comes from the form, or from the file properties; without either, the language of the site is used. Search engines and screen readers use both.', 'jim-conversor-acessivel' ); ?></p>
 			</div>
 
 			<div class="jimca-admin-card">
@@ -1609,6 +1779,7 @@ class JIMCA_Admin {
 
 		$output['max_file_size_mb']      = max( 1, min( 100, (int) ( $input['max_file_size_mb'] ?? $defaults['max_file_size_mb'] ) ) );
 		$output['delete_original_after'] = ! empty( $input['delete_original_after'] );
+		$output['noindex_originals']     = ! empty( $input['noindex_originals'] );
 		$output['include_images']        = ! empty( $input['include_images'] );
 		$output['seo_enabled']           = ! empty( $input['seo_enabled'] );
 		$output['max_images']            = max( 1, min( JIMCA_Image_Store::MAX_IMAGES, (int) ( $input['max_images'] ?? $defaults['max_images'] ) ) );
@@ -1674,6 +1845,16 @@ class JIMCA_Admin {
 						</td>
 					</tr>
 					<tr>
+						<th scope="row"><?php esc_html_e( 'Originals and search engines', 'jim-conversor-acessivel' ); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="jimca_settings[noindex_originals]" value="1" <?php checked( ! empty( $settings['noindex_originals'] ) ); ?>>
+								<?php esc_html_e( 'Ask search engines not to index the original files that are kept (noindex).', 'jim-conversor-acessivel' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Only matters when the option above is off. It avoids the original PDF and the converted page competing in search results with the same text. It works on Apache and LiteSpeed; on nginx, add the header in the server configuration (see the documentation).', 'jim-conversor-acessivel' ); ?></p>
+						</td>
+					</tr>
+					<tr>
 						<th scope="row"><?php esc_html_e( 'Document images', 'jim-conversor-acessivel' ); ?></th>
 						<td>
 							<label>
@@ -1695,7 +1876,7 @@ class JIMCA_Admin {
 								echo esc_html(
 									JIMCA_SEO::other_seo_plugin_active()
 										? __( 'Another SEO plugin is active on this site (Yoast, Rank Math, All in One SEO or SEOPress): Jim writes no tags, to avoid duplicating theirs, even with this option on.', 'jim-conversor-acessivel' )
-										: __( 'The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim turns itself off on those pages.', 'jim-conversor-acessivel' )
+										: __( 'The tags go in the head of the page where the shortcode is, built from the title and the beginning of the document. If you install an SEO plugin, Jim stops writing tags and gives that plugin the description and the accessibility data.', 'jim-conversor-acessivel' )
 								);
 								?>
 							</p>

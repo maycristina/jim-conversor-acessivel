@@ -29,6 +29,7 @@ class JIMCA_Post_Type {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post_' . self::POST_TYPE, array( $this, 'save_display_mode' ) );
+		add_action( 'save_post_' . self::POST_TYPE, array( $this, 'save_seo_fields' ) );
 		add_action( 'quick_edit_custom_box', array( $this, 'render_quick_edit_box' ), 10, 2 );
 		add_action( 'before_delete_post', array( $this, 'delete_document_images' ) );
 
@@ -80,6 +81,7 @@ class JIMCA_Post_Type {
 				$new_columns['jimca_shortcode'] = __( 'Shortcode', 'jim-conversor-acessivel' );
 				$new_columns['jimca_mode']      = __( 'Display mode', 'jim-conversor-acessivel' );
 				$new_columns['jimca_published'] = __( 'Published in', 'jim-conversor-acessivel' );
+				$new_columns['jimca_seo']       = __( 'SEO score', 'jim-conversor-acessivel' );
 			}
 		}
 
@@ -94,10 +96,24 @@ class JIMCA_Post_Type {
 			return;
 		}
 
+		if ( 'jimca_seo' === $column ) {
+			$result = JIMCA_Scorecard::evaluate( JIMCA_Scorecard::facts( $post_id ) );
+
+			printf(
+				'<strong>%1$s</strong>/100<br><span class="description">%2$s</span> <a href="%3$s">%4$s <span class="screen-reader-text">%5$s</span></a>',
+				esc_html( number_format_i18n( $result['score'] ) ),
+				esc_html( JIMCA_Scorecard::grade_label( $result['score'] ) ),
+				esc_url( get_edit_post_link( $post_id, 'raw' ) . '#jimca_documento_seo' ),
+				esc_html__( 'Details', 'jim-conversor-acessivel' ),
+				esc_html( get_the_title( $post_id ) )
+			);
+			return;
+		}
+
 		if ( 'jimca_review' === $column ) {
 			// Run by assets/js/auditor.js without opening the document; the result appears under the button.
 			printf(
-				'<button type="button" class="button button-small" data-jimca-review="%1$d" data-jimca-edit="%2$s" aria-describedby="jimca-review-status-%1$d">%3$s<span class="screen-reader-text"> %4$s</span></button><span class="jimca-review-status" id="jimca-review-status-%1$d" role="status" aria-live="polite"></span>',
+				'<button type="button" class="button button-small" data-jimca-review="%1$d" data-jimca-edit="%2$s" aria-describedby="jimca-review-status-%1$d">%3$s <span class="screen-reader-text">%4$s</span></button><span class="jimca-review-status" id="jimca-review-status-%1$d" role="status" aria-live="polite"></span>',
 				(int) $post_id,
 				esc_url( get_edit_post_link( $post_id, 'raw' ) . '#jimca_documento_audit' ),
 				esc_html__( 'Review', 'jim-conversor-acessivel' ),
@@ -107,27 +123,46 @@ class JIMCA_Post_Type {
 		}
 
 		if ( 'jimca_published' === $column ) {
-			$state  = JIMCA_Destination::state( $post_id );
-			$target = 'post' === $state['kind'] ? $state['post_id'] : 0;
+			$hosts = JIMCA_Usage::hosts( $post_id );
 
-			if ( $target ) {
-				$type = get_post_type_object( get_post_type( $target ) );
+			if ( $hosts ) {
+				// Every page that shows the document, wherever its shortcode was put (see JIMCA_Usage).
+				echo '<ul class="jimca-hosts">';
 
-				printf(
-					'<a href="%1$s">%2$s</a><br><span class="description">%3$s · %4$s</span>',
-					esc_url( get_edit_post_link( $target, '' ) ),
-					esc_html( get_the_title( $target ) ),
-					esc_html( $type ? $type->labels->singular_name : '' ),
-					esc_html( JIMCA_Destination::status_label_of( $target ) )
-				);
-			} elseif ( in_array( $state['kind'], array( 'scheduled', 'canceled', 'failed', 'removed' ), true ) ) {
+				foreach ( array_slice( $hosts, 0, 5 ) as $host ) {
+					$type = get_post_type_object( $host->post_type );
+
+					printf(
+						'<li><a href="%1$s">%2$s</a><br><span class="description">%3$s · %4$s</span> · <a href="%5$s">%6$s<span class="screen-reader-text"> %2$s</span></a></li>',
+						esc_url( get_permalink( $host ) ),
+						esc_html( '' !== get_the_title( $host ) ? get_the_title( $host ) : __( '(no title)', 'jim-conversor-acessivel' ) ),
+						esc_html( $type ? $type->labels->singular_name : '' ),
+						esc_html( JIMCA_Destination::status_label_of( $host->ID ) ),
+						esc_url( (string) get_edit_post_link( $host->ID, '' ) ),
+						esc_html__( 'Edit', 'jim-conversor-acessivel' )
+					);
+				}
+
+				echo '</ul>';
+
+				if ( count( $hosts ) > 5 ) {
+					/* translators: %s: number of other pages */
+					echo '<span class="description">' . esc_html( sprintf( __( 'and %s more', 'jim-conversor-acessivel' ), number_format_i18n( count( $hosts ) - 5 ) ) ) . '</span>';
+				}
+
+				return;
+			}
+
+			$state = JIMCA_Destination::state( $post_id );
+
+			if ( in_array( $state['kind'], array( 'scheduled', 'canceled', 'failed', 'removed' ), true ) ) {
 				echo esc_html( JIMCA_Destination::state_label( $state ) );
 
 				if ( '' !== $state['event'] ) {
 					echo '<br><span class="description">' . esc_html( $state['event'] ) . '</span>';
 				}
 			} else {
-				echo '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'Not published in another post type', 'jim-conversor-acessivel' ) . '</span>';
+				echo '<span aria-hidden="true">&mdash;</span> ' . esc_html__( 'Not used on any page', 'jim-conversor-acessivel' );
 			}
 			return;
 		}
@@ -226,6 +261,15 @@ class JIMCA_Post_Type {
 		);
 
 		add_meta_box(
+			'jimca_documento_seo',
+			__( 'SEO and accessibility score', 'jim-conversor-acessivel' ),
+			array( $this, 'render_seo_meta_box' ),
+			self::POST_TYPE,
+			'side',
+			'default'
+		);
+
+		add_meta_box(
 			'jimca_documento_audit',
 			__( 'Conversion review', 'jim-conversor-acessivel' ),
 			array( $this, 'render_audit_meta_box' ),
@@ -245,7 +289,7 @@ class JIMCA_Post_Type {
 		<p id="jimca-audit-question"><?php esc_html_e( 'Did you find problems in the conversion?', 'jim-conversor-acessivel' ); ?></p>
 		<p>
 			<button type="button" class="button button-primary" id="jimca-audit-run" aria-describedby="jimca-audit-question jimca-audit-help">
-				<?php esc_html_e( 'Click here', 'jim-conversor-acessivel' ); ?><span class="screen-reader-text"> <?php esc_html_e( 'to review the conversion', 'jim-conversor-acessivel' ); ?></span>
+				<?php esc_html_e( 'Click here', 'jim-conversor-acessivel' ); ?> <span class="screen-reader-text"><?php esc_html_e( 'to review the conversion', 'jim-conversor-acessivel' ); ?></span>
 			</button>
 		</p>
 		<p class="description" id="jimca-audit-help">
@@ -253,6 +297,43 @@ class JIMCA_Post_Type {
 		</p>
 		<div id="jimca-audit-result" class="jimca-audit" role="status" aria-live="polite"></div>
 		<?php
+	}
+
+	/**
+	 * Score of the document and what to fix, by group. Every check says in
+	 * words whether it passed: color is never the only signal.
+	 */
+	public function render_seo_meta_box( $post ) {
+		JIMCA_Seo_Box::render( $post );
+	}
+
+	/**
+	 * Saves the author typed in the SEO box. The score is computed from the
+	 * document every time it is shown, so it is up to date right after saving.
+	 */
+	public function save_seo_fields( $post_id ) {
+		if ( ! isset( $_POST['jimca_seo_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jimca_seo_nonce'] ) ), 'jimca_save_seo' ) ) {
+			return;
+		}
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) || ! isset( $_POST['jimca_seo_author'] ) ) {
+			return;
+		}
+
+		$author = mb_substr( sanitize_text_field( wp_unslash( $_POST['jimca_seo_author'] ) ), 0, 120 );
+		$meta   = get_post_meta( $post_id, JIMCA_Metadata::META_KEY, true );
+		$meta   = is_array( $meta ) ? $meta : array();
+
+		if ( '' === $author ) {
+			unset( $meta['author'] );
+		} else {
+			$meta['author'] = $author;
+		}
+
+		if ( $meta ) {
+			update_post_meta( $post_id, JIMCA_Metadata::META_KEY, $meta );
+		} else {
+			delete_post_meta( $post_id, JIMCA_Metadata::META_KEY );
+		}
 	}
 
 	public function render_info_meta_box( $post ) {

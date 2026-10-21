@@ -198,6 +198,13 @@
 	font-size: 1.5rem;
 }
 
+/* Same title as the page's <h1>: shown as a paragraph, so the page has one heading for it. */
+p.jimca-title {
+	margin-bottom: 0.75em;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
 .jimca-meta {
 	color: var(--jimca-fg);
 	opacity: 0.8;

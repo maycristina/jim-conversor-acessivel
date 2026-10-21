@@ -34,6 +34,20 @@ ouvir/pausar, velocidade (um toque passa para a próxima), parar, partes de docu
 
 ![Demonstração dos controles de leitura: menu de aparência, troca de tema, reprodução e ocultação da barra](docs/media/demo-leitura.gif)
 
+## SEO e acessibilidade da página publicada
+
+O Jim escreve, na página que tem o shortcode, os dados que os buscadores leem: meta description escolhida pela forma do texto
+(pula capas, fichas técnicas e avisos), Open Graph, Twitter Card e JSON-LD (schema.org) com autor, tempo de leitura, idioma e os
+recursos de acessibilidade que a página realmente oferece. Títulos longos são encurtados para os resultados de busca e, com Yoast,
+Rank Math, All in One SEO ou SEOPress ativo, o Jim entrega a eles a descrição e os dados de acessibilidade em vez de duplicar tags.
+
+Cada documento recebe uma **nota de 0 a 100** (lista de documentos e caixa na tela do documento) com correção ali mesmo: autor
+(com "Usar meu nome"), título e resumo com contador de caracteres, "Detectar a partir do texto" e "Corrigir títulos
+automaticamente". A coluna "Publicado em" mostra todas as páginas onde o shortcode está.
+
+Para conferir sem ferramentas web com limite de uso: `wp jimca convert arquivo.docx --mode=post` publica um arquivo numa página e
+`node bin/seo-audit.js <url>` audita a página. Veja o [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Como fica no painel
 
 O envio mostra o arquivo escolhido, o estado de conversão enquanto o arquivo é processado,

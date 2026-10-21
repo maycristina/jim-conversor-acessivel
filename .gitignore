@@ -11,3 +11,9 @@ composer.lock
 .phpunit.result.cache
 /node_modules/
 /package-lock.json
+
+# CSS/JS minificados: gerados por bin/minify-assets.sh na montagem do pacote
+assets/js/*.min.js
+assets/css/*.min.css
+
+__pycache__/

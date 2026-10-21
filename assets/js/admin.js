@@ -25,6 +25,171 @@
 		return ( i === 0 ? value : value.toFixed( 1 ) ) + ' ' + units[ i ];
 	}
 
+	function format( template, values ) {
+		var next = 0;
+		return template.replace( /%(\d+\$)?s/g, function ( match, position ) {
+			var index = position ? parseInt( position, 10 ) - 1 : next++;
+			return String( values[ index ] );
+		} );
+	}
+
+	function megabytes( bytes ) {
+		return ( bytes / 1048576 ).toLocaleString( document.documentElement.lang || undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) + ' MB';
+	}
+
+	/**
+	 * Why a file cannot be converted ('' when it can). Same rules as the
+	 * server (JIMCA_Admin::receive_file()): allowed type, not empty, within the
+	 * size limit (and, for a PDF, within what the server memory converts).
+	 */
+	function problemWith( file, index ) {
+		var allowed = ( i18n.allowedTypes || [] ).map( function ( type ) {
+			return String( type ).toLowerCase();
+		} );
+		var match = /\.([A-Za-z0-9]+)$/.exec( file.name );
+		var ext = match ? match[ 1 ].toLowerCase() : '';
+
+		if ( 'markdown' === ext ) {
+			ext = 'md';
+		}
+
+		if ( allowed.length && -1 === allowed.indexOf( ext ) ) {
+			return format( t( 'badType', 'This type is not accepted. Use: %s.' ), [ allowed.join( ', ' ).toUpperCase() ] );
+		}
+
+		if ( 0 === file.size ) {
+			return t( 'emptyFile', 'The file is empty (0 bytes).' );
+		}
+
+		var ceiling = t( 'maxBytes', Infinity );
+
+		if ( 'pdf' === ext && t( 'maxPdfBytes', 0 ) > 0 ) {
+			ceiling = Math.min( t( 'maxPdfBytes', 0 ), ceiling );
+		}
+
+		if ( file.size > ceiling ) {
+			return format( t( 'tooBig', 'This file is %1$s; the limit here is %2$s.' ), [ megabytes( file.size ), megabytes( ceiling ) ] );
+		}
+
+		if ( index >= t( 'maxFiles', 20 ) ) {
+			return format( t( 'beyondLimit', 'Over the limit of %s files per upload.' ), [ t( 'maxFiles', 20 ) ] );
+		}
+
+		return '';
+	}
+
+	/**
+	 * List of the chosen files, right below the field, before anything is
+	 * sent: name, size and a badge (text and icon, never color alone). The
+	 * button that converts stays off while any file cannot be converted.
+	 */
+	function initFileList() {
+		var input = document.getElementById( 'jimca_file' );
+		var wrap  = document.querySelector( '[data-jimca-file-list]' );
+		var form  = document.getElementById( 'jimca-upload-form' );
+
+		if ( ! input || ! wrap || ! form ) {
+			return;
+		}
+
+		var items    = wrap.querySelector( '[data-jimca-file-items]' );
+		var summary  = wrap.querySelector( '[data-jimca-file-summary]' );
+		var button   = form.querySelector( 'input[type="submit"], button[type="submit"]' );
+		var expected = document.getElementById( 'jimca_expected_files' );
+
+		function render() {
+			var files = input.files ? Array.prototype.slice.call( input.files ) : [];
+
+			items.textContent = '';
+			form.removeAttribute( 'data-jimca-invalid' );
+
+			if ( ! files.length ) {
+				wrap.hidden = true;
+				if ( button ) {
+					button.disabled = false;
+				}
+				return;
+			}
+
+			var bad = 0;
+
+			files.forEach( function ( file, index ) {
+				var reason = problemWith( file, index );
+				var li     = document.createElement( 'li' );
+				var name   = document.createElement( 'span' );
+				var size   = document.createElement( 'span' );
+				var badge  = document.createElement( 'span' );
+				var icon   = document.createElement( 'span' );
+
+				li.className = 'jimca-file-list__item';
+				name.className = 'jimca-file-list__name';
+				name.textContent = file.name;
+				size.className = 'jimca-file-list__size';
+				size.textContent = megabytes( file.size );
+				badge.className = 'jimca-file-badge ' + ( reason ? 'jimca-file-badge--error' : 'jimca-file-badge--ok' );
+				icon.setAttribute( 'aria-hidden', 'true' );
+				icon.textContent = reason ? '✕' : '✓';
+				badge.appendChild( icon );
+				badge.appendChild( document.createTextNode( reason ? t( 'fileInvalid', 'Error' ) : t( 'fileValid', 'Valid' ) ) );
+
+				li.appendChild( name );
+				li.appendChild( size );
+				li.appendChild( badge );
+
+				if ( window.DataTransfer ) {
+					var remove = document.createElement( 'button' );
+
+					remove.type = 'button';
+					remove.className = 'button-link jimca-file-list__remove';
+					remove.textContent = t( 'removeLabel', 'Remove' );
+					remove.setAttribute( 'aria-label', format( t( 'removeFile', 'Remove %s' ), [ file.name ] ) );
+					remove.addEventListener( 'click', function () {
+						var kept = new window.DataTransfer();
+
+						files.forEach( function ( other, position ) {
+							if ( position !== index ) {
+								kept.items.add( other );
+							}
+						} );
+						input.files = kept.files;
+						if ( expected ) {
+							expected.value = input.files.length;
+						}
+						render();
+						input.focus();
+					} );
+					li.appendChild( remove );
+				}
+
+				if ( reason ) {
+					var why = document.createElement( 'p' );
+
+					why.className = 'jimca-file-list__reason';
+					why.textContent = reason;
+					li.appendChild( why );
+					bad++;
+				}
+
+				items.appendChild( li );
+			} );
+
+			if ( bad ) {
+				summary.textContent = format( t( 'listProblems', '%1$s of %2$s files cannot be converted. Remove them to continue.' ), [ bad, files.length ] );
+				form.setAttribute( 'data-jimca-invalid', '1' );
+			} else {
+				summary.textContent = 1 === files.length ? t( 'listReadyOne', '1 file ready to convert.' ) : format( t( 'listReady', '%s files ready to convert.' ), [ files.length ] );
+			}
+
+			if ( button ) {
+				button.disabled = bad > 0;
+			}
+			wrap.hidden = false;
+		}
+
+		input.addEventListener( 'change', render );
+		render();
+	}
+
 	function init() {
 		var input = document.getElementById( 'jimca_file' );
 		var toast = document.getElementById( 'jimca-file-toast' );
@@ -146,14 +311,6 @@
 			ui.detail.innerHTML = message || '';
 			announce( t( 'failed', 'The conversion failed.' ) + ' ' + ui.detail.textContent );
 			setBusy( false );
-		}
-
-		function format( template, values ) {
-			var next = 0;
-			return template.replace( /%(\d+\$)?s/g, function ( match, position ) {
-				var index = position ? parseInt( position, 10 ) - 1 : next++;
-				return String( values[ index ] );
-			} );
 		}
 
 		function update( job ) {
@@ -451,6 +608,16 @@
 				return;
 			}
 
+			// A chosen file cannot be converted (see initFileList()): nothing is sent until it is removed.
+			if ( form.hasAttribute( 'data-jimca-invalid' ) ) {
+				event.preventDefault();
+				var firstProblem = document.querySelector( '.jimca-file-list__reason' );
+				if ( firstProblem && firstProblem.scrollIntoView ) {
+					firstProblem.scrollIntoView( { block: 'center' } );
+				}
+				return;
+			}
+
 			if ( toast ) {
 				toast.hidden = true;
 			}
@@ -558,6 +725,7 @@
 
 	function boot() {
 		init();
+		initFileList();
 		initUpload();
 		initAssistant();
 		initDestination();

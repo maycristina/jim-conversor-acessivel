@@ -96,6 +96,20 @@ Hoje cada mudança é testada à mão, seguindo os casos de
 - se a mudança afeta a conversão, compare o resultado antes e depois com os mesmos arquivos;
 - se mexeu em textos, se rodou a verificação de sintaxe (`php -l`) e o Plugin Check.
 
+### Conferir o SEO e a acessibilidade de uma página (sem limite de uso)
+
+```bash
+# Passa um arquivo pelo conversor do Jim e publica numa página (WP-CLI, em qualquer WordPress com o plugin ativo):
+wp jimca convert tests/fixtures/moulin.txt --mode=post --language=fr --slug=moulin
+
+# Confere a página (ou vários endereços, ou um .html salvo). Lista só o que não passou; --verbose mostra tudo.
+node bin/seo-audit.js http://localhost:8888/moulin/ --strict
+```
+
+`bin/seo-audit.js` reúne o que os verificadores web olham na página (título, descrição, títulos H1-H6, Open Graph, JSON-LD,
+idioma, imagens, scripts) mais as regras do plugin (modo post sem busca nem partes, scripts adiados e só os necessários).
+A CI roda os dois com os arquivos de `tests/fixtures/` (`.github/workflows/jim-seo-audit.yml`).
+
 ## Commits e pull requests
 
 1. Crie um branch a partir do branch principal (`git checkout -b corrige-tabelas-docx`).
