@@ -3,7 +3,7 @@
  * Plugin Name:       Jim - Accessible Converter
  * Plugin URI:         https://jim.mabo.cc/
  * Description:       Converts PDF, Word, Markdown and TXT files into responsive, accessible pages (with text-to-speech) and lets you publish them via shortcode.
- * Version:            2.3.0
+ * Version:            2.4.0
  * Requires at least:  6.0
  * Requires PHP:       7.4
  * Author:             Mayara Nascimento
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JIMCA_VERSION', '2.3.0' );
+define( 'JIMCA_VERSION', '2.4.0' );
 define( 'JIMCA_PLUGIN_FILE', __FILE__ );
 define( 'JIMCA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'JIMCA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

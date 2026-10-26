@@ -1,6 +1,27 @@
 # Changelog
 
-## Não lançado
+## 2.4.0 (2026-10-26)
+
+### Conversão de PDF
+- Colunas: páginas em duas colunas gravadas linha a linha (Word, Canva) são lidas coluna por coluna (`JIMCA_Pdf_Layout`). Só age
+  quando há um corredor vazio, os dois lados são texto corrido e o arquivo alterna esquerda/direita; páginas que já saíam certas
+  (coluna por coluna, sumários, tabelas, slides) não são tocadas. Sonda as 5 primeiras páginas com texto e desliga se não achar.
+- Listas: marcadores (inclusive o U+F0B7 do Word) e listas numeradas viram `<ul>`/`<ol>` planas (`JIMCA_Pdf_Lists`); título
+  numerado sozinho, falas com travessão e versículos continuam parágrafos.
+- Hifenização: palavra cortada no fim da linha ou na mesma linha ("desen- volvedor") é juntada; ficam o hífen de 1 letra
+  (e-mail), o suspenso ("pré- e pós-") e o antes de maiúscula. Regras por idioma para português (enclíticos, prefixos pelo
+  Acordo Ortográfico) e russo. Ligaduras ﬀ ﬁ ﬂ ﬃ ﬄ viram letras; chinês e japonês juntam linhas sem espaço.
+
+### Idioma e voz
+- `JIMCA_Language` detecta o idioma pelo texto (pt-BR, en-US, es-ES, de-DE, fr-FR, ru-RU, zh-CN, ja-JP, hi-IN) e o grava na
+  conversão quando o campo de importação fica no automático. O texto recebe o `lang` completo, o mesmo de `inLanguage` e
+  `og:locale`.
+- Leitura em voz alta (`assets/js/speech.js`, usado pelo leitor e pelo modo post): melhor voz do idioma do documento, nunca uma
+  voz de outra língua, e texto em pedaços de até 220 caracteres (limite das vozes online do Chrome), sem cortar "3.5" nem
+  "R$ 1.250,00".
+
+### Word
+- O estilo Título (que o phpword grava como `<h0>`) vira o título principal, com os demais um nível abaixo.
 
 ### Testes
 - Corpus de conversão público (`tests/corpus/`, `composer corpus`): arquivos sintéticos gerados por `make-corpus.py`, sem

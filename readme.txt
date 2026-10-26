@@ -4,7 +4,7 @@ Tags: accessibility, pdf, docx, text-to-speech, seo
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,17 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 
 == Changelog ==
 
+= 2.4.0 =
+* New: PDF pages set in two columns and written line by line (Word, Canva) are read column by column. Pages that already read correctly (column by column, contents, tables, slides) are left as they are.
+* New: bulleted and numbered lists in PDFs become real lists (including Word's private-use bullet). Numbered headings, dialogue lines with a dash and verses stay paragraphs.
+* New: the document language is detected from the text (Portuguese, English, Spanish, German, French, Russian, Chinese, Japanese and Hindi) and saved when the import field is left on automatic. The full language tag (for example `pt-BR`) goes to the text, the read-aloud voice, `inLanguage` and `og:locale`.
+* New: read-aloud picks the best voice for the document language (never a voice of another language) and reads in pieces of up to 220 characters, so online voices in Chrome do not stop midway. Post mode now uses the same voice choice.
+* Improved: PDF words cut by a hyphen at the end of a line, or already on the same line ("desen- volvedor"), are joined, with per-language rules that keep real hyphens (e-mail, pronouns, prefixes, "pre- and post-"). Ligatures (fi, fl, ff, ffi, ffl) become plain letters. Chinese and Japanese lines are joined without spaces.
+* Improved: small images whose size repeats across many different images of a PDF (carousel arrows, pieces of code that a browser sliced into images when printing) are left out.
+* Fix: PDFs without a text layer (scanned, or with the letters drawn as outlines, as "Microsoft Print to PDF" does with web pages) are refused again with the OCR advice, instead of creating an empty document. Word counts no longer include the "Page N" markers.
+* Fix: Word's "Title" style becomes the main heading of the document instead of being dropped.
+* Developers: public conversion test corpus in `tests/corpus/` (`composer corpus`), with synthetic PDF and DOCX files and the text the read-aloud player speaks for each one.
+
 = 2.3.0 =
 * New: SEO and accessibility score (0 to 100) with 11 local checks, in "All documents" and in the document editor, with a notice for orphan documents (not in any published page).
 * New: SEO box with an editable author ("Use my name"), per-item fields with character counters, "Auto-detect from text" (author, title and summary suggestions) and "Auto-fix headings", all saved by AJAX.
@@ -256,6 +267,9 @@ English (source), Brazilian Portuguese, Spanish, French, Simplified Chinese, Hin
 * Progress feedback while a document is being converted, and readable messages instead of a raw error page when the server rejects an upload or lacks a required PHP extension.
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+Better PDF conversion: two-column pages, lists and hyphenated words come out right, the document language is detected and the read-aloud voice follows it. PDFs without selectable text are refused again with the OCR advice. Documents converted before keep their text; convert them again to get these improvements.
 
 = 2.3.0 =
 SEO and accessibility score, an SEO box with author, title and summary helpers, a document language field, a file list with validation on import and a "Published in" column. Important: on sites that keep the original uploaded files, those files are now sent with a noindex header (X-Robots-Tag), also on existing sites, so search engines stop listing the PDF next to the converted page. To keep them indexable, go to Jim > Settings, find "Originals and search engines" and untick it. Sites that delete the original after conversion (the default) are not affected.
