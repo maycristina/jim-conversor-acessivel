@@ -25,6 +25,9 @@
 html.a11y-links a{text-decoration:underline!important;text-underline-offset:3px!important;text-decoration-thickness:2px!important}
 html.a11y-space body :where(p,li,dd,dt,td,th,summary,figcaption,blockquote,h1,h2,h3,h4,h5,h6,a,span,label,button){line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}
 html.a11y-space body :where(p){margin-bottom:2em!important}
+/* 1.4.12: com o espaçamento maior o texto quebra em vez de passar da tela (botões têm nowrap) */
+html.a11y-space body .btn:not(.a11y *){white-space:normal!important;height:auto!important;min-height:48px;padding-block:10px;text-align:center}
+html.a11y-space body :where(p,li,dd,dt,td,th,summary,figcaption,blockquote,h1,h2,h3,h4,h5,h6){overflow-wrap:anywhere}
 html.a11y-font body,html.a11y-font body :where(*:not(code):not(pre):not(kbd):not(svg *)){font-family:Arial,Helvetica,"Segoe UI",sans-serif!important}
 html.a11y-hc body{background:#000!important;color:#fff!important}
 html.a11y-hc body *:not(img):not(video):not(svg):not(svg *):not(.a11y):not(.a11y *){background-color:#000!important;background-image:none!important;color:#fff!important;border-color:#fff!important;text-shadow:none!important;box-shadow:none!important}
