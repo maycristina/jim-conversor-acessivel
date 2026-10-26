@@ -14,7 +14,7 @@
  * @var array      $toc             Document headings (see JIMCA_Shortcode::build_toc()); empty = no table of contents.
  * @var array|null $tutor           AI tutor settings (see JIMCA_Tutor::get_settings()); null = no tutor.
  * @var string     $title_tag       'h2', or 'p' when the title repeats the page's own (see JIMCA_Shortcode::same_title()).
- * @var string     $doc_lang        Language tag of the document when it differs from the page; '' = same as the page.
+ * @var array      $lang_attributes JIMCA_Language::attributes(): 'lang' (on the text) and 'data-doc-lang' (on the reader), both the BCP-47 tag.
  * @var array|null $pager           Long document shown in parts: count, part, titles, arg (see JIMCA_Pagination); null = whole.
  */
 
@@ -27,7 +27,7 @@ $jimca_current_rate = (string) ( isset( $settings['tts_default_rate'] ) ? $setti
 // "1×", "1.25×": the speed as the button shows it (no trailing zeros).
 $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate, 2 ), '0' ), '.,' ) . '×';
 ?>
-<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer<?php echo '' !== $doc_lang ? ' data-jimca-lang="' . esc_attr( $doc_lang ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute built with esc_attr(). ?> data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" data-jimca-title="<?php echo esc_attr( get_the_title( $post ) ); ?>"<?php echo $pager ? ' data-jimca-parts="' . esc_attr( $pager['count'] ) . '" data-jimca-part="' . esc_attr( $pager['part'] ) . '" data-jimca-part-arg="' . esc_attr( $pager['arg'] ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributes built with esc_attr(). ?> aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
+<section class="jimca-viewer jimca-theme-<?php echo esc_attr( $settings['theme'] ); ?> jimca-mode-<?php echo esc_attr( $mode ); ?>" id="<?php echo esc_attr( $uid ); ?>" data-jimca-viewer data-doc-lang="<?php echo esc_attr( $lang_attributes['data-doc-lang'] ); ?>" data-jimca-doc="<?php echo esc_attr( $post->ID ); ?>" data-jimca-title="<?php echo esc_attr( get_the_title( $post ) ); ?>"<?php echo $pager ? ' data-jimca-parts="' . esc_attr( $pager['count'] ) . '" data-jimca-part="' . esc_attr( $pager['part'] ) . '" data-jimca-part-arg="' . esc_attr( $pager['arg'] ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributes built with esc_attr(). ?> aria-labelledby="<?php echo esc_attr( $uid ); ?>-title">
 
 	<?php
 	/*
@@ -368,7 +368,7 @@ $jimca_rate_text = rtrim( rtrim( number_format_i18n( (float) $jimca_current_rate
 		<?php echo JIMCA_Shortcode::render_pager( $pager, $uid, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_attr()/esc_html() in render_pager(). ?>
 	<?php endif; ?>
 
-	<div id="<?php echo esc_attr( $uid ); ?>-content" class="jimca-content" tabindex="-1" data-jimca-content<?php echo '' !== $doc_lang ? ' lang="' . esc_attr( $doc_lang ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute built with esc_attr(). ?>>
+	<div id="<?php echo esc_attr( $uid ); ?>-content" class="jimca-content" tabindex="-1" data-jimca-content lang="<?php echo esc_attr( $lang_attributes['lang'] ); ?>">
 		<?php echo wp_kses_post( $content ); ?>
 	</div>
 

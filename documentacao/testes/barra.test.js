@@ -17,6 +17,8 @@ const { JSDOM } = require( 'jsdom' );
 const ROOT = path.join( __dirname, '../..' );
 const FRONTEND = fs.readFileSync( path.join( ROOT, 'assets/js/frontend.js' ), 'utf8' );
 const PAGER = fs.readFileSync( path.join( ROOT, 'assets/js/pager.js' ), 'utf8' );
+// Loaded before frontend.js, as WordPress does (a dependency of it).
+const SPEECH = fs.readFileSync( path.join( ROOT, 'assets/js/speech.js' ), 'utf8' );
 const wait = ( ms ) => new Promise( ( r ) => setTimeout( r, ms ) );
 
 const PARTS = { 1: '<h2 id="a">Um</h2><p>Primeiro.</p>', 2: '<h2 id="b">Dois</h2><p>Segundo.</p>', 3: '<p>Terceiro.</p>' };
@@ -126,6 +128,7 @@ async function setup( html, { voices = [], prefs = null } = {} ) {
 
 		return Promise.resolve( { status: 200, json: () => Promise.resolve( body ? { success: true, data: { html: body } } : { success: false } ) } );
 	};
+	w.eval( SPEECH );
 	w.eval( FRONTEND );
 	w.eval( PAGER );
 	await wait( 20 );
@@ -410,7 +413,8 @@ test( 'voice settings: changing the language empties the narrator back to Automa
 
 	e.click( '[data-jimca-play]' );
 	await wait( 5 );
-	assert.equal( e.spoken[ 0 ].voice, undefined );
+	// Automatic picks the best voice of the language (not the browser's default, which may be of another language).
+	assert.equal( e.spoken[ 0 ].voice.name, 'Google US English' );
 	assert.equal( e.spoken[ 0 ].lang, 'en-US' );
 } );
 

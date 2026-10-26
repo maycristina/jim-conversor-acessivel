@@ -37,6 +37,13 @@
         "test": [
             "phpunit"
         ],
+        "corpus": [
+            "phpunit --testsuite corpus"
+        ],
+        "corpus:update": [
+            "@putenv JIMCA_UPDATE_CORPUS=1",
+            "phpunit --testsuite corpus"
+        ],
         "qa": [
             "@lint",
             "@analyse",

@@ -1,0 +1,13 @@
+{
+	"description": "One column written one letter per text object. No columns to find, and no word may be split (wide letters like m must not open false spaces).",
+	"in_order": [
+		"Este guia explica como transformar um arquivo em uma página que todo mundo consegue ler ou ouvir.",
+		"Ele foi escrito para bibliotecas, escolas e prefeituras que publicam documentos com frequência.",
+		"Antes de começar, separe o arquivo original e confira se o texto pode ser selecionado com o mouse.",
+		"Quando o texto não pode ser selecionado, o arquivo é uma imagem e precisa passar por reconhecimento de caracteres.",
+		"A conversão respeita os títulos marcados pelo autor e monta um sumário lateral com eles.",
+		"Por isso vale a pena revisar os marcadores do documento antes de enviar o arquivo, porque um título esquecido some do sumário e deixa a navegação mais difícil para quem usa leitor de tela no celular ou no computador.",
+		"Depois da conversão, abra a página e escute o começo do texto com o leitor em voz alta.",
+		"Se uma frase soar estranha, compare com o original e anote a página."
+	]
+}

@@ -771,8 +771,10 @@
 			return;
 		}
 
+		// window.jimcaSpeech comes from speech.js: if a script optimizer dropped it, the audio goes away like in a browser without speech.
 		var supported = ( 'speechSynthesis' in window ) &&
-			typeof window.SpeechSynthesisUtterance !== 'undefined';
+			typeof window.SpeechSynthesisUtterance !== 'undefined' &&
+			!! window.jimcaSpeech;
 
 		if ( ! supported ) {
 			/*
@@ -825,7 +827,16 @@
 		var elements = collectElements();
 
 		var index = 0;
+		var pieces = null; // Pieces of the text of elements[ index ] (see jimcaSpeech.pieces() in speech.js); null until it is read.
+		var piece = 0;
 		var state = 'idle'; // idle | playing | paused
+
+		/** Moves the reading to another passage. */
+		function goTo( i ) {
+			index = i;
+			pieces = null;
+			piece = 0;
+		}
 
 		/*
 		 * Identifies the current reading. speechSynthesis.cancel() makes the
@@ -901,6 +912,7 @@
 		var voiceLang = prefs.get( 'voiceLang', '' );
 		var voiceKind = prefs.get( 'voiceKind', '' );
 		var langKnown = false; // The language is the reader's choice or the page's: only then it is passed to the voice.
+		var langChosen = false; // The reader picked the language in the settings during this visit (see targetLang()).
 
 		function setStatus( text ) {
 			if ( statusEl ) {
@@ -941,7 +953,7 @@
 		function stopUI( statusText ) {
 			cutSpeech();
 			state = 'idle';
-			index = 0;
+			goTo( 0 );
 			clearHighlight();
 			updateUI();
 
@@ -950,10 +962,36 @@
 			}
 		}
 
+		function primaryLang( code ) {
+			return window.jimcaSpeech.primaryLang( code );
+		}
+
+		/** The document's language (data-doc-lang, set by the server), else the page's, else the browser's. */
+		function docLang() {
+			return viewer.getAttribute( 'data-doc-lang' ) || viewer.getAttribute( 'data-jimca-lang' ) ||
+				document.documentElement.lang || window.navigator.language || '';
+		}
+
+		/**
+		 * The language to read in: the one picked in the settings during this
+		 * visit; else the saved one when it is a variant of the document's
+		 * (pt-PT for a pt-BR text); else the document's. A language saved while
+		 * reading a document in another language does not apply: a Portuguese
+		 * voice reading a Russian text would only spell it out.
+		 */
+		function targetLang() {
+			if ( langChosen || ( voiceLang && primaryLang( voiceLang ) === primaryLang( docLang() ) ) ) {
+				return voiceLang;
+			}
+
+			return docLang();
+		}
+
+		/** The narrator chosen in the settings, when it speaks the language read. */
 		function currentVoice() {
 			var voices = synth.getVoices();
 			var match = voices.filter( function ( voice ) {
-				return voice.name === voiceName;
+				return voice.name === voiceName && primaryLang( voice.lang ) === primaryLang( targetLang() );
 			} );
 			return match[ 0 ] || null;
 		}
@@ -1008,15 +1046,16 @@
 
 		/** The language to start with: the one saved, else the page's, else the browser's. */
 		function startLanguage( codes ) {
+			// The saved narrator decides only for documents in its language.
 			var named = synth.getVoices().filter( function ( voice ) {
-				return voice.name === voiceName;
+				return voice.name === voiceName && primaryLang( voice.lang ) === primaryLang( docLang() );
 			} )[ 0 ];
 
 			if ( named && codes.indexOf( voiceCode( named ) ) > -1 ) {
 				return voiceCode( named );
 			}
 
-			var wanted = [ viewer.getAttribute( 'data-jimca-lang' ), document.documentElement.lang, window.navigator.language ].filter( Boolean );
+			var wanted = [ viewer.getAttribute( 'data-doc-lang' ), viewer.getAttribute( 'data-jimca-lang' ), document.documentElement.lang, window.navigator.language ].filter( Boolean );
 
 			for ( var i = 0; i < wanted.length; i++ ) {
 				var exact = codes.filter( function ( code ) {
@@ -1113,6 +1152,11 @@
 				return;
 			}
 
+			// A language saved while reading a document in another language does not carry over to this one.
+			if ( voiceLang && primaryLang( voiceLang ) !== primaryLang( docLang() ) ) {
+				voiceLang = '';
+			}
+
 			if ( codes.indexOf( voiceLang ) < 0 ) {
 				voiceLang = startLanguage( codes );
 			} else {
@@ -1135,6 +1179,7 @@
 				if ( target.hasAttribute( 'data-jimca-voice-lang' ) ) {
 					voiceLang = target.value;
 					langKnown = true;
+					langChosen = true;
 					voiceName = '';
 					prefs.set( 'voiceLang', voiceLang );
 					prefs.set( 'voice', '' );
@@ -1223,7 +1268,7 @@
 
 				viewer.jimcaPager.next( { focus: false, auto: true } ).then( function () {
 					if ( waiting === run && 'playing' === state ) {
-						index = 0;
+						goTo( 0 );
 						speakNext();
 					}
 				} ).catch( function () {
@@ -1234,7 +1279,7 @@
 
 			if ( index >= elements.length ) {
 				state = 'idle';
-				index = 0;
+				goTo( 0 );
 				clearHighlight();
 				updateUI();
 				setStatus( t( 'statusDone', 'Reading finished.' ) );
@@ -1242,24 +1287,31 @@
 			}
 
 			var el = elements[ index ];
-			var text = 'IMG' === el.tagName
-				? t( 'imageLabel', 'Image:' ) + ' ' + el.getAttribute( 'alt' ).trim()
-				: el.textContent.trim();
 
-			if ( '' === text ) {
-				index++;
+			if ( ! pieces ) {
+				pieces = window.jimcaSpeech.pieces( 'IMG' === el.tagName
+					? t( 'imageLabel', 'Image:' ) + ' ' + el.getAttribute( 'alt' ).trim()
+					: el.textContent.trim() );
+				piece = 0;
+			}
+
+			if ( ! pieces.length ) {
+				goTo( index + 1 );
 				speakNext();
 				return;
 			}
 
-			var utterance = new window.SpeechSynthesisUtterance( text );
-			var voice = currentVoice();
+			var utterance = new window.SpeechSynthesisUtterance( pieces[ piece ] );
+			// The narrator chosen in the settings, else the best voice of the language; none at all rather than one of another language.
+			var lang = targetLang();
+			var voice = currentVoice() || window.jimcaSpeech.bestVoice( synth.getVoices(), lang );
 
+			// Both: Chrome and Edge follow the voice, Safari on iOS follows the language.
 			if ( voice ) {
 				utterance.voice = voice;
 				utterance.lang = voice.lang;
-			} else if ( voiceLang && langKnown ) {
-				utterance.lang = voiceLang;
+			} else if ( lang ) {
+				utterance.lang = lang;
 			}
 
 			utterance.rate = rate;
@@ -1271,16 +1323,23 @@
 				if ( mine !== run || 'playing' !== state ) {
 					return;
 				}
-				index++;
+				if ( piece + 1 < pieces.length ) {
+					piece++;
+				} else {
+					goTo( index + 1 );
+				}
 				speakNext();
 			}
 
 			utterance.onend = next;
 			utterance.onerror = next;
 
-			clearHighlight();
-			el.classList.add( 'jimca-reading' );
-			el.scrollIntoView( { block: 'center', behavior: reducedMotion ? 'auto' : 'smooth' } );
+			// The passage is marked once, not again at each of its pieces.
+			if ( 0 === piece ) {
+				clearHighlight();
+				el.classList.add( 'jimca-reading' );
+				el.scrollIntoView( { block: 'center', behavior: reducedMotion ? 'auto' : 'smooth' } );
+			}
 
 			synth.speak( utterance );
 		}
@@ -1300,7 +1359,7 @@
 					activeStop();
 				}
 				cutSpeech();
-				index = startIndex();
+				goTo( startIndex() );
 				state = 'playing';
 				setStatus( t( 'statusReading', 'Reading aloud.' ) );
 				activeStop = stopUI;
@@ -1320,7 +1379,7 @@
 				stopUI( t( 'statusStopped', 'Reading stopped.' ) );
 			}
 			elements = collectElements();
-			index = 0;
+			goTo( 0 );
 		} );
 
 		updateUI();

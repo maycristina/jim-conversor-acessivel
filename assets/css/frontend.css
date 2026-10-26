@@ -1047,6 +1047,15 @@ p.jimca-title {
 	font-variant-numeric: tabular-nums;
 }
 
+/*
+ * Numbered list from a PDF: the number ("1.", "a)") stays in the text, which
+ * the read-aloud player reads, so the list draws no number of its own.
+ */
+.jimca-content .jimca-pdf-list--numbered {
+	list-style: none;
+	padding-left: 0;
+}
+
 .jimca-content table {
 	width: 100%;
 	max-width: 100%;

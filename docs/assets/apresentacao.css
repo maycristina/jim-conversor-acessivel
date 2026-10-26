@@ -330,5 +330,10 @@ html[data-motion=reduced] .ico .wave{opacity:.5}
 .s8 .sm p{font-size:26px}
 .s12 .lanes{top:500px}
 html[lang=ru] .s14 .h .t-xl{font-size:74px}
+/* slide 14: a introdução acompanha os cartões (os dois empilhados no pé do slide). Antes ela ficava numa altura fixa e os cartões, que crescem para cima, a cobriam em russo (no Chromium do Linux, que quebra uma linha a mais). 61px = a distância de sempre em pt; nos idiomas de cartões mais altos, 33px, para a introdução não subir até o título. */
+.stage .slide.s14{display:flex;flex-direction:column;justify-content:flex-end;padding:0 112px 96px} /* 3 classes: vence o display:block do @media print */
+.s14 .intro{position:static;align-self:flex-start;margin:0 0 61px}
+html:is([lang=es],[lang=fr],[lang=de],[lang=ru]) .s14 .intro{margin-bottom:33px}
+.s14 .cases{position:static}
 html[lang=ru] .s12 .lanes{top:470px}
 html[lang=ru] .s12 .h .t-l{font-size:64px}

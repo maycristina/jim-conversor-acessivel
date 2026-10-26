@@ -18,6 +18,8 @@ const path = require( 'node:path' );
 const { JSDOM } = require( 'jsdom' );
 
 const SOURCE = fs.readFileSync( process.env.JIMCA_FRONTEND_JS || path.join( __dirname, '../../assets/js/frontend.js' ), 'utf8' );
+// Loaded before frontend.js, as WordPress does (a dependency of it).
+const SPEECH = fs.readFileSync( path.join( __dirname, '../../assets/js/speech.js' ), 'utf8' );
 const wait = ( ms ) => new Promise( ( r ) => setTimeout( r, ms ) );
 
 /**
@@ -90,6 +92,7 @@ async function setup( count = 12, firstOnScreen = 0 ) {
 		};
 	} );
 
+	w.eval( SPEECH );
 	w.eval( SOURCE );
 	await wait( 20 ); // the script starts on DOMContentLoaded.
 

@@ -1,0 +1,14 @@
+p: Leitura em duas colunas: um teste do Jim
+p: Maria Silva, Universidade Exemplo
+p: Resumo: este artigo de teste mostra como o Jim deve ler um texto em duas colunas, com título e resumo na largura toda, frases que mudam de coluna e uma frase que continua na página seguinte.
+p: A leitura em voz alta depende da ordem do texto. Quando a ordem se perde, a frase deixa de fazer sentido e a pessoa que escuta precisa adivinhar o que o autor quis dizer.
+p: Artigos científicos costumam usar duas colunas para economizar papel. Na tela, essas colunas viram um desafio, porque o arquivo guarda cada linha em uma posição e não diz qual coluna vem primeiro.
+p: Alguns programas gravam a coluna da esquerda inteira e depois a da direita. Outros gravam a primeira linha da esquerda, a primeira linha da direita, e assim por diante, como se a página fosse uma única coluna larga.
+p: No segundo caso, um conversor ingênuo junta pedaços de frases que nunca estiveram lado a lado. O resultado parece uma lista de palavras soltas e o leitor de tela anuncia tudo com a mesma calma, sem perceber o erro.
+p: Para corrigir, o conversor precisa olhar a posição de cada linha. Linhas com a mesma margem esquerda pertencem à mesma coluna, e o espaço vazio no meio da página mostra onde uma coluna termina.
+p: Títulos e resumos ocupam a largura toda e ficam acima das colunas. Eles devem ser lidos antes, na posição em que aparecem, e não misturados com a primeira linha de cada coluna.
+p: Rodapés com o número da página ficam abaixo das colunas. O conversor já remove esses números quando eles aparecem sozinhos na primeira ou na última linha da página.
+p: Uma frase pode começar no fim da coluna da direita e terminar no alto da próxima página.
+p: Quando os marcadores de página estão desligados, as duas partes precisam voltar a formar uma frase só.
+p: Tabelas também têm colunas, mas são lidas linha por linha. Por isso uma célula curta não pode ser confundida com uma coluna de texto corrido, que tem linhas longas e parecidas.
+p: Com essas regras, a leitura volta a seguir o caminho que o autor imaginou: de cima para baixo na coluna da esquerda e, depois, de cima para baixo na coluna da direita.

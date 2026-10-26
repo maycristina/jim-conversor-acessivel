@@ -1,0 +1,7 @@
+p: Estrutura básica de uma página Todo documento começa com <!DOCTYPE html> e a tag <html>, que envolve o resto.
+p: Dentro dela ficam <head>, com o <title> e as tags <meta>, e <body>, com o conteúdo.
+p: Os títulos vão de <h1> a <h6>, e cada parágrafo fica entre <p> e </p>.
+p: Um script entra assim: <script>alert('oi')</script> e não deve rodar.
+p: Comparações também usam os sinais: 3 < 5 e 7 > 2, e a seta -> aparece em código.
+p: Um comentário se escreve <!-- assim --> e o texto depois dele continua.
+p: Fim do tutorial.

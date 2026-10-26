@@ -1,0 +1,123 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Leitura em duas colunas) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 2651 >>
+stream
+BT /F1 16 Tf 1 0 0 1 50 790 Tm (Leitura em duas colunas: um teste do Jim) Tj ET
+BT /F1 10 Tf 1 0 0 1 200 768 Tm (Maria Silva, Universidade Exemplo) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 745 Tm (Resumo: este artigo de teste mostra como o Jim deve ler um texto em duas colunas, com título e) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 732 Tm (resumo na largura toda, frases que mudam de coluna e uma frase que continua na página seguinte.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 699 Tm (A leitura em voz alta depende da ordem do) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 686 Tm (texto. Quando a ordem se perde, a frase deixa) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 686 Tm (No segundo caso, um conversor ingênuo junta) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 673 Tm (de fazer sentido e a pessoa que escuta precisa) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 673 Tm (pedaços de frases que nunca estiveram lado a) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 660 Tm (adivinhar o que o autor quis dizer.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 660 Tm (lado. O resultado parece uma lista de palavras) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 647 Tm (soltas e o leitor de tela anuncia tudo com a) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 634 Tm (Artigos científicos costumam usar duas colunas) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 634 Tm (mesma calma, sem perceber o erro.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 621 Tm (para economizar papel. Na tela, essas colunas) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 608 Tm (viram um desafio, porque o arquivo guarda cada) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 608 Tm (Para corrigir, o conversor precisa olhar a) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 595 Tm (linha em uma posição e não diz qual coluna vem) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 595 Tm (posição de cada linha. Linhas com a mesma) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 582 Tm (primeiro.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 582 Tm (margem esquerda pertencem à mesma coluna, e o) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 569 Tm (espaço vazio no meio da página mostra onde uma) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 556 Tm (Alguns programas gravam a coluna da esquerda) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 556 Tm (coluna termina.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 543 Tm (inteira e depois a da direita. Outros gravam a) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 530 Tm (primeira linha da esquerda, a primeira linha) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 530 Tm (Títulos e resumos ocupam a largura toda e) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 517 Tm (da direita, e assim por diante, como se a) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 517 Tm (ficam acima das colunas. Eles devem ser lidos) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 504 Tm (página fosse uma única coluna larga.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 504 Tm (antes, na posição em que aparecem, e não) Tj ET
+BT /F1 10 Tf 1 0 0 1 295 40 Tm (1) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 10 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+10 0 obj
+<< /Length 1537 >>
+stream
+BT /F1 10 Tf 1 0 0 1 50 800 Tm (misturados com a primeira linha de cada) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 800 Tm (pode ser confundida com uma coluna de texto) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 787 Tm (coluna.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 787 Tm (corrido, que tem linhas longas e parecidas.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 761 Tm (Rodapés com o número da página ficam abaixo) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 761 Tm (Com essas regras, a leitura volta a seguir o) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 748 Tm (das colunas. O conversor já remove esses) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 748 Tm (caminho que o autor imaginou: de cima para) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 735 Tm (números quando eles aparecem sozinhos na) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 735 Tm (baixo na coluna da esquerda e, depois, de cima) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 722 Tm (primeira ou na última linha da página.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 722 Tm (para baixo na coluna da direita.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 696 Tm (Uma frase pode começar no fim da coluna da) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 683 Tm (direita e terminar no alto da próxima página.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 670 Tm (Quando os marcadores de página estão) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 657 Tm (desligados, as duas partes precisam voltar a) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 644 Tm (formar uma frase só.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 618 Tm (Tabelas também têm colunas, mas são lidas) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 605 Tm (linha por linha. Por isso uma célula curta não) Tj ET
+BT /F1 10 Tf 1 0 0 1 295 40 Tm (2) Tj ET
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000302 00000 n 
+0000000684 00000 n 
+0000000759 00000 n 
+0000000895 00000 n 
+0000003598 00000 n 
+0000003735 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R /Info 6 0 R >>
+startxref
+5325
+%%EOF

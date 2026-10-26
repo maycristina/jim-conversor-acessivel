@@ -60,6 +60,24 @@ class JIMCA_Converter {
 	const UNREADABLE_SYMBOL_RATIO = 0.3;
 
 	/**
+	 * Words of the converted document. The page markers ("Page 3") are the
+	 * converter's, not the document's: without leaving them out, a PDF with
+	 * no text layer would pass for a document with a few words.
+	 *
+	 * Without a third argument, preg_match_all() returns the count without
+	 * building an array of every word, which costs megabytes of memory on a
+	 * book.
+	 *
+	 * @param string $html Converted document.
+	 * @return int
+	 */
+	public static function count_words( $html ) {
+		$html = preg_replace( '#<h[1-6][^>]*class="[^"]*jimca-page-title[^"]*"[^>]*>.*?</h[1-6]>#is', ' ', $html );
+
+		return (int) preg_match_all( '/\p{L}+/u', wp_strip_all_tags( (string) $html ) );
+	}
+
+	/**
 	 * Does the extracted text look like garbage? It happens with PDFs whose
 	 * fonts do not say which letter each glyph is: the PDF looks right on
 	 * screen, but its text is a run of symbols.

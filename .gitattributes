@@ -5,4 +5,7 @@
 
 # Arquivos de exemplo da auditoria de SEO: ficam byte a byte como foram gerados.
 /tests/fixtures/* -text
+# Corpus de conversão: arquivos de entrada e saídas esperadas comparados byte a byte.
+/tests/corpus/*/source.* -text
+/tests/corpus/*/expected-reader.txt text eol=lf
 *.sh text eol=lf

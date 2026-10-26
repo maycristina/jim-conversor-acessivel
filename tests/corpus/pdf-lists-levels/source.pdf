@@ -1,0 +1,107 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Listas em niveis) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 9 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 1102 >>
+stream
+BT /F1 14 Tf 1 0 0 1 50 792 Tm (Checklist de Requisitos de Leitura) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 757 Tm (• Item de primeiro nível com bullet tradicional redondo.) Tj ET
+BT /F3 11 Tf 1 0 0 1 75 737 Tm <06> Tj ET
+BT /F1 11 Tf 1 0 0 1 81.05 737 Tm ( Subitem de segundo nível com círculo vazado e recuo X maior.) Tj ET
+BT /F3 11 Tf 1 0 0 1 75 717 Tm <06> Tj ET
+BT /F1 11 Tf 1 0 0 1 81.05 717 Tm ( Segundo subitem que quebra em duas linhas para testar se a continuação) Tj ET
+BT /F1 11 Tf 1 0 0 1 85 697 Tm (não vira um novo parágrafo fora do elemento da lista.) Tj ET
+BT /F3 11 Tf 1 0 0 1 50 677 Tm <07> Tj ET
+BT /F1 11 Tf 1 0 0 1 56.05 677 Tm ( Item com bullet quadrado muito comum no Microsoft Word.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 657 Tm (— Item usando travessão como marcador de lista.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 637 Tm (1. Primeiro item de uma lista ordenada numérica.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 617 Tm (2. Segundo item da lista ordenada numérica.) Tj ET
+BT /F1 11 Tf 1 0 0 1 75 597 Tm (a\) Subitem ordenado alfabético com parêntese.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 577 Tm (Fim da lista.) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /ToUnicode 10 0 R >>
+endobj
+10 0 obj
+<< /Length 403 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+7 beginbfchar
+<01> <FB00>
+<02> <FB01>
+<03> <FB02>
+<04> <FB03>
+<05> <FB04>
+<06> <25E6>
+<07> <25AA>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000296 00000 n 
+0000000678 00000 n 
+0000000746 00000 n 
+0000000892 00000 n 
+0000002046 00000 n 
+0000002134 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R /Info 6 0 R >>
+startxref
+2589
+%%EOF

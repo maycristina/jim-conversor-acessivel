@@ -1,0 +1,3 @@
+p: Artigo Científico em Duas Colunas
+p: COLUNA A LINHA 1: o argumento começa aqui, COLUNA A LINHA 2: desce pelo lado esquerdo COLUNA A LINHA 3: e junta as frases do COLUNA A LINHA 4: primeiro bloco, uma por COLUNA A LINHA 5: linha, até chegar ao fim COLUNA A LINHA 6: da coluna sem pular para COLUNA A LINHA 7: o outro lado, onde fica COLUNA A LINHA 8: o bloco que vem depois.
+p: COLUNA B LINHA 1: o segundo bloco começa COLUNA B LINHA 2: no alto da direita e só COLUNA B LINHA 3: deve ser lido depois da COLUNA B LINHA 4: coluna da esquerda, sem COLUNA B LINHA 5: misturar uma linha de COLUNA B LINHA 6: cada lado, o erro de quem COLUNA B LINHA 7: segue a ordem bruta do COLUNA B LINHA 8: arquivo nesta página.

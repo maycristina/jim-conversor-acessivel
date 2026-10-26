@@ -1,0 +1,83 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Listas) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 1550 >>
+stream
+BT /F1 10 Tf 1 0 0 1 50 790 Tm (Materiais para a oficina de leitura:) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 774 Tm (• Livros em letra ampliada) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 758 Tm (• Fones de ouvido) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 742 Tm (• Cadeiras com apoio para os braços e altura) Tj ET
+BT /F1 10 Tf 1 0 0 1 62 726 Tm (regulável para cada leitor) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 710 Tm (Depois da lista, um parágrafo comum continua o texto e termina com ponto final.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 694 Tm (Passos para converter um arquivo:) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 678 Tm (1. Abra o painel do Jim) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 662 Tm (2. Envie o arquivo) Tj ET
+BT /F1 10 Tf 1 0 0 1 70 646 Tm (a\) PDF com texto selecionável) Tj ET
+BT /F1 10 Tf 1 0 0 1 70 630 Tm (b\) DOCX salvo no Word ou no Google Docs) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 614 Tm (3. Confira o resultado no leitor) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 598 Tm (O resultado aparece em poucos segundos.) Tj ET
+BT /F2 10 Tf 1 0 0 1 50 582 Tm (·) Tj ET
+BT /F1 10 Tf 1 0 0 1 68 582 Tm (Item marcado com o símbolo do Word) Tj ET
+BT /F2 10 Tf 1 0 0 1 50 566 Tm (·) Tj ET
+BT /F1 10 Tf 1 0 0 1 68 566 Tm (Outro item com o mesmo símbolo) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 550 Tm (Fim dos itens com símbolo.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 534 Tm (1. Introdução) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 518 Tm (Este capítulo apresenta o tema e termina com ponto final.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 502 Tm (— Você leu o capítulo? — perguntou Ana.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 486 Tm (— Li, sim — respondeu Davi.) Tj ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000296 00000 n 
+0000000678 00000 n 
+0000000736 00000 n 
+0000000872 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R /Info 6 0 R >>
+startxref
+2474
+%%EOF

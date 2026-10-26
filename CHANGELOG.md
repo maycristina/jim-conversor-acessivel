@@ -1,5 +1,21 @@
 # Changelog
 
+## Não lançado
+
+### Testes
+- Corpus de conversão público (`tests/corpus/`, `composer corpus`): arquivos sintéticos gerados por `make-corpus.py`, sem
+  biblioteca, cada um com as regras do que é certo (`expected.json`) e o texto que o leitor em voz alta fala
+  (`expected-reader.txt`). Como rodar e como adicionar um caso: `tests/corpus/README.md`.
+- Casos novos: `pdf-no-text-layer` (página da web impressa com "Microsoft Print to PDF"), `pdf-literal-html-tags` e
+  `docx-literal-html-tags` (tutorial de HTML com tags escritas no texto). Regras novas no corpus: `words` e `images`.
+
+### Corrigido
+- PDF sem camada de texto (escaneado, ou com as letras desenhadas como contornos, como faz o "Microsoft Print to PDF") voltou a
+  ser recusado com a orientação de OCR: os marcadores "Página N" eram contados como palavras e o documento era criado vazio.
+  A contagem de palavras dos documentos também deixa de somar esses marcadores.
+- PDF: imagens pequenas cujo tamanho se repete em várias imagens diferentes (setas de carrossel, pedaços de código colorido
+  que o navegador recortou em imagens) não entram mais no documento. Imagens grandes e imagens únicas continuam.
+
 ## 2.3.0 (2026-10-20)
 
 ### SEO

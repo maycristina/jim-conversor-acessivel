@@ -1,0 +1,80 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /Outlines 9 0 R /PageMode /UseOutlines >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Versiculos) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 824 >>
+stream
+BT /F1 14 Tf 1 0 0 1 50 790 Tm (Capítulo 1) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 760 Tm (1 No começo havia apenas o silêncio da biblioteca e o barulho distante da chuva) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 746 Tm (no telhado.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 732 Tm (2 Então alguém abriu um livro e leu em voz alta a primeira linha, devagar, para) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 718 Tm (que todos ouvissem.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 704 Tm (3 E os que estavam longe se aproximaram, porque a voz chegava até o fundo da) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 690 Tm (sala.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 676 Tm (4 Assim terminou o primeiro dia da oficina.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 642 Tm (A chuva cai na rua,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 628 Tm (o livro aberto espera,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 614 Tm (e a voz segue sozinha.) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Outlines /First 10 0 R /Last 10 0 R /Count 1 >>
+endobj
+10 0 obj
+<< /Title (Capítulo 1) /Parent 9 0 R /Dest [7 0 R /XYZ 0 842 0] >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000097 00000 n 
+0000000154 00000 n 
+0000000251 00000 n 
+0000000335 00000 n 
+0000000717 00000 n 
+0000000779 00000 n 
+0000000915 00000 n 
+0000001790 00000 n 
+0000001863 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R /Info 6 0 R >>
+startxref
+1946
+%%EOF

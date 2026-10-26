@@ -1,0 +1,82 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Tabelas) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 1131 >>
+stream
+BT /F1 18 Tf 1 0 0 1 72 760 Tm (Relatório de Desempenho e Acessibilidade) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 720 Tm (Critério WCAG) Tj ET
+BT /F1 10 Tf 1 0 0 1 300 720 Tm (Status por Formato) Tj ET
+BT /F1 10 Tf 1 0 0 1 300 702 Tm (DOCX) Tj ET
+BT /F1 10 Tf 1 0 0 1 400 702 Tm (PDF) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 684 Tm (1.1.1 Conteúdo Não Textual) Tj ET
+BT /F1 10 Tf 1 0 0 1 300 684 Tm (Suportado) Tj ET
+BT /F1 10 Tf 1 0 0 1 400 684 Tm (Parcial) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 666 Tm (1.3.1 Informações e Relações) Tj ET
+BT /F1 10 Tf 1 0 0 1 300 666 Tm (Suportado) Tj ET
+BT /F1 10 Tf 1 0 0 1 400 666 Tm (Em Teste) Tj ET
+BT /F1 14 Tf 1 0 0 1 72 623 Tm (Tabela Financeira Sem Bordas) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 599 Tm (Item) Tj ET
+BT /F1 10 Tf 1 0 0 1 330 599 Tm (Quantidade) Tj ET
+BT /F1 10 Tf 1 0 0 1 440 599 Tm (Valor Unitário) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 581 Tm (Licença Open Source) Tj ET
+BT /F1 10 Tf 1 0 0 1 330 581 Tm (100) Tj ET
+BT /F1 10 Tf 1 0 0 1 440 581 Tm (R$ 0,00) Tj ET
+BT /F1 10 Tf 1 0 0 1 100 563 Tm (Servidor Cloud) Tj ET
+BT /F1 10 Tf 1 0 0 1 330 563 Tm (2) Tj ET
+BT /F1 10 Tf 1 0 0 1 440 563 Tm (R$ 45,90) Tj ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000296 00000 n 
+0000000678 00000 n 
+0000000737 00000 n 
+0000000873 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R /Info 6 0 R >>
+startxref
+2056
+%%EOF

@@ -16,8 +16,51 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	/** @var callable|null See JIMCA_Converter::convert(), option 'progress'. */
 	private $progress;
 
-	/** Punctuation that ends a paragraph (see reconstruct_paragraphs()). */
-	const TERMINAL_PUNCTUATION = array( '.', '!', '?', ':', '"', '”', '»' );
+	/** @var bool Read pages set in two columns column by column (see JIMCA_Pdf_Layout). */
+	private $detect_columns;
+
+	/**
+	 * @var array{mode: string, probed: int} Column detection across the
+	 * document: 'probe' (looking), 'on' (columns found: every page is
+	 * checked) or 'off' (none in the first pages: not checked any more).
+	 */
+	private $columns = array(
+		'mode'   => 'probe',
+		'probed' => 0,
+	);
+
+	/**
+	 * Pages with text checked for columns before giving up. Reading the
+	 * positions doubles or triples the time of a page, which a book in one
+	 * column should not pay: layouts rarely change after the first pages.
+	 */
+	const COLUMN_PROBE_PAGES = 5;
+
+	/** @var string Language subtag of the text (pt, en, ru...), '' while unknown: turns the language's hyphen rules on (see keeps_hyphen()). */
+	private $language = '';
+
+	/**
+	 * @var string|null Text of the first pages, from which the language is
+	 * learned (see learn_language()); null once it is settled.
+	 */
+	private $language_sample = '';
+
+	/** Characters of the first pages read before a recognised language is settled (unrecognised: up to JIMCA_Language::SAMPLE). */
+	const LANGUAGE_SAMPLE = 3000;
+
+	/**
+	 * Punctuation that ends a paragraph (see reconstruct_paragraphs()),
+	 * including the Chinese and Japanese full stops and marks and the
+	 * Devanagari danda.
+	 */
+	const TERMINAL_PUNCTUATION = array( '.', '!', '?', ':', '"', '”', '»', '。', '！', '？', '」', '』', '।', '॥' );
+
+	/**
+	 * Han, kana and CJK punctuation (listed, since PCRE versions differ on
+	 * whether \p{Han} covers "。"): lines of these scripts join without a
+	 * space, as the text has none.
+	 */
+	const CJK = '\p{Han}\p{Hiragana}\p{Katakana}\x{3000}-\x{303F}\x{FF00}-\x{FFEF}';
 
 	/**
 	 * Dot leader of a printed table of contents: 4 or more dots (spaced or
@@ -27,13 +70,99 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	const TOC_LEADER = '(?:\.[ \t]?){4,}|…{2,}|_{4,}';
 
 	/**
+	 * Typographic ligatures (LaTeX, InDesign): one character for "fi". Kept,
+	 * "ﬁcção" is not found by a search for "ficção" and some voices stumble
+	 * on it.
+	 */
+	const LIGATURES = array(
+		"\u{FB00}" => 'ff',
+		"\u{FB01}" => 'fi',
+		"\u{FB02}" => 'fl',
+		"\u{FB03}" => 'ffi',
+		"\u{FB04}" => 'ffl',
+	);
+
+	/**
+	 * Enclitic pronouns: in "chama-" + "se" the hyphen is part of the word,
+	 * not a line break inside it. Not "lhes": it is also the last syllable
+	 * of "detalhes".
+	 */
+	const ENCLITICS = 'se|me|te|lhe|nos';
+
+	/**
+	 * Pronouns that follow a verb that lost its final r, s or z
+	 * ("encontrá-lo", "fazê-la", "assisti-los", "fazemo-lo"): only after
+	 * that ending. Otherwise it is a cut word: "capítu-" + "los".
+	 */
+	const VERB_ENCLITICS = 'lo|la|los|las';
+	const VERB_ENDING    = '(?:[áâéêíóô]|i|mo)';
+
+	/**
+	 * Pronouns kept only after a gerund ("executando-os", "fazendo-a"): no
+	 * Portuguese word ends in "ndoo", "ndoa", "ndoos" or "ndoas".
+	 */
+	const GERUND_ENCLITICS = 'os|as|o|a';
+
+	/**
+	 * Prefixes always written with a hyphen (pós-graduação, guarda-chuva).
+	 * Not "ex-": every word starting with "ex" cut right after it
+	 * ("ex-" + "plícitas") would keep the hyphen.
+	 */
+	const HYPHEN_PREFIXES = array( 'guarda', 'pós', 'pré', 'vice', 'recém' );
+
+	/**
+	 * Words after a suspended hyphen: "pré- e pós-operatório", "micro- ou
+	 * macroeconomia", "pre- and post-war", "Ein- und Ausgang". A one-letter
+	 * word ("e", "y", "и") is never joined anyway.
+	 */
+	const SUSPENDED_HYPHEN = 'ou|nem|ni|and|or|et|und|oder|или';
+
+	/**
+	 * Russian particles after a hyphen, each only after the words it goes
+	 * with: "-то" and "-ка" are also the last syllables of "лето" and "рука".
+	 * Particle => pattern of the word before the hyphen.
+	 */
+	const RU_PARTICLES = array(
+		'то'     => '(?:кто|что|где|куда|откуда|как|когда|почему|зачем|чей|чья|чьё|чьи|сколько|кого|кому|кем|ком|чего|чему|чем|как\p{L}+|чь\p{L}+)',
+		'либо'   => '(?:кто|что|где|куда|откуда|как|когда|почему|зачем|чей|чья|чьё|чьи|сколько|кого|кому|кем|ком|чего|чему|чем|как\p{L}+|чь\p{L}+)',
+		'нибудь' => '(?:кто|что|где|куда|откуда|как|когда|почему|зачем|чей|чья|чьё|чьи|сколько|кого|кому|кем|ком|чего|чему|чем|как\p{L}+|чь\p{L}+)',
+		'таки'   => '(?:всё|все|так|опять|довольно|верно)',
+		'ка'     => '\p{L}+(?:й|и|ите|йте)',
+	);
+
+	/**
+	 * Russian prefixes kept with a hyphen, each only before what it goes
+	 * with ("по-русски", "по-моему", "из-за", "из-под"): "по-" + "лучить" is
+	 * "получить". Prefix => pattern of the text after the hyphen.
+	 */
+	const RU_PREFIXES = array(
+		'по' => '\p{L}*(?:ски|цки|ому|ему|ьи)(?![\p{L}\p{M}])',
+		'из' => '(?:за|под)(?![\p{L}\p{M}])',
+	);
+
+	/**
+	 * Prefixes written with a hyphen only before "h" or the vowel they end
+	 * in (auto-observação, anti-inflamatório; but automóvel, antigo).
+	 */
+	const VOWEL_PREFIXES = array( 'auto', 'anti' );
+
+	/**
 	 * @param JIMCA_Image_Store|null $image_store
-	 * @param array                  $options     'page_markers' => bool (default true), 'progress' => callable|null.
+	 * @param array                  $options     'page_markers' => bool (default true), 'progress' => callable|null,
+	 *                                            'columns' => bool (default true), 'language' => BCP-47 tag
+	 *                                            chosen for the document ('' = detected from the text).
 	 */
 	public function __construct( $image_store = null, array $options = array() ) {
 		$this->image_store       = $image_store;
 		$this->show_page_markers = ! isset( $options['page_markers'] ) || (bool) $options['page_markers'];
 		$this->progress          = isset( $options['progress'] ) && is_callable( $options['progress'] ) ? $options['progress'] : null;
+		$this->detect_columns    = ! isset( $options['columns'] ) || (bool) $options['columns'];
+		$this->language          = isset( $options['language'] ) ? JIMCA_Language::primary( $options['language'] ) : '';
+
+		// Chosen on import: nothing to learn.
+		if ( '' !== $this->language ) {
+			$this->language_sample = null;
+		}
 	}
 
 	/**
@@ -75,7 +204,11 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 		}
 
 		try {
-			$parser  = new PdfParser();
+			// Font sizes in getDataTm(): the column detection measures text with them.
+			$config = new \Smalot\PdfParser\Config();
+			$config->setDataTmFontInfoHasToBeIncluded( true );
+
+			$parser  = new PdfParser( array(), $config );
 			$pdf     = $parser->parseFile( $file_path );
 			$pages   = $pdf->getPages();
 		} catch ( \Exception $e ) {
@@ -101,6 +234,16 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 
 		if ( $extractor && isset( $state['extractor'] ) ) {
 			$extractor->import_state( $state['extractor'] );
+		}
+
+		if ( isset( $state['columns'] ) ) {
+			$this->columns = $state['columns'];
+		}
+
+		// array_key_exists(): a settled language travels with a null sample, which isset() would miss.
+		if ( null !== $this->language_sample && array_key_exists( 'language_sample', $state ) ) {
+			$this->language        = isset( $state['language'] ) ? (string) $state['language'] : '';
+			$this->language_sample = $state['language_sample'];
 		}
 
 		$this->report_progress( $index, $total );
@@ -147,7 +290,7 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 			if ( null !== $carry ) {
 				// This page finishes the sentence (or contents item) the previous one cut.
 				if ( isset( $blocks[0] ) && in_array( $blocks[0]['type'], array( 'p', 'toc' ), true ) ) {
-					$blocks[0]['text'] = trim( $carry . ' ' . $blocks[0]['text'] );
+					$blocks[0]['text'] = trim( self::join_lines( $carry, $blocks[0]['text'], $this->language ) );
 					$html             .= $this->render_blocks( array( array_shift( $blocks ) ) );
 				} else {
 					$html .= $this->render_blocks( array( self::paragraph( $carry ) ) );
@@ -193,6 +336,9 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 						'carry_images' => $carry_images,
 						'next'         => $next,
 						'extractor'    => $extractor ? $extractor->export_state() : array(),
+						'columns'      => $this->columns,
+						'language'        => $this->language,
+						'language_sample' => $this->language_sample,
 					),
 				);
 			}
@@ -236,12 +382,208 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 		 * noise, and with markers they repeat "Page N" (and stick to the last
 		 * paragraph or contents item).
 		 */
-		$text = self::drop_page_number_lines( $page->getText() );
+		$text = self::drop_page_number_lines( $this->page_text( $page ) );
 
 		return $this->page_blocks(
 			$this->reconstruct_paragraphs( $text ),
 			isset( $outline[ $index ] ) ? $outline[ $index ] : array()
 		);
+	}
+
+	/**
+	 * The page text in reading order: getText(), or the columns read one
+	 * after the other when JIMCA_Pdf_Layout finds them mixed up.
+	 *
+	 * @param \Smalot\PdfParser\Page $page
+	 * @return string
+	 */
+	private function page_text( $page ) {
+		$text = $page->getText();
+
+		if ( $this->detect_columns && 'off' !== $this->columns['mode'] ) {
+			$ordered = JIMCA_Pdf_Layout::page_text( $page, $text );
+
+			if ( null !== $ordered ) {
+				$this->columns['mode'] = 'on';
+				$text                  = $ordered;
+			} elseif ( 'probe' === $this->columns['mode'] && mb_strlen( trim( $text ) ) > 200 && ++$this->columns['probed'] >= self::COLUMN_PROBE_PAGES ) {
+				// Covers, blank and image-only pages say nothing about the layout.
+				$this->columns['mode'] = 'off';
+			}
+		}
+
+		$text = strtr( $text, self::LIGATURES );
+		$this->learn_language( $text );
+
+		return $text;
+	}
+
+	/**
+	 * Learns the language from the first pages, unless it was chosen on
+	 * import. Until LANGUAGE_SAMPLE characters are read, each page updates
+	 * the guess: a book in Portuguese that opens with a copyright page in
+	 * English is not settled as English by that page.
+	 *
+	 * @param string $text Text of a page.
+	 */
+	private function learn_language( $text ) {
+		if ( null === $this->language_sample ) {
+			return;
+		}
+
+		$joined = trim( $this->language_sample . ' ' . $text );
+		$first  = mb_substr( $joined, 0, self::LANGUAGE_SAMPLE );
+
+		$this->language = JIMCA_Language::primary( JIMCA_Language::detect( $first ) );
+
+		if ( '' !== $this->language ) {
+			$this->language_sample = mb_strlen( $first ) >= self::LANGUAGE_SAMPLE ? null : $first;
+			return;
+		}
+
+		/*
+		 * Not recognised in the first LANGUAGE_SAMPLE characters: reading goes
+		 * on, up to JIMCA_Language::SAMPLE. The first pages may be a cover and
+		 * a table of contents in capitals ("CAPÍTULO II – DA DEFESA"), and
+		 * settling on "unknown" there turned the Portuguese rules off for the
+		 * whole document.
+		 */
+		$this->language_sample = mb_substr( $joined, 0, JIMCA_Language::SAMPLE );
+		$this->language        = JIMCA_Language::primary( JIMCA_Language::detect( $this->language_sample ) );
+
+		if ( '' !== $this->language || mb_strlen( $this->language_sample ) >= JIMCA_Language::SAMPLE ) {
+			$this->language_sample = null;
+		}
+	}
+
+	/**
+	 * Joins two lines of the same paragraph.
+	 *
+	 * - Chinese and Japanese: no space between the lines (the text has none).
+	 * - A hyphen at the end of the line before a capital letter stays, with
+	 *   no space: "Software-" + "Entwicklung", "Rio-" + "Grande".
+	 * - A word cut at the end of the line ("acessi-" + "bilidade") is joined
+	 *   without the hyphen, unless it belongs to the word (see
+	 *   keeps_hyphen()). Only when the next line goes on in lowercase.
+	 *
+	 * A compound cut exactly at its hyphen ("bem-" + "vindo") loses it: there
+	 * is no dictionary to tell it from a cut word.
+	 *
+	 * @param string $before
+	 * @param string $after
+	 * @param string $language Language subtag of the text ('' = unknown).
+	 * @return string
+	 */
+	private static function join_lines( $before, $after, $language ) {
+		if ( preg_match( '/[' . self::CJK . ']$/u', $before ) && preg_match( '/^[' . self::CJK . ']/u', $after ) ) {
+			return $before . $after;
+		}
+
+		if ( ! preg_match( '/([\p{L}\p{M}]+)-$/u', $before, $match ) ) {
+			return $before . ' ' . $after;
+		}
+
+		if ( preg_match( '/^\p{Lu}/u', $after ) ) {
+			return $before . $after;
+		}
+
+		if ( ! preg_match( '/^\p{Ll}/u', $after ) ) {
+			return $before . ' ' . $after;
+		}
+
+		return ( self::keeps_hyphen( $match[1], $after, $language ) ? $before : mb_substr( $before, 0, -1 ) ) . $after;
+	}
+
+	/**
+	 * A word cut by a hyphen that smalot/pdfparser already put on the same
+	 * line as its end, with a space between ("desen- volvedor"): joined like
+	 * a cut at the end of the line (see join_lines()). Not before "ou",
+	 * "nem"... (see SUSPENDED_HYPHEN), nor before a capital letter, nor
+	 * before a one-letter word except the Portuguese pronoun after a gerund
+	 * ("fazendo- a"): "pré- e pós-" stays.
+	 *
+	 * @param string $line
+	 * @param string $language Language subtag of the text ('' = unknown).
+	 * @return string
+	 */
+	private static function join_cut_words( $line, $language ) {
+		if ( false === strpos( $line, '- ' ) && false === strpos( $line, "-\t" ) ) {
+			return $line;
+		}
+
+		return (string) preg_replace_callback(
+			'/([\p{L}\p{M}]+)-[ \t]+(?!(?:' . self::SUSPENDED_HYPHEN . ')(?![\p{L}\p{M}]))(?=\p{Ll}[\p{Ll}\p{M}]|[oa](?![\p{L}\p{M}]))/u',
+			static function ( $match ) use ( $line, $language ) {
+				$after = substr( $line, $match[0][1] + strlen( $match[0][0] ) );
+
+				// A one-letter word is only touched as the pronoun of a Portuguese gerund.
+				if ( preg_match( '/^[oa](?![\p{L}\p{M}])/u', $after ) && ! ( 'pt' === $language && preg_match( '/ndo$/u', $match[1][0] ) ) ) {
+					return $match[0][0];
+				}
+
+				return $match[1][0] . ( self::keeps_hyphen( $match[1][0], $after, $language ) ? '-' : '' );
+			},
+			$line,
+			-1,
+			$count,
+			PREG_OFFSET_CAPTURE
+		);
+	}
+
+	/**
+	 * Whether the hyphen between a word and the text after it belongs to the
+	 * word. In any language, after a single letter ("e-mail"). In
+	 * Portuguese, before an enclitic pronoun ("chama-se", "encontrá-lo") or
+	 * after a hyphenated prefix ("pós-graduação"). In Russian, before a
+	 * particle ("кто-то") or after a prefix ("по-русски", "из-за"). The
+	 * language rules run only in their language: in English "welco-" + "me"
+	 * is "welcome", in Spanish "mode-" + "lo" is "modelo".
+	 *
+	 * @param string $word     The letters right before the hyphen.
+	 * @param string $after    The text right after it.
+	 * @param string $language Language subtag of the text ('' = unknown).
+	 * @return bool
+	 */
+	private static function keeps_hyphen( $word, $after, $language ) {
+		$word = mb_strtolower( $word );
+
+		// Hyphenation never leaves one letter before the break: "e-" + "mail" is "e-mail".
+		if ( 1 === mb_strlen( $word ) ) {
+			return true;
+		}
+
+		if ( 'ru' === $language ) {
+			return self::keeps_russian_hyphen( $word, $after );
+		}
+
+		if ( 'pt' !== $language ) {
+			return false;
+		}
+
+		// No verb of two letters without an accent takes a pronoun ("dá-nos", "vê-se" have one): "me-" + "nos" is "menos".
+		$verb = mb_strlen( $word ) > 2 || preg_match( '/[áâéêíóô]/u', $word );
+		$end  = '(?![\p{L}\p{M}])';
+
+		return ( $verb && preg_match( '/^(?:' . self::ENCLITICS . ')' . $end . '/u', $after ) )
+			|| ( preg_match( '/^(?:' . self::VERB_ENCLITICS . ')' . $end . '/u', $after ) && preg_match( '/' . self::VERB_ENDING . '$/u', $word ) )
+			|| ( preg_match( '/^(?:' . self::GERUND_ENCLITICS . ')' . $end . '/u', $after ) && preg_match( '/ndo$/u', $word ) )
+			|| in_array( $word, self::HYPHEN_PREFIXES, true )
+			|| ( in_array( $word, self::VOWEL_PREFIXES, true ) && preg_match( '/^(?:h|' . mb_substr( $word, -1 ) . ')/u', $after ) );
+	}
+
+	/**
+	 * @param string $word  Lowercase letters right before the hyphen.
+	 * @param string $after The text right after it.
+	 * @return bool See keeps_hyphen().
+	 */
+	private static function keeps_russian_hyphen( $word, $after ) {
+		foreach ( self::RU_PARTICLES as $particle => $before ) {
+			if ( preg_match( '/^' . $particle . '(?![\p{L}\p{M}])/u', $after ) && preg_match( '/^' . $before . '$/u', $word ) ) {
+				return true;
+			}
+		}
+
+		return isset( self::RU_PREFIXES[ $word ] ) && preg_match( '/^' . self::RU_PREFIXES[ $word ] . '/u', $after );
 	}
 
 	/**
@@ -252,16 +594,20 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	 * text, it becomes the heading right there (the rest of the paragraph, if
 	 * any, stays as text). A heading not found goes to the top of the page.
 	 *
+	 * Lists are confirmed first: a numbered heading taken for a list item
+	 * ("1. Introduction" alone) is a paragraph again by then, and can match
+	 * its outline entry.
+	 *
 	 * @param string[] $paragraphs
 	 * @param array    $entries    Outline entries of this page (see JIMCA_Pdf_Outline).
-	 * @return array<int, array{type: string, text: string, level?: int}>
+	 * @return array<int, array{type: string, text?: string, level?: int, kind?: string, items?: string[]}>
 	 */
 	private function page_blocks( array $paragraphs, array $entries ) {
 		$blocks = array();
 		foreach ( $paragraphs as $paragraph ) {
 			$blocks = array_merge( $blocks, self::blocks_for( $paragraph ) );
 		}
-		$blocks = self::split_toc_heading( $blocks );
+		$blocks = JIMCA_Pdf_Lists::group( self::split_toc_heading( $blocks ) );
 		$cursor = 0;
 
 		foreach ( $entries as $entry ) {
@@ -331,7 +677,21 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 				$in_list = false;
 			}
 
-			if ( 'toc-heading' === $block['type'] ) {
+			if ( 'list' === $block['type'] ) {
+				/*
+				 * Numbered items keep their number in the text (the read-aloud
+				 * player reads text, not list numbering), so the CSS hides the
+				 * list's own number. role="list": Safari drops the list
+				 * semantics of a list without markers.
+				 */
+				$tag   = $block['kind'];
+				$html .= 'ol' === $tag ? '<ol class="jimca-pdf-list jimca-pdf-list--numbered" role="list">' : '<ul class="jimca-pdf-list">';
+				$html .= "\n";
+				foreach ( $block['items'] as $item ) {
+					$html .= '<li>' . esc_html( $item ) . '</li>' . "\n";
+				}
+				$html .= '</' . $tag . '>' . "\n";
+			} elseif ( 'toc-heading' === $block['type'] ) {
 				$html .= '<p class="jimca-printed-toc__heading"><strong>' . esc_html( $block['text'] ) . '</strong></p>' . "\n";
 			} elseif ( 'h' === $block['type'] ) {
 				// Outline level 0 is <h2>: the <h1> belongs to the site page, and the document title is an <h2> too.
@@ -350,7 +710,8 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	}
 
 	/**
-	 * A paragraph, or a printed contents item ("title ..... 87").
+	 * A paragraph, a printed contents item ("title ..... 87") or a list item
+	 * candidate (see JIMCA_Pdf_Lists::group()).
 	 *
 	 * @param string $text
 	 * @return array[]
@@ -358,6 +719,17 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	private static function blocks_for( $text ) {
 		// The title may be missing: the item's text ended the previous page.
 		if ( ! preg_match( '/^(.*?)\s*(?:' . self::TOC_LEADER . ')\s*(\d{1,4})$/u', $text, $match ) ) {
+			$marker = JIMCA_Pdf_Lists::marker( $text );
+			if ( null !== $marker ) {
+				return array(
+					array(
+						'type'   => 'li',
+						'text'   => $text,
+						'marker' => $marker,
+					),
+				);
+			}
+
 			return array( self::paragraph( $text ) );
 		}
 
@@ -529,6 +901,10 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 	 * punctuation are joined into the same sentence; a paragraph closes when
 	 * the joined text ends in final punctuation or at a blank line.
 	 *
+	 * List items have no final punctuation either, so a line that starts with
+	 * a bullet or a number starts a new paragraph (see JIMCA_Pdf_Lists), and
+	 * an item ends at the next line that does not continue it in lowercase.
+	 *
 	 * @return string[] Paragraphs without inner line breaks.
 	 */
 	private function reconstruct_paragraphs( $text ) {
@@ -550,9 +926,10 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 
 		$paragraphs = array();
 		$buffer     = '';
+		$in_item    = false;
 
 		foreach ( $lines as $raw_line ) {
-			$line = trim( $raw_line );
+			$line = self::join_cut_words( trim( $raw_line ), $this->language );
 
 			if ( '' === $line ) {
 				if ( '' !== $buffer ) {
@@ -562,7 +939,21 @@ class JIMCA_Pdf_Converter implements JIMCA_Converter_Interface {
 				continue;
 			}
 
-			$buffer = ( '' === $buffer ) ? $line : $buffer . ' ' . $line;
+			$marker = JIMCA_Pdf_Lists::marker( $line );
+
+			if ( '' !== $buffer && (
+				( null !== $marker && JIMCA_Pdf_Lists::starts_item( $marker, $buffer, $in_item ) )
+				|| ( $in_item && null === $marker && ! JIMCA_Pdf_Lists::continues_item( $line ) )
+			) ) {
+				$paragraphs[] = $buffer;
+				$buffer       = '';
+			}
+
+			if ( '' === $buffer ) {
+				$in_item = null !== $marker;
+			}
+
+			$buffer = ( '' === $buffer ) ? $line : self::join_lines( $buffer, $line, $this->language );
 
 			$last_char = mb_substr( rtrim( $buffer ), -1 );
 			if ( in_array( $last_char, self::TERMINAL_PUNCTUATION, true ) || preg_match( '/(?:' . $leader . ')\s*\d{1,4}$/u', $buffer ) ) {

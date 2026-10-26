@@ -1,0 +1,25 @@
+{
+	"description": "Baseline: one column, bookmarks (outline), a printed table of contents with dot leaders, page numbers in the footer and a sentence cut by the page break. This already works and must keep working.",
+	"in_order": [
+		"Guia de leitura acessível",
+		"Capítulo 1: Começo page 2",
+		"Capítulo 2: Revisão page 3",
+		"Capítulo 1: Começo",
+		"Este guia explica como transformar um arquivo em uma página que todo mundo consegue ler ou ouvir.",
+		"Quando o texto não pode ser selecionado, o arquivo é uma imagem e precisa passar por reconhecimento de caracteres.",
+		"Capítulo 2: Revisão",
+		"Se uma frase soar estranha, compare com o original e anote a página.",
+		"2.1 Detalhes",
+		"Os detalhes de cada formato ficam na documentação do projeto, com exemplos de arquivos que funcionam bem."
+	],
+	"absent_patterns": [
+		"/^\\d{1,3}$/m",
+		"/\\.{4,}/"
+	],
+	"xpath": {
+		"//ul[@class='jimca-printed-toc']/li": 2,
+		"//h2[@class='jimca-page-title']": 3,
+		"//h2[not(@class)]": 2,
+		"//h3": 1
+	}
+}

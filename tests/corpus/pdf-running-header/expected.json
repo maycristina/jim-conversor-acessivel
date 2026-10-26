@@ -1,0 +1,15 @@
+{
+	"description": "The same title printed at the top of every page. It must be read once (or not at all), and the sentence that runs from page 1 into page 2 must stay whole.",
+	"pending": "running headers are not removed yet; the header is read on every page and cuts the sentence",
+	"options": {
+		"page_markers": false
+	},
+	"in_order": [
+		"O relatório anual reúne os números da biblioteca e as histórias de quem passou por ela.",
+		"Cada seção começa com um resumo curto e termina com as metas para o próximo ano.",
+		"Os empréstimos cresceram em todos os bairros, e a sala de leitura ficou aberta até mais tarde nas noites de quinta-feira, quando os estudantes se preparavam para as provas do fim do semestre."
+	],
+	"absent_patterns": [
+		"/Relatório anual da biblioteca municipal.*Relatório anual da biblioteca municipal/su"
+	]
+}

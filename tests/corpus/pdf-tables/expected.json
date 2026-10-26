@@ -1,0 +1,21 @@
+{
+	"description": "Case 03 of the external suggestion: a table with merged header cells (\"Status por Formato\" over DOCX and PDF) and a table without borders. They should become <table> with header cells, read cell by cell in row order.",
+	"pending": "roadmap: PDF tables are not rebuilt yet; the cells come out as one paragraph",
+	"in_order": [
+		"Relatório de Desempenho e Acessibilidade",
+		"Critério WCAG",
+		"Status por Formato",
+		"1.1.1 Conteúdo Não Textual",
+		"Suportado",
+		"Parcial",
+		"Tabela Financeira Sem Bordas",
+		"Licença Open Source",
+		"100",
+		"R$ 0,00"
+	],
+	"xpath": {
+		"//table": 2,
+		"(//table)[1]//th[@colspan='2']": 1,
+		"(//table)[2]//tr": 3
+	}
+}

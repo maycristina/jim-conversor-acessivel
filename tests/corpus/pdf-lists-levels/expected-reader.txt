@@ -1,0 +1,10 @@
+p: Checklist de Requisitos de Leitura
+li: Item de primeiro nível com bullet tradicional redondo.
+li: Subitem de segundo nível com círculo vazado e recuo X maior.
+li: Segundo subitem que quebra em duas linhas para testar se a continuação não vira um novo parágrafo fora do elemento da lista.
+li: Item com bullet quadrado muito comum no Microsoft Word.
+p: — Item usando travessão como marcador de lista.
+li: 1. Primeiro item de uma lista ordenada numérica.
+li: 2. Segundo item da lista ordenada numérica.
+li: a) Subitem ordenado alfabético com parêntese.
+p: Fim da lista.

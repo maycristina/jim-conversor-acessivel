@@ -1,0 +1,25 @@
+{
+	"description": "Case 04 of the external suggestion. Bullets of two levels (•, ◦, ▪) form one flat list (the read-aloud player would read a nested list twice), the wrapped item stays one item, the dash line stays a paragraph (dialogue in Portuguese books), and a single \"a)\" right after a numbered list is a sub-item.",
+	"in_order": [
+		"Checklist de Requisitos de Leitura",
+		"Item de primeiro nível com bullet tradicional redondo.",
+		"Subitem de segundo nível com círculo vazado e recuo X maior.",
+		"Segundo subitem que quebra em duas linhas para testar se a continuação não vira um novo parágrafo fora do elemento da lista.",
+		"Item com bullet quadrado muito comum no Microsoft Word.",
+		"— Item usando travessão como marcador de lista.",
+		"1. Primeiro item de uma lista ordenada numérica.",
+		"2. Segundo item da lista ordenada numérica.",
+		"a) Subitem ordenado alfabético com parêntese.",
+		"Fim da lista."
+	],
+	"absent": [
+		"◦",
+		"▪"
+	],
+	"xpath": {
+		"//ul/li": 4,
+		"//ol/li": 3,
+		"//li[normalize-space(.) = 'a) Subitem ordenado alfabético com parêntese.']": 1,
+		"//p[starts-with(normalize-space(.), '—')]": 1
+	}
+}

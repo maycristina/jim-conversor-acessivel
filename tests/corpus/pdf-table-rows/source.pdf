@@ -1,0 +1,84 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Tabela) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 1151 >>
+stream
+BT /F1 12 Tf 1 0 0 1 50 790 Tm (Participantes da oficina de leitura.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 760 Tm (Nome) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 760 Tm (Cidade) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 760 Tm (Livros lidos) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 744 Tm (Ana Souza) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 744 Tm (Recife) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 744 Tm (12) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 728 Tm (Davi Lima) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 728 Tm (Belém) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 728 Tm (8) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 712 Tm (Clara Nunes) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 712 Tm (Curitiba) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 712 Tm (15) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 696 Tm (Bruno Alves) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 696 Tm (Natal) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 696 Tm (6) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 680 Tm (Rita Gomes) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 680 Tm (Manaus) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 680 Tm (9) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 664 Tm (Pedro Rocha) Tj ET
+BT /F1 10 Tf 1 0 0 1 250 664 Tm (Goiânia) Tj ET
+BT /F1 10 Tf 1 0 0 1 420 664 Tm (11) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 638 Tm (Os números contam os livros lidos durante o semestre.) Tj ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000296 00000 n 
+0000000678 00000 n 
+0000000736 00000 n 
+0000000872 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R /Info 6 0 R >>
+startxref
+2075
+%%EOF

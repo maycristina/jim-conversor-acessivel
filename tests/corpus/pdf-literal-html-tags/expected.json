@@ -1,0 +1,22 @@
+{
+	"description": "An HTML tutorial: tags written in the text (<html>, <head>, <script>, <p>, a comment, loose < and > signs) are words to read, not markup. They must come out escaped, as visible text, without creating elements or swallowing the text around them (case from teste-3.pdf, a DevMedia tutorial).",
+	"in_order": [
+		"Estrutura básica de uma página",
+		"Todo documento começa com <!DOCTYPE html> e a tag <html>, que envolve o resto.",
+		"Dentro dela ficam <head>, com o <title> e as tags <meta>, e <body>, com o conteúdo.",
+		"Os títulos vão de <h1> a <h6>, e cada parágrafo fica entre <p> e </p>.",
+		"Um script entra assim: <script>alert('oi')</script> e não deve rodar.",
+		"Comparações também usam os sinais: 3 < 5 e 7 > 2, e a seta -> aparece em código.",
+		"Um comentário se escreve <!-- assim --> e o texto depois dele continua.",
+		"Fim do tutorial."
+	],
+	"xpath": {
+		"//script": 0,
+		"//head": 0,
+		"//meta": 0,
+		"//title": 0,
+		"//body": 0,
+		"//h1[not(normalize-space(.) = 'Estrutura básica de uma página')]": 0,
+		"//p[contains(., '<script>')]": 1
+	}
+}

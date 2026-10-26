@@ -294,6 +294,7 @@ class JIMCA_Conversion_Job {
 			array(
 				'page_markers' => ! $job['remove_pages'],
 				'progress'     => array( __CLASS__, 'on_progress' ),
+				'language'     => isset( $job['received']['language'] ) ? $job['received']['language'] : '',
 			)
 		);
 

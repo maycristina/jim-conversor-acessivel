@@ -1,0 +1,2 @@
+p: Participantes da oficina de leitura.
+p: Nome Cidade Livros lidos Ana Souza Recife 12 Davi Lima Belém 8 Clara Nunes Curitiba 15 Bruno Alves Natal 6 Rita Gomes Manaus 9 Pedro Rocha Goiânia 11 Os números contam os livros lidos durante o semestre.

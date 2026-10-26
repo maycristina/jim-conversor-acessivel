@@ -1,0 +1,14 @@
+{
+	"description": "Word's \"Title\" style, which phpword writes as <h0>, a tag that does not exist (wp_kses_post() dropped it and the title was neither a heading nor read aloud). It must become an <h1>, with the \"Heading 1\" sections one level below.",
+	"in_order": [
+		"Relatório da oficina de leitura",
+		"A oficina reuniu quarenta pessoas ao longo de três sábados.",
+		"Resultados",
+		"Cada participante leu pelo menos um livro inteiro em voz alta."
+	],
+	"xpath": {
+		"//h1[normalize-space(.) = 'Relatório da oficina de leitura']": 1,
+		"//h2[normalize-space(.) = 'Resultados']": 1,
+		"//h1": 1
+	}
+}

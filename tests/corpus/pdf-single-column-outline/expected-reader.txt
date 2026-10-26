@@ -1,0 +1,18 @@
+h2: Page 1
+p: Guia de leitura acessível
+p: Sumário
+li: Capítulo 1: Começo page 2
+li: Capítulo 2: Revisão page 3
+h2: Page 2
+h2: Capítulo 1: Começo
+p: Este guia explica como transformar um arquivo em uma página que todo mundo consegue ler ou ouvir. Ele foi escrito para bibliotecas, escolas e prefeituras que publicam documentos com frequência.
+p: Antes de começar, separe o arquivo original e confira se o texto pode ser selecionado com o mouse. Quando o texto não pode ser selecionado, o arquivo é uma imagem e precisa passar por reconhecimento de caracteres.
+p: A conversão respeita os títulos marcados pelo autor e monta um sumário lateral com eles.
+p: Por isso vale a pena revisar os marcadores do documento antes de enviar o arquivo,
+h2: Page 3
+p: porque um título esquecido some do sumário e deixa a navegação mais difícil para quem usa leitor de tela no celular ou no computador.
+h2: Capítulo 2: Revisão
+p: Depois da conversão, abra a página e escute o começo do texto com o leitor em voz alta.
+p: Se uma frase soar estranha, compare com o original e anote a página.
+h3: 2.1 Detalhes
+p: Os detalhes de cada formato ficam na documentação do projeto, com exemplos de arquivos que funcionam bem.

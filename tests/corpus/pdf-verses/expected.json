@@ -1,0 +1,16 @@
+{
+	"description": "Numbered verses (\"1 No começo\", without a dot after the number) and a short poem. They already convert well; the case guards them against the list detection.",
+	"in_order": [
+		"Capítulo 1",
+		"1 No começo havia apenas o silêncio da biblioteca e o barulho distante da chuva no telhado.",
+		"2 Então alguém abriu um livro e leu em voz alta a primeira linha, devagar, para que todos ouvissem.",
+		"3 E os que estavam longe se aproximaram, porque a voz chegava até o fundo da sala.",
+		"4 Assim terminou o primeiro dia da oficina.",
+		"A chuva cai na rua, o livro aberto espera, e a voz segue sozinha."
+	],
+	"xpath": {
+		"//ol": 0,
+		"//ul": 0,
+		"//p": 5
+	}
+}

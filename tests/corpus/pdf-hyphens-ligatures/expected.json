@@ -1,0 +1,26 @@
+{
+	"description": "Words cut by a hyphen at the end of a line are joined (\"trans-\" + \"lineadas\"); hyphens that belong to the word stay: enclitic pronouns (encontrá-lo; o/a/os/as only after a gerund: executando-os) and compound prefixes (pós-, recém-, guarda-; auto- and anti- only before h or the same vowel, as the spelling rule says; not ex-: \"ex-\" + \"plícitas\" is one word). A word cut on the same line (\"com- plexidade\") is joined too, but not a suspended hyphen (\"pré- e pós-\"). Ligatures become plain letters. A paragraph cut by a hyphen runs into page 2 past the \"Página 1 de 2\" footer.",
+	"options": {
+		"page_markers": false
+	},
+	"in_order": [
+		"A implementação de micro-organismos e guarda-chuvas exige que palavras translineadas no fim da margem",
+		"Ligaduras: ficção, fluxo, staff, effigy e shuffle, com Conceição, órgãos e 1º lugar.",
+		"quer lê-lo inteiro e depois encontrá-lo de novo",
+		"para guardá-la bem.",
+		"Os alunos de pós-graduação e os recém-chegados recebem um guarda-chuva e instruções explícitas antes da primeira aula, com pelo menos um mapa da cidade.",
+		"A complexidade do pré- e pós-operatório não assusta ninguém.",
+		"Os testes vão executando-os em ordem, fazendo-a revisão de cada um.",
+		"O prédio antigo ficou aberto, e a auto-observação dos leitores mostrou que a acessibilidade melhorou muito.",
+		"Este parágrafo começa no fim da primeira página e continua exatamente na segunda, sem o rodapé no meio da frase."
+	],
+	"absent": [
+		"trans- lineadas",
+		"trans-lineadas",
+		"Página 1 de 2"
+	],
+	"absent_patterns": [
+		"/[\\x{FB00}-\\x{FB06}]/u",
+		"/\\p{L}- (?!(?:e|ou|nem)(?!\\p{L}))\\p{Ll}/u"
+	]
+}

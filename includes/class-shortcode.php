@@ -59,13 +59,13 @@ class JIMCA_Shortcode {
 
 		$settings = JIMCA_Admin::get_settings();
 		$mode     = JIMCA_Post_Type::get_mode( $post->ID );
-		// Language of the document when it differs from the page's: marks the text for screen readers and picks the reading voice.
-		$doc_lang  = JIMCA_Metadata::get( $post->ID )['language'];
-		$site_lang = str_replace( '_', '-', determine_locale() );
-
-		if ( '' !== $doc_lang && 0 === strcasecmp( $doc_lang, $site_lang ) ) {
-			$doc_lang = '';
-		}
+		/*
+		 * Language of the document (saved, else detected from its text, else
+		 * the site's): lang on the text for screen readers, data-doc-lang on
+		 * the reader for the reading voice. Not lang on the whole reader: its
+		 * buttons are in the site's language.
+		 */
+		$lang_attributes = JIMCA_Language::attributes( JIMCA_Language::of_document( $post->ID, $post->post_content ) );
 		// The theme already shows the page title as the <h1>: the same title again as an <h2> would be a duplicate heading.
 		$title_tag = self::same_title( get_the_title( $post ), is_singular() ? get_the_title( get_queried_object_id() ) : '' ) ? 'p' : 'h2';
 
@@ -439,10 +439,16 @@ class JIMCA_Shortcode {
 	 */
 	private function enqueue_assets( $mode, $has_images, $tutor ) {
 		$load = array(
+			// Voice choice and text pieces shared by the reader and the post bar (see speech.js).
+			'speech'   => 'reader' === $mode || $tutor || 'post' === $mode,
 			'frontend' => 'reader' === $mode || $tutor,
 			'pager'    => 'reader' === $mode,
 			'post'     => 'post' === $mode,
 			'lightbox' => $has_images,
+		);
+		$depends = array(
+			'frontend' => array( 'jimca-speech' ),
+			'post'     => array( 'jimca-speech' ),
 		);
 
 		if ( ! isset( $this->loaded['style'] ) ) {
@@ -457,7 +463,7 @@ class JIMCA_Shortcode {
 
 			$this->loaded[ $key ] = true;
 			$file                 = 'assets/js/' . $key . '.js';
-			wp_enqueue_script( 'jimca-' . $key, jimca_asset_url( $file ), array(), jimca_asset_version( $file ), self::SCRIPT_ARGS );
+			wp_enqueue_script( 'jimca-' . $key, jimca_asset_url( $file ), isset( $depends[ $key ] ) ? $depends[ $key ] : array(), jimca_asset_version( $file ), self::SCRIPT_ARGS );
 
 			if ( 'pager' === $key ) {
 				wp_localize_script(

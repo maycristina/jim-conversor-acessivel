@@ -43,6 +43,7 @@ O GitHub Actions (`.github/workflows/qa.yml`) roda em todo Pull Request e em tod
 | PHPCS (`phpcs.xml.dist`) | WordPress Coding Standards (segurança, escape, i18n) e compatibilidade com PHP 7.4+ | `composer lint` |
 | PHPStan (`phpstan.neon.dist`) | Análise estática, nível 5 | `composer analyse` |
 | PHPUnit (`tests/unit/`) | Testes unitários (Brain Monkey, sem WordPress) | `composer test` |
+| PHPUnit (`tests/corpus/`) | Conversão de arquivos reais: resultado e texto lido em voz alta | `composer corpus` |
 | Infection (`infection.json5`) | Testes de mutação; informativo por enquanto | só no CI |
 | jsdom (`documentacao/testes/`) | Leitor, tutor, tour e testes WCAG | `npm install --no-save jsdom` e `node --test "documentacao/testes/*.test.js"` |
 
@@ -88,12 +89,16 @@ ru_RU, de_DE) foram feitas com ajuda de máquina e precisam de revisão por fala
 
 ## Testes
 
-O projeto ainda não tem testes automatizados; contribuições nesse sentido são muito bem-vindas.
-Hoje cada mudança é testada à mão, seguindo os casos de
+A conversão tem um corpus de testes em [`tests/corpus/`](tests/corpus/README.md): arquivos PDF e DOCX
+com o resultado esperado e o texto que o leitor em voz alta deve falar. `composer corpus` diz se uma
+mudança quebrou algo que já funcionava; `composer corpus:update` registra uma mudança intencional. Se
+encontrar um arquivo que o Jim converte mal, um caso novo no corpus é a melhor forma de relatar.
+
+O restante (telas, leitores de tela, navegadores) ainda é testado à mão, seguindo os casos de
 [`documentacao/TESTES-E-LIMITACOES.md`](documentacao/TESTES-E-LIMITACOES.md). No pull request, diga:
 
 - o que você testou (formatos e tamanhos de arquivo, navegadores, leitores de tela) e o resultado;
-- se a mudança afeta a conversão, compare o resultado antes e depois com os mesmos arquivos;
+- se a mudança afeta a conversão, rode `composer corpus` e explique qualquer diferença em `expected-reader.txt`;
 - se mexeu em textos, se rodou a verificação de sintaxe (`php -l`) e o Plugin Check.
 
 ### Conferir o SEO e a acessibilidade de uma página (sem limite de uso)

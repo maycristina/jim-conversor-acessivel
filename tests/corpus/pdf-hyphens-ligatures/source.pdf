@@ -1,0 +1,136 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Hifenizacao e ligaduras) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 11 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 2139 >>
+stream
+BT /F1 11 Tf 1 0 0 1 50 790 Tm (A implementação de micro-organismos e guarda-chuvas exige que palavras trans-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 775 Tm (lineadas no fim da margem sejam reconstruídas sem cortar o fôlego do sintetizador.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 760 Tm (Ligaduras: ) Tj ET
+BT /F3 11 Tf 1 0 0 1 104.417 760 Tm <02> Tj ET
+BT /F1 11 Tf 1 0 0 1 110.467 760 Tm (cção, ) Tj ET
+BT /F3 11 Tf 1 0 0 1 139.815 760 Tm <03> Tj ET
+BT /F1 11 Tf 1 0 0 1 145.865 760 Tm (uxo, sta) Tj ET
+BT /F3 11 Tf 1 0 0 1 184.387 760 Tm <01> Tj ET
+BT /F1 11 Tf 1 0 0 1 190.437 760 Tm (, e) Tj ET
+BT /F3 11 Tf 1 0 0 1 202.669 760 Tm <04> Tj ET
+BT /F1 11 Tf 1 0 0 1 208.719 760 Tm (gy e shu) Tj ET
+BT /F3 11 Tf 1 0 0 1 250.299 760 Tm <05> Tj ET
+BT /F1 11 Tf 1 0 0 1 256.349 760 Tm (e, com Conceição, órgãos e 1º lugar.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 745 Tm (Quem gosta do documento quer lê-lo inteiro e depois encontrá-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 730 Tm (lo de novo, e quem o perdeu pede que lhe mandem outra cópia para guardá-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 715 Tm (la bem.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 700 Tm (Os alunos de pós-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 685 Tm (graduação e os recém-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 670 Tm (chegados recebem um guarda-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 655 Tm (chuva e instruções ex-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 640 Tm (plícitas antes da primeira aula, com pelo me-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 625 Tm (nos um mapa da cidade.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 610 Tm (A com- plexidade do pré- e pós-operatório não assusta ninguém.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 595 Tm (Os testes vão executando-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 580 Tm (os em ordem, fazendo- a revisão de cada um.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 565 Tm (O prédio anti-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 550 Tm (go ficou aberto, e a auto-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 535 Tm (observação dos leitores mostrou que a acessi-) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 520 Tm (bilidade melhorou muito.) Tj ET
+BT /F1 11 Tf 1 0 0 1 50 70 Tm (Este parágrafo começa no fim da primeira página e continua exata-) Tj ET
+BT /F1 8 Tf 1 0 0 1 250 30 Tm (Página 1 de 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 10 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 11 0 R >> >> >>
+endobj
+10 0 obj
+<< /Length 139 >>
+stream
+BT /F1 11 Tf 1 0 0 1 50 790 Tm (mente na segunda, sem o rodapé no meio da frase.) Tj ET
+BT /F1 8 Tf 1 0 0 1 250 30 Tm (Página 2 de 2) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /ToUnicode 12 0 R >>
+endobj
+12 0 obj
+<< /Length 403 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+7 beginbfchar
+<01> <FB00>
+<02> <FB01>
+<03> <FB02>
+<04> <FB03>
+<05> <FB04>
+<06> <25E6>
+<07> <25AA>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000302 00000 n 
+0000000684 00000 n 
+0000000759 00000 n 
+0000000906 00000 n 
+0000003097 00000 n 
+0000003245 00000 n 
+0000003436 00000 n 
+0000003525 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 6 0 R >>
+startxref
+3980
+%%EOF

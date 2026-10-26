@@ -1,0 +1,31 @@
+{
+	"description": "The same two-column article, one letter per text object, but written column by column (left column, then right), like Google Docs exports. getText() already reads it in order: the column detection must leave it alone.",
+	"options": {
+		"page_markers": false
+	},
+	"in_order": [
+		"Leitura em duas colunas: um teste do Jim",
+		"A leitura em voz alta depende da ordem do texto.",
+		"Quando a ordem se perde, a frase deixa de fazer sentido e a pessoa que escuta precisa adivinhar o que o autor quis dizer.",
+		"Artigos científicos costumam usar duas colunas para economizar papel.",
+		"Na tela, essas colunas viram um desafio, porque o arquivo guarda cada linha em uma posição e não diz qual coluna vem primeiro.",
+		"Alguns programas gravam a coluna da esquerda inteira e depois a da direita.",
+		"Outros gravam a primeira linha da esquerda, a primeira linha da direita, e assim por diante, como se a página fosse uma única coluna larga.",
+		"No segundo caso, um conversor ingênuo junta pedaços de frases que nunca estiveram lado a lado.",
+		"O resultado parece uma lista de palavras soltas e o leitor de tela anuncia tudo com a mesma calma, sem perceber o erro.",
+		"Para corrigir, o conversor precisa olhar a posição de cada linha.",
+		"Linhas com a mesma margem esquerda pertencem à mesma coluna, e o espaço vazio no meio da página mostra onde uma coluna termina.",
+		"Títulos e resumos ocupam a largura toda e ficam acima das colunas.",
+		"Eles devem ser lidos antes, na posição em que aparecem, e não misturados com a primeira linha de cada coluna.",
+		"Rodapés com o número da página ficam abaixo das colunas.",
+		"O conversor já remove esses números quando eles aparecem sozinhos na primeira ou na última linha da página.",
+		"Uma frase pode começar no fim da coluna da direita e terminar no alto da próxima página.",
+		"Quando os marcadores de página estão desligados, as duas partes precisam voltar a formar uma frase só.",
+		"Tabelas também têm colunas, mas são lidas linha por linha.",
+		"Por isso uma célula curta não pode ser confundida com uma coluna de texto corrido, que tem linhas longas e parecidas.",
+		"Com essas regras, a leitura volta a seguir o caminho que o autor imaginou: de cima para baixo na coluna da esquerda e, depois, de cima para baixo na coluna da direita."
+	],
+	"absent_patterns": [
+		"/^\\d{1,3}$/m"
+	]
+}

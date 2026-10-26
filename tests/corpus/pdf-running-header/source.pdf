@@ -1,0 +1,80 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Relatorio anual) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 492 >>
+stream
+BT /F1 8 Tf 1 0 0 1 50 810 Tm (Relatório anual da biblioteca municipal) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 770 Tm (O relatório anual reúne os números da biblioteca e as histórias de quem passou por ela.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 756 Tm (Cada seção começa com um resumo curto e termina com as metas para o próximo ano.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 728 Tm (Os empréstimos cresceram em todos os bairros, e a sala de leitura ficou aberta até mais) Tj ET
+BT /F1 10 Tf 1 0 0 1 290 40 Tm (1) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 10 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+10 0 obj
+<< /Length 300 >>
+stream
+BT /F1 8 Tf 1 0 0 1 50 810 Tm (Relatório anual da biblioteca municipal) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 770 Tm (tarde nas noites de quinta-feira, quando os estudantes se preparavam para as provas do) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 756 Tm (fim do semestre.) Tj ET
+BT /F1 10 Tf 1 0 0 1 290 40 Tm (2) Tj ET
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000302 00000 n 
+0000000684 00000 n 
+0000000751 00000 n 
+0000000887 00000 n 
+0000001430 00000 n 
+0000001567 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R /Info 6 0 R >>
+startxref
+1919
+%%EOF

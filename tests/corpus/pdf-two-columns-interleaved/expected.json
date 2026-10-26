@@ -1,0 +1,25 @@
+{
+	"description": "Case 02 of the external suggestion: two columns written line by line at the same height, 8 lines each (3 are too few for the column detection, by design). Column A must be read whole before column B, and no two sentences may be glued without a space.",
+	"in_order": [
+		"Artigo Científico em Duas Colunas",
+		"COLUNA A LINHA 1: o argumento começa aqui,",
+		"COLUNA A LINHA 2",
+		"COLUNA A LINHA 3",
+		"COLUNA A LINHA 4",
+		"COLUNA A LINHA 5",
+		"COLUNA A LINHA 6",
+		"COLUNA A LINHA 7",
+		"COLUNA A LINHA 8: o bloco que vem depois.",
+		"COLUNA B LINHA 1: o segundo bloco começa",
+		"COLUNA B LINHA 2",
+		"COLUNA B LINHA 3",
+		"COLUNA B LINHA 4",
+		"COLUNA B LINHA 5",
+		"COLUNA B LINHA 6",
+		"COLUNA B LINHA 7",
+		"COLUNA B LINHA 8: arquivo nesta página."
+	],
+	"absent_patterns": [
+		"/[.,]COLUNA/u"
+	]
+}

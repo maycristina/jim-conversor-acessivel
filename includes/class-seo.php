@@ -301,6 +301,8 @@ class JIMCA_SEO {
 		$post    = get_post( $id );
 		$content = substr( (string) $post->post_content, 0, self::SCAN_CHARS );
 		$meta    = JIMCA_Metadata::get( $id );
+		// The same language the reader marks the text with (lang): inLanguage and og:locale must not differ from it.
+		$language = JIMCA_Language::of_document( $id, $post->post_content );
 
 		$image       = self::share_image( $content );
 		$words       = (int) get_post_meta( $id, '_jimca_word_count', true );
@@ -330,8 +332,8 @@ class JIMCA_SEO {
 			'description' => $description,
 			'url'         => get_permalink( $page ),
 			'site_name'   => get_bloginfo( 'name' ),
-			'locale'      => '' !== $meta['language'] ? self::og_locale( $meta['language'] ) : get_locale(),
-			'language'    => '' !== $meta['language'] ? $meta['language'] : get_bloginfo( 'language' ),
+			'locale'      => self::og_locale( $language ),
+			'language'    => $language,
 			'published'   => get_post_time( 'c', true, $post ),
 			'modified'    => get_post_modified_time( 'c', true, $post ),
 			'words'       => $words,

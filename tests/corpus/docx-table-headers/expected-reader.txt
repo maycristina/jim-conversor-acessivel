@@ -1,0 +1,31 @@
+h1: Tabela com cabeçalho
+p: Livro
+p: Autor
+p: Ano
+p: Dom Casmurro
+p: Machado de Assis
+p: 1899
+p: Iracema
+p: José de Alencar
+p: 1865
+h1: Tabela exportada do Google Docs
+p: Bairro
+p: Empréstimos
+p: Centro
+p: 340
+p: Várzea
+p: 215
+h1: Tabela com células mescladas
+p: Região
+p: Visitas por ano
+p: Norte
+p: 2025
+p: 120
+p: 2026
+p: 150
+h1: Listas do Word
+p: Primeiro passo numerado
+p: Segundo passo numerado
+p: Item com marcador
+p: Outro item com marcador
+p: Fim do documento.

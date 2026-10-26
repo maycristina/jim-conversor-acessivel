@@ -1,0 +1,14 @@
+{
+	"description": "A table drawn as loose text in three short columns. It must be read row by row: the column detection is for running text, and must not read all names, then all cities.",
+	"in_order": [
+		"Participantes da oficina de leitura.",
+		"Nome Cidade Livros lidos",
+		"Ana Souza Recife 12",
+		"Davi Lima Belém 8",
+		"Clara Nunes Curitiba 15",
+		"Bruno Alves Natal 6",
+		"Rita Gomes Manaus 9",
+		"Pedro Rocha Goiânia 11",
+		"Os números contam os livros lidos durante o semestre."
+	]
+}

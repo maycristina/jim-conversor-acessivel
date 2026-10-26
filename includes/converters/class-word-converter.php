@@ -161,6 +161,36 @@ class JIMCA_Word_Converter implements JIMCA_Converter_Interface {
 	}
 
 	/**
+	 * phpword writes Word's "Title" style as <h0>, a tag that does not exist:
+	 * wp_kses_post() drops it, and the title was neither a heading nor read
+	 * aloud. When there is one, every heading goes one level up (h0 to h1,
+	 * h1 to h2...), keeping the title above the "Heading 1" sections; h6 stays
+	 * h6. JIMCA_Shortcode::demote_headings() then makes room for the page's
+	 * own <h1>, as for any document with an <h1>.
+	 *
+	 * @param \DOMDocument $dom
+	 */
+	private static function shift_headings( \DOMDocument $dom ) {
+		if ( 0 === $dom->getElementsByTagName( 'h0' )->length ) {
+			return;
+		}
+
+		// From the deepest level up, so a heading moved to h(n+1) is not moved again.
+		for ( $level = 5; $level >= 0; $level-- ) {
+			foreach ( iterator_to_array( $dom->getElementsByTagName( 'h' . $level ) ) as $heading ) {
+				$new = $dom->createElement( 'h' . ( $level + 1 ) );
+				foreach ( iterator_to_array( $heading->attributes ) as $attribute ) {
+					$new->setAttribute( $attribute->nodeName, $attribute->nodeValue );
+				}
+				while ( $heading->firstChild ) {
+					$new->appendChild( $heading->firstChild );
+				}
+				$heading->parentNode->replaceChild( $new, $heading );
+			}
+		}
+	}
+
+	/**
 	 * phpword writes a whole HTML page; only the <body> content goes to post_content.
 	 */
 	private function extract_body( $full_html ) {
@@ -179,6 +209,7 @@ class JIMCA_Word_Converter implements JIMCA_Converter_Interface {
 
 		$this->replace_images( $dom );
 		$this->clean_table_cells( $dom );
+		self::shift_headings( $dom );
 
 		$inner_html = '';
 		foreach ( $body->childNodes as $child ) {

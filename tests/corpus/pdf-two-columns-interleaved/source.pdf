@@ -1,0 +1,78 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Duas colunas intercaladas) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 1373 >>
+stream
+BT /F1 16 Tf 1 0 0 1 50 792 Tm (Artigo Científico em Duas Colunas) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 752 Tm (COLUNA A LINHA 1: o argumento começa aqui,) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 752 Tm (COLUNA B LINHA 1: o segundo bloco começa) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 734 Tm (COLUNA A LINHA 2: desce pelo lado esquerdo) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 734 Tm (COLUNA B LINHA 2: no alto da direita e só) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 716 Tm (COLUNA A LINHA 3: e junta as frases do) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 716 Tm (COLUNA B LINHA 3: deve ser lido depois da) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 698 Tm (COLUNA A LINHA 4: primeiro bloco, uma por) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 698 Tm (COLUNA B LINHA 4: coluna da esquerda, sem) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 680 Tm (COLUNA A LINHA 5: linha, até chegar ao fim) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 680 Tm (COLUNA B LINHA 5: misturar uma linha de) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 662 Tm (COLUNA A LINHA 6: da coluna sem pular para) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 662 Tm (COLUNA B LINHA 6: cada lado, o erro de quem) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 644 Tm (COLUNA A LINHA 7: o outro lado, onde fica) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 644 Tm (COLUNA B LINHA 7: segue a ordem bruta do) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 626 Tm (COLUNA A LINHA 8: o bloco que vem depois.) Tj ET
+BT /F1 10 Tf 1 0 0 1 310 626 Tm (COLUNA B LINHA 8: arquivo nesta página.) Tj ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000296 00000 n 
+0000000678 00000 n 
+0000000755 00000 n 
+0000000891 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R /Info 6 0 R >>
+startxref
+2316
+%%EOF

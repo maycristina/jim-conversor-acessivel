@@ -1124,6 +1124,7 @@ class JIMCA_Admin {
 				array(
 					'page_markers' => ! $remove_pages,
 					'progress'     => $progress,
+					'language'     => isset( $received['language'] ) ? $received['language'] : '',
 				)
 			);
 			// Author, subject and keywords of the file, read while the original still exists (see JIMCA_Metadata).
@@ -1199,12 +1200,7 @@ class JIMCA_Admin {
 			$title = sanitize_text_field( pathinfo( $file['name'], PATHINFO_FILENAME ) );
 		}
 
-		/*
-		 * Without a third argument, preg_match_all() returns the count without
-		 * building an array of every word, which costs megabytes of memory on a
-		 * book.
-		 */
-		$word_count = (int) preg_match_all( '/\p{L}+/u', wp_strip_all_tags( $html ) );
+		$word_count = JIMCA_Converter::count_words( $html );
 
 		if ( 0 === $word_count ) {
 			// A document with no text has nothing to read, on screen or aloud: an error, not a success.
@@ -1253,6 +1249,15 @@ class JIMCA_Admin {
 		// The language the administrator chose wins over the one in the file properties.
 		if ( ! empty( $received['language'] ) ) {
 			$file_meta['language'] = $received['language'];
+		}
+
+		// Neither: the text tells it (lang of the page, reading voice, SEO locale).
+		if ( empty( $file_meta['language'] ) ) {
+			$detected = JIMCA_Language::detect( $html );
+
+			if ( '' !== $detected ) {
+				$file_meta['language'] = $detected;
+			}
 		}
 
 		if ( ! empty( $received['author'] ) ) {

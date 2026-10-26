@@ -1,0 +1,8 @@
+{
+	"description": "A web tutorial printed with \"Microsoft Print to PDF\" (like teste-3.pdf, a real page that cannot go in the repository): the letters are outlines, with no text to extract. Only the page markers come out, and they are not words: 0 words makes the upload be refused with the OCR message instead of creating an empty document. Of the 12 images, the wide strips (lines of text turned into images) and the broken-image icon stay; the 9 small arrows and \"</\" pieces, each with its own bytes, are fragments and go.",
+	"words": 0,
+	"images": ["600x40", "101x100", "600x40"],
+	"xpath": {
+		"//p": 0
+	}
+}

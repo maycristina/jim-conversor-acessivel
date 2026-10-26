@@ -1,0 +1,19 @@
+p: Materiais para a oficina de leitura:
+li: Livros em letra ampliada
+li: Fones de ouvido
+li: Cadeiras com apoio para os braços e altura regulável para cada leitor
+p: Depois da lista, um parágrafo comum continua o texto e termina com ponto final.
+p: Passos para converter um arquivo:
+li: 1. Abra o painel do Jim
+li: 2. Envie o arquivo
+li: a) PDF com texto selecionável
+li: b) DOCX salvo no Word ou no Google Docs
+li: 3. Confira o resultado no leitor
+p: O resultado aparece em poucos segundos.
+li: Item marcado com o símbolo do Word
+li: Outro item com o mesmo símbolo
+p: Fim dos itens com símbolo.
+p: 1. Introdução
+p: Este capítulo apresenta o tema e termina com ponto final.
+p: — Você leu o capítulo? — perguntou Ana.
+p: — Li, sim — respondeu Davi.

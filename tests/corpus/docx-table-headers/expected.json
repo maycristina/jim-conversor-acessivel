@@ -1,0 +1,27 @@
+{
+	"description": "Word tables: a real header row (w:tblHeader), a Google Docs table whose rows say w:tblHeader w:val=\"0\" (not headers), merged cells (gridSpan, vMerge) and a cell with Word's \"auto\" shading. Guards the fixes of 2.0: no table where every cell is a header, no dark red cells.",
+	"in_order": [
+		"Tabela com cabeçalho",
+		"Livro",
+		"Autor",
+		"Ano",
+		"Dom Casmurro",
+		"Machado de Assis",
+		"Tabela exportada do Google Docs",
+		"Bairro",
+		"Tabela com células mescladas",
+		"Visitas por ano",
+		"Norte",
+		"Fim do documento."
+	],
+	"xpath": {
+		"//table": 3,
+		"(//table)[1]//th": 3,
+		"(//table)[2]//th": 0,
+		"(//table)[3]//th": 2,
+		"//th[not(@scope='col')]": 0,
+		"//th[@colspan='2']": 1,
+		"//td[@rowspan='2']": 1,
+		"//*[@bgcolor]": 0
+	}
+}

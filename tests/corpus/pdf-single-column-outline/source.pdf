@@ -1,0 +1,121 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /Outlines 13 0 R /PageMode /UseOutlines >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Symbol /ToUnicode 5 0 R >>
+endobj
+5 0 obj
+<< /Length 331 >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<B7> <F0B7>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+6 0 obj
+<< /Title (Guia de leitura acessivel) /Author (Jim corpus) >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 355 >>
+stream
+BT /F1 18 Tf 1 0 0 1 50 780 Tm (Guia de leitura acessível) Tj ET
+BT /F1 14 Tf 1 0 0 1 50 740 Tm (Sumário) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 715 Tm (Capítulo 1: Começo ........................................ 2) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 700 Tm (Capítulo 2: Revisão ........................................ 3) Tj ET
+BT /F1 10 Tf 1 0 0 1 290 40 Tm (1) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 10 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+10 0 obj
+<< /Length 990 >>
+stream
+BT /F1 14 Tf 1 0 0 1 50 780 Tm (Capítulo 1: Começo) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 750 Tm (Este guia explica como transformar um arquivo em uma página que todo mundo consegue ler) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 736 Tm (ou ouvir. Ele foi escrito para bibliotecas, escolas e prefeituras que publicam) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 722 Tm (documentos com frequência.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 694 Tm (Antes de começar, separe o arquivo original e confira se o texto pode ser selecionado) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 680 Tm (com o mouse. Quando o texto não pode ser selecionado, o arquivo é uma imagem e precisa) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 666 Tm (passar por reconhecimento de caracteres.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 638 Tm (A conversão respeita os títulos marcados pelo autor e monta um sumário lateral com eles.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 624 Tm (Por isso vale a pena revisar os marcadores do documento antes de enviar o arquivo,) Tj ET
+BT /F1 10 Tf 1 0 0 1 290 40 Tm (2) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 12 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>
+endobj
+12 0 obj
+<< /Length 782 >>
+stream
+BT /F1 10 Tf 1 0 0 1 50 780 Tm (porque um título esquecido some do sumário e deixa a navegação mais difícil para quem) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 766 Tm (usa leitor de tela no celular ou no computador.) Tj ET
+BT /F1 14 Tf 1 0 0 1 50 738 Tm (Capítulo 2: Revisão) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 708 Tm (Depois da conversão, abra a página e escute o começo do texto com o leitor em voz alta.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 694 Tm (Se uma frase soar estranha, compare com o original e anote a página.) Tj ET
+BT /F1 12 Tf 1 0 0 1 50 666 Tm (2.1 Detalhes) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 642 Tm (Os detalhes de cada formato ficam na documentação do projeto, com exemplos de arquivos) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 628 Tm (que funcionam bem.) Tj ET
+BT /F1 10 Tf 1 0 0 1 290 40 Tm (3) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Outlines /First 14 0 R /Last 15 0 R /Count 2 >>
+endobj
+14 0 obj
+<< /Title (Capítulo 1: Começo) /Parent 13 0 R /Dest [9 0 R /XYZ 0 842 0] /Next 15 0 R >>
+endobj
+15 0 obj
+<< /Title (Capítulo 2: Revisão) /Parent 13 0 R /Dest [11 0 R /XYZ 0 842 0] /Prev 14 0 R /First 16 0 R /Last 16 0 R /Count 1 >>
+endobj
+16 0 obj
+<< /Title (2.1 Detalhes) /Parent 15 0 R /Dest [11 0 R /XYZ 0 842 0] >>
+endobj
+xref
+0 17
+0000000000 65535 f 
+0000000009 00000 n 
+0000000098 00000 n 
+0000000168 00000 n 
+0000000265 00000 n 
+0000000349 00000 n 
+0000000731 00000 n 
+0000000808 00000 n 
+0000000944 00000 n 
+0000001350 00000 n 
+0000001487 00000 n 
+0000002529 00000 n 
+0000002667 00000 n 
+0000003501 00000 n 
+0000003575 00000 n 
+0000003680 00000 n 
+0000003823 00000 n 
+trailer
+<< /Size 17 /Root 1 0 R /Info 6 0 R >>
+startxref
+3910
+%%EOF

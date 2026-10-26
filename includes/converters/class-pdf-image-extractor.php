@@ -34,6 +34,19 @@ class JIMCA_Pdf_Image_Extractor {
 	const MIN_SIDE = 32;
 
 	/**
+	 * Small images whose size repeats across many different images of the
+	 * document are fragments, not pictures. A browser printing a page with
+	 * "Microsoft Print to PDF" turns carousel arrows and bits of colored code
+	 * ("<", "</") into dozens of small JPEGs, each encoded again and so with
+	 * different bytes: the repeat check in extract() does not catch them.
+	 * Up to FRAGMENT_SIDE on both sides, at least FRAGMENT_REPEATS different
+	 * images within FRAGMENT_TOLERANCE pixels of the same size.
+	 */
+	const FRAGMENT_SIDE      = 100;
+	const FRAGMENT_REPEATS   = 3;
+	const FRAGMENT_TOLERANCE = 2;
+
+	/**
 	 * Most pixels of a raw image. 40 megapixels is a professional camera
 	 * photo; above that, building the PNG in memory exceeds what ordinary
 	 * hosting allows.
@@ -45,6 +58,9 @@ class JIMCA_Pdf_Image_Extractor {
 
 	/** @var array<string, bool> Images already seen on earlier pages. */
 	private $seen = array();
+
+	/** @var array<string, bool>|null "WxH" => true for fragment sizes (see FRAGMENT_SIDE); null until first needed. */
+	private $fragment_sizes = null;
 
 	/** @var array<string, int> Images found but not converted, by reason (see JIMCA_Limits::reason_labels()). */
 	private $skip_reasons = array();
@@ -94,6 +110,10 @@ class JIMCA_Pdf_Image_Extractor {
 				continue;
 			}
 			$this->seen[ $key ] = true;
+
+			if ( $this->is_fragment( $xobject ) ) {
+				continue;
+			}
 
 			$binary = $this->to_web_image( $xobject );
 
@@ -271,6 +291,116 @@ class JIMCA_Pdf_Image_Extractor {
 		}
 
 		return $table instanceof \Smalot\PdfParser\Header ? $table->getElements() : null;
+	}
+
+	/**
+	 * @param PDFObject $image
+	 * @return bool Whether the image is a fragment (see FRAGMENT_SIDE).
+	 */
+	private function is_fragment( PDFObject $image ) {
+		if ( null === $this->fragment_sizes ) {
+			$this->fragment_sizes = self::fragment_sizes( $this->document_image_sizes() );
+		}
+
+		$details = $image->getDetails();
+		$size    = ( isset( $details['Width'] ) ? (int) $details['Width'] : 0 ) . 'x' . ( isset( $details['Height'] ) ? (int) $details['Height'] : 0 );
+
+		return isset( $this->fragment_sizes[ $size ] );
+	}
+
+	/**
+	 * Size of each different image of the document, transparency masks left
+	 * out (each photo with a mask would count twice).
+	 *
+	 * @return array<int, array{int, int}> [ width, height ] per image.
+	 */
+	private function document_image_sizes() {
+		if ( null === $this->document ) {
+			return array();
+		}
+
+		$images = array();
+		$masks  = array();
+
+		foreach ( $this->document->getObjects() as $object ) {
+			if ( ! self::is_image( $object ) ) {
+				continue;
+			}
+
+			$images[] = $object;
+			$mask     = $object->getHeader()->get( 'SMask' );
+
+			if ( $mask instanceof PDFObject ) {
+				$masks[ spl_object_id( $mask ) ] = true;
+			}
+		}
+
+		$sizes    = array();
+		$distinct = array();
+
+		foreach ( $images as $image ) {
+			if ( isset( $masks[ spl_object_id( $image ) ] ) ) {
+				continue;
+			}
+
+			$details = $image->getDetails();
+			$width   = isset( $details['Width'] ) ? (int) $details['Width'] : 0;
+			$height  = isset( $details['Height'] ) ? (int) $details['Height'] : 0;
+
+			// Only small images matter, and only these are hashed.
+			if ( $width > self::FRAGMENT_SIDE || $height > self::FRAGMENT_SIDE ) {
+				continue;
+			}
+
+			$key = md5( (string) $image->getContent() );
+
+			if ( ! isset( $distinct[ $key ] ) ) {
+				$distinct[ $key ] = true;
+				$sizes[]          = array( $width, $height );
+			}
+		}
+
+		return $sizes;
+	}
+
+	/**
+	 * Sizes taken as fragments: up to FRAGMENT_SIDE on both sides and shared,
+	 * within FRAGMENT_TOLERANCE pixels, by at least FRAGMENT_REPEATS images.
+	 *
+	 * @param array<int, array{int, int}> $sizes [ width, height ] of each different image.
+	 * @return array<string, bool> "WxH" => true.
+	 */
+	public static function fragment_sizes( array $sizes ) {
+		$count = array();
+
+		foreach ( $sizes as $size ) {
+			list( $width, $height ) = $size;
+
+			if ( $width <= self::FRAGMENT_SIDE && $height <= self::FRAGMENT_SIDE ) {
+				$key           = $width . 'x' . $height;
+				$count[ $key ] = ( isset( $count[ $key ] ) ? $count[ $key ] : 0 ) + 1;
+			}
+		}
+
+		$fragments = array();
+		$reach     = self::FRAGMENT_TOLERANCE;
+
+		foreach ( array_keys( $count ) as $key ) {
+			list( $width, $height ) = array_map( 'intval', explode( 'x', $key ) );
+			$near                   = 0;
+
+			for ( $w = $width - $reach; $w <= $width + $reach; $w++ ) {
+				for ( $h = $height - $reach; $h <= $height + $reach; $h++ ) {
+					$near += isset( $count[ $w . 'x' . $h ] ) ? $count[ $w . 'x' . $h ] : 0;
+				}
+			}
+
+			if ( $near >= self::FRAGMENT_REPEATS ) {
+				$fragments[ $key ] = true;
+			}
+		}
+
+		return $fragments;
 	}
 
 	/**
