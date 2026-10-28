@@ -33,11 +33,11 @@
 		document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { close(); menuBtn.focus(); } });
 	}
 
-	var lang = document.getElementById('langMenu');
-	if (lang) {
+	document.querySelectorAll('details.lang').forEach(function (lang) {
 		document.addEventListener('click', function (e) { if (lang.open && !lang.contains(e.target)) { lang.open = false; } });
 		document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lang.open) { lang.open = false; lang.querySelector('summary').focus(); } });
-	}
+		lang.addEventListener('click', function (e) { if (e.target.closest('a[target="_blank"]')) { lang.open = false; } });
+	});
 
 	var top = document.getElementById('top');
 	if (top) {

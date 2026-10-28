@@ -348,3 +348,16 @@ html[data-motion=reduced] .jh-ba__lane li{transition:none}
 
 /* cabeçalho: fr, de e ru têm rótulos mais longos; a barra tem largura máxima fixa, então o menu fica um pouco mais justo */
 @media (min-width:1280px){html[lang^="fr"] .top__bar,html[lang^="de"] .top__bar,html[lang^="ru"] .top__bar{gap:8px}html[lang^="fr"] .nav,html[lang^="de"] .nav,html[lang^="ru"] .nav{margin-left:0}html[lang^="fr"] .nav a,html[lang^="de"] .nav a,html[lang^="ru"] .nav a{padding:0 6px;font-size:.88rem}html[lang^="fr"] .top__end,html[lang^="de"] .top__end,html[lang^="ru"] .top__end{gap:6px}}
+/* Playground (cabeçalho) e testes (rodapé) */
+.demo summary{background:var(--yellow-soft);color:var(--ink)}
+.demo summary:hover{background:var(--yellow)}
+.demo[open] summary{background:var(--yellow)}
+.demo__list{min-width:250px}
+.demo__note{padding:8px 14px 6px;color:var(--ink-2);font-size:.84rem;line-height:1.45;max-width:260px}
+.foot__tests{margin-top:20px}
+@media (min-width:1280px){.demo summary span{display:none}.demo summary{padding:0 11px}}
+@media (max-width:380px){.top__end{gap:4px}.demo summary{padding:0 9px}}
+.foot__tests .btn{max-width:100%;height:auto;min-height:48px;padding-block:10px;white-space:normal;text-align:center;line-height:1.3}
+/* Playground: rótulo só onde cabe; es/fr/de mais apertados no desktop */
+@media (max-width:1099px){.demo summary span{display:none}.demo summary{padding:0 11px}}
+@media (min-width:1280px){html[lang^="es"] .top__bar{gap:8px}html[lang^="es"] .nav{margin-left:0}html[lang^="fr"] .top__end,html[lang^="de"] .top__end{gap:4px}html[lang^="fr"] .nav a,html[lang^="de"] .nav a{padding:0 5px}html[lang^="es"] .lang summary span,html[lang^="fr"] .lang summary span{display:none}html[lang^="es"] .lang summary,html[lang^="fr"] .lang summary{padding:0 11px}}
