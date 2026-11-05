@@ -5,6 +5,21 @@
     <lastmod>2026-10-19</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jim.mabo.cc/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://jim.mabo.cc/ru/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://jim.mabo.cc/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jim.mabo.cc/"/>
+  </url>
+  <url>
+    <loc>https://jim.mabo.cc/en/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -18,6 +33,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -31,6 +47,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -44,6 +61,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -57,6 +75,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -70,6 +89,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -83,6 +103,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/"/>
@@ -96,6 +117,21 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jim.mabo.cc/hi/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://jim.mabo.cc/ru/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://jim.mabo.cc/de/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jim.mabo.cc/documentacao/"/>
+  </url>
+  <url>
+    <loc>https://jim.mabo.cc/en/documentacao/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -109,6 +145,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -122,6 +159,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -135,6 +173,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -148,6 +187,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -161,6 +201,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
@@ -174,6 +215,7 @@
     <lastmod>2026-10-18</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jim.mabo.cc/documentacao/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jim.mabo.cc/en/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://jim.mabo.cc/es/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://jim.mabo.cc/fr/documentacao/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jim.mabo.cc/zh/documentacao/"/>
